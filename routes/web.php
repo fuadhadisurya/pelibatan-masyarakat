@@ -3,6 +3,7 @@ use App\Http\Controllers\admin_dashboard\auth\LoginController;
 use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
+use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -24,12 +25,9 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/registrasi', function () {
-    return view('auth.registrasi');
-});
-Route::get('/lupa-password', function () {
-    return view('auth.lupa_password');
-});
+Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
+Route::post('/registrasi', [RegistrasiController::class, 'postRegistrasi'])->name('postRegistrasi');
 
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);

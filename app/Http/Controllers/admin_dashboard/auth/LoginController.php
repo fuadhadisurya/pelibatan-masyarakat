@@ -28,4 +28,8 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function lupaPassword(){
+        return view("auth.lupa_password");
+    }
 }

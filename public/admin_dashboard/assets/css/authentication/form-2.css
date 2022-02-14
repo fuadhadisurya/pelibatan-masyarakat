@@ -122,6 +122,10 @@ body {
         font-weight: 100; }
       .form-form .form-form-wrap form .field-wrapper.terms_condition a {
         color: #1b55e2; }
+    .form-form .form-form-wrap form .field-wrapper svg.feather-smile {
+      top: 53px; }
+    .form-form .form-form-wrap form .field-wrapper svg.feather-smartphone {
+      top: 53px; }
     .form-form .form-form-wrap form .field-wrapper svg.feather-user {
       top: 53px; }
     .form-form .form-form-wrap form .field-wrapper svg.feather-lock {

@@ -57,7 +57,8 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kelas = Kelas::findOrFail();
+        return view('admin_dashboard.admin.kelas.edit', ['kelas' => $kelas]);
     }
 
     /**

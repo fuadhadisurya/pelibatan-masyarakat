@@ -72,7 +72,7 @@
     @stack('modal')
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="{{ asset('admin_dashboard/assets/js/libs/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/assets/js/libs/jquery-3.1.1.js') }}"></script>
     <script src="{{ asset('admin_dashboard/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>

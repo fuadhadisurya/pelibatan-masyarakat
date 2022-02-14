@@ -9,7 +9,7 @@
     
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahTutor">Tambah Kelas</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahKelas">Tambah Kelas</button>
                 <div class="table-responsive mb-4 mt-2">
                     <table id="zero-config" class="table table-hover" style="width:100%">
                         <thead>
@@ -27,13 +27,30 @@
                                 <td class="text-center">1</td>
                                 <td>Pemrograman Web</td>
                                 <td>Februari 2022</td>
-                                <td>Mitro</td>
-                                <td class="text-center"><span class="badge outline-badge-info shadow-none">In Progress</span></td>
+                                <td>Fuad</td>
                                 <td class="text-center">
-                                    <ul class="table-controls">
-                                        <li><a href="{{ route('kelas.index') }}" data-toggle="tooltip" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 text-success"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a></li>
-                                        <li><a href="{{ route('kelas.index') }}" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 text-danger"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a></li>
-                                    </ul>
+                                    <a href="">
+                                        <span class="badge badge-success">Aktif</span>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('kelas.index') }}" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-sm btn-danger" id="konfirmasiHapus" onclick="confirmDelete(this)" data-id="" title="Hapus"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>Pemrograman Mobile</td>
+                                <td>Februari 2022</td>
+                                <td>Hadi</td>
+                                <td class="text-center">
+                                    <a href="">
+                                        <span class="badge badge-danger">Tidak Aktif</span>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('kelas.index') }}" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-sm btn-danger" id="konfirmasiHapus" onclick="confirmDelete(this)" data-id="" title="Hapus"><i class="far fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -47,11 +64,11 @@
 
 @push('modal')
     <!-- Modal -->
-    <div class="modal fade" id="tambahTutor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tambahKelas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Tutor</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kelas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="far fa-times-circle"></i>
                     </button>
@@ -59,35 +76,59 @@
                 <form>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nama">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control" id="nama">
+                            <label for="nama_kegiatan">Nama Kegiatan</label>
+                            <input type="text" name="nama_kegiatan" class="form-control" id="nama_kegiatan">
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="email@example.com">
+                        <label for="periode_kegiatan">Periode Kegiatan</label>
+                        <div class="form-row mb-4">
+                            <div class="col">
+                                <select class="form-control">
+                                    <option value="Januari">Januari</option>
+                                    <option value="Februari">Februari</option>
+                                    <option value="Maret">Maret</option>
+                                    <option value="April">April</option>
+                                    <option value="Mei">Mei</option>
+                                    <option value="Juni">Juni</option>
+                                    <option value="Juli">Juli</option>
+                                    <option value="Agustus">Agustus</option>
+                                    <option value="September">September</option>
+                                    <option value="Oktober">Oktober</option>
+                                    <option value="November">November</option>
+                                    <option value="Desember">Desember</option>
+                                </select>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="kontak">Kontak</label>
-                                <input type="number" class="form-control" id="inputPassword4" placeholder="08123456789">
+                            <div class="col">
+                                <select class="form-control">
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" name="username" class="form-control" id="username">
+                            <label for="periode_kegiatan">Periode Kegiatan</label>
+                            <input type="date" name="periode_kegiatan" class="form-control" id="periode_kegiatan">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" class="form-control" id="password">
+                            <label for="tutor">Tutor</label>
+                            <select class="form-control">
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                                <option>2025</option>
+                                <option>2026</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="konfirmasi_password">Konfirmasi Password</label>
-                            <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_password">
+                            <label for="status">Status</label>
+                            <input type="text" name="status" class="form-control" id="status">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary">Simpan</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
                     </div>
                 </form>
             </div>

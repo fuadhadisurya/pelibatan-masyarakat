@@ -56,7 +56,7 @@
                     </ul>
                 </li>
                 <li class="menu">
-                    <a href="{{ url('/admin/tutor') }}" aria-expanded="false" class="dropdown-toggle">
+                    <a href="{{ url('/admin/notifikasi') }}" aria-expanded="false" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                             <span> Notifikasi</span>
@@ -141,7 +141,33 @@
                     </ul>
                 </li>
             @elseif(Auth::user()->level == 'tutor')
-                
+                <li class="menu {{ Request::segment(2) == 'dashboard' ? 'active' : '' }}">
+                    <a href="{{ url('/admin/dashboard') }}" aria-expanded="{{ Request::segment(2) == 'dashboard' ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span> Dashboard</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu">
+                    <a href="#hasilNilai" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <span> Hasil Nilai</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="collapse submenu list-unstyled" id="hasilNilai" data-parent="#accordionExample">
+                        <li>
+                            <a href="javascript:void(0);"> Pra Test </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);"> Post Test </a>
+                        </li>                      
+                    </ul>
+                </li>
             @else
                 <li class="menu">
                     <a href="javascript:void(0);" aria-expanded="false" class="dropdown-toggle">
