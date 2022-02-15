@@ -13,8 +13,13 @@ class Kelas extends Model
 
     protected $fillable = [
         "nama_kegiatan", 
-        "periode_kegiatan",
-        "id_tutor",
+        "tanggal_mulai",
+        "tanggal_berakhir",
+        "tutor_id",
         "status",
     ];
+
+    public function tutor(){
+        return $this->belongsTo(User::class);
+    }
 }

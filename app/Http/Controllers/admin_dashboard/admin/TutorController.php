@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class TutorController extends Controller
 {
@@ -78,7 +78,7 @@ class TutorController extends Controller
         
         User::create($data);
         
-        return redirect()->route('tutor.index')->with('status', 'Berita Berhasil Dibuat');
+        return redirect()->route('tutor.index')->with('status', 'Akun tutor berhasil dibuat');
     }
 
     /**

@@ -87,7 +87,7 @@
                                 <div class="field-wrapper terms_condition">
                                     <div class="n-chk">
                                         <label class="new-control new-checkbox checkbox-primary">
-                                          <input type="checkbox" class="new-control-input">
+                                          <input type="checkbox" class="new-control-input" required>
                                           <span class="new-control-indicator"></span><span>Saya setuju <a href="javascript:void(0);">  syarat dan ketentuan. </a></span>
                                         </label>
                                     </div>
