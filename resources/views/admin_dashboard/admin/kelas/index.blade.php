@@ -33,7 +33,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th>Periode Kegiatan</th>
+                                <th>Periode Kelas</th>
                                 <th>Tutor</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Aksi</th>
@@ -65,12 +65,12 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nama_kegiatan">Nama Kegiatan</label>
-                            <input type="text" name="nama_kegiatan" class="form-control" id="nama_kegiatan">
+                            <label for="nama_kelas">Nama Kelas</label>
+                            <input type="text" name="nama_kelas" class="form-control" id="nama_kelas">
                         </div>
                         <div class="form-group">
-                            <label for="periode_kegiatan">Periode Kegiatan</label>
-                            <input id="periode_kegiatan" name="periode_kegiatan" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kegiatan..">
+                            <label for="periode_kelas">Periode Kelas</label>
+                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kelas..">
                         </div>
                         <div class="form-group">
                             <label for="tutor">Tutor</label>
@@ -82,11 +82,60 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="deskripsi">Deskripsi Kelas</label>
+                            <textarea class="form-control" name="deskripsi" id="deskripsi" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control selectpicker" name="status">
                                 <option value="Aktif">Aktif</option>
                                 <option value="Tidak Aktif">Tidak Aktif</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Sasaran">Sasaran</label>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>TK/PAUD
+                                </label>
+                            </div>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="SD_MI" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>SD/MI
+                                </label>
+                            </div>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>SMP/MTS
+                                </label>
+                            </div>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>SMA/SMK/MA
+                                </label>
+                            </div>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>Mahasiswa
+                                </label>
+                            </div>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>Masyarakat Umum
+                                </label>
+                            </div>
+                            <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                    <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1">
+                                    <span class="new-control-indicator"></span>ASN/Polri/TNI
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -113,6 +162,7 @@
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/select2/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
 @endpush
 
 @push('scripts')
@@ -130,8 +180,8 @@
             ajax: "{{ route('kelas.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_kegiatan', name: 'nama_kegiatan'},
-                {data: 'periode_kegiatan', name: 'periode_kegiatan'},
+                {data: 'nama_kelas', name: 'nama_kelas'},
+                {data: 'periode_kelas', name: 'periode_kelas'},
                 {data: 'tutor_id', name: 'tutor_id'},
                 {data: 'status', name: 'status'},
                 {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
@@ -182,7 +232,7 @@
         }
     </script>
     <script>
-        var f3 = flatpickr(document.getElementById('periode_kegiatan'), {
+        var f3 = flatpickr(document.getElementById('periode_kelas'), {
             mode: "range",
             minDate: "today"
         });

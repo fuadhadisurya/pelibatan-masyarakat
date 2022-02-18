@@ -21,12 +21,15 @@ class TutorController extends Controller
             $data = User::where('level', '=', 'tutor');
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('gambar', function($row){
+                    ->addColumn('nama', function($row){
                         $gambar = ($row->gambar != null ) ? "Avatar Tutor (On Progress)" : asset('admin_dashboard/assets/img/90x90.jpg');
                         return '
-                            <td class="text-center">
-                                <div class="avatar avatar-sm">
-                                    <img alt="avatar" src="'. $gambar .'" class="rounded-circle" width="50px" />
+                            <td>
+                                <div class="d-flex">
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <img alt="avatar" class="img-fluid rounded-circle" src="'. $gambar .'" width="50px">
+                                    </div>
+                                    <p class="align-self-center mb-0">'. $row->nama .'</p>
                                 </div>
                             </td>
                         ';
@@ -39,7 +42,7 @@ class TutorController extends Controller
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi', 'gambar'])
+                    ->rawColumns(['aksi', 'nama'])
                     ->make(true);
         }
         return view('admin_dashboard.admin.tutor.index');

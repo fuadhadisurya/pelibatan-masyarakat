@@ -68,16 +68,6 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <label for="RT">RT</label>
-                            <input type="text" class="form-control" placeholder="RT">
-                        </div>
-                        <div class="col">
-                            <label for="RW">RW</label>
-                            <input type="text" class="form-control" placeholder="RW">
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>

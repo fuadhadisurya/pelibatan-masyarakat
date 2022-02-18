@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('foto')->nullable();
             $table->string('kontak');
+            // $table->string('status')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -32,7 +32,6 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Gambar</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Kontak</th>
@@ -126,7 +125,6 @@
             ajax: "{{ route('tutor.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {"width": "5%", data: 'gambar', name: 'gambar'},
                 {data: 'nama', name: 'nama'},
                 {data: 'email', name: 'email'},
                 {data: 'kontak', name: 'kontak'},

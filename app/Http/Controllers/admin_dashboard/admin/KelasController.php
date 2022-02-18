@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\KelasKategori;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,7 +22,7 @@ class KelasController extends Controller
             $data = Kelas::all();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->editColumn('periode_kegiatan', function($row){
+                    ->editColumn('periode_kelas', function($row){
                         return $row->tanggal_berakhir . ' s.d. ' . $row->tanggal_berakhir;
                     })
                     ->editColumn('tutor_id', function($row){
@@ -71,21 +72,22 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nama_kegiatan' => 'required',
-            'periode_kegiatan' => 'required',
+            'nama_kelas' => 'required',
+            'periode_kelas' => 'required',
+            'deskripsi' => 'required',
             'tutor_id' => 'required',
             'status' => 'required',
         ]);
         
         $data = $request->all();
-
-        $dates = explode('to', $request->periode_kegiatan);
+        $dates = explode('to', $request->periode_kelas);
         $startDate = trim($dates[0]);
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
         $data['tanggal_berakhir'] = $endDate;
         
         Kelas::create($data);
+        $kelas = Kelas::latest()->first();
 
         return redirect()->route('kelas.index')->with('status', 'Kelas Berhasil Dibuat');
     }
@@ -124,15 +126,15 @@ class KelasController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nama_kegiatan' => 'required',
-            'periode_kegiatan' => 'required',
+            'nama_kelas' => 'required',
+            'periode_kelas' => 'required',
             'tutor_id' => 'required',
             'status' => 'required',
         ]);
         
         $data = $request->all();
 
-        $dates = explode('to', $request->periode_kegiatan);
+        $dates = explode('to', $request->periode_kelas);
         $startDate = trim($dates[0]);
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
