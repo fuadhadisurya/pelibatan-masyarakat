@@ -4,8 +4,10 @@ use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashb
 use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
+use App\Http\Controllers\admin_dashboard\peserta\BiodataController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
+use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +34,15 @@ Route::post('/registrasi', [RegistrasiController::class, 'postRegistrasi'])->nam
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
     Route::resource('tutor', TutorController::class);
+    Route::get('kelas-status/{id}', [KelasController::class, 'status'])->name('kelas.status');
     Route::resource('kelas', KelasController::class);
 });
 Route::prefix('tutor')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
 });
-Route::prefix('peserta')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
+Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
+    Route::get('/biodata', [BiodataController::class, 'index']);
+    Route::post('/biodata', [BiodataController::class, 'index']);
+    Route::resource('kelas', PesertaKelasController::class);
 });

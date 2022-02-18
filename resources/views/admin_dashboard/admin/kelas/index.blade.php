@@ -40,21 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
-                                <td class="text-center">2</td>
-                                <td>Pemrograman Web</td>
-                                <td>Februari 2022</td>
-                                <td>Fuad</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <span class="badge badge-success">Aktif</span>
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <a href="{{ route('kelas.index') }}" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
-                                    <button class="btn btn-sm btn-danger" id="konfirmasiHapus" onclick="confirmDelete(this)" data-id="" title="Hapus"><i class="far fa-trash-alt"></i></button>
-                                </td>
-                            </tr> --}}
+                            
                         </tbody>
                     </table>
                 </div>
@@ -86,19 +72,6 @@
                             <label for="periode_kegiatan">Periode Kegiatan</label>
                             <input id="periode_kegiatan" name="periode_kegiatan" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kegiatan..">
                         </div>
-                        {{-- <label for="periode_kegiatan">Periode Kegiatan</label> --}}
-                        {{-- <div class="form-row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <input type="date" name="periode_kegiatan" class="form-control" id="periode_kegiatan">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <input type="date" name="periode_kegiatan" class="form-control" id="periode_kegiatan">
-                                </div>
-                            </div>
-                        </div> --}}
                         <div class="form-group">
                             <label for="tutor">Tutor</label>
                             <select class="placeholder form-control" name="tutor_id">
@@ -110,8 +83,7 @@
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
-                            <select class="form-control" name="status">
-                                <option value="" hidden>Pilih Status...</option>
+                            <select class="form-control selectpicker" name="status">
                                 <option value="Aktif">Aktif</option>
                                 <option value="Tidak Aktif">Tidak Aktif</option>
                             </select>
@@ -140,6 +112,7 @@
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/select2/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
 @endpush
 
 @push('scripts')
@@ -149,6 +122,7 @@
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script>
         $('#tab_kelas').DataTable({
             processing: true,
@@ -175,24 +149,37 @@
         }); 
     </script>
     <script>
-        $('.widget-content .confirm-hapus').on('click', function () {
-        swal({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Delete',
-            padding: '2em'
-            }).then(function(result) {
-            if (result.value) {
-                swal(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
-            }
-            })
-        })
+        function confirmDelete(e) {  
+            let id = e.getAttribute('data-id');
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Anda tidak bisa mengembalikan ini!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Iya, hapus',
+                cancelButtonText: 'Batalkan'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type:'DELETE',
+                        url:'{{url("/admin/kelas")}}/' +id,
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success:function(data) {
+                            if (data.success){
+                                Swal.fire(
+                                    'Berhasil dihapus',
+                                    'Data berhasil dihapus.',
+                                    "success"
+                                );
+                                $("#konfirmasiHapus"+id+"").parents('tr').remove()
+                            }
+                        }
+                    });
+                }
+            }) 
+        }
     </script>
     <script>
         var f3 = flatpickr(document.getElementById('periode_kegiatan'), {
@@ -205,5 +192,10 @@
             placeholder: "Pilih Tutor...",
             dropdownParent: $('#tambahKelas')
         });
+    </script>
+    <script>
+        $(".selectpicker").selectpicker({
+            "title": "Pilih Status..."        
+        }).selectpicker("render");
     </script>
 @endpush

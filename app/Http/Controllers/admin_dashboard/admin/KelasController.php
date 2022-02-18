@@ -22,7 +22,7 @@ class KelasController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kegiatan', function($row){
-                        return $row->tanggal_berakhir . 's.d.' . $row->tanggal_berakhir;
+                        return $row->tanggal_berakhir . ' s.d. ' . $row->tanggal_berakhir;
                     })
                     ->editColumn('tutor_id', function($row){
                         return $row->tutor->nama;
@@ -31,7 +31,7 @@ class KelasController extends Controller
                         $status = ($row->status == 'Aktif') ? '<span class="badge badge-success">Aktif</span>' : '<span class="badge badge-danger">Tidak Aktif</span>' ;
                         return '
                         <td class="text-center">
-                            <a href="" class="d-flex justify-content-center">
+                            <a href="'. route("kelas.status", $row) .'" class="d-flex justify-content-center">
                                 '. $status .'
                             </a>
                         </td>
@@ -109,8 +109,9 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
+        $tutor = User::all()->where('level', '=', 'tutor');
         $kelas = Kelas::findOrFail($id);
-        return view('admin_dashboard.admin.kelas.edit', ['kelas' => $kelas]);
+        return view('admin_dashboard.admin.kelas.edit', ['kelas' => $kelas, 'tutor' => $tutor]);
     }
 
     /**
@@ -122,7 +123,26 @@ class KelasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'nama_kegiatan' => 'required',
+            'periode_kegiatan' => 'required',
+            'tutor_id' => 'required',
+            'status' => 'required',
+        ]);
+        
+        $data = $request->all();
+
+        $dates = explode('to', $request->periode_kegiatan);
+        $startDate = trim($dates[0]);
+        $endDate = trim($dates[1]);
+        $data['tanggal_mulai'] = $startDate;
+        $data['tanggal_berakhir'] = $endDate;
+
+        $kelas = Kelas::findOrFail($id);
+
+        $kelas->update($data);
+
+        return redirect()->route('kelas.index')->with('status', 'Kelas berhasil di Perbarui');
     }
 
     /**
@@ -133,6 +153,22 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tutor = Kelas::findOrFail($id);
+
+        $tutor->delete();
+
+        return response()->json(array('success' => true));
+    }
+
+    public function status($id){
+        $data = Kelas::findOrFail($id);
+        
+        ($data->status == 'Aktif') ? $status = "Tidak Aktif" : $status = "Aktif" ;
+        
+        $data->update([
+            'status' => $status
+        ]);
+
+        return back()->with('status','Status berhasil diganti');
     }
 }
