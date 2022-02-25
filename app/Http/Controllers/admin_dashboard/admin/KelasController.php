@@ -85,9 +85,10 @@ class KelasController extends Controller
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
         $data['tanggal_berakhir'] = $endDate;
-        
-        Kelas::create($data);
-        $kelas = Kelas::latest()->first();
+        $kelas = Kelas::create($data);
+       
+        $data['kelas_id'] = $kelas->id;
+        KelasKategori::create($data);
 
         return redirect()->route('kelas.index')->with('status', 'Kelas Berhasil Dibuat');
     }
@@ -141,8 +142,18 @@ class KelasController extends Controller
         $data['tanggal_berakhir'] = $endDate;
 
         $kelas = Kelas::findOrFail($id);
-
         $kelas->update($data);
+
+        $kelasKategori = KelasKategori::where('kelas_id', '=', $id);
+        $kelasKategori->update([
+            'TK_PAUD' => $request->has('TK_PAUD'),
+            'SD_MI' => $request->has('SD_MI'),
+            'SMP_MTS' => $request->has('SMP_MTS'),
+            'SMA_SMK_MA' => $request->has('SMA_SMK_MA'),
+            'Mahasiswa' => $request->has('Mahasiswa'),
+            'Masyarakat_Umum' => $request->has('Masyarakat_Umum'),
+            'ASN_Polri_TNI' => $request->has('ASN_Polri_TNI'),
+        ]);
 
         return redirect()->route('kelas.index')->with('status', 'Kelas berhasil di Perbarui');
     }
@@ -155,9 +166,11 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $tutor = Kelas::findOrFail($id);
+        $kelas = Kelas::findOrFail($id);
+        $kelas->delete();
 
-        $tutor->delete();
+        $kelasKategori = KelasKategori::where('kelas_id', '=', $id);
+        $kelasKategori->delete();
 
         return response()->json(array('success' => true));
     }
