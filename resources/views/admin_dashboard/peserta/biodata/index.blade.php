@@ -39,32 +39,31 @@
                     <div class="form-row mb-4">
                         <div class="col">
                             <label for="provinsi">Provinsi</label>
-                            <select class="form-control selectpicker" name="provinsi">
-                                <option value="Banten">Banten</option>
-                                <option value="Jawa Barat">Jawa Barat</option>
-                                <option value="Jawa Tengah">Jawa Tengah</option>
-                                <option value="Daerah Istimewa Yogyakarta">Daerah Istimewa Yogyakarta</option>
-                                <option value="Jawa Timur">Jawa Timur</option>
+                            <select class="form-control selectpicker" name="provinsi" id="provinsi">
+                                <option value="Pilih Kabupaten/Kota" selected hidden>Pilih Provinsi</option>
+                                @foreach ($provinsi['provinsi'] as $provinsi)
+                                    <option value="{{ $provinsi['id'] }}">{{ $provinsi['nama'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col">
-                            <label for="kabupaten/kota">Kabupaten/Kota</label>
-                            <select class="form-control selectpicker" name="kabupaten/kota">
-                                <option value="Ini selected Kota/Kab dari provinsi yang dipilih">Ini selected Kota/Kab dari provinsi yang dipilih</option>
+                            <label for="kabupaten_kota">Kabupaten/Kota</label>
+                            <select class="form-control selectpicker" name="kabupaten_kota" id="kabupaten_kota">
+                                <option value="Pilih Kabupaten/Kota" hidden>Pilih Kabupaten/Kota</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row mb-4">
                         <div class="col">
                             <label for="kecamatan">Kecamatan</label>
-                            <select class="form-control selectpicker" name="provinsi">
-                                <option value="ini selected kecamatan dari kota yang dipilih">ini selected kecamatan dari kota yang dipilih</option>
+                            <select class="form-control selectpicker" name="kecamatan" id="kecamatan">
+                                <option value="Pilih Kecamatan" hidden>Pilih Kecamatan</option>
                             </select>
                         </div>
                         <div class="col">
-                            <label for="kelurahan/desa">Kelurahan/Desa</label>
-                            <select class="form-control selectpicker" name="kelurahan/desa">
-                                <option value="Ini selected desa dari kecematan yang dipilih">Ini selected desa dari kecematan yang dipilih</option>
+                            <label for="desa_kelurahan">Desa/Kelurahan</label>
+                            <select class="form-control selectpicker" name="desa_kelurahan" id="desa_kelurahan">
+                                <option value="Pilih Desa/Kelurahan">Pilih Desa/Kelurahan</option>
                             </select>
                         </div>
                     </div>
@@ -81,9 +80,99 @@
 @endsection
 
 @push('styles')
-    
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}"> --}}
 @endpush
 
 @push('scripts')
-    
+{{-- <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script> --}}
+<script>
+    // $(".selectpicker").selectpicker({
+    //     "title": "Pilih Menu"        
+    // }).selectpicker("render");
+</script>
+<script>
+    $(document).ready(function() {
+        $('#provinsi').on('change', function() {
+            var provinsiID = $(this).val();
+            if(provinsiID) {
+                $.ajax({
+                    url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi='+provinsiID,
+                    type: "GET",
+                    data : {"_token":"{{ csrf_token() }}"},
+                    dataType: "json",
+                    success:function(data)
+                    {
+                        if(data){
+                            $('#kabupaten_kota').empty();
+                            $('#kabupaten_kota').append('<option hidden>Pilih Kabupaten/Kota</option>'); 
+                            $.each(data.kota_kabupaten, function(key, item){
+                                $('select[name="kabupaten_kota"]').append('<option value="'+ item.id +'">' + item.nama + '</option>');
+                            });
+                            // $('.selectpicker').selectpicker('refresh');
+                        }else{
+                            $('#kabupaten_kota').empty();
+                            // $('.selectpicker').selectpicker('refresh');
+                        }
+                    }
+                });
+            }else{
+                $('#kabupaten_kota').empty();
+            }
+        });
+        $('#kabupaten_kota').on('change', function() {
+            var kabupatenKotaID = $(this).val();
+            if(kabupatenKotaID) {
+                $.ajax({
+                    url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota='+kabupatenKotaID,
+                    type: "GET",
+                    data : {"_token":"{{ csrf_token() }}"},
+                    dataType: "json",
+                    success:function(data)
+                    {
+                        if(data){
+                            $('#kecamatan').empty();
+                            $('#kecamatan').append('<option hidden>Pilih Kecamatan</option>'); 
+                            $.each(data.kecamatan, function(key, item){
+                                $('select[name="kecamatan"]').append('<option value="'+ item.id +'">' + item.nama + '</option>');
+                            });
+                            // $('.selectpicker').selectpicker('refresh');
+                        }else{
+                            $('#kecamatan').empty();
+                            // $('.selectpicker').selectpicker('refresh');
+                        }
+                    }
+                });
+            }else{
+                $('#kecamatan').empty();
+            }
+        });
+        $('#kecamatan').on('change', function() {
+            var kecamatanID = $(this).val();
+            if(kecamatanID) {
+                $.ajax({
+                    url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan='+kecamatanID,
+                    type: "GET",
+                    data : {"_token":"{{ csrf_token() }}"},
+                    dataType: "json",
+                    success:function(data)
+                    {
+                        if(data){
+                            $('#desa_kelurahan').empty();
+                            $('#desa_kelurahan').append('<option hidden>Pilih Desa/Kelurahan</option>'); 
+                            $.each(data.kelurahan, function(key, item){
+                                $('select[name="desa_kelurahan"]').append('<option value="'+ item.id +'">' + item.nama + '</option>');
+                            });
+                            // $('.selectpicker').selectpicker('refresh');
+                        }else{
+                            $('#desa_kelurahan').empty();
+                            // $('.selectpicker').selectpicker('refresh');
+                        }
+                    }
+                });
+            }else{
+                $('#desa_kelurahan').empty();
+            }
+        });
+    });
+</script>
 @endpush
