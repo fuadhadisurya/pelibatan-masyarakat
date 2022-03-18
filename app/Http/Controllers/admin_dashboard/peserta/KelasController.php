@@ -46,7 +46,7 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin_dashboard.peserta.kelas.show');
     }
 
     /**

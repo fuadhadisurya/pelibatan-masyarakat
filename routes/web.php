@@ -8,6 +8,7 @@ use App\Http\Controllers\admin_dashboard\peserta\BiodataController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
+use App\Http\Controllers\DaerahController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
 Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
 Route::post('/registrasi', [RegistrasiController::class, 'postRegistrasi'])->name('postRegistrasi');
+
+Route::get('provinces', [DaerahController::class, 'provinces'])->name('provinces');
+Route::get('cities', [DaerahController::class, 'cities'])->name('cities');
+Route::get('districts', [DaerahController::class, 'districts'])->name('districts');
+Route::get('villages', [DaerahController::class, 'villages'])->name('villages');
 
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
