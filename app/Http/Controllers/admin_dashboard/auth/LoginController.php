@@ -21,7 +21,7 @@ class LoginController extends Controller
                 return redirect('peserta/dashboard');
             }
         }
-        return redirect('/login');
+        return redirect('/login')->with('status', 'Username atau Password salah');
     }
 
     public function logout(){

@@ -17,7 +17,7 @@ class RegistrasiController extends Controller
             'email' => 'required|email|unique:users,email',
             'kontak' => 'required|numeric|unique:users,kontak',
             'username' => 'required|alpha_dash|unique:users,username',
-            'password' => 'required|min:5',
+            'password' => 'required|min:6',
             'konfirmasi_password' => 'required|same:password',
         ]);
         

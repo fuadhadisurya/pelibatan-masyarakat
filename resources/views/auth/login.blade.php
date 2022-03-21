@@ -11,6 +11,7 @@
     <link href="{{ asset('admin_dashboard/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/authentication/form-2.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/switches.css') }}">
@@ -26,7 +27,20 @@
 
                         <h1 class="">Masuk</h1>
                         <p class="">Login ke akun kamu untuk melanjutkan.</p>
-                        
+                        @if(session('status'))
+                            <div class="alert alert-danger alert-dismissible show fade">
+                                <div class="alert-body">
+                                    <button class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                    {{ session('status') }}
+                                </div>
+                            </div>
+                            {{-- <div class="alert alert-warning mb-4" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+                                <strong>Primary!</strong> Lorem Ipsum is simply dummy text of the printing.
+                            </div> --}}
+                        @endif
                         <form class="text-left" action="{{ route('postlogin') }}" method="POST">
                             @csrf
                             <div class="form">

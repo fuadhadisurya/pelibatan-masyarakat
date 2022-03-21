@@ -20,4 +20,8 @@ class BiodataController extends Controller
     public function update(){
 
     }
+
+    public function akun(){
+        return view('admin_dashboard.profil.akun');
+    }
 }

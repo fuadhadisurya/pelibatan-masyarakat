@@ -50,5 +50,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
     Route::get('/biodata', [BiodataController::class, 'index']);
     Route::post('/biodata', [BiodataController::class, 'index']);
+    Route::get('/akun', [BiodataController::class, 'akun']);
+    Route::post('/akun', [BiodataController::class, 'index']);
     Route::resource('kelas', PesertaKelasController::class);
 });
