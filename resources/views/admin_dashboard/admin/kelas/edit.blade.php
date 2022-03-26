@@ -45,8 +45,10 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control selectpicker" name="status">
-                                <option value="Aktif" {{ ($kelas->status == 'Aktif') ? 'selected': '' }}>Aktif</option>
-                                <option value="Tidak Aktif" {{ ($kelas->status == 'Tidak Aktif') ? 'selected': '' }}>Tidak Aktif</option>
+                                <option value="Pendaftaran" {{ ($kelas->status == 'Pendaftaran') ? 'selected': '' }}>Pendaftaran</option>
+                                <option value="Proses Seleksi" {{ ($kelas->status == 'Proses Seleksi') ? 'selected': '' }}>Proses Seleksi</option>
+                                <option value="Kegiatan Berlangsung" {{ ($kelas->status == 'Kegiatan Berlangsung') ? 'selected': '' }}>Kegiatan Berlangsung</option>
+                                <option value="Selesai" {{ ($kelas->status == 'Selesai') ? 'selected': '' }}>Selesai</option>
                             </select>
                         </div>
                         <div class="form-group">

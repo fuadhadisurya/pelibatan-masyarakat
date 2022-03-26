@@ -29,14 +29,23 @@ class KelasController extends Controller
                         return $row->tutor->nama;
                     })
                     ->editColumn('status', function($row){
-                        $status = ($row->status == 'Aktif') ? '<span class="badge badge-success">Aktif</span>' : '<span class="badge badge-danger">Tidak Aktif</span>' ;
-                        return '
-                        <td class="text-center">
-                            <a href="'. route("kelas.status", $row) .'" class="d-flex justify-content-center">
-                                '. $status .'
-                            </a>
-                        </td>
-                        ';
+                        if($row->status == 'Pendaftaran'){
+                            $status = '<span class="badge badge-success">Pendaftaran</span>';
+                        } elseif($row->status == 'Proses Seleksi'){
+                            $status = '<span class="badge badge-warning">Proses Seleksi</span>';
+                        } elseif($row->status == 'Kegiatan Berlangsung'){
+                            $status = '<span class="badge badge-danger">Proses Seleksi</span>';
+                        } else {
+                            $status = '<span class="badge badge-dark">Selesai</span>';
+                        }
+                        return '<td class="text-center">'. $status .'</td>';
+                        // return '
+                        // <td class="text-center">
+                        //     <a href="'. route("kelas.status", $row) .'" class="d-flex justify-content-center">
+                        //         '. $status .'
+                        //     </a>
+                        // </td>
+                        // ';
                     })
                     ->addColumn('aksi', function($row){
                         return '
@@ -175,15 +184,15 @@ class KelasController extends Controller
         return response()->json(array('success' => true));
     }
 
-    public function status($id){
-        $data = Kelas::findOrFail($id);
+    // public function status($id){
+    //     $data = Kelas::findOrFail($id);
         
-        ($data->status == 'Aktif') ? $status = "Tidak Aktif" : $status = "Aktif" ;
+    //     ($data->status == 'Aktif') ? $status = "Tidak Aktif" : $status = "Aktif" ;
         
-        $data->update([
-            'status' => $status
-        ]);
+    //     $data->update([
+    //         'status' => $status
+    //     ]);
 
-        return back()->with('status','Status berhasil diganti');
-    }
+    //     return back()->with('status','Status berhasil diganti');
+    // }
 }

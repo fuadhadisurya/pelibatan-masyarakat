@@ -21,8 +21,8 @@
                     </div>
                     <div class="form-row mb-4">
                         <div class="col">
-                            <label for="kontak">No. HP</label>
-                            <input type="text" class="form-control" placeholder="No. HP" value="{{ $peserta->kontak }}">
+                            <label for="nomor_telepon">No. HP</label>
+                            <input type="text" class="form-control" placeholder="No. HP" value="{{ $peserta->nomor_telepon }}">
                         </div>
                         <div class="col">
                             <label for="pendidikan_terakhir">Pendidikan Terakhir</label>

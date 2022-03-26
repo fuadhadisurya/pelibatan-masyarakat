@@ -34,7 +34,7 @@
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
                                 <th>Email</th>
-                                <th>Kontak</th>
+                                <th>Nomor Telepon</th>
                                 <th>Username</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -74,8 +74,8 @@
                                 <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="kontak">Kontak</label>
-                                <input type="text" name="kontak" class="form-control" id="kontak" placeholder="08123456789">
+                                <label for="nomor_telepon">Nomor Telepon</label>
+                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" placeholder="08123456789">
                             </div>
                         </div>
                         <div class="form-group">
@@ -127,7 +127,7 @@
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama', name: 'nama'},
                 {data: 'email', name: 'email'},
-                {data: 'kontak', name: 'kontak'},
+                {data: 'nomor_telepon', name: 'nomor_telepon'},
                 {data: 'username', name: 'username'},
                 {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
             ],

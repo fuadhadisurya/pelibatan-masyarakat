@@ -8,7 +8,9 @@ use App\Http\Controllers\admin_dashboard\peserta\BiodataController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
+use App\Http\Controllers\admin_dashboard\tutor\KelasController as TutorKelasController;
 use App\Http\Controllers\DaerahController;
+use App\Http\Controllers\tutor\DataPesertaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,14 +45,22 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::get('kelas-status/{id}', [KelasController::class, 'status'])->name('kelas.status');
     Route::resource('kelas', KelasController::class);
 });
-Route::prefix('tutor')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
+Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
+    Route::resource('kelas', TutorKelasController::class);
+    Route::resource('kelas/{id_kelas}/data-peserta', DataPesertaController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
     Route::get('/biodata', [BiodataController::class, 'index']);
     Route::post('/biodata', [BiodataController::class, 'index']);
+    Route::get('/profil', [BiodataController::class, 'profil']);
+    Route::post('/profil', [BiodataController::class, 'index']);
     Route::get('/akun', [BiodataController::class, 'akun']);
     Route::post('/akun', [BiodataController::class, 'index']);
     Route::resource('kelas', PesertaKelasController::class);
+});
+
+Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){
+
 });

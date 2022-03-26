@@ -31,8 +31,8 @@
                                 <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com" value="{{ $tutor->email }}" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="kontak">Kontak</label>
-                                <input type="text" name="kontak" class="form-control" id="kontak" placeholder="08123456789" value="{{ $tutor->kontak }}" required>
+                                <label for="nomor_telepon">Nomor Telepon</label>
+                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" placeholder="08123456789" value="{{ $tutor->nomor_telepon }}" required>
                             </div>
                         </div>
                         <div class="form-group">

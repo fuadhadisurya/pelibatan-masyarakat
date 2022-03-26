@@ -69,7 +69,7 @@ class TutorController extends Controller
         $this->validate($request, [
             'nama' => 'required',
             'email' => 'required|email|unique:users,email',
-            'kontak' => 'required|numeric|unique:users,kontak',
+            'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon',
             'username' => 'required|alpha_dash|unique:users,username',
             'password' => 'required|min:5',
             'konfirmasi_password' => 'required|same:password',
@@ -120,7 +120,7 @@ class TutorController extends Controller
             $this->validate($request, [
                 'nama' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'kontak' => 'required|numeric|unique:users,kontak,' . $id,
+                'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
                 'username' => 'required|alpha_dash|unique:users,username,' . $id,
                 'password' => 'required|min:5',
                 'konfirmasi_password' => 'required|same:password',
@@ -129,7 +129,7 @@ class TutorController extends Controller
             $this->validate($request, [
                 'nama' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'kontak' => 'required|numeric|unique:users,kontak,' . $id,
+                'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
                 'username' => 'required|alpha_dash|unique:users,username,' . $id,
             ]);
         }

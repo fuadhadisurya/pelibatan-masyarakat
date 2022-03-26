@@ -85,13 +85,7 @@
                             <label for="deskripsi">Deskripsi Kelas</label>
                             <textarea class="form-control" name="deskripsi" id="deskripsi" rows="10"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control selectpicker" name="status">
-                                <option value="Aktif">Aktif</option>
-                                <option value="Tidak Aktif">Tidak Aktif</option>
-                            </select>
-                        </div>
+                        <input type="hidden" name="status" value="Pendaftaran">
                         <div class="form-group">
                             <label for="Sasaran">Sasaran</label>
                             <div class="n-chk">
@@ -183,7 +177,7 @@
                 {data: 'nama_kelas', name: 'nama_kelas'},
                 {data: 'periode_kelas', name: 'periode_kelas'},
                 {data: 'tutor_id', name: 'tutor_id'},
-                {data: 'status', name: 'status'},
+                {data: 'status', name: 'status', className: 'text-center'},
                 {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
             ],
             "oLanguage": {
