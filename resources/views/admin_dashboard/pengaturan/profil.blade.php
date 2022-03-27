@@ -1,220 +1,172 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Biodata | Kegiatan Pelibatan Masyarakat
+    Profil | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    <div class="row layout-top-spacing">
-        
-        <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-            <div class="widget-content-area br-4">
-                <form>
-                    <div class="form-row mb-4">
-                        <div class="col">
+    <div class="row d-flex justify-content-center layout-top-spacing">
+
+        <div class="col-lg-7 layout-spacing">
+            <div class="card">
+                <div class="card-body shadow-sm rounded-lg">
+                    <h5 class="card-title">Data Profil</h5>
+                    <hr>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="foto">Foto Diri</label><br>
+                            <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
+                            <input type="file" name="foto" id="foto">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status Verifikasi</label>
+                            <P>Sudah Verifikasi <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></P>
+                            <p>Belum Verifikasi <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e7515a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></p>
+                        </div>
+                        <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
-                            <input type="text" class="form-control" placeholder="Nama Lengkap" value="{{ $peserta->nama }}">
+                            <input id="nama" type="text" name="nama" class="form-control" placeholder="John Doe" readonly required>
+                            <small id="namaHelp" class="form-text text-muted">Nama Anda sudah terverifikasi dan tidak dapat diubah. Jika Anda merasa terdapat kesalahan dan ingin memperbaikinya, silakan hubungi kami dengan menyertakan dokumen identitas asli.</small>
                         </div>
-                        <div class="col">
-                            <label for="umur">Umur</label>
-                            <input type="text" class="form-control" placeholder="Umur" value="{{ $peserta->umur }}">
+                        <div class="form-group">
+                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="jenis_kelamin1" name="jenis_kelamin" class="custom-control-input">
+                                        <label class="custom-control-label" for="jenis_kelamin1">Laki-laki</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="jenis_kelamin2" name="jenis_kelamin" class="custom-control-input">
+                                        <label class="custom-control-label" for="jenis_kelamin2">Perempuan</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <label for="nomor_telepon">No. HP</label>
-                            <input type="text" class="form-control" placeholder="No. HP" value="{{ $peserta->nomor_telepon }}">
+                        <div class="form-group">
+                            <label for="tempat_lahir">Tempat Lahir</label>
+                            <select class="form-control select2">
+                                <option value="" hidden>Pilih tempat lahir</option>
+                                <option value="Kabupaten Indramayu">Kabupaten Indramayu</option>
+                                <option value="Kota Cirebon">Kota Cirebon</option>
+                                <option value="Kabupaten Cirebon">Kabupaten Cirebon</option>
+                                <option value="Kabupaten Majalengka">Kabupaten Majalengka</option>
+                                <option value="Kabupaten Kuningan">Kabupaten Kuningan</option>
+                            </select>
                         </div>
-                        <div class="col">
-                            <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
-                            <select class="form-control selectpicker" name="pendidikan_terakhir">
-                                <option value="PAUD/TK">PAUD/TK</option>
+                        <div class="form-group">
+                            <label for="tanggal_lahir">Tanggal Lahir</label>
+                            <input id="tanggal_lahir" value="2019-09-04" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Select Date..">
+                        </div>
+                        <div class="form-group">
+                            <label for="nomor_telepon">Nomor Telepon</label>
+                            <input id="nomor_telepon" type="text" name="nomor_telepon" class="form-control" onkeypress="return isNumber(event)" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="provinsi">Provinsi</label>
+                            <select class="form-control selectpicker">
+                                <option value="Banten">Banten</option>
+                                <option value="Jawa Barat">Jawa Barat</option>
+                                <option value="Jawa Tengah">Jawa Tengah</option>
+                                <option value="DI Yogyakarta">DI Yogyakarta</option>
+                                <option value="Jawa Timur">Jawa Timur</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kabupaten_kota">Kabupaten/Kota</label>
+                            <select class="form-control selectpicker">
+                                <option value="Kabupaten Indramayu">Kabupaten Indramayu</option>
+                                <option value="Kota Cirebon">Kota Cirebon</option>
+                                <option value="Kabupaten Cirebon">Kabupaten Cirebon</option>
+                                <option value="Kabupaten Majalengka">Kabupaten Majalengka</option>
+                                <option value="Kabupaten Kuningan">Kabupaten Kuningan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kecamatan">Kecamatan</label>
+                            <select class="form-control selectpicker">
+                                <option value="Indramayu">Indramayu</option>
+                                <option value="Sindang">Sindang</option>
+                                <option value="Jatibarang">Jatibarang</option>
+                                <option value="Balongan">Balongan</option>
+                                <option value="Lohbener">Lohbener</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="desa_kelurahan">Desa/Kelurahan</label>
+                            <select class="form-control selectpicker">
+                                <option value="Pekandangan">Pekandangan</option>
+                                <option value="Pekandangan Jaya">Pekandangan Jaya</option>
+                                <option value="Kepandean">Kepandean</option>
+                                <option value="Bojong Sari">Bojong Sari</option>
+                                <option value="Kenanga">Kenanga</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea class="form-control" id="alamat" name="alamat" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipe_anggota">Tipe Anggota</label>
+                            <select class="form-control selectpicker">
+                                <option value="TK/PAUD">TK/PAUD</option>
                                 <option value="SD/MI">SD/MI</option>
                                 <option value="SMP/MTS">SMP/MTS</option>
                                 <option value="SMA/SMK/MA">SMA/SMK/MA</option>
                                 <option value="Mahasiswa">Mahasiswa</option>
                                 <option value="Masyarakat Umum">Masyarakat Umum</option>
+                                <option value="ASN/TNI/POLRI">ASN/TNI/POLRI</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <label for="provinsi">Provinsi</label>
-                            @php
-                                $provinsi = new App\Http\Controllers\DaerahController;
-                                $provinsi= $provinsi->provinces();
-                            @endphp
-                            <select class="form-control selectpicker" name="provinsi" id="provinsi">
-                                <option value="Pilih Kabupaten/Kota" selected hidden>Pilih Menu</option>
-                                @foreach ($provinsi as $provinsi)
-                                    <option value="{{ $provinsi->id ?? '' }}">{{ $provinsi->name ?? '' }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="kabupaten_kota">Kabupaten/Kota</label>
-                            <select class="form-control selectpicker" name="kabupaten_kota" id="kabupaten_kota">
-                                <option value="Pilih Kabupaten/Kota" hidden>Pilih Menu</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <label for="kecamatan">Kecamatan</label>
-                            <select class="form-control selectpicker" name="kecamatan" id="kecamatan">
-                                <option value="Pilih Kecamatan" hidden>Pilih Menu</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                            <label for="desa_kelurahan">Desa/Kelurahan</label>
-                            <select class="form-control selectpicker" name="desa_kelurahan" id="desa_kelurahan">
-                                <option value="Pilih Desa/Kelurahan">Pilih Menu</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
-                    </div>
-                    <button class="mb-4 btn btn-primary" type="submit">Simpan</button>
-                </form>
+                        <button type="submit" class="btn btn-primary mt-3">Simpan Email</button>
+                    </form>
+                </div>
             </div>
         </div>
-
     </div>
 @endsection
 
 @push('styles')
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/select2/select2.min.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
 @endpush
 
 @push('scripts')
-{{-- <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script> --}}
-<script>
-    // $(".selectpicker").selectpicker({
-    //     "title": "Pilih Menu"        
-    // }).selectpicker("render");
-</script>
-{{-- <script>
-    $(document).ready(function() {
-        $('#provinsi').on('change', function() {
-            var provinsiID = $(this).val();
-            if(provinsiID) {
-                $.ajax({
-                    url: 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi='+provinsiID,
-                    type: "GET",
-                    data : {"_token":"{{ csrf_token() }}"},
-                    dataType: "json",
-                    success:function(data)
-                    {
-                        if(data){
-                            $('#kabupaten_kota').empty();
-                            $('#kecamatan').empty();
-                            $('#desa_kelurahan').empty();
-                            $('#kabupaten_kota').append('<option hidden>Pilih Kabupaten/Kota</option>'); 
-                            $('#kecamatan').append('<option hidden>Pilih Kecamatan</option>'); 
-                            $('#desa_kelurahan').append('<option hidden>Pilih Desa/Kelurahan</option>'); 
-                            $.each(data.kota_kabupaten, function(key, item){
-                                $('select[name="kabupaten_kota"]').append('<option value="'+ item.id +'">' + item.nama + '</option>');
-                            });
-                            // $('.selectpicker').selectpicker('refresh');
-                        }else{
-                            $('#kabupaten_kota').empty();
-                            $('#kecamatan').empty();
-                            $('#desa_kelurahan').empty();
-                            // $('.selectpicker').selectpicker('refresh');
-                        }
-                    }
-                });
-            }else{
-                $('#kabupaten_kota').empty();
-                $('#kecamatan').empty();
-                $('#desa_kelurahan').empty();
-                // $('.selectpicker').selectpicker('refresh');
+    <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script>
+        foto.onchange = evt => {
+            const [file] = foto.files
+            if (file) {
+                preview.src = URL.createObjectURL(file)
             }
+        }
+    </script>
+    <script>
+        var ss = $(".select2").select2({
+            placeholder: "Pilih tempat lahir",
         });
-        $('#kabupaten_kota').on('change', function() {
-            var kabupatenKotaID = $(this).val();
-            if(kabupatenKotaID) {
-                $.ajax({
-                    url: 'https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota='+kabupatenKotaID,
-                    type: "GET",
-                    data : {"_token":"{{ csrf_token() }}"},
-                    dataType: "json",
-                    success:function(data)
-                    {
-                        if(data){
-                            $('#kecamatan').empty();
-                            $('#desa_kelurahan').empty(); 
-                            $('#kecamatan').append('<option hidden>Pilih Kecamatan</option>'); 
-                            $('#desa_kelurahan').append('<option hidden>Pilih Desa/Kelurahan</option>');
-                            $.each(data.kecamatan, function(key, item){
-                                $('select[name="kecamatan"]').append('<option value="'+ item.id +'">' + item.nama + '</option>');
-                            });
-                        }else{
-                            $('#kecamatan').empty();
-                        }
-                    }
-                });
-            }else{
-                $('#kecamatan').empty();
+    </script>
+    <script>
+        var f1 = flatpickr(document.getElementById('tanggal_lahir'), {
+            dateFormat: "d-m-Y"
+        });
+    </script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
             }
-        });
-        $('#kecamatan').on('change', function() {
-            var kecamatanID = $(this).val();
-            if(kecamatanID) {
-                $.ajax({
-                    url: 'https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan='+kecamatanID,
-                    type: "GET",
-                    data : {"_token":"{{ csrf_token() }}"},
-                    dataType: "json",
-                    success:function(data)
-                    {
-                        if(data){
-                            $('#desa_kelurahan').empty();
-                            $('#desa_kelurahan').append('<option hidden>Pilih Desa/Kelurahan</option>');
-                            $.each(data.kelurahan, function(key, item){
-                                $('select[name="desa_kelurahan"]').append('<option value="'+ item.id +'">' + item.nama + '</option>');
-                            });
-                        }else{
-                            $('#desa_kelurahan').empty();
-                        }
-                    }
-                });
-            }else{
-                $('#desa_kelurahan').empty();
-            }
-        });
-    });
-</script> --}}
-<script>
-    function onChangeSelect(url, id, name) {
-        // send ajax request to get the cities of the selected province and append to the select tag
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function (data) {
-                $('#' + name).empty();
-                $('#' + name).append('<option hidden>Pilih Menu</option>');
-
-                $.each(data, function (key, value) {
-                    $('#' + name).append('<option value="' + key + '">' + value + '</option>');
-                });
-            }
-        });
-    }
-    $(function () {
-        $('#provinsi').on('change', function () {
-            onChangeSelect('{{ route("cities") }}', $(this).val(), 'kabupaten_kota');
-        });
-        $('#kabupaten_kota').on('change', function () {
-            onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
-        })
-        $('#kecamatan').on('change', function () {
-            onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa_kelurahan');
-        })
-    });
-</script>
+            return true;
+        }
+    </script>
+    <script>
+        $(".selectpicker").selectpicker({
+            "title": "Pilih Menu"        
+        }).selectpicker("render");
+    </script>
 @endpush

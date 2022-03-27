@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Dashboard | Kegiatan Pelibatan Masyarakat
+    Akun | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-lg-7 layout-spacing">
             <div class="card">
                 <div class="card-body shadow-sm rounded-lg">
-                    <h5 class="card-title">Input Email</h5>
+                    <h5 class="card-title">Ganti Email</h5>
                     <hr>
                     <form method="post">
                         <div class="form-group">
@@ -25,7 +25,7 @@
         <div class="col-lg-7 layout-spacing">
             <div class="card">
                 <div class="card-body shadow-sm rounded-lg">
-                    <h5 class="card-title">Input Password</h5>
+                    <h5 class="card-title">Ganti Password</h5>
                     <hr>
                     <form method="post">
                         <div class="form-group">
