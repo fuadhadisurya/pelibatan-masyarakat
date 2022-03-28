@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
                 // 'desa_kelurahan' => '',
                 // 'alamat' => '',
                 // 'tipe_anggota' => '',
-                'status' => 'Sudah verifikasi',
+                'status' => 'Sudah Verifikasi',
                 'remember_token' => Str::random(60),
             ],
             [
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
                 // 'desa_kelurahan' => '',
                 // 'alamat' => '',
                 // 'tipe_anggota' => '',
-                'status' => 'Sudah verifikasi',
+                'status' => 'Sudah Verifikasi',
                 'remember_token' => Str::random(60),
             ],
             [
@@ -74,7 +74,7 @@ class UserSeeder extends Seeder
                 // 'desa_kelurahan' => '',
                 // 'alamat' => '',
                 // 'tipe_anggota' => '',
-                'status' => 'Belum verifikasi',
+                'status' => 'Belum Verifikasi',
                 'remember_token' => Str::random(60),
             ],
         ]);

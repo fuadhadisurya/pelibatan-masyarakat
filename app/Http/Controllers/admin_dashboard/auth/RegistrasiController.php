@@ -27,6 +27,6 @@ class RegistrasiController extends Controller
         
         User::create($data);
         
-        return redirect()->route('login')->with('status', 'Akun Berhasil Dibuat');
+        return redirect()->route('login')->with('success', 'Akun Berhasil Dibuat');
     }
 }

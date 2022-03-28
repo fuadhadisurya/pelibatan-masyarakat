@@ -25,4 +25,8 @@ class DaerahController extends Controller
     {
         return \Indonesia::findDistrict($request->id, ['villages'])->villages->pluck('name', 'id');
     }
+
+    public function allCities(){
+        return \Indonesia::allCities();
+    }
 }

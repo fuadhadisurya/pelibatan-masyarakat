@@ -9,15 +9,15 @@
         <div class="col-lg-7 layout-spacing">
             <div class="card">
                 <div class="card-body shadow-sm rounded-lg">
-                    <h5 class="card-title">Ganti Email</h5>
+                    <h5 class="card-title">Ganti Username</h5>
                     <hr>
                     <form method="post">
                         <div class="form-group">
-                            <label for="email">Email Baru</label>
-                            <input id="email" type="email" name="email" placeholder="email@domain.com" class="form-control" required>
-                            <small id="emailHelp" class="form-text text-muted">Email anda akan berubah ketika menekan tombol simpan email.</small>
+                            <label for="username">Username Baru</label>
+                            <input id="username" type="text" name="username" class="form-control" value="{{ $peserta->username }}" required>
+                            <small id="usernameHelp" class="form-text text-muted">Username anda akan berubah ketika menekan tombol Simpan Username.</small>
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan Email</button>
+                        <button type="submit" class="btn btn-primary">Simpan Username</button>
                     </form>
                 </div>
             </div>

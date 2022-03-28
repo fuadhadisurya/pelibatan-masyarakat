@@ -71,7 +71,7 @@ class TutorController extends Controller
             'email' => 'required|email|unique:users,email',
             'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon',
             'username' => 'required|alpha_dash|unique:users,username',
-            'password' => 'required|min:5',
+            'password' => 'required|min:6',
             'konfirmasi_password' => 'required|same:password',
         ]);
         
@@ -122,7 +122,7 @@ class TutorController extends Controller
                 'email' => 'required|email|unique:users,email,' . $id,
                 'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
                 'username' => 'required|alpha_dash|unique:users,username,' . $id,
-                'password' => 'required|min:5',
+                'password' => 'required|min:6',
                 'konfirmasi_password' => 'required|same:password',
             ]);
         } else {
