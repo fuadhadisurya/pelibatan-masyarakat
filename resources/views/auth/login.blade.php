@@ -36,7 +36,7 @@
                                     {{ session('status') }}
                                 </div>
                             </div>
-                            @if(session('success'))
+                        @elseif(session('success'))
                             <div class="alert alert-success alert-dismissible show fade">
                                 <div class="alert-body">
                                     <button class="close" data-dismiss="alert">
@@ -45,10 +45,6 @@
                                     {{ session('success') }}
                                 </div>
                             </div>
-                            {{-- <div class="alert alert-warning mb-4" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
-                                <strong>Primary!</strong> Lorem Ipsum is simply dummy text of the printing.
-                            </div> --}}
                         @endif
                         <form class="text-left" action="{{ route('postlogin') }}" method="POST">
                             @csrf

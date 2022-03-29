@@ -9,7 +9,7 @@ use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaD
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelasController as TutorKelasController;
 use App\Http\Controllers\DaerahController;
-use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\tutor\DataPesertaController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,13 +52,13 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
-    Route::get('/profil', [PenggunaController::class, 'profil']);
-    Route::post('/profil', [PenggunaController::class, 'index']);
-    Route::get('/akun', [PenggunaController::class, 'akun']);
-    Route::post('/akun', [PenggunaController::class, 'index']);
+    Route::get('/profil', [PengaturanController::class, 'profil']);
+    Route::get('/akun', [PengaturanController::class, 'akun']);
+    Route::post('/akun', [PengaturanController::class, 'index']);
     Route::resource('kelas', PesertaKelasController::class);
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){
-
+    Route::post('/profil', [PengaturanController::class, 'update_profil'])->name('profil.update');
+    Route::put('/akun', [PengaturanController::class, 'update_akun'])->name('akun.update');
 });

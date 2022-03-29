@@ -11,18 +11,22 @@
                 <div class="card-body shadow-sm rounded-lg">
                     <h5 class="card-title">Data Profil</h5>
                     <hr>
-                    <form method="post">
+                    <form method="post" action="{{ route('profil.update') }}" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="foto">Foto Diri</label><br>
-                            <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
+                            @if(Auth::user()->tempat_lahir)
+                                <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
+                            @else
+                                <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
+                            @endif
                             <input type="file" name="foto" id="foto">
                         </div>
                         <div class="form-group">
                             <label for="status">Status Verifikasi</label>
                             @if ($peserta->status == "Sudah Verifikasi")
-                                <P>Sudah Verifikasi <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></P>
+                                <P><strong>Sudah Verifikasi</strong> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></P>
                             @else
-                                <p>Belum Verifikasi <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e7515a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></p>
+                                <p><strong>Belum Verifikasi</strong> <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e7515a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></p>
                             @endif
                         </div>
                         <div class="form-group">
@@ -35,11 +39,11 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="jenis_kelamin1" name="jenis_kelamin" class="custom-control-input">
+                                        <input type="radio" id="jenis_kelamin1" name="jenis_kelamin" class="custom-control-input" {{ (Auth::user()->jenis_kelamin == 'Laki-laki') ? 'checked': '' }}>
                                         <label class="custom-control-label" for="jenis_kelamin1">Laki-laki</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="jenis_kelamin2" name="jenis_kelamin" class="custom-control-input">
+                                        <input type="radio" id="jenis_kelamin2" name="jenis_kelamin" class="custom-control-input" {{ (Auth::user()->jenis_kelamin == 'Perempuan') ? 'checked': '' }}>
                                         <label class="custom-control-label" for="jenis_kelamin2">Perempuan</label>
                                     </div>
                                 </div>
@@ -52,18 +56,19 @@
                                 $kabupaten_kota = $kabupaten_kota->allCities();
                             @endphp
                             <select class="form-control select2">
+                                <option value="">Pilih Menu</option>
                                 @foreach ($kabupaten_kota as $kabupaten_kota)
-                                        <option value="{{ $kabupaten_kota->id ?? '' }}">{{ $kabupaten_kota->name ?? '' }}</option>
+                                    <option value="{{ $kabupaten_kota->id ?? '' }}" {{ ($kabupaten_kota->code == Auth::user()->tempat_lahir) ? 'selected': '' }}>{{ $kabupaten_kota->name ?? '' }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
-                            <input id="tanggal_lahir" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Select Date..">
+                            <input id="tanggal_lahir" class="form-control flatpickr flatpickr-input active" type="text" value="{{ Auth::user()->tanggal_lahir }}" placeholder="Select Date..">
                         </div>
                         <div class="form-group">
                             <label for="nomor_telepon">Nomor Telepon</label>
-                            <input id="nomor_telepon" type="text" name="nomor_telepon" class="form-control" onkeypress="return isNumber(event)" {{ $peserta->nomor_telepon }} required>
+                            <input id="nomor_telepon" type="text" name="nomor_telepon" class="form-control" onkeypress="return isNumber(event)" value="{{ $peserta->nomor_telepon }}" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -72,32 +77,41 @@
                         <div class="form-group">
                             <label for="provinsi">Provinsi</label>
                             @php
-                                $provinsi = new App\Http\Controllers\DaerahController;
-                                $provinsi= $provinsi->provinces();
+                                $daerah = new App\Http\Controllers\DaerahController;
+                                $provinsi = $daerah->provinces();
+                                $kabupaten_kota = Indonesia::findProvince(Auth::user()->provinsi, ['cities'])->cities;
+                                $kecamatan = Indonesia::findCity(Auth::user()->kabupaten_kota, ['districts'])->districts;
+                                $desa_kelurahan = Indonesia::findDistrict(Auth::user()->kecamatan, ['villages'])->villages;
                             @endphp
                             <select class="form-control" name="provinsi" id="provinsi">
                                 <option value="" hidden>Pilih Menu</option>
                                 @foreach ($provinsi as $provinsi)
-                                    <option value="{{ $provinsi->id ?? '' }}">{{ $provinsi->name ?? '' }}</option>
+                                    <option value="{{ $provinsi->id }}" {{ Auth::user()->provinsi == $provinsi->id ? 'selected' : ''}}>{{ $provinsi->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="kabupaten_kota">Kabupaten/Kota</label>
                             <select class="form-control" name="kabupaten_kota" id="kabupaten_kota">
-                                <option value="" hidden>Pilih Menu</option>
+                                @foreach ($kabupaten_kota as $kabupaten_kota)
+                                    <option value="{{ $kabupaten_kota->id }}" {{ Auth::user()->kabupaten_kota == $kabupaten_kota->id ? 'selected' : ''}}>{{ $kabupaten_kota->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="kecamatan">Kecamatan</label>
                             <select class="form-control" name="kecamatan" id="kecamatan">
-                                <option value="" hidden>Pilih Menu</option>
+                                @foreach ($kecamatan as $kecamatan)
+                                    <option value="{{ $kecamatan->id }}" {{ Auth::user()->kecamatan == $kecamatan->id ? 'selected' : ''}}>{{ $kecamatan->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="desa_kelurahan">Desa/Kelurahan</label>
                             <select class="form-control" name="desa_kelurahan" id="desa_kelurahan">
-                                <option value="" hidden>Pilih Menu</option>
+                                @foreach ($desa_kelurahan as $desa_kelurahan)
+                                    <option value="{{ $desa_kelurahan->id }}" {{ Auth::user()->desa_kelurahan == $desa_kelurahan->id ? 'selected' : ''}}>{{ $desa_kelurahan->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -107,21 +121,24 @@
                         <div class="form-group">
                             <label for="tipe_anggota">Tipe Anggota</label>
                             <select class="form-control selectpicker">
-                                <option value="TK/PAUD">TK/PAUD</option>
-                                <option value="SD/MI">SD/MI</option>
-                                <option value="SMP/MTS">SMP/MTS</option>
-                                <option value="SMA/SMK/MA">SMA/SMK/MA</option>
-                                <option value="Mahasiswa">Mahasiswa</option>
-                                <option value="Masyarakat Umum">Masyarakat Umum</option>
-                                <option value="ASN/TNI/POLRI">ASN/TNI/POLRI</option>
+                                <option value="TK/PAUD" {{ (Auth::user()->tipe_anggota == 'TK/PAUD') ? 'selected': '' }}>TK/PAUD</option>
+                                <option value="SD/MI" {{ (Auth::user()->tipe_anggota == 'SD/MI') ? 'selected': '' }}>SD/MI</option>
+                                <option value="SMP/MTS" {{ (Auth::user()->tipe_anggota == 'SMP/MTS') ? 'selected': '' }}>SMP/MTS</option>
+                                <option value="SMA/SMK/MA" {{ (Auth::user()->tipe_anggota == 'SMA/SMK/MA') ? 'selected': '' }}>SMA/SMK/MA</option>
+                                <option value="Mahasiswa" {{ (Auth::user()->tipe_anggota == 'Mahasiswa') ? 'selected': '' }}>Mahasiswa</option>
+                                <option value="Masyarakat Umum" {{ (Auth::user()->tipe_anggota == 'Masyarakat Umum') ? 'selected': '' }}>Masyarakat Umum</option>
+                                <option value="ASN/TNI/POLRI" {{ (Auth::user()->tipe_anggota == 'ASN/TNI/POLRI') ? 'selected': '' }}>ASN/TNI/POLRI</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Simpan Email</button>
+                        <button type="submit" class="btn btn-primary mt-3">Simpan Profil</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    {{-- @foreach (\Indonesia::search('321215')->allVillages() as $item)
+    {{ $item->name }}
+    @endforeach --}}
 @endsection
 
 @push('styles')
@@ -150,7 +167,7 @@
     </script>
     <script>
         var f1 = flatpickr(document.getElementById('tanggal_lahir'), {
-            dateFormat: "d-m-Y"
+            // dateFormat: "d-m-Y"
         });
     </script>
     <script>
@@ -163,11 +180,11 @@
             return true;
         }
     </script>
-    {{-- <script>
+    <script>
         $(".selectpicker").selectpicker({
             "title": "Pilih Menu"        
         }).selectpicker("render");
-    </script> --}}
+    </script>
     <script>
         function onChangeSelect(url, id, name) {
             // send ajax request to get the cities of the selected province and append to the select tag
