@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin_dashboard\peserta;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -14,7 +16,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        return view('admin_dashboard.peserta.kelas.index');
+        $kelas = Kelas::where('status', '=', 'Pendaftaran')->get();
+        return view('admin_dashboard.peserta.kelas.index', ['kelas' => $kelas]);
     }
 
     /**
@@ -46,7 +49,8 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        return view('admin_dashboard.peserta.kelas.show');
+        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($id);
+        return view('admin_dashboard.peserta.kelas.show', ['kelas' => $kelas]);
     }
 
     /**

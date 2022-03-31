@@ -4,43 +4,45 @@
 @endsection
 
 @section('content')
-<div class="row d-flex justify-content-center layout-top-spacing">
-    <div class="col-lg-7">
-        @if(session('status'))
-            <div class="alert alert-success alert-dismissible show fade">
-                <div class="alert-body">
-                    <button class="close" data-dismiss="alert">
-                        <span>&times;</span>
-                    </button>
-                    {{ session('status') }}
-                </div>
+    @if (session('status') == true || session('error') == true || $errors->any() == true)
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-7">
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            {{ session('status') }}
+                        </div>
+                    </div>
+                @elseif(session('error'))
+                    <div class="alert alert-success alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
             </div>
-        @elseif(session('error'))
-            <div class="alert alert-success alert-dismissible show fade">
-                <div class="alert-body">
-                    <button class="close" data-dismiss="alert">
-                        <span>&times;</span>
-                    </button>
-                    {{ session('error') }}
-                </div>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible show fade">
-                <div class="alert-body">
-                    <button class="close" data-dismiss="alert">
-                        <span>&times;</span>
-                    </button>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif
-    </div>
-</div>
+        </div>
+    @endif
     <div class="row d-flex justify-content-center layout-top-spacing">
         <div class="col-lg-7 layout-spacing">
             <div class="card">

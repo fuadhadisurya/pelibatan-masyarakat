@@ -12,10 +12,18 @@
                 <div class="card component-card_9">
                     <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                     <div class="card-body">
-                        <p class="meta-date">25 Jan 2020 - 25 Februari 2020</p>
-                        <h5 class="nama-kelas">Nama Kelas</h5>
+                        <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
+                        <h5 class="nama-kelas">{{ $kelas->nama_kelas }}</h5>
                         <hr>
-                        <div class="row">
+                        {{-- <div class="meta-info"> --}}
+                            <div class="meta-user">
+                                <div class="avatar avatar-sm">
+                                    <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
+                                </div>
+                                <div class="user-name">{{ $kelas->tutor->nama }}</div>
+                            </div>
+                        {{-- </div> --}}
+                        {{-- <div class="row">
                             <div class="col-2 mr-2">
                                 <img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="56" height="56" class="rounded-circle" />
                             </div>
@@ -23,7 +31,7 @@
                                 <h5 class="card-user_name">Luke Ivory</h5>
                                 <p class="card-user_occupation">Web Programmer</p>
                             </div>
-                        </div>
+                        </div> --}}
                         <hr>
                         <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
                             Daftar Sekarang
@@ -47,52 +55,7 @@
             <div class="layout-spacing ">
                 <div class="widget-content widget-content-area">
                     <h3 class="">Deskripsi</h3>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa dolores fugiat repellendus veniam rerum hic beatae quaerat eveniet et ex architecto magni delectus commodi voluptatibus ad, aut numquam minima maiores!</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quaerat mollitia nisi, pariatur minus et, provident itaque blanditiis officia perferendis, sint magni eaque dolores optio consequuntur ab magnam saepe ea.</p>
-                    <div class="bio-skill-box">
-                        <div class="row">
-                            <div class="col-12 col-xl-6 col-lg-12 mb-xl-5 mb-5 ">
-                                <div class="d-flex b-skills">
-                                    <div>
-                                    </div>
-                                    <div class="">
-                                        <h5>Sass Applications</h5>
-                                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse eu fugiat nulla pariatur.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-6 col-lg-12 mb-xl-5 mb-5 ">
-                                <div class="d-flex b-skills">
-                                    <div>
-                                    </div>
-                                    <div class="">
-                                        <h5>Github Countributer</h5>
-                                        <p>Ut enim ad minim veniam, quis nostrud exercitation aliquip ex ea commodo consequat.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-6 col-lg-12 mb-xl-0 mb-5 ">
-                                <div class="d-flex b-skills">
-                                    <div>
-                                    </div>
-                                    <div class="">
-                                        <h5>Photograhpy</h5>
-                                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia anim id est laborum.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-6 col-lg-12 mb-xl-0 mb-0 ">
-                                <div class="d-flex b-skills">
-                                    <div>
-                                    </div>
-                                    <div class="">
-                                        <h5>Mobile Apps</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do et dolore magna aliqua.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <p>{!! $kelas->deskripsi !!}</p>
                 </div>                                
             </div>
         </div>

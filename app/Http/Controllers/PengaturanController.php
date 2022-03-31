@@ -15,32 +15,51 @@ class PengaturanController extends Controller
     }
 
     public function update_profil(Request $request){
+        // dd($request);
+
         $id = Auth::user()->id;
-        if ($request->password) {
+        if ($request->foto) {
             $this->validate($request, [
+                // 'foto' => ,
                 'nama' => 'required',
-                'email' => 'required|email|unique:users,email,' . $id,
+                'jenis_kelamin' => 'required',
+                'tempat_lahir' => 'required',
+                'tanggal_lahir' => 'required',
                 'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
-                'username' => 'required|alpha_dash|unique:users,username,' . $id,
-                'password' => 'required|min:6',
-                'konfirmasi_password' => 'required|same:password',
+                'email' => 'required|email|unique:users,email,' . $id,
+                'tipe_anggota' => 'required',
+                'provinsi' => 'required',
+                'kabupaten_kota' => 'required',
+                'kecamatan' => 'required',
+                'desa_kelurahan' => 'required',
             ]);
         } else {
             $this->validate($request, [
                 'nama' => 'required',
-                'email' => 'required|email|unique:users,email,' . $id,
+                'jenis_kelamin' => 'required',
+                'tempat_lahir' => 'required',
+                'tanggal_lahir' => 'required',
                 'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
-                'username' => 'required|alpha_dash|unique:users,username,' . $id,
+                'email' => 'required|email|unique:users,email,' . $id,
+                'tipe_anggota' => 'required',
+                'provinsi' => 'required',
+                'kabupaten_kota' => 'required',
+                'kecamatan' => 'required',
+                'desa_kelurahan' => 'required',
             ]);
         }
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
-
+        $data['status'] = "Sudah Verifikasi";
         $tutor = User::findOrFail($id);
-
         $tutor->update($data);
 
-        return redirect()->route('tutor.index')->with('status', 'Tutor berhasil di Perbarui');
+        if (Auth::user()->level == "admin") {
+            return redirect('/admin/profil')->with('status', 'Profil Berhasil diperbarui');
+        } elseif (Auth::user()->level == "tutor") {
+            return redirect('/tutor/profil')->with('status', 'Profil berhasil diperbarui');
+        } else {
+            return redirect('/peserta/profil')->with('status', 'Profil berhasil diperbarui');
+        }
     }
 
     public function akun(){
@@ -59,7 +78,13 @@ class PengaturanController extends Controller
             $user = User::findOrFail($id);
             $user->update($data);
 
-            return redirect('/peserta/akun')->with('status', 'Username berhasil disimpan');
+            if (Auth::user()->level == "admin") {
+                return redirect('/admin/akun')->with('status', 'Username berhasil disimpan');
+            } elseif (Auth::user()->level == "tutor") {
+                return redirect('/tutor/akun')->with('status', 'Username berhasil disimpan');
+            } else {
+                return redirect('/peserta/akun')->with('status', 'Username berhasil disimpan');
+            }
         } elseif($request->password) {
             $this->validate($request, [
                 'password_lama' => 'required',
@@ -73,13 +98,30 @@ class PengaturanController extends Controller
                 $data['password'] = bcrypt($request->password);
                 
                 $user->update($data);
-                return redirect('/peserta/akun')->with('status', 'Password berhasil disimpan');
+                if (Auth::user()->level == "admin") {
+                    return redirect('/admin/akun')->with('status', 'Password berhasil disimpan');
+                } elseif (Auth::user()->level == "tutor") {
+                    return redirect('/tutor/akun')->with('status', 'Password berhasil disimpan');
+                } else {
+                    return redirect('/peserta/akun')->with('status', 'Password berhasil disimpan');
+                }
             } else {
-                return redirect('/peserta/akun')->with('error', 'Password lama salah');
-                
+                if (Auth::user()->level == "admin") {
+                    return redirect('/admin/akun')->with('error', 'Password lama salah');
+                } elseif (Auth::user()->level == "tutor") {
+                    return redirect('/tutor/akun')->with('error', 'Password lama salah');
+                } else {
+                    return redirect('/peserta/akun')->with('error', 'Password lama salah');
+                }
             }
         } else {
-            return redirect('/peserta/akun')->with('status', 'Proses pengubahan tidak berhasil');
+            if (Auth::user()->level == "admin") {
+                return redirect('/admin/akun')->with('status', 'Proses pengubahan tidak berhasil');
+            } elseif (Auth::user()->level == "tutor") {
+                return redirect('/tutor/akun')->with('status', 'Proses pengubahan tidak berhasil');
+            } else {
+                return redirect('/peserta/akun')->with('status', 'Proses pengubahan tidak berhasil');
+            }
         }
     }
 }

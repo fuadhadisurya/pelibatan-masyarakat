@@ -78,86 +78,28 @@
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <a href="{{ url('peserta/kelas/1') }}">
-                                <div class="card component-card_9 mb-3">
-                                    <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
-                                    <div class="card-body">
-                                        <p class="meta-date">25 Jan 2020</p>
-                                        <h5 class="card-title">How to Start a Blog in 5 Easy Steps.</h5>
-                                        <p class="card-text">Vestibulum vestibulum tortor ut eros tincidunt, ut rutrum elit volutpat.</p>
-                                        <div class="meta-info">
-                                            <div class="meta-user">
-                                                <div class="avatar avatar-sm">
-                                                    <span class="avatar-title rounded-circle">AG</span>
+                        @foreach ($kelas as $kelas)
+                            <div class="col-sm-6">
+                                <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
+                                    <div class="card component-card_9 mb-3">
+                                        <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
+                                        <div class="card-body">
+                                            <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
+                                            <h5 class="card-title">{{ $kelas->nama_kelas }}</h5>
+                                            <p class="card-text">{!! Str::limit($kelas->deskripsi, 150, $end='...') !!}</p>
+                                            <div class="meta-info">
+                                                <div class="meta-user">
+                                                    <div class="avatar avatar-sm">
+                                                        <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
+                                                    </div>
+                                                    <div class="user-name">{{ $kelas->tutor->nama }}</div>
                                                 </div>
-                                                <div class="user-name">Luke Ivory</div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="{{ url('peserta/kelas/1') }}">
-                                <div class="card component-card_9 mb-3">
-                                    <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
-                                    <div class="card-body">
-                                        <p class="meta-date">25 Jan 2020</p>
-                                        <h5 class="card-title">How to Start a Blog in 5 Easy Steps.</h5>
-                                        <p class="card-text">Vestibulum vestibulum tortor ut eros tincidunt, ut rutrum elit volutpat.</p>
-                                        <div class="meta-info">
-                                            <div class="meta-user">
-                                                <div class="avatar avatar-sm">
-                                                    <span class="avatar-title rounded-circle">AG</span>
-                                                </div>
-                                                <div class="user-name">Luke Ivory</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="{{ url('peserta/kelas/1') }}">
-                                <div class="card component-card_9 mb-3">
-                                    <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
-                                    <div class="card-body">
-                                        <p class="meta-date">25 Jan 2020</p>
-                                        <h5 class="card-title">How to Start a Blog in 5 Easy Steps.</h5>
-                                        <p class="card-text">Vestibulum vestibulum tortor ut eros tincidunt, ut rutrum elit volutpat.</p>
-                                        <div class="meta-info">
-                                            <div class="meta-user">
-                                                <div class="avatar avatar-sm">
-                                                    <span class="avatar-title rounded-circle">AG</span>
-                                                </div>
-                                                <div class="user-name">Luke Ivory</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="{{ url('peserta/kelas/1') }}">
-                                <div class="card component-card_9 mb-3">
-                                    <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
-                                    <div class="card-body">
-                                        <p class="meta-date">25 Jan 2020</p>
-                                        <h5 class="card-title">How to Start a Blog in 5 Easy Steps.</h5>
-                                        <p class="card-text">Vestibulum vestibulum tortor ut eros tincidunt, ut rutrum elit volutpat.</p>
-                                        <div class="meta-info">
-                                            <div class="meta-user">
-                                                <div class="avatar avatar-sm">
-                                                    <span class="avatar-title rounded-circle">AG</span>
-                                                </div>
-                                                <div class="user-name">Luke Ivory</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -169,6 +111,9 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_dashboard/plugins/font-icons/fontawesome/css/fontawesome.css') }}">
+    <link href="{{asset('admin_dashboard/assets/css/components/cards/card.css')}}" rel="stylesheet" type="text/css" />
+    <link href="assets/css/elements/avatar.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
 @endpush
 
 @push('scripts')

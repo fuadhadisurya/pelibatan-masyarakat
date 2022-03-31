@@ -54,11 +54,10 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
     Route::get('/akun', [PengaturanController::class, 'akun']);
-    Route::post('/akun', [PengaturanController::class, 'index']);
     Route::resource('kelas', PesertaKelasController::class);
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){
-    Route::post('/profil', [PengaturanController::class, 'update_profil'])->name('profil.update');
+    Route::put('/profil', [PengaturanController::class, 'update_profil'])->name('profil.update');
     Route::put('/akun', [PengaturanController::class, 'update_akun'])->name('akun.update');
 });

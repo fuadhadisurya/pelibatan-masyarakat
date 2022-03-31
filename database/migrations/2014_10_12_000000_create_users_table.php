@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('kabupaten_kota')->nullable();
             $table->string('kecamatan')->nullable();
             $table->string('desa_kelurahan')->nullable();
-            $table->string('alamat')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('tipe_anggota')->nullable();
             $table->string('status')->nullable();
             $table->rememberToken();

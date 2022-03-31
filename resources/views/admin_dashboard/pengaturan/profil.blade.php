@@ -4,6 +4,45 @@
 @endsection
 
 @section('content')
+    @if (session('status') == true || session('error') == true || $errors->any() == true)
+        <div class="row d-flex justify-content-center layout-top-spacing">
+            <div class="col-lg-7">
+                @if(session('status'))
+                    <div class="alert alert-success alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            {{ session('status') }}
+                        </div>
+                    </div>
+                @elseif(session('error'))
+                    <div class="alert alert-success alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    @endif
     <div class="row d-flex justify-content-center layout-top-spacing">
 
         <div class="col-lg-7 layout-spacing">
@@ -12,14 +51,16 @@
                     <h5 class="card-title">Data Profil</h5>
                     <hr>
                     <form method="post" action="{{ route('profil.update') }}" enctype="multipart/form-data">
+                        @csrf
+                        @method('put')
                         <div class="form-group">
                             <label for="foto">Foto Diri</label><br>
-                            @if(Auth::user()->tempat_lahir)
+                            @if(Auth::user()->foto != null)
                                 <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
                             @else
                                 <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
                             @endif
-                            <input type="file" name="foto" id="foto">
+                            <input type="file" name="foto" id="foto" accept="image/*">
                         </div>
                         <div class="form-group">
                             <label for="status">Status Verifikasi</label>
@@ -39,11 +80,11 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="jenis_kelamin1" name="jenis_kelamin" class="custom-control-input" {{ (Auth::user()->jenis_kelamin == 'Laki-laki') ? 'checked': '' }}>
+                                        <input type="radio" id="jenis_kelamin1" value="Laki-laki" name="jenis_kelamin" class="custom-control-input" {{ (Auth::user()->jenis_kelamin == 'Laki-laki') ? 'checked': '' }} required="required">
                                         <label class="custom-control-label" for="jenis_kelamin1">Laki-laki</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="jenis_kelamin2" name="jenis_kelamin" class="custom-control-input" {{ (Auth::user()->jenis_kelamin == 'Perempuan') ? 'checked': '' }}>
+                                        <input type="radio" id="jenis_kelamin2" value="Perempuan" name="jenis_kelamin" class="custom-control-input" {{ (Auth::user()->jenis_kelamin == 'Perempuan') ? 'checked': '' }}>
                                         <label class="custom-control-label" for="jenis_kelamin2">Perempuan</label>
                                     </div>
                                 </div>
@@ -55,16 +96,16 @@
                                 $kabupaten_kota = new App\Http\Controllers\DaerahController;
                                 $kabupaten_kota = $kabupaten_kota->allCities();
                             @endphp
-                            <select class="form-control select2">
+                            <select class="form-control select2" name="tempat_lahir" required>
                                 <option value="">Pilih Menu</option>
                                 @foreach ($kabupaten_kota as $kabupaten_kota)
-                                    <option value="{{ $kabupaten_kota->id ?? '' }}" {{ ($kabupaten_kota->code == Auth::user()->tempat_lahir) ? 'selected': '' }}>{{ $kabupaten_kota->name ?? '' }}</option>
+                                    <option value="{{ $kabupaten_kota->id }}" {{ ($kabupaten_kota->id == Auth::user()->tempat_lahir) ? 'selected': '' }}>{{ $kabupaten_kota->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
-                            <input id="tanggal_lahir" class="form-control flatpickr flatpickr-input active" type="text" value="{{ Auth::user()->tanggal_lahir }}" placeholder="Select Date..">
+                            <input id="tanggal_lahir" name="tanggal_lahir" class="form-control flatpickr flatpickr-input active" type="text" value="{{ Auth::user()->tanggal_lahir }}" placeholder="Pilih Tanggal" required>
                         </div>
                         <div class="form-group">
                             <label for="nomor_telepon">Nomor Telepon</label>
@@ -75,52 +116,8 @@
                             <input id="email" type="email" name="email" placeholder="email@domain.com" value="{{ $peserta->email }}" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label for="provinsi">Provinsi</label>
-                            @php
-                                $daerah = new App\Http\Controllers\DaerahController;
-                                $provinsi = $daerah->provinces();
-                                $kabupaten_kota = Indonesia::findProvince(Auth::user()->provinsi, ['cities'])->cities;
-                                $kecamatan = Indonesia::findCity(Auth::user()->kabupaten_kota, ['districts'])->districts;
-                                $desa_kelurahan = Indonesia::findDistrict(Auth::user()->kecamatan, ['villages'])->villages;
-                            @endphp
-                            <select class="form-control" name="provinsi" id="provinsi">
-                                <option value="" hidden>Pilih Menu</option>
-                                @foreach ($provinsi as $provinsi)
-                                    <option value="{{ $provinsi->id }}" {{ Auth::user()->provinsi == $provinsi->id ? 'selected' : ''}}>{{ $provinsi->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="kabupaten_kota">Kabupaten/Kota</label>
-                            <select class="form-control" name="kabupaten_kota" id="kabupaten_kota">
-                                @foreach ($kabupaten_kota as $kabupaten_kota)
-                                    <option value="{{ $kabupaten_kota->id }}" {{ Auth::user()->kabupaten_kota == $kabupaten_kota->id ? 'selected' : ''}}>{{ $kabupaten_kota->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="kecamatan">Kecamatan</label>
-                            <select class="form-control" name="kecamatan" id="kecamatan">
-                                @foreach ($kecamatan as $kecamatan)
-                                    <option value="{{ $kecamatan->id }}" {{ Auth::user()->kecamatan == $kecamatan->id ? 'selected' : ''}}>{{ $kecamatan->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="desa_kelurahan">Desa/Kelurahan</label>
-                            <select class="form-control" name="desa_kelurahan" id="desa_kelurahan">
-                                @foreach ($desa_kelurahan as $desa_kelurahan)
-                                    <option value="{{ $desa_kelurahan->id }}" {{ Auth::user()->desa_kelurahan == $desa_kelurahan->id ? 'selected' : ''}}>{{ $desa_kelurahan->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <textarea class="form-control" id="alamat" name="alamat" rows="3">{{ $peserta->alamat }}</textarea>
-                        </div>
-                        <div class="form-group">
                             <label for="tipe_anggota">Tipe Anggota</label>
-                            <select class="form-control selectpicker">
+                            <select class="form-control selectpicker" name="tipe_anggota" required>
                                 <option value="TK/PAUD" {{ (Auth::user()->tipe_anggota == 'TK/PAUD') ? 'selected': '' }}>TK/PAUD</option>
                                 <option value="SD/MI" {{ (Auth::user()->tipe_anggota == 'SD/MI') ? 'selected': '' }}>SD/MI</option>
                                 <option value="SMP/MTS" {{ (Auth::user()->tipe_anggota == 'SMP/MTS') ? 'selected': '' }}>SMP/MTS</option>
@@ -130,15 +127,94 @@
                                 <option value="ASN/TNI/POLRI" {{ (Auth::user()->tipe_anggota == 'ASN/TNI/POLRI') ? 'selected': '' }}>ASN/TNI/POLRI</option>
                             </select>
                         </div>
+                        <hr>
+                        <h5 class="card-title">Alamat</h5>
+                        <hr>
+                        @if (Auth::user()->provinsi != null && Auth::user()->kabupaten_kota != null && Auth::user()->kecamatan != null && Auth::user()->desa_kelurahan != null)
+                            <div class="form-group">
+                                <label for="provinsi">Provinsi</label>
+                                @php
+                                    $daerah = new App\Http\Controllers\DaerahController;
+                                    $provinsi = $daerah->provinces();
+                                    $kota_kabupaten = Indonesia::findProvince(Auth::user()->provinsi, ['cities'])->cities;
+                                    $kecamatan = Indonesia::findCity(Auth::user()->kabupaten_kota, ['districts'])->districts;
+                                    $desa_kelurahan = Indonesia::findDistrict(Auth::user()->kecamatan, ['villages'])->villages;
+                                @endphp
+                                <select class="form-control" name="provinsi" id="provinsi" required>
+                                    <option value="" hidden>Pilih Menu</option>
+                                    @foreach ($provinsi as $provinsi)
+                                        <option value="{{ $provinsi->id }}" {{ Auth::user()->provinsi == $provinsi->id ? 'selected' : ''}}>{{ $provinsi->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="kabupaten_kota">Kabupaten/Kota</label>
+                                <select class="form-control" name="kabupaten_kota" id="kabupaten_kota" required>
+                                    @foreach ($kota_kabupaten as $kota_kabupaten)
+                                        <option value="{{ $kota_kabupaten->id }}" {{ Auth::user()->kota_kabupaten == $kota_kabupaten->id ? 'selected' : ''}}>{{ $kota_kabupaten->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="kecamatan">Kecamatan</label>
+                                <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                    @foreach ($kecamatan as $kecamatan)
+                                        <option value="{{ $kecamatan->id }}" {{ Auth::user()->kecamatan == $kecamatan->id ? 'selected' : ''}}>{{ $kecamatan->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="desa_kelurahan">Desa/Kelurahan</label>
+                                <select class="form-control" name="desa_kelurahan" id="desa_kelurahan" required>
+                                    @foreach ($desa_kelurahan as $desa_kelurahan)
+                                        <option value="{{ $desa_kelurahan->id }}" {{ Auth::user()->desa_kelurahan == $desa_kelurahan->id ? 'selected' : ''}}>{{ $desa_kelurahan->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label for="provinsi">Provinsi</label>
+                                @php
+                                    $daerah = new App\Http\Controllers\DaerahController;
+                                    $provinsi = $daerah->provinces();
+                                @endphp
+                                <select class="form-control" name="provinsi" id="provinsi" required>
+                                    <option value="" hidden>Pilih Menu</option>
+                                    @foreach ($provinsi as $provinsi)
+                                        <option value="{{ $provinsi->id }}" {{ Auth::user()->provinsi == $provinsi->id ? 'selected' : ''}}>{{ $provinsi->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="kabupaten_kota">Kabupaten/Kota</label>
+                                <select class="form-control" name="kabupaten_kota" id="kabupaten_kota" required>
+                                    <option value="" hidden>Pilih Menu</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="kecamatan">Kecamatan</label>
+                                <select class="form-control" name="kecamatan" id="kecamatan" required>
+                                    <option value="" hidden>Pilih Menu</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="desa_kelurahan">Desa/Kelurahan</label>
+                                <select class="form-control" name="desa_kelurahan" id="desa_kelurahan" required>
+                                    <option value="" hidden>Pilih Menu</option>
+                                </select>
+                            </div>
+                        @endif
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea class="form-control" id="alamat" name="alamat" rows="3" required>{{ $peserta->alamat }}</textarea>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary mt-3">Simpan Profil</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    {{-- @foreach (\Indonesia::search('321215')->allVillages() as $item)
-    {{ $item->name }}
-    @endforeach --}}
 @endsection
 
 @push('styles')
@@ -182,7 +258,7 @@
     </script>
     <script>
         $(".selectpicker").selectpicker({
-            "title": "Pilih Menu"        
+            "title": "Pilih Menu"
         }).selectpicker("render");
     </script>
     <script>

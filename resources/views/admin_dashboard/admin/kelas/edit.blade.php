@@ -20,86 +20,107 @@
                 <form action="{{ route('kelas.update', $kelas->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama_kelas">Nama Kelas</label>
-                            <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ $kelas->nama_kelas }}" required>
+                    <div class="form-group">
+                        <label for="banner">Banner</label><br>
+                        <div class="custom-file mb-4">
+                            <input type="file" class="custom-file-input" id="banner" name="banner" accept="image/*" required>
+                            <label class="custom-file-label" for="banner">Pilih Gambar</label>
                         </div>
-                        <div class="form-group">
-                            <label for="periode_kelas">Periode Kelas</label>
-                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" value="{{ $kelas->tanggal_mulai }} to {{ $kelas->tanggal_berakhir }}" placeholder="Pilih Periode Kelas..">
-                        </div>
-                        <div class="form-group">
-                            <label for="deskripsi">Deskripsi Kelas</label>
-                            <textarea class="form-control" name="deskripsi" id="deskripsi" rows="10">{{ $kelas->deskripsi }}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor">Tutor</label>
-                            <select class="placeholder form-control" name="tutor_id">
-                                <option value="">Pilih Tutor...</option>
-                                @foreach ($tutor as $tutor)
-                                <option value="{{ $tutor->id }}" {{ ($tutor->id == $kelas->tutor_id) ? 'selected': '' }}>{{ $tutor->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control selectpicker" name="status">
-                                <option value="Pendaftaran" {{ ($kelas->status == 'Pendaftaran') ? 'selected': '' }}>Pendaftaran</option>
-                                <option value="Proses Seleksi" {{ ($kelas->status == 'Proses Seleksi') ? 'selected': '' }}>Proses Seleksi</option>
-                                <option value="Kegiatan Berlangsung" {{ ($kelas->status == 'Kegiatan Berlangsung') ? 'selected': '' }}>Kegiatan Berlangsung</option>
-                                <option value="Selesai" {{ ($kelas->status == 'Selesai') ? 'selected': '' }}>Selesai</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="Sasaran">Sasaran</label>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1" {{ ($kelas->kelasKategori->TK_PAUD == '1') ? 'checked' : ''}}>
-                                    <span class="new-control-indicator"></span>TK/PAUD
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SD_MI" class="new-control-input" value="1" {{ ($kelas->kelasKategori->SD_MI == '1') ? 'checked' : ''}}>
-                                    <span class="new-control-indicator"></span>SD/MI
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1" {{ ($kelas->kelasKategori->SMP_MTS == '1') ? 'checked' : ''}}>
-                                    <span class="new-control-indicator"></span>SMP/MTS
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1" {{ ($kelas->kelasKategori->SMA_SMK_MA == '1') ? 'checked' : ''}}>
-                                    <span class="new-control-indicator"></span>SMA/SMK/MA
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1" {{ ($kelas->kelasKategori->Mahasiswa == '1') ? 'checked' : ''}}>
-                                    <span class="new-control-indicator"></span>Mahasiswa
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1" {{ ($kelas->kelasKategori->Masyarakat_Umum == '1') ? 'checked' : ''}}>
-                                    <span class="new-control-indicator"></span>Masyarakat Umum
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1" {{ ($kelas->kelasKategori->ASN_Polri_TNI == '1') ? 'checked' : ''}}>
-                                <span class="new-control-indicator"></span>ASN/Polri/TNI
-                                </label>
-                            </div>
+                        <div class="d-flex justify-content-center">
+                            @if ($kelas->banner != null)
+                                <img class="rounded img-fluid" src="{{ Storage::url($kelas->banner) }}" alt="foto" id="preview" width="400px" height="300px">
+                            @else
+                                <img class="rounded img-fluid" src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" alt="foto" id="preview" width="400px" height="300px">
+                            @endif
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="form-group">
+                        <label for="nama_kelas">Nama Kelas</label>
+                        <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ $kelas->nama_kelas }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="periode_kelas">Periode Kelas</label>
+                        <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" value="{{ $kelas->tanggal_mulai }} to {{ $kelas->tanggal_berakhir }}" placeholder="Pilih Periode Kelas..">
+                    </div>
+                    <div class="form-group">
+                        <label for="persyaratan">persyaratan Kelas</label>
+                        <textarea name="persyaratan" class="editor" id="editor1" rows="10">
+                            {!! $kelas->persyaratan !!}
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="deskripsi">Deskripsi Kelas</label>
+                        <textarea name="deskripsi" class="editor" id="editor2" rows="10">
+                            {!! $kelas->deskripsi !!}
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tutor">Tutor</label>
+                        <select class="placeholder form-control" name="tutor_id">
+                            <option value="">Pilih Tutor...</option>
+                            @foreach ($tutor as $tutor)
+                            <option value="{{ $tutor->id }}" {{ ($tutor->id == $kelas->tutor_id) ? 'selected': '' }}>{{ $tutor->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control selectpicker" name="status">
+                            <option value="Pendaftaran" {{ ($kelas->status == 'Pendaftaran') ? 'selected': '' }}>Pendaftaran</option>
+                            <option value="Proses Seleksi" {{ ($kelas->status == 'Proses Seleksi') ? 'selected': '' }}>Proses Seleksi</option>
+                            <option value="Kegiatan Berlangsung" {{ ($kelas->status == 'Kegiatan Berlangsung') ? 'selected': '' }}>Kegiatan Berlangsung</option>
+                            <option value="Selesai" {{ ($kelas->status == 'Selesai') ? 'selected': '' }}>Selesai</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Sasaran">Sasaran</label>
+                        <div class="n-chk">
+                            <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1" {{ ($kelas->kelasKategori->TK_PAUD == '1') ? 'checked' : ''}}>
+                                <span class="new-control-indicator"></span>TK/PAUD
+                            </label>
+                        </div>
+                        <div class="n-chk">
+                            <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="SD_MI" class="new-control-input" value="1" {{ ($kelas->kelasKategori->SD_MI == '1') ? 'checked' : ''}}>
+                                <span class="new-control-indicator"></span>SD/MI
+                            </label>
+                        </div>
+                        <div class="n-chk">
+                            <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1" {{ ($kelas->kelasKategori->SMP_MTS == '1') ? 'checked' : ''}}>
+                                <span class="new-control-indicator"></span>SMP/MTS
+                            </label>
+                        </div>
+                        <div class="n-chk">
+                            <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1" {{ ($kelas->kelasKategori->SMA_SMK_MA == '1') ? 'checked' : ''}}>
+                                <span class="new-control-indicator"></span>SMA/SMK/MA
+                            </label>
+                        </div>
+                        <div class="n-chk">
+                            <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1" {{ ($kelas->kelasKategori->Mahasiswa == '1') ? 'checked' : ''}}>
+                                <span class="new-control-indicator"></span>Mahasiswa
+                            </label>
+                        </div>
+                        <div class="n-chk">
+                            <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1" {{ ($kelas->kelasKategori->Masyarakat_Umum == '1') ? 'checked' : ''}}>
+                                <span class="new-control-indicator"></span>Masyarakat Umum
+                            </label>
+                        </div>
+                        <div class="n-chk">
+                                <label class="new-control new-checkbox checkbox-primary">
+                                <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1" {{ ($kelas->kelasKategori->ASN_Polri_TNI == '1') ? 'checked' : ''}}>
+                            <span class="new-control-indicator"></span>ASN/Polri/TNI
+                            </label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
                         <a href="{{ route('kelas.index') }}" class="btn">Batal</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -120,6 +141,7 @@
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/editors/ckeditor/ckeditor.js') }}"></script>
     <script>
         var f3 = flatpickr(document.getElementById('periode_kelas'), {
             mode: "range",
@@ -135,5 +157,22 @@
         $(".selectpicker").selectpicker({
             "title": "Select Options"        
         }).selectpicker("render");
+    </script>
+    <script>
+        $('.editor').each(function () {
+            CKEDITOR.replace($(this).prop('id'));
+        });
+    </script>
+    <script>
+        $('#banner').on('change',function(e){
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        })
+        banner.onchange = evt => {
+            const [file] = banner.files
+            if (file) {
+                preview.src = URL.createObjectURL(file)
+            }
+        }
     </script>
 @endpush

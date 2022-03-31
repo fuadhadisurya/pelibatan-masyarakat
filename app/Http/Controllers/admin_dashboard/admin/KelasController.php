@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\KelasKategori;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelasController extends Controller
@@ -23,7 +24,7 @@ class KelasController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_berakhir . ' s.d. ' . $row->tanggal_berakhir;
+                        return $row->tanggal_berakhir . ' - ' . $row->tanggal_berakhir;
                     })
                     ->editColumn('tutor_id', function($row){
                         return $row->tutor->nama;
@@ -83,12 +84,30 @@ class KelasController extends Controller
         $this->validate($request, [
             'nama_kelas' => 'required',
             'periode_kelas' => 'required',
+            'persyaratan' => 'required',
             'deskripsi' => 'required',
             'tutor_id' => 'required',
             'status' => 'required',
         ]);
         
         $data = $request->all();
+        
+        if ($request->file('banner')){
+            //get filename with extension
+            $filenamewithextension = $request->file('banner')->getClientOriginalName();
+        
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+    
+            //get file extension
+            $extension = $request->file('banner')->getClientOriginalExtension();
+    
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+
+            $data['banner'] = $request->file('banner')->storeAs('kelas_banner', $filenametostore, 'public');
+        }
+
         $dates = explode('to', $request->periode_kelas);
         $startDate = trim($dates[0]);
         $endDate = trim($dates[1]);
@@ -151,6 +170,22 @@ class KelasController extends Controller
         $data['tanggal_berakhir'] = $endDate;
 
         $kelas = Kelas::findOrFail($id);
+        if ($request->file('banner')){
+            Storage::disk('public')->delete($kelas['banner']);
+            //get filename with extension
+            $filenamewithextension = $request->file('banner')->getClientOriginalName();
+        
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+    
+            //get file extension
+            $extension = $request->file('banner')->getClientOriginalExtension();
+    
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+
+            $data['banner'] = $request->file('banner')->storeAs('kelas_banner', $filenametostore, 'public');
+        }
         $kelas->update($data);
 
         $kelasKategori = KelasKategori::where('kelas_id', '=', $id);

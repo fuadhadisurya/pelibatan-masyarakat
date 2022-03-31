@@ -12,9 +12,11 @@ class Kelas extends Model
     protected $table = "kelas";
 
     protected $fillable = [
+        "banner", 
         "nama_kelas", 
         "tanggal_mulai",
         "tanggal_berakhir",
+        "persyaratan",
         "deskripsi",
         "tutor_id",
         "status",

@@ -66,6 +66,16 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="banner">Banner</label><br>
+                            <div class="custom-file mb-4">
+                                <input type="file" class="custom-file-input" id="banner" name="banner" accept="image/*" required>
+                                <label class="custom-file-label" for="banner">Pilih Gambar</label>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <img class="rounded img-fluid" src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" alt="foto" id="preview" width="400px" height="300px">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="nama_kelas">Nama Kelas</label>
                             <input type="text" name="nama_kelas" class="form-control" id="nama_kelas">
                         </div>
@@ -83,8 +93,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="persyaratan">persyaratan Kelas</label>
+                            <textarea name="persyaratan" class="editor" id="editor1" rows="10">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="deskripsi">Deskripsi Kelas</label>
-                            <textarea class="form-control" name="deskripsi" id="deskripsi" rows="10"></textarea>
+                            <textarea name="deskripsi" class="editor" id="editor2" rows="10">
+                            </textarea>
                         </div>
                         <input type="hidden" name="status" value="Pendaftaran">
                         <div class="form-group">
@@ -158,6 +174,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/select2/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -168,6 +185,8 @@
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/editors/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <script>
         $('#tab_kelas').DataTable({
             processing: true,
@@ -235,12 +254,29 @@
     <script>
         $(".placeholder").select2({
             placeholder: "Pilih Tutor...",
-            dropdownParent: $('#tambahKelas')
+            dropdownParent: $('.modal-body')
         });
     </script>
     <script>
         $(".selectpicker").selectpicker({
             "title": "Pilih Status..."        
         }).selectpicker("render");
+    </script>
+    <script>
+        $('.editor').each(function () {
+            CKEDITOR.replace($(this).prop('id'));
+        });
+    </script>
+    <script>
+        $('#banner').on('change',function(e){
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        })
+        banner.onchange = evt => {
+            const [file] = banner.files
+            if (file) {
+                preview.src = URL.createObjectURL(file)
+            }
+        }
     </script>
 @endpush
