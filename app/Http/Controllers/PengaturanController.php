@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class PengaturanController extends Controller
 {
@@ -20,7 +21,7 @@ class PengaturanController extends Controller
         $id = Auth::user()->id;
         if ($request->foto) {
             $this->validate($request, [
-                // 'foto' => ,
+                'kelas' => 'image|nullable|max:10240',
                 'nama' => 'required',
                 'jenis_kelamin' => 'required',
                 'tempat_lahir' => 'required',
@@ -49,6 +50,25 @@ class PengaturanController extends Controller
             ]);
         }
         $data = $request->all();
+
+        if ($request->file('foto')){
+            Storage::disk('public')->delete($data['foto']);
+
+            //get filename with extension
+            $filenamewithextension = $request->file('foto')->getClientOriginalName();
+        
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+    
+            //get file extension
+            $extension = $request->file('foto')->getClientOriginalExtension();
+    
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+
+            $data['foto'] = $request->file('foto')->storeAs('user', $filenametostore, 'public');
+        }
+
         $data['status'] = "Sudah Verifikasi";
         $tutor = User::findOrFail($id);
         $tutor->update($data);

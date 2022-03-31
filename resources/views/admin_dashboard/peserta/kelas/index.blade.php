@@ -82,7 +82,11 @@
                             <div class="col-sm-6">
                                 <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
                                     <div class="card component-card_9 mb-3">
-                                        <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
+                                        @if($kelas->banner != null)
+                                            <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
+                                        @else
+                                            <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
+                                        @endif
                                         <div class="card-body">
                                             <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
                                             <h5 class="card-title">{{ $kelas->nama_kelas }}</h5>

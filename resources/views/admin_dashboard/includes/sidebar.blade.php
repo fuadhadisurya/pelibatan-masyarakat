@@ -4,7 +4,11 @@
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar">
+                @if(Auth::user()->foto != null)
+                    <img src="{{ Storage::url(Auth::user()->foto) }}" alt="avatar">
+                @else
+                    <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar">
+                @endif
                 <h6>{{ Auth::user()->nama }}</h6>
                 <p>{{ Auth::user()->level }}</p>
             </div>

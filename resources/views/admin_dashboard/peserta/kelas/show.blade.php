@@ -10,7 +10,11 @@
 
             <div class="user-profile layout-spacing sticky-top" style="top: 105px;">
                 <div class="card component-card_9">
-                    <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
+                    @if($kelas->banner != null)
+                        <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
+                    @else
+                        <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
+                    @endif
                     <div class="card-body">
                         <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
                         <h5 class="nama-kelas">{{ $kelas->nama_kelas }}</h5>
@@ -45,17 +49,13 @@
             <div class="layout-spacing ">
                 <div class="widget-content widget-content-area">
                     <h3 class="">Persyaratan</h3>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                        <li>Lorem ipsum dolor sit.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                    </ul>
+                    {!! $kelas->persyaratan !!}
                 </div>
             </div>
             <div class="layout-spacing ">
                 <div class="widget-content widget-content-area">
                     <h3 class="">Deskripsi</h3>
-                    <p>{!! $kelas->deskripsi !!}</p>
+                    {!! $kelas->deskripsi !!}
                 </div>                                
             </div>
         </div>
@@ -75,24 +75,24 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="alert alert-info" role="alert">
-                        {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
-                        Silahkan Isi Motivasi berikut, apa alasan anda ingin mengikuti Kelas nama kelas? 
-                        <strong>Isilah motivasi anda minimal 30 kata</strong>
-                    </div>
-                    <form>
+                <form action="{{ route('peserta.kelas.daftar', $kelas->id) }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="alert alert-info" role="alert">
+                            Silahkan Isi Motivasi berikut, apa alasan anda ingin mengikuti Kelas nama kelas? 
+                            <strong>Isilah motivasi anda minimal 30 kata</strong>
+                        </div>
                         <div class="form-group mb-4">
                             <label for="motivasi">Motivasi</label>
                             <textarea class="form-control" id="motivasi" name="motivasi" rows="5"></textarea>
                         </div>
                         <div id="result"><b style="font-size:16px;font-family:Arial">Jumlah Kata</b> : <b style="font-size:16px;font-family:Arial;color:#2980b9">0</b></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
-                    <button type="button" class="btn btn-primary">Daftar</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
+                        <button type="submit" class="btn btn-primary">Daftar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

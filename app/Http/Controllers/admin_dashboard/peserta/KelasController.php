@@ -86,4 +86,8 @@ class KelasController extends Controller
     {
         //
     }
+
+    public function daftar(Request $request, $id){
+        dd($request);
+    }
 }

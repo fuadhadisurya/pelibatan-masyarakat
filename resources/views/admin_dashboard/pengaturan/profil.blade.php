@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <label for="foto">Foto Diri</label><br>
                             @if(Auth::user()->foto != null)
-                                <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
+                                <img class="rounded" src="{{ Storage::url($peserta->foto) }}" alt="foto" id="preview" width="90px" height="90px">
                             @else
                                 <img class="rounded" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="foto" id="preview" width="90px" height="90px">
                             @endif
@@ -151,7 +151,7 @@
                                 <label for="kabupaten_kota">Kabupaten/Kota</label>
                                 <select class="form-control" name="kabupaten_kota" id="kabupaten_kota" required>
                                     @foreach ($kota_kabupaten as $kota_kabupaten)
-                                        <option value="{{ $kota_kabupaten->id }}" {{ Auth::user()->kota_kabupaten == $kota_kabupaten->id ? 'selected' : ''}}>{{ $kota_kabupaten->name }}</option>
+                                        <option value="{{ $kota_kabupaten->id }}" {{ Auth::user()->kabupaten_kota == $kota_kabupaten->id ? 'selected' : ''}}>{{ $kota_kabupaten->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

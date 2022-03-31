@@ -40,7 +40,11 @@
                 <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
-                            <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="img-fluid mr-2" alt="avatar">
+                            @if(Auth::user()->foto != null)
+                                <img src="{{ Storage::url(Auth::user()->foto) }}" class="img-fluid mr-2" alt="avatar">
+                            @else
+                                <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="img-fluid mr-2" alt="avatar">
+                            @endif
                             <div class="media-body">
                                 <h5>{{ Auth()->user()->nama }}</h5>
                                 <p>{{ Auth()->user()->level }}</p>

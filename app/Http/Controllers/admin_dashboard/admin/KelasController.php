@@ -82,6 +82,7 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'kelas' => 'image|nullable|max:10240',
             'nama_kelas' => 'required',
             'periode_kelas' => 'required',
             'persyaratan' => 'required',
@@ -155,6 +156,7 @@ class KelasController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'kelas' => 'image|nullable|max:10240',
             'nama_kelas' => 'required',
             'periode_kelas' => 'required',
             'tutor_id' => 'required',

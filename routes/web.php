@@ -54,6 +54,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
     Route::get('/akun', [PengaturanController::class, 'akun']);
+    Route::post('kelas/{id}', [PesertaKelasController::class, 'daftar'])->name('kelas.daftar');
     Route::resource('kelas', PesertaKelasController::class);
 });
 
