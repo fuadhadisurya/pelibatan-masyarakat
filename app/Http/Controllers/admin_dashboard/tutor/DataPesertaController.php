@@ -3,50 +3,63 @@
 namespace App\Http\Controllers\admin_dashboard\tutor;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelas;
+use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class KelasController extends Controller
+class DataPesertaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($kelas, Request $request)
     {
         if ($request->ajax()) {
-            $data = Kelas::all();
+            $data = RegistrasiKelas::all();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_berakhir . ' - ' . $row->tanggal_berakhir;
+                    ->addColumn('user.nama', function($row){
+                        return $row->user->nama;
+                    })
+                    ->addColumn('user.ttl', function($row){
+                        return $row->user->tempat_lahir. ',' .$row->user->tanggal_lahir;
+                    })
+                    ->addColumn('user.tipe_anggota', function($row){
+                        return $row->user->tipe_anggota;
+                    })
+                    ->addColumn('user.nomor_telepon', function($row){
+                        return $row->user->nomor_telepon;
+                    })
+                    ->addColumn('user.alamat', function($row){
+                        return $row->user->alamat. ' , ' .$row->user->desa_kelurahan. ' , ' .$row->user->kecamatan. ' , ' .$row->user->kabupaten_kota. ' , ' .$row->user->provinsi;
                     })
                     ->editColumn('status', function($row){
-                        if($row->status == 'Pendaftaran'){
-                            $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-warning">Proses Seleksi</span>';
-                        } elseif($row->status == 'Kegiatan Berlangsung'){
-                            $status = '<span class="badge badge-danger">Proses Seleksi</span>';
+                        if($row->status == 'Diterima'){
+                            $status = '<span class="badge badge-success">Diterima</span>';
+                        } elseif($row->status == 'Ditolak'){
+                            $status = '<span class="badge badge-danger">Ditolak</span>';
                         } else {
-                            $status = '<span class="badge badge-dark">Selesai</span>';
+                            $status = '<span class="badge badge-warning">Belum Diproses</span>';
                         }
                         return '<td class="text-center">'. $status .'</td>';
                     })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'. route('tutor.kelas.data-peserta.index', $row->id) .'" class="btn btn-sm btn-info" title="Edit"><i class="far fa-eye"></i></a>
+                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat'.$row->id.'" title="Lihat">
+                                        <i class="far fa-file-alt"></i>
+                                </button>
                             </td>
                         ';
                     })
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
+        $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas)->get();
         
-        return view("admin_dashboard.tutor.kelas.index");
+        return view('admin_dashboard.tutor.data_peserta.index', ['kelas' => $kelas, 'dataPeserta' => $dataPeserta]);
     }
 
     /**

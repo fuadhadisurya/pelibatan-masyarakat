@@ -9,13 +9,13 @@
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive mb-4 mt-4">
-                    <table id="zero-config" class="table table-hover" style="width:100%">
+                    <table id="data-peserta" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
                                 <th>TTL</th>
-                                <th>Pendidikan Terakhir</th>
+                                <th>Tipe Anggota</th>
                                 <th>Nomor Telepon</th>
                                 <th>Alamat</th>
                                 <th class="text-center">Status</th>
@@ -23,11 +23,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            {{-- <tr>
                                 <td>1.</td>
                                 <td>Fuad </td>
                                 <td>Indramayu, 19 Maret 2001</td>
-                                <td>D3</td>
+                                <td>Mahasiswa</td>
                                 <td>087727989512</td>
                                 <td>Griya Asri 1</td>
                                 <td class="text-center">
@@ -43,7 +43,7 @@
                                 <td>2.</td>
                                 <td>Hadi</td>
                                 <td>Indramayu, 19 Maret 2001</td>
-                                <td>SMA</td>
+                                <td>SMA/SMK/MA</td>
                                 <td>087727989512</td>
                                 <td>Griya Asri 1</td>
                                 <td class="text-center">
@@ -59,7 +59,7 @@
                                 <td>3.</td>
                                 <td>Surya</td>
                                 <td>Indramayu, 19 Maret 2001</td>
-                                <td>S1</td>
+                                <td>Masysarakat Umum</td>
                                 <td>087727989512</td>
                                 <td>Griya Asri 1</td>
                                 <td class="text-center">
@@ -70,7 +70,7 @@
                                         <i class="far fa-file-alt"></i>
                                     </button>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -81,7 +81,8 @@
 @endsection
 
 @push('modal')
-    <div class="modal fade" id="lihat" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
+    @foreach ($dataPeserta as $dataPeserta)
+    <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -97,47 +98,47 @@
                                 <tr>
                                     <td style="width: 22%">Tanggal Mendaftar</td>
                                     <td style="width: 1%">:</td>
-                                    <td>Sabtu, 26 April 2022</td>
+                                    <td>{{ $dataPeserta->created_at }}</td>
                                 </tr>
                                 <tr>
                                     <td>Nama</td>
                                     <td>:</td>
-                                    <td>Thornton</td>
+                                    <td>{{ $dataPeserta->user->nama }}</td>
                                 </tr>
                                 <tr>
                                     <td>Tempat Lahir</td>
                                     <td>:</td>
-                                    <td>Indramayu</td>
+                                    <td>{{ $dataPeserta->user->tempat_lahir }}</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal Lahir</td>
                                     <td>:</td>
-                                    <td>26 Maret 2002</td>
+                                    <td>{{ $dataPeserta->user->tanggal_lahir }}</td>
                                 </tr>
                                 <tr>
                                     <td>Jenis Kelamin</td>
                                     <td>:</td>
-                                    <td>Laki-laki</td>
+                                    <td>{{ $dataPeserta->user->jenis_kelamin }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Pendidikan Terakhir</td>
+                                    <td>Tipe Anggota</td>
                                     <td>:</td>
-                                    <td>D3</td>
+                                    <td>{{ $dataPeserta->user->tipe_anggota }}</td>
                                 </tr>
                                 <tr>
                                     <td>Nomor Telepon</td>
                                     <td>:</td>
-                                    <td>08123456789</td>
+                                    <td>{{ $dataPeserta->user->nomor_telepon }}</td>
                                 </tr>
                                 <tr>
                                     <td>Alamat</td>
                                     <td>:</td>
-                                    <td>Griya Asri 1</td>
+                                    <td>{{ $dataPeserta->user->alamat.', '.$dataPeserta->user->desa_kelurahan.', '.$dataPeserta->user->kecamatan.', '.$dataPeserta->user->kabupaten_kota.', '.$dataPeserta->user->provinsi }}</td>
                                 </tr>
                                 <tr>
                                     <td>Motivasi</td>
                                     <td>:</td>
-                                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem porro temporibus iure autem, labore nemo molestias accusantium esse rerum deserunt! Obcaecati, est. Labore fuga corporis et sequi perferendis dolorum. Vel!</td>
+                                    <td>{{ $dataPeserta->motivasi }}</td>
                                 </tr>
                             </tbody>
                         </table>  
@@ -148,6 +149,10 @@
                                 <option value="Ditolak">Ditolak</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="komentar">Komentar</label>
+                            <textarea class="form-control" id="komentar" name="komentar" rows="3"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -157,6 +162,7 @@
             </div>
         </div>
     </div>
+    @endforeach
 @endpush
 
 @push('styles')
@@ -169,7 +175,20 @@
     <script src="{{ asset('admin_dashboard/plugins/table/datatable/datatables.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script>
-        $('#zero-config').DataTable({
+        $('#data-peserta').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('tutor.kelas.data-peserta.index', $kelas) }}",
+            columns: [
+                {"width": "5%", data: 'DT_RowIndex', name: 'id'},
+                {data: 'user.nama', name: 'user.nama'},
+                {data: 'user.ttl', name: 'user.ttl'},
+                {data: 'user.tipe_anggota', name: 'user.tipe_anggota'},
+                {data: 'user.nomor_telepon', name: 'user.nomor_telepon'},
+                {data: 'user.alamat', name: 'user.alamat'},
+                {data: 'status', name: 'status', className: 'text-center'},
+                {"width": "12%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
+            ],
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
                 "sInfo": "Showing page _PAGE_ of _PAGES_",

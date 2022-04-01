@@ -4,10 +4,19 @@
 @endsection
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible show fade layout-top-spacing">
+            <div class="alert-body">
+                <button class="close" data-dismiss="alert">
+                    <span>&times;</span>
+                </button>
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
     <div class="row layout-top-spacing">
         
         <div class="col-xl-4 col-lg-6 col-md-5 col-sm-12 layout-top-spacing">
-
             <div class="user-profile layout-spacing sticky-top" style="top: 105px;">
                 <div class="card component-card_9">
                     @if($kelas->banner != null)
@@ -37,9 +46,15 @@
                             </div>
                         </div> --}}
                         <hr>
-                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-                            Daftar Sekarang
-                        </button>
+                        @if(count($registrasi_kelas) > 0)
+                            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                Anda sudah mendaftar
+                            </button>
+                        @else
+                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                                Daftar Sekarang
+                            </button>
+                        @endif
                         {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Daftar Sekarang</button> --}}
                     </div>
                 </div>
@@ -78,6 +93,11 @@
                 <form action="{{ route('peserta.kelas.daftar', $kelas->id) }}" method="post">
                     @csrf
                     <div class="modal-body">
+                        @error('motivasi')
+                        <div class="alert alert-danger" role="alert">
+                            {{ $message }}
+                        </div>
+                        @enderror
                         <div class="alert alert-info" role="alert">
                             Silahkan Isi Motivasi berikut, apa alasan anda ingin mengikuti Kelas nama kelas? 
                             <strong>Isilah motivasi anda minimal 30 kata</strong>

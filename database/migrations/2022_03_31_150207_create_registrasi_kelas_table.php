@@ -19,7 +19,7 @@ class CreateRegistrasiKelasTable extends Migration
             $table->foreignId("kelas_id");
             $table->text("motivasi");
             $table->string("status")->nullable();
-            $table->text("komentar")->nullable();
+            $table->text("catatan")->nullable();
             $table->timestamps();
         });
     }

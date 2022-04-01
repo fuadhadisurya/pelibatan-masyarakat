@@ -7,10 +7,10 @@ use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
+use App\Http\Controllers\admin_dashboard\tutor\DataPesertaController as TutorDataPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\KelasController as TutorKelasController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\PengaturanController;
-use App\Http\Controllers\tutor\DataPesertaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
     Route::resource('kelas', TutorKelasController::class);
-    Route::resource('kelas/{id_kelas}/data-peserta', DataPesertaController::class);
+    Route::resource('kelas.data-peserta', TutorDataPesertaController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
