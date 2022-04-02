@@ -16,8 +16,6 @@ class PengaturanController extends Controller
     }
 
     public function update_profil(Request $request){
-        // dd($request);
-
         $id = Auth::user()->id;
         if ($request->foto) {
             $this->validate($request, [

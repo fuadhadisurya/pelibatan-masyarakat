@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\tutor;
 
 use App\Http\Controllers\Controller;
 use App\Models\RegistrasiKelas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -23,8 +24,11 @@ class DataPesertaController extends Controller
                     ->addColumn('user.nama', function($row){
                         return $row->user->nama;
                     })
-                    ->addColumn('user.ttl', function($row){
-                        return $row->user->tempat_lahir. ',' .$row->user->tanggal_lahir;
+                    ->addColumn('umur', function($row){
+                        $hari_ini = Carbon::now();
+                        $tanggal_lahir = Carbon::parse($row->user->tanggal_lahir);
+                        $umur = $tanggal_lahir->diffInYears($hari_ini); 
+                        return $umur;
                     })
                     ->addColumn('user.tipe_anggota', function($row){
                         return $row->user->tipe_anggota;
@@ -33,7 +37,7 @@ class DataPesertaController extends Controller
                         return $row->user->nomor_telepon;
                     })
                     ->addColumn('user.alamat', function($row){
-                        return $row->user->alamat. ' , ' .$row->user->desa_kelurahan. ' , ' .$row->user->kecamatan. ' , ' .$row->user->kabupaten_kota. ' , ' .$row->user->provinsi;
+                        return $row->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($row->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($row->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($row->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($row->user->provinsi)->name));
                     })
                     ->editColumn('status', function($row){
                         if($row->status == 'Diterima'){
@@ -114,7 +118,15 @@ class DataPesertaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
+
+        $data = $request->all();
+        $dataPeserta = RegistrasiKelas::findOrFail($id);
+        $dataPeserta->update($data);
+
+        return redirect()->route('tutor.kelas.data-peserta.index', $id)->with('status', 'Data berhasil diperbarui');
     }
 
     /**

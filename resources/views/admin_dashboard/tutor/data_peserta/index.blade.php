@@ -5,8 +5,17 @@
 
 @section('content')
     <div class="row layout-top-spacing">
-        
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            @if(session('status'))
+                <div class="alert alert-success alert-dismissible show fade">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {{ session('status') }}
+                    </div>
+                </div>
+            @endif
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive mb-4 mt-4">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
@@ -14,7 +23,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
-                                <th>TTL</th>
+                                <th>Umur</th>
                                 <th>Tipe Anggota</th>
                                 <th>Nomor Telepon</th>
                                 <th>Alamat</th>
@@ -23,54 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
-                                <td>1.</td>
-                                <td>Fuad </td>
-                                <td>Indramayu, 19 Maret 2001</td>
-                                <td>Mahasiswa</td>
-                                <td>087727989512</td>
-                                <td>Griya Asri 1</td>
-                                <td class="text-center">
-                                    <span class="badge badge-success">Diterima</span>
-                                </td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat" title="Lihat">
-                                        <i class="far fa-file-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2.</td>
-                                <td>Hadi</td>
-                                <td>Indramayu, 19 Maret 2001</td>
-                                <td>SMA/SMK/MA</td>
-                                <td>087727989512</td>
-                                <td>Griya Asri 1</td>
-                                <td class="text-center">
-                                    <span class="badge badge-danger">Ditolak</span>
-                                </td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat" title="Lihat">
-                                        <i class="far fa-file-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3.</td>
-                                <td>Surya</td>
-                                <td>Indramayu, 19 Maret 2001</td>
-                                <td>Masysarakat Umum</td>
-                                <td>087727989512</td>
-                                <td>Griya Asri 1</td>
-                                <td class="text-center">
-                                    <span class="badge badge-warning">Belum Dikonfirmasi</span>
-                                </td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat" title="Lihat">
-                                        <i class="far fa-file-alt"></i>
-                                    </button>
-                                </td>
-                            </tr> --}}
+
                         </tbody>
                     </table>
                 </div>
@@ -85,80 +47,94 @@
     <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="data_peserta">Data Peserta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 22%">Tanggal Mendaftar</td>
-                                    <td style="width: 1%">:</td>
-                                    <td>{{ $dataPeserta->created_at }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Nama</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->nama }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tempat Lahir</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->tempat_lahir }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Lahir</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->tanggal_lahir }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Jenis Kelamin</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->jenis_kelamin }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tipe Anggota</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->tipe_anggota }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Nomor Telepon</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->nomor_telepon }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->alamat.', '.$dataPeserta->user->desa_kelurahan.', '.$dataPeserta->user->kecamatan.', '.$dataPeserta->user->kabupaten_kota.', '.$dataPeserta->user->provinsi }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Motivasi</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->motivasi }}</td>
-                                </tr>
-                            </tbody>
-                        </table>  
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control selectpicker" name="status">
-                                <option value="Diterima">Diterima</option>
-                                <option value="Ditolak">Ditolak</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="komentar">Komentar</label>
-                            <textarea class="form-control" id="komentar" name="komentar" rows="3"></textarea>
+                <form action="{{ route('tutor.kelas.data-peserta.update', [$kelas, $dataPeserta->id]) }}" method="POST">
+                    @csrf
+                    @method('put')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="data_peserta">Data Peserta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 22%">Tanggal Mendaftar</td>
+                                        <td style="width: 1%">:</td>
+                                        <td>{{ $dataPeserta->created_at }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->user->nama }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Umur</td>
+                                        <td>:</td>
+                                        @php
+                                            $hari_ini = Carbon\Carbon::now();
+                                            $tanggal_lahir = Carbon\Carbon::parse($dataPeserta->user->tanggal_lahir);
+                                            $umur = $tanggal_lahir->diffInYears($hari_ini); 
+                                        @endphp
+                                        <td>{{ $umur }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tempat Lahir</td>
+                                        <td>:</td>
+                                        <td>{{ ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->tempat_lahir)->name)) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanggal Lahir</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->user->tanggal_lahir }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jenis Kelamin</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->user->jenis_kelamin }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tipe Anggota</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->user->tipe_anggota }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nomor Telepon</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->user->nomor_telepon }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alamat</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Motivasi</td>
+                                        <td>:</td>
+                                        <td>{{ $dataPeserta->motivasi }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>  
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="form-control selectpicker" name="status" required>
+                                    <option value="Diterima" {{ ($dataPeserta->status == 'Diterima') ? 'selected': '' }}>Diterima</option>
+                                    <option value="Ditolak" {{ ($dataPeserta->status == 'Ditolak') ? 'selected': '' }}>Ditolak</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="catatan">Catatan</label>
+                                <textarea class="form-control" id="catatan" name="catatan" rows="3">{{ $dataPeserta->catatan }}</textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="button" class="btn btn-primary">Simpan</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -182,7 +158,7 @@
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'user.nama', name: 'user.nama'},
-                {data: 'user.ttl', name: 'user.ttl'},
+                {data: 'umur', name: 'umur'},
                 {data: 'user.tipe_anggota', name: 'user.tipe_anggota'},
                 {data: 'user.nomor_telepon', name: 'user.nomor_telepon'},
                 {data: 'user.alamat', name: 'user.alamat'},

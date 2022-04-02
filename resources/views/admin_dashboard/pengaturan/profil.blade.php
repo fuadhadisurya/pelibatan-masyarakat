@@ -72,7 +72,11 @@
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
-                            <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" readonly required>
+                            @if (Auth::user()->level == 'admin')
+                                <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" required>
+                            @else
+                                <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" readonly required>
+                            @endif
                             <small id="namaHelp" class="form-text text-muted">Nama Anda sudah terverifikasi dan tidak dapat diubah. Jika Anda merasa terdapat kesalahan dan ingin memperbaikinya, silakan hubungi kami dengan menyertakan dokumen identitas asli.</small>
                         </div>
                         <div class="form-group">

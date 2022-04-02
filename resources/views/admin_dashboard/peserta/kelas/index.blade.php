@@ -94,7 +94,11 @@
                                             <div class="meta-info">
                                                 <div class="meta-user">
                                                     <div class="avatar avatar-sm">
-                                                        <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
+                                                        @if ($kelas->tutor->foto != null)
+                                                            <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ Storage::url($kelas->tutor->foto) }}" width="30" height="30" class="rounded-circle" /></span>
+                                                        @else
+                                                            <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
+                                                        @endif
                                                     </div>
                                                     <div class="user-name">{{ $kelas->tutor->nama }}</div>
                                                 </div>
