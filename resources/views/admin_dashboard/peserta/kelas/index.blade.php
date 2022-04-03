@@ -91,6 +91,39 @@
                                             <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
                                             <h5 class="card-title">{{ $kelas->nama_kelas }}</h5>
                                             <p class="card-text">{!! Str::limit($kelas->deskripsi, 150, $end='...') !!}</p>
+                                            @php
+                                                if($kelas->kelasKategori->TK_PAUD == 1){
+                                                    $sasaran[] = "TK/PAUD";
+                                                }
+                                                if($kelas->kelasKategori->SD_MI == 1){
+                                                    $sasaran[] = "SD/MI";
+                                                }
+                                                if($kelas->kelasKategori->SMP_MTS == 1){
+                                                    $sasaran[] = "SMP/MTS";
+                                                }
+                                                if($kelas->kelasKategori->SMA_SMK_MA == 1){
+                                                    $sasaran[] = "SMA/SMK/MA";
+                                                }
+                                                if($kelas->kelasKategori->Mahasiswa == 1){
+                                                    $sasaran[] = "Mahasiswa";
+                                                }
+                                                if($kelas->kelasKategori->Masyarakat_Umum == 1){
+                                                    $sasaran[] = "Masyarakat Umum";
+                                                }
+                                                if($kelas->kelasKategori->ASN_Polri_TNI == 1){
+                                                    $sasaran[] = "ASN/Polri/TNI";
+                                                }
+                                            @endphp
+                                            <p> 
+                                                Sasaran : 
+                                                @foreach ($sasaran as $item)
+                                                    @if($loop->last)
+                                                        {{ $item }}
+                                                    @else
+                                                        {{ $item }},
+                                                    @endif
+                                                @endforeach
+                                            </p>
                                             <div class="meta-info">
                                                 <div class="meta-user">
                                                     <div class="avatar avatar-sm">

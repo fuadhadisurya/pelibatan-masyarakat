@@ -9,7 +9,7 @@
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive mb-4 mt-4">
-                    <table id="kelas" class="table table-hover" style="width:100%">
+                    <table id="data-kelas_tutor" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -38,7 +38,7 @@
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/table/datatable/datatables.js') }}"></script>
     <script>
-        $('#kelas').DataTable({
+        $('#data-kelas_tutor').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('tutor.kelas.index') }}",

@@ -27,24 +27,46 @@
                     <div class="card-body">
                         <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
                         <h5 class="nama-kelas">{{ $kelas->nama_kelas }}</h5>
+                        @php
+                            if($kelas->kelasKategori->TK_PAUD == 1){
+                                $sasaran[] = "TK/PAUD";
+                            }
+                            if($kelas->kelasKategori->SD_MI == 1){
+                                $sasaran[] = "SD/MI";
+                            }
+                            if($kelas->kelasKategori->SMP_MTS == 1){
+                                $sasaran[] = "SMP/MTS";
+                            }
+                            if($kelas->kelasKategori->SMA_SMK_MA == 1){
+                                $sasaran[] = "SMA/SMK/MA";
+                            }
+                            if($kelas->kelasKategori->Mahasiswa == 1){
+                                $sasaran[] = "Mahasiswa";
+                            }
+                            if($kelas->kelasKategori->Masyarakat_Umum == 1){
+                                $sasaran[] = "Masyarakat Umum";
+                            }
+                            if($kelas->kelasKategori->ASN_Polri_TNI == 1){
+                                $sasaran[] = "ASN/Polri/TNI";
+                            }
+                        @endphp
+                        <p> 
+                            Sasaran : 
+                            @foreach ($sasaran as $item)
+                                @if($loop->last)
+                                    {{ $item }}
+                                @else
+                                    {{ $item }},
+                                @endif
+                            @endforeach
+                        </p>
                         <hr>
-                        {{-- <div class="meta-info"> --}}
-                            <div class="meta-user">
-                                <div class="avatar avatar-sm">
-                                    <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
-                                </div>
-                                <div class="user-name">{{ $kelas->tutor->nama }}</div>
+                        <div class="meta-user">
+                            <div class="avatar avatar-sm">
+                                <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
                             </div>
-                        {{-- </div> --}}
-                        {{-- <div class="row">
-                            <div class="col-2 mr-2">
-                                <img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="56" height="56" class="rounded-circle" />
-                            </div>
-                            <div class="col-9 mt-1">
-                                <h5 class="card-user_name">Luke Ivory</h5>
-                                <p class="card-user_occupation">Web Programmer</p>
-                            </div>
-                        </div> --}}
+                            <div class="user-name">{{ $kelas->tutor->nama }}</div>
+                        </div>
                         <hr>
                         @if(count($registrasi_kelas) > 0)
                             <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
