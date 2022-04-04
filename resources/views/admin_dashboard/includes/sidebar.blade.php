@@ -220,7 +220,7 @@
                     </a>
                 </li>
                 <li class="menu">
-                    <a href="#kelas" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'kelas' ? 'true' : 'false' }}" class="dropdown-toggle">
+                    <a href="#kelas" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'kelas' || Request::segment(2) == 'kelasku' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
                             <span> Kelas</span>
@@ -229,12 +229,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                     </a>
-                    <ul class="{{ Request::segment(2) == 'kelas' ? 'toggle' : 'collapse' }} submenu list-unstyled" id="kelas" data-parent="#accordionExample">
+                    <ul class="{{ Request::segment(2) == 'kelas' || Request::segment(2) == 'kelasku' ? 'toggle' : 'collapse' }} submenu list-unstyled" id="kelas" data-parent="#accordionExample">
                         <li class="{{ Request::segment(2) == 'kelas' ? 'active' : '' }}">
                             <a href="{{ route('peserta.kelas.index') }}"> Pilih Kelas </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);"> Kelasku </a>
+                        <li class="{{ Request::segment(2) == 'kelasku' ? 'active' : '' }}">
+                            <a href="{{ route('peserta.kelasku.index') }}"> Kelasku </a>
                         </li>                           
                     </ul>
                 </li>

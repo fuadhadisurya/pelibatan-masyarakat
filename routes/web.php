@@ -9,6 +9,8 @@ use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
+use App\Http\Controllers\admin_dashboard\peserta\KelaskuController;
+use App\Http\Controllers\admin_dashboard\peserta\KelaskuKelasController;
 use App\Http\Controllers\admin_dashboard\tutor\DataPesertaController as TutorDataPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\KelasController as TutorKelasController;
 use App\Http\Controllers\DaerahController;
@@ -64,6 +66,10 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::get('/akun', [PengaturanController::class, 'akun']);
     Route::post('kelas/{id}', [PesertaKelasController::class, 'daftar'])->name('kelas.daftar');
     Route::resource('kelas', PesertaKelasController::class);
+    Route::resource('kelasku', KelaskuController::class)->only([
+        'index'
+    ]);
+    Route::resource('kelasku.kelas', KelaskuKelasController::class);
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){

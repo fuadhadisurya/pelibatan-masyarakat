@@ -70,7 +70,7 @@
                         <hr>
                         @if(count($registrasi_kelas) > 0)
                             <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
-                                Anda sudah mendaftar
+                                Terimakasih sudah mendaftar
                             </button>
                         @else
                             <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
