@@ -77,7 +77,6 @@
                                 Daftar Sekarang
                             </button>
                         @endif
-                        {{-- <button type="button" class="btn btn-primary btn-lg btn-block">Daftar Sekarang</button> --}}
                     </div>
                 </div>
             </div>

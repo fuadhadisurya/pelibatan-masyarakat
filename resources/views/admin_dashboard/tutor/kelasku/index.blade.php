@@ -41,7 +41,7 @@
         $('#data-kelas_tutor').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelas.index') }}",
+            ajax: "{{ route('tutor.kelasku.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_kelas', name: 'nama_kelas'},

@@ -63,7 +63,7 @@ class DataPesertaController extends Controller
         }
         $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas)->get();
         
-        return view('admin_dashboard.tutor.data_peserta.index', ['kelas' => $kelas, 'dataPeserta' => $dataPeserta]);
+        return view('admin_dashboard.tutor.kelasku.data_peserta.index', ['kelas' => $kelas, 'dataPeserta' => $dataPeserta]);
     }
 
     /**

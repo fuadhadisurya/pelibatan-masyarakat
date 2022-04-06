@@ -9,10 +9,11 @@ use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
-use App\Http\Controllers\admin_dashboard\peserta\KelaskuController;
+use App\Http\Controllers\admin_dashboard\peserta\KelaskuController as PesertaKelaskuController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuKelasController;
 use App\Http\Controllers\admin_dashboard\tutor\DataPesertaController as TutorDataPesertaController;
-use App\Http\Controllers\admin_dashboard\tutor\KelasController as TutorKelasController;
+use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
+use App\Http\Controllers\admin_dashboard\tutor\KelaskuHomeController as TutorKelaskuHomeController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\PengaturanController;
 use Illuminate\Support\Facades\Route;
@@ -57,8 +58,9 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
     Route::get('/akun', [PengaturanController::class, 'akun']);
-    Route::resource('kelas', TutorKelasController::class);
-    Route::resource('kelas.data-peserta', TutorDataPesertaController::class);
+    Route::resource('kelasku', TutorKelaskuController::class)->only(['index']);
+    Route::resource('kelasku.home', TutorKelaskuHomeController::class);
+    Route::resource('kelasku.data-peserta', TutorDataPesertaController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
@@ -66,9 +68,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::get('/akun', [PengaturanController::class, 'akun']);
     Route::post('kelas/{id}', [PesertaKelasController::class, 'daftar'])->name('kelas.daftar');
     Route::resource('kelas', PesertaKelasController::class);
-    Route::resource('kelasku', KelaskuController::class)->only([
-        'index'
-    ]);
+    Route::resource('kelasku', PesertaKelaskuController::class)->only(['index']);
     Route::resource('kelasku.kelas', KelaskuKelasController::class);
 });
 

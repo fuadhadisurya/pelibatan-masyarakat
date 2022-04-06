@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div> --}}
-                <div class="widget-content widget-content-area simple-tab">
+                <div class="widget-content widget-content-area simple-pills">
                     <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
@@ -84,7 +84,8 @@
                             <a class="nav-link" id="silabus-tab" data-toggle="tab" href="#silabus" role="tab" aria-controls="silabus" aria-selected="false">Silabus</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="peserta-tab" data-toggle="tab" href="#peserta" role="tab" aria-controls="peserta" aria-selected="false">Peserta</a>
+                            <a class="nav-link" href="{{ route('tutor.kelasku.data-peserta.index',[1]) }}">Peserta</a>
+                            {{-- <a class="nav-link" id="peserta-tab" data-toggle="tab" href="{{ route('tutor.kelasku.data-peserta.index',[1]) }}" role="tab" aria-controls="peserta" aria-selected="false">Peserta</a> --}}
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="forum-tab" data-toggle="tab" href="#forum" role="tab" aria-controls="forum" aria-selected="false">Forum</a>
