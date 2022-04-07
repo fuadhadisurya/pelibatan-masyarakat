@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin_dashboard\tutor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class DataPesertaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($kelas, Request $request)
+    public function index($kelas_id, Request $request)
     {
         if ($request->ajax()) {
             $data = RegistrasiKelas::all();
@@ -61,9 +62,10 @@ class DataPesertaController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas)->get();
+        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas_id)->get();
         
-        return view('admin_dashboard.tutor.kelasku.data_peserta.index', ['kelas' => $kelas, 'dataPeserta' => $dataPeserta]);
+        return view('admin_dashboard.tutor.kelasku.data_peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'dataPeserta' => $dataPeserta]);
     }
 
     /**

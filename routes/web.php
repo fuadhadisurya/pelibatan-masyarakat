@@ -14,6 +14,7 @@ use App\Http\Controllers\admin_dashboard\peserta\KelaskuKelasController;
 use App\Http\Controllers\admin_dashboard\tutor\DataPesertaController as TutorDataPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuHomeController as TutorKelaskuHomeController;
+use App\Http\Controllers\admin_dashboard\tutor\MateriController as TutorMateriController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\PengaturanController;
 use Illuminate\Support\Facades\Route;
@@ -60,7 +61,11 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::get('/akun', [PengaturanController::class, 'akun']);
     Route::resource('kelasku', TutorKelaskuController::class)->only(['index']);
     Route::resource('kelasku.home', TutorKelaskuHomeController::class);
+    // Route::resource('kelasku.silabus', TutorKelaskuHomeController::class);
     Route::resource('kelasku.data-peserta', TutorDataPesertaController::class);
+    // Route::resource('kelasku.forum', TutorDataPesertaController::class);
+    Route::get('/kelasku/{kelas}/materi/download/{id}', [TutorMateriController::class, 'download'])->name("materi.download");
+    Route::resource('kelasku.materi', TutorMateriController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);

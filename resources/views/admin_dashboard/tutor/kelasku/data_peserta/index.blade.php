@@ -17,38 +17,7 @@
                 </div>
             @endif
 
-            <div class="widget-content widget-content-area simple-pills mb-3">
-                <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="silabus-tab" data-toggle="tab" href="#silabus" role="tab" aria-controls="silabus" aria-selected="false">Silabus</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('tutor.kelasku.data-peserta.index',[1]) }}">Peserta</a>
-                        {{-- <a class="nav-link" id="peserta-tab" data-toggle="tab" href="{{ route('tutor.kelasku.data-peserta.index',[1]) }}" role="tab" aria-controls="peserta" aria-selected="false">Peserta</a> --}}
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="forum-tab" data-toggle="tab" href="#forum" role="tab" aria-controls="forum" aria-selected="false">Forum</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="materi-tab" data-toggle="tab" href="#materi" role="tab" aria-controls="materi" aria-selected="false">Materi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="tugas-tab" data-toggle="tab" href="#tugas" role="tab" aria-controls="tugas" aria-selected="false">Tugas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="presensi-tab" data-toggle="tab" href="#presensi" role="tab" aria-controls="presensi" aria-selected="false">Presensi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="test-tab" data-toggle="tab" href="#test" role="tab" aria-controls="test" aria-selected="false">Test</a>
-                    </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li> --}}
-                </ul>
-            </div>
+            @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive mb-4 mt-4">
@@ -81,7 +50,7 @@
     <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.data-peserta.update', [$kelas, $dataPeserta->id]) }}" method="POST">
+                <form action="{{ route('tutor.kelasku.data-peserta.update', [$kelas_id, $dataPeserta->id]) }}" method="POST">
                     @csrf
                     @method('put')
                     <div class="modal-header">
@@ -188,7 +157,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.data-peserta.index', $kelas) }}",
+            ajax: "{{ route('tutor.kelasku.data-peserta.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'user.nama', name: 'user.nama'},
