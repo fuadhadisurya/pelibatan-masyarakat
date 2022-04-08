@@ -35,8 +35,8 @@ class KelaskuController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'. route('peserta.kelasku.kelas.index', $row->id) .'" class="btn btn-sm btn-info" title="Edit"><i class="far fa-eye"></i></a>
-                                <a href="'. route('peserta.kelasku.kelas.index', $row->id) .'" class="btn btn-sm btn-light" title="Edit"><i class="bi bi-patch-check-fill"></i></a>
+                                <a href="'. route('peserta.kelasku.home.index', $row->id) .'" class="btn btn-sm btn-info" title="Edit"><i class="far fa-eye"></i></a>
+                                <a href="'. route('peserta.kelasku.home.index', $row->id) .'" class="btn btn-sm btn-light" title="Edit"><i class="bi bi-patch-check-fill"></i></a>
                             </td>
                         ';
                     })

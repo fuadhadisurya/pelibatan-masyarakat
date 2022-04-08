@@ -50,7 +50,7 @@
     <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.data-peserta.update', [$kelas_id, $dataPeserta->id]) }}" method="POST">
+                <form action="{{ route('tutor.kelasku.peserta.update', [$kelas_id, $dataPeserta->id]) }}" method="POST">
                     @csrf
                     @method('put')
                     <div class="modal-header">
@@ -157,7 +157,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.data-peserta.index', $kelas_id) }}",
+            ajax: "{{ route('tutor.kelasku.peserta.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'user.nama', name: 'user.nama'},

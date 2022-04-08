@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\tutor;
+namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class DataPesertaController extends Controller
+class PesertaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class DataPesertaController extends Controller
     public function index($kelas_id, Request $request)
     {
         if ($request->ajax()) {
-            $data = RegistrasiKelas::all();
+            $data = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('user.nama', function($row){
@@ -62,10 +62,10 @@ class DataPesertaController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $kelas = Kelas::findOrfail($kelas_id);
         $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas_id)->get();
         
-        return view('admin_dashboard.tutor.kelasku.data_peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'dataPeserta' => $dataPeserta]);
+        return view('admin_dashboard.tutor.kelasku.peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'dataPeserta' => $dataPeserta]);
     }
 
     /**
@@ -128,7 +128,7 @@ class DataPesertaController extends Controller
         $dataPeserta = RegistrasiKelas::findOrFail($id);
         $dataPeserta->update($data);
 
-        return redirect()->route('tutor.kelas.data-peserta.index', $id)->with('status', 'Data berhasil diperbarui');
+        return redirect()->route('tutor.kelasku.peserta.index', $id)->with('status', 'Data berhasil diperbarui');
     }
 
     /**

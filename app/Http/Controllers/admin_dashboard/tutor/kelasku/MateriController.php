@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\tutor;
+namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
@@ -19,9 +19,9 @@ class MateriController extends Controller
      */
     public function index($kelas_id, Request $request)
     {
+        $materi = Materi::where('kelas_id', '=', $kelas_id)->get();
         if ($request->ajax()) {
-            $data = Materi::all();
-            return DataTables::of($data)
+            return DataTables::of($materi)
                     ->addIndexColumn()
                     ->addColumn('aksi', function($row){
                         return '
@@ -37,8 +37,7 @@ class MateriController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
-        $materi = Materi::where('kelas_id', $kelas_id)->get();
+        $kelas = Kelas::findOrfail($kelas_id);
         
         return view('admin_dashboard.tutor.kelasku.materi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'materi' => $materi]);
     }
@@ -61,7 +60,11 @@ class MateriController extends Controller
      */
     public function store($kelas_id, Request $request)
     {
-        
+        $this->validate($request, [
+            'nama_materi' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
         $data = $request->all();
         $data['kelas_id'] = $kelas_id;
         $materi = Materi::create($data);
@@ -109,8 +112,9 @@ class MateriController extends Controller
      */
     public function edit($kelas_id, $id)
     {
+        $kelas = Kelas::findOrfail($kelas_id);
         $materi = Materi::findOrFail($id);
-        return view('admin_dashboard.tutor.kelasku.materi.edit', ['materi' => $materi]);
+        return view('admin_dashboard.tutor.kelasku.materi.edit', ['kelas' => $kelas, 'materi' => $materi]);
     }
 
     /**
@@ -120,9 +124,46 @@ class MateriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
-        //
+        $this->validate($request, [
+            'nama_materi' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        $materi = Materi::with('uploadMateri')->findOrFail($id);
+        
+        $data = $request->all();
+
+        if ($request->file('materi')) {
+            foreach ($materi->uploadMateri as $item) {
+                Storage::disk('public')->delete($item->materi);
+                $item->delete();
+            }
+
+            foreach ($request->file('materi') as $file) {
+                //get filename with extension
+                $filenamewithextension = $file->getClientOriginalName();
+            
+                //get filename without extension
+                $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        
+                //get file extension
+                $extension = $file->getClientOriginalExtension();
+        
+                //filename to store
+                $filenametostore = $filename.'_'.time().'.'.$extension;
+
+                $data['materi'] = $file->storeAs('materi', $filenametostore, 'public');
+                
+                $data['materi_id'] = $materi->id;
+                UploadMateri::create($data);
+            }
+        }
+
+        $materi->update($data);
+
+        return redirect()->route('tutor.kelasku.materi.index', $kelas_id)->with('status', 'Materi Berhasil Diperbarui');
     }
 
     /**
@@ -143,10 +184,5 @@ class MateriController extends Controller
         $data->delete();
 
         return response()->json(array('success' => true));
-    }
-
-    public function download($kelas_id, $id){
-        $uploadMateri = UploadMateri::findOrFail($id);
-        return Storage::disk('public')->download($uploadMateri['materi']);
     }
 }

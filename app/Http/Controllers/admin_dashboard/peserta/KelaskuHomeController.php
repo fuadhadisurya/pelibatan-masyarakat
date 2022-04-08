@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class KelaskuKelasController extends Controller
+class KelaskuHomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,7 @@ class KelaskuKelasController extends Controller
         $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
         $peserta = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('status', '=', 'Diterima' )->get();
 
-        return view('admin_dashboard.peserta.kelasku.kelas.index', ['kelas' => $kelas, 'peserta' => $peserta]);
+        return view('admin_dashboard.peserta.kelasku.home.index', ['kelas' => $kelas, 'peserta' => $peserta]);
     }
 
     /**

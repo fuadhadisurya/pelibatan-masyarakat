@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Materi | Kegiatan Pelibatan Masyarakat
+    Tugas | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -20,8 +20,8 @@
             @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadMateri">
-                    <i class="far fa-plus-square"></i> Upload Materi
+                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadTugas">
+                    <i class="far fa-plus-square"></i> Buat Tugas
                 </button>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
@@ -29,6 +29,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
+                                <th>Batas Waktu</th>
                                 <th>Deskripsi</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -45,31 +46,35 @@
 @endsection
 
 @push('modal')
-    <div class="modal fade" id="uploadMateri" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="uploadTugas" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.materi.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tutor.kelasku.tugas.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Buat Tugas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nama_materi">Nama Materi</label>
-                            <input type="text" class="form-control" id="nama_materi" name="nama_materi" placeholder="Nama Materi" required>
+                            <label for="nama_tugas">Nama Tugas</label>
+                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" required>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5"></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="batas_waktu">Batas Waktu</label>
+                            <input id="dateTimeFlatpickr" name="batas_waktu" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
                         </div>
                         <div class="form-group">
                             <div class="custom-file-container" data-upload-id="mySecondImage">
-                                <label>Upload File Materi <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                                <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                 <label class="custom-file-container__custom-file" >
-                                    <input type="file" name="materi[]" class="custom-file-container__custom-file__custom-file-input" multiple>
+                                    <input type="file" name="tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
                                     <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                                     <span class="custom-file-container__custom-file__custom-file-control"></span>
                                 </label>
@@ -79,68 +84,12 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    @foreach ($materi as $materi)
-        <div class="modal fade" id="lihat{{ $materi->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <form action="{{ route('tutor.kelasku.peserta.update', [$kelas_id, $materi->id]) }}" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="data_peserta">{{ $materi->nama_materi }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td style="width: 15%">Tanggal</td>
-                                            <td style="width: 1%">:</td>
-                                            <td>{{ $materi->created_at }}</td>
-                                        </tr>
-                                        @if ($materi->created_at != $materi->updated_at)
-                                            <tr>
-                                                <td>Tanggal Diperbarui</td>
-                                                <td>:</td>
-                                                <td>{{ $materi->updated_at }}</td>
-                                            </tr>
-                                        @endif
-                                        <tr>
-                                            <td>Nama Materi</td>
-                                            <td>:</td>
-                                            <td>{{ $materi->nama_materi }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Deskripsi</td>
-                                            <td>:</td>
-                                            <td>{{ $materi->deskripsi }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>  
-                            </div>
-                            <div>
-                                @foreach ($materi->uploadMateri as $fileMateri)
-                                    <a href="{{ route('materi.download', [$kelas->id, $fileMateri->id]) }}"><i class="far fa-save"></i> {{ $fileMateri->materi }}</a><br>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endforeach
 @endpush
 
 @push('styles')
@@ -150,6 +99,8 @@
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
 @endpush
 
@@ -158,15 +109,17 @@
     <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script>
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.materi.index', $kelas_id) }}",
+            ajax: "{{ route('tutor.kelasku.tugas.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_materi', name: 'nama_materi'},
+                {data: 'nama_tugas', name: 'nama_tugas'},
                 {data: 'deskripsi', name: 'deskripsi'},
+                {data: 'batas_waktu', name: 'batas_waktu'},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
@@ -198,7 +151,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{route("tutor.kelasku.materi.destroy", [$kelas_id, '+id+'])}}',
+                        url:'{{route("tutor.kelasku.tugas.destroy", [$kelas_id, '+id+'])}}',
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
@@ -216,5 +169,12 @@
                 }
             }) 
         }
+    </script>
+    <script>
+        var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true
+        });
     </script>
 @endpush

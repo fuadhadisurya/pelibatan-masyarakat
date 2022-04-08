@@ -45,6 +45,10 @@
                     </p>
                     <p class="card-text">Status : <span class="badge badge-warning">Proses Seleksi</span></p>
                     <hr>
+                    <div class="alert alert-success mb-4" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                        <strong>Selamat!</strong> anda dinyatakan diterima di kelas {{ $kelas->nama_kelas }}.
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,22 +58,22 @@
 <div class="widget-content widget-content-area simple-pills mb-3">
     <ul class="nav nav-pills" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'home' ? 'active' : '' }}" href="{{ route('tutor.kelasku.home.index',[$kelas->id]) }}">Home</a>
+            <a class="nav-link {{ Request::segment(4) == 'home' ? 'active' : '' }}" href="{{ route('peserta.kelasku.home.index',[$kelas->id]) }}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="silabus-tab" data-toggle="tab" href="#silabus" role="tab" aria-controls="silabus" aria-selected="false">Silabus</a>
+            <a class="nav-link {{ Request::segment(4) == 'silabus' ? 'active' : '' }}" href="{{ route('peserta.kelasku.silabus.index',[$kelas->id]) }}">Silabus</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('tutor.kelasku.peserta.index',[$kelas->id]) }}">Peserta</a>
+            <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('peserta.kelasku.peserta.index',[$kelas->id]) }}">Peserta</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="forum-tab" data-toggle="tab" href="#forum" role="tab" aria-controls="forum" aria-selected="false">Forum</a>
+            <a class="nav-link {{ Request::segment(4) == 'forum' ? 'active' : '' }}" href="{{ route('peserta.kelasku.forum.index',[$kelas->id]) }}">Forum</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('tutor.kelasku.materi.index',[$kelas->id]) }}">Materi</a>
+            <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('peserta.kelasku.materi.index',[$kelas->id]) }}">Materi</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'tugas' ? 'active' : '' }}" href="{{ route('tutor.kelasku.tugas.index',[$kelas->id]) }}">Tugas</a>
+            <a class="nav-link {{ Request::segment(4) == 'tugas' ? 'active' : '' }}" href="{{ route('peserta.kelasku.tugas.index',[$kelas->id]) }}">Tugas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="presensi-tab" data-toggle="tab" href="#presensi" role="tab" aria-controls="presensi" aria-selected="false">Presensi</a>
