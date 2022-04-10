@@ -111,7 +111,7 @@
                                     <tr>
                                         <td>Alamat</td>
                                         <td>:</td>
-                                        <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td>
+                                        {{-- <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td> --}}
                                     </tr>
                                     <tr>
                                         <td>Motivasi</td>

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\peserta;
+namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 
-class KelaskuHomeController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,8 @@ class KelaskuHomeController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $peserta = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('status', '=', 'Diterima' )->get();
 
-        return view('admin_dashboard.peserta.kelasku.home.index', ['kelas' => $kelas, 'peserta' => $peserta]);
+        return view('admin_dashboard.admin.data-kelas.home.index', ['kelas' => $kelas]);
     }
 
     /**

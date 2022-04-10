@@ -206,43 +206,17 @@ class TugasController extends Controller
     }
 
     public function periksaTugasStore(Request $request, $kelas_id, $id){
-        dd($request);
         $this->validate($request, [
             'nilai' => 'required',
         ]);
 
-        $tugas = Tugas::with('uploadTugas')->findOrFail($id);
+        $jawabanTugas = JawabanTugas::with('uploadJawabanTugas')->findOrFail($id);
         
         $data = $request->all();
+        $data['status'] = 'Dinilai';
 
-        if ($request->file('tugas')) {
-            foreach ($tugas->uploadTugas as $item) {
-                Storage::disk('public')->delete($item->tugas);
-                $item->delete();
-            }
+        $jawabanTugas->update($data);
 
-            foreach ($request->file('tugas') as $file) {
-                //get filename with extension
-                $filenamewithextension = $file->getClientOriginalName();
-            
-                //get filename without extension
-                $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-        
-                //get file extension
-                $extension = $file->getClientOriginalExtension();
-        
-                //filename to store
-                $filenametostore = $filename.'_'.time().'.'.$extension;
-
-                $data['tugas'] = $file->storeAs('tugas', $filenametostore, 'public');
-                
-                $data['tugas_id'] = $tugas->id;
-                UploadTugas::create($data);
-            }
-        }
-
-        $tugas->update($data);
-
-        return redirect()->route('tutor.kelasku.tugas.index', $kelas_id)->with('status', 'Tugas Berhasil Diperbarui');
+        return redirect()->route('tutor.kelasku.tugas.show', [$kelas_id, $id])->with('status', 'Tugas Berhasil Dinilai');
     }
 }

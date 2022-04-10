@@ -41,7 +41,7 @@ class DataKelasController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'. route('data-kelas.data-peserta.index', $row->id) .'" class="btn btn-sm btn-info" title="Edit"><i class="far fa-eye"></i></a>
+                                <a href="'. route('data-kelas.home.index', $row->id) .'" class="btn btn-sm btn-info" title="Edit"><i class="far fa-eye"></i></a>
                             </td>
                         ';
                     })
@@ -49,7 +49,7 @@ class DataKelasController extends Controller
                     ->make(true);
         }
 
-        return view("admin_dashboard.admin.pilih_kelas.index");
+        return view("admin_dashboard.admin.data-kelas.index");
     }
 
     /**

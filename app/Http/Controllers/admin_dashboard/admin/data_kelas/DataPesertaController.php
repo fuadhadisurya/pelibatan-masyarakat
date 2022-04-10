@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\admin;
+namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
-use App\Models\RegistrasiKelas;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class DataPesertaController extends Controller
 {
@@ -15,7 +12,7 @@ class DataPesertaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($kelas, Request $request)
+    public function index(Request $request, $kelas_id)
     {
         if ($request->ajax()) {
             $data = RegistrasiKelas::all();
@@ -67,9 +64,9 @@ class DataPesertaController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas)->get();
+        $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas_id)->get();
         
-        return view('admin_dashboard.admin.data_peserta.index', ['kelas' => $kelas, 'dataPeserta' => $dataPeserta]);
+        return view('admin_dashboard.admin.data_peserta.index', ['kelas' => $kelas_id, 'dataPeserta' => $dataPeserta]);
     }
 
     /**

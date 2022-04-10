@@ -1,8 +1,9 @@
 <?php
 use App\Http\Controllers\admin_dashboard\auth\LoginController;
 use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\HomeController;
 use App\Http\Controllers\admin_dashboard\admin\DataKelasController;
-use App\Http\Controllers\admin_dashboard\admin\DataPesertaController;
 use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
@@ -61,7 +62,8 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     // Route::get('kelas-status/{id}', [KelasController::class, 'status'])->name('kelas.status');
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
-    Route::resource('data-kelas.data-peserta', DataPesertaController::class);
+    Route::resource('data-kelas.home', HomeController::class);
+    Route::resource('data-kelas.peserta', DataPesertaController::class);
 });
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
@@ -69,7 +71,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::get('/akun', [PengaturanController::class, 'akun']);
     Route::resource('kelasku', TutorKelaskuController::class)->only(['index']);
     Route::resource('kelasku.home', TutorKelaskuHomeController::class);
-    // Route::resource('kelasku.silabus', TutorKelaskuHomeController::class);
+    Route::resource('kelasku.silabus', TutorKelaskuHomeController::class);
     Route::resource('kelasku.peserta', TutorKelaskuPesertaController::class);
     // Route::resource('kelasku.forum', TutorDataPesertaController::class);
     Route::resource('kelasku.materi', TutorKelaskuMateriController::class);

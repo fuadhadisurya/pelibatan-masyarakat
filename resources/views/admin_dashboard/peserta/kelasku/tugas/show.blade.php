@@ -85,7 +85,7 @@
                                                 <th>Nilai</th>
                                                 <td>:</td>
                                                 @if ($jawabanTugas->nilai != null)
-                                                    {{ $tugas->nilai }}
+                                                    <td>{{ $jawabanTugas->nilai }}</td>
                                                 @else
                                                     <td>Belum Dinilai</td>
                                                 @endif

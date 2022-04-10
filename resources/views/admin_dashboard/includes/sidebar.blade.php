@@ -47,7 +47,7 @@
                             <a href="{{ route('kelas.index') }}"> Kelola Kelas </a>
                         </li>
                         <li class="{{ Request::segment(2) == 'data-kelas' ? 'active' : '' }}">
-                            <a href="{{ Route('data-kelas.index') }}"> Data Calon Peserta </a>
+                            <a href="{{ Route('data-kelas.index') }}"> Data Kelas </a>
                         </li>      
                     </ul>
                 </li>
