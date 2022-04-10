@@ -60,4 +60,8 @@ class User extends Authenticatable
     public function kelas(){
         return $this->hasMany(kelas::class);
     }
+
+    public function jawaban_Tugas(){
+        return $this->hasMany(JawabanTugas::class);
+    }
 }

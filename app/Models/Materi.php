@@ -22,6 +22,6 @@ class Materi extends Model
     }
 
     public function uploadMateri(){
-        return $this->hasMany(uploadMateri::class);
+        return $this->hasMany(UploadMateri::class);
     }
 }

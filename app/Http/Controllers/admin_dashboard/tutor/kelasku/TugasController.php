@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 
 use App\Http\Controllers\Controller;
+use App\Models\JawabanTugas;
 use App\Models\Kelas;
 use App\Models\Tugas;
 use App\Models\UploadTugas;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -58,7 +60,6 @@ class TugasController extends Controller
      */
     public function store($kelas_id, Request $request)
     {
-        // dd($request);
         $this->validate($request, [
             'nama_tugas' => 'required',
             'deskripsi' => 'required',
@@ -103,7 +104,15 @@ class TugasController extends Controller
     {
         $kelas = Kelas::findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
-        return view('admin_dashboard.tutor.kelasku.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas]);
+        $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->get();
+        $tugasBelum = User::leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('tugas', 'users.id', '=', 'tugas.kelas_id')
+            ->leftJoin('jawaban_tugas', 'users.id', '=', 'jawaban_tugas.users_id')
+            ->where('registrasi_kelas.kelas_id', '=', $kelas_id)
+            ->where('users.level', '=', 'peserta')
+            ->where('jawaban_tugas.status', '=', null)
+            ->get();
+        return view('admin_dashboard.tutor.kelasku.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas, 'tugasBelum' => $tugasBelum]);
     }
 
     /**
@@ -187,5 +196,53 @@ class TugasController extends Controller
         $data->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function periksaTugas($kelas_id, $id){
+        $kelas = Kelas::findOrfail($kelas_id);
+        $tugas = Tugas::findOrFail($id);
+        $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->first();
+        return view('admin_dashboard.tutor.kelasku.tugas.periksa-tugas', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas]);
+    }
+
+    public function periksaTugasStore(Request $request, $kelas_id, $id){
+        dd($request);
+        $this->validate($request, [
+            'nilai' => 'required',
+        ]);
+
+        $tugas = Tugas::with('uploadTugas')->findOrFail($id);
+        
+        $data = $request->all();
+
+        if ($request->file('tugas')) {
+            foreach ($tugas->uploadTugas as $item) {
+                Storage::disk('public')->delete($item->tugas);
+                $item->delete();
+            }
+
+            foreach ($request->file('tugas') as $file) {
+                //get filename with extension
+                $filenamewithextension = $file->getClientOriginalName();
+            
+                //get filename without extension
+                $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        
+                //get file extension
+                $extension = $file->getClientOriginalExtension();
+        
+                //filename to store
+                $filenametostore = $filename.'_'.time().'.'.$extension;
+
+                $data['tugas'] = $file->storeAs('tugas', $filenametostore, 'public');
+                
+                $data['tugas_id'] = $tugas->id;
+                UploadTugas::create($data);
+            }
+        }
+
+        $tugas->update($data);
+
+        return redirect()->route('tutor.kelasku.tugas.index', $kelas_id)->with('status', 'Tugas Berhasil Diperbarui');
     }
 }

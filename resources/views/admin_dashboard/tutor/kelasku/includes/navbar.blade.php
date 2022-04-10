@@ -69,7 +69,7 @@
             <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('tutor.kelasku.materi.index',[$kelas->id]) }}">Materi</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'tugas' ? 'active' : '' }}" href="{{ route('tutor.kelasku.tugas.index',[$kelas->id]) }}">Tugas</a>
+            <a class="nav-link {{ Request::segment(4) == 'tugas' || Request::segment(4) == 'periksa-tugas' ? 'active' : '' }}" href="{{ route('tutor.kelasku.tugas.index',[$kelas->id]) }}">Tugas</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="presensi-tab" data-toggle="tab" href="#presensi" role="tab" aria-controls="presensi" aria-selected="false">Presensi</a>

@@ -10,9 +10,11 @@ use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashb
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\ForumController as PesertaKelaskuForumController;
+use App\Http\Controllers\admin_dashboard\peserta\kelasku\JawabanTugasController as PesertaKelaskuJawabanTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\MateriController as PesertaKelaskuMateriController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\PesertaController as PesertaKelaskuPesertaController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\SilabusController as PesertaKelaskuSilabusController;
+use App\Http\Controllers\admin_dashboard\peserta\kelasku\TugasController as PesertaKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuController as PesertaKelaskuController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuHomeController as PesertaKelaskuHomeController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\MateriController as TutorKelaskuMateriController;
@@ -20,7 +22,6 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\PesertaController as Tuto
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuHomeController as TutorKelaskuHomeController;
-use App\Http\Controllers\admin_dashboard\tutor\MateriController as TutorMateriController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PengaturanController;
@@ -72,6 +73,8 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku.peserta', TutorKelaskuPesertaController::class);
     // Route::resource('kelasku.forum', TutorDataPesertaController::class);
     Route::resource('kelasku.materi', TutorKelaskuMateriController::class);
+    Route::get('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugas'])->name('kelasku.periksa-tugas.show');
+    Route::put('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.periksa-tugas.update');
     Route::resource('kelasku.tugas', TutorKelaskuTugasController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
@@ -86,7 +89,8 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('kelasku.peserta', PesertaKelaskuPesertaController::class);
     Route::resource('kelasku.forum', PesertaKelaskuForumController::class);
     Route::resource('kelasku.materi', PesertaKelaskuMateriController::class);
-    Route::resource('kelasku.tugas', PesertaKelaskuMateriController::class);
+    Route::post('/kelasku/{kelas}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');
+    Route::resource('kelasku.tugas', PesertaKelaskuTugasController::class);
     Route::resource('kelasku.presensi', PesertaKelaskuMateriController::class);
     Route::resource('kelasku.test', PesertaKelaskuMateriController::class);
 });
@@ -94,6 +98,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){
     Route::get('/kelasku/{kelas}/materi/download/{id}', [DownloadController::class, 'materi'])->name("materi.download");
     Route::get('/kelasku/{kelas}/tugas/download/{id}', [DownloadController::class, 'tugas'])->name("tugas.download");
+    Route::get('/kelasku/{kelas}/jawaban-tugas/download/{id}', [DownloadController::class, 'jawabanTugas'])->name("jawaban.tugas.download");
     Route::put('/profil', [PengaturanController::class, 'update_profil'])->name('profil.update');
     Route::put('/akun', [PengaturanController::class, 'update_akun'])->name('akun.update');
 });

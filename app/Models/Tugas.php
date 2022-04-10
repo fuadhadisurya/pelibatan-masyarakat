@@ -23,6 +23,10 @@ class Tugas extends Model
     }
 
     public function uploadTugas(){
-        return $this->hasMany(uploadTugas::class);
+        return $this->hasMany(UploadTugas::class);
+    }
+
+    public function jawabanTugas(){
+        return $this->hasMany(JawabanTugas::class);
     }
 }

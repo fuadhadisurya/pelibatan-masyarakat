@@ -1,52 +1,3 @@
-{{-- <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h2>Tugas Siswa</h2>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card card-round">
-                            <div class="card-body">
-                                <div class="card-title fw-mediumbold">Belum Mengupulkan</div>
-                                <div class="card-list">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card card-round">
-                            <div class="card-body">
-                                <div class="card-title fw-mediumbold">Sudah Mengupulkan</div>
-                                <div class="card-list">
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img src="http://localhost:8080/azzara/img/100x100.png"
-                                                alt="..." class="avatar-img rounded-circle">
-                                        </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Siswa</div>
-                                            <div class="status">Sukses | <span
-                                                    class="badge badge-pill badge-danger">Belum
-                                                    Dinilai</span></div>
-
-                                        </div>
-                                        <a href="http://localhost:8080/pengajar/tugas/periksa-tugas/1"
-                                            class="btn btn-primary btn-round btn-sm">
-                                            <i class="fas fa-tasks"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
 @extends('admin_dashboard.layouts.main')
 @section('title')
     Detail Tugas | Kegiatan Pelibatan Masyarakat
@@ -71,7 +22,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-borderless">
                         <tbody>
                             <tr>
                                 <td style="width: 15%">Tanggal</td>
@@ -88,7 +39,7 @@
                             <tr>
                                 <td>Batas Waktu</td>
                                 <td>:</td>
-                                <td><span class="badge badge-danger">{{ $tugas->batas_waktu }}</span></td>
+                                <td><span class="badge badge-info">{{ $tugas->batas_waktu }}</span></td>
                             </tr>
                             <tr>
                                 <td>Nama Tugas</td>
@@ -115,36 +66,50 @@
             <div class="widget-content-area br-4">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="card card-round">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h5 class="card-title">Belum Mengumpulkan</h5>
+                            </div>
                             <div class="card-body">
-                                <div class="card-title fw-mediumbold">Belum Mengupulkan</div>
-                                <div class="card-list">
+                                <div class="card-text">
+                                    @foreach ($tugasBelum as $tugasBelum)
+                                        <div class="row">
+                                            <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
+                                            <div class="col">
+                                                <h6 class=""><strong>{{ $tugasBelum->nama }}</strong></h6>
+                                                <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card card-round">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h5 class="card-title">Sudah Mengumpulkan</h5>
+                            </div>
                             <div class="card-body">
-                                <div class="card-title fw-mediumbold">Sudah Mengupulkan</div>
-                                <div class="card-list">
-                                    <div class="item-list">
-                                        <div class="avatar">
-                                            <img src="http://localhost:8080/azzara/img/100x100.png"
-                                                alt="..." class="avatar-img rounded-circle">
+                                <div class="card-text">
+                                    @foreach ($jawabanTugas as $jawabanTugas)
+                                    <div class="row">
+                                        <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
+                                        <div class="col">
+                                            <h6 class=""><strong>{{ $jawabanTugas->users->nama }}</strong></h6>
+                                            @if ($jawabanTugas->nilai != null)
+                                                <p class=""><span class="badge badge-success">Nilai : {{ $jawabanTugas->nilai }}</span></p>                                            
+                                            @else
+                                                <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
+                                            @endif
                                         </div>
-                                        <div class="info-user ml-3">
-                                            <div class="username">Siswa</div>
-                                            <div class="status">Sukses | <span
-                                                    class="badge badge-pill badge-danger">Belum
-                                                    Dinilai</span></div>
-
+                                        <div class="d-flex align-items-center">
+                                            <div class="col">
+                                                <a href="{{ route('tutor.kelasku.periksa-tugas.show', [$kelas->id, $tugas->id]) }}" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a>
+                                            </div>
                                         </div>
-                                        <a href="http://localhost:8080/pengajar/tugas/periksa-tugas/1"
-                                            class="btn btn-primary btn-round btn-sm">
-                                            <i class="fas fa-tasks"></i>
-                                        </a>
                                     </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -161,9 +126,7 @@
     <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <style>
-        .btn-light { border-color: transparent; }
-    </style>
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-media_object.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')

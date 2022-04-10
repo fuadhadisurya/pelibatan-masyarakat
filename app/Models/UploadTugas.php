@@ -15,4 +15,8 @@ class UploadTugas extends Model
         'tugas_id',
         'tugas',
     ];
+
+    public function uploadTugas(){
+        return $this->belongsTo(UploadTugas::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UploadJawabanTugas;
 use App\Models\UploadMateri;
 use App\Models\UploadTugas;
 use Illuminate\Http\Request;
@@ -17,5 +18,10 @@ class DownloadController extends Controller
     public function tugas($kelas_id, $id){
         $uploadTugas = UploadTugas::findOrFail($id);
         return Storage::disk('public')->download($uploadTugas['tugas']);
+    }
+
+    public function jawabanTugas($kelas_id, $id){
+        $uploadJawabanTugas = UploadJawabanTugas::findOrFail($id);
+        return Storage::disk('public')->download($uploadJawabanTugas['jawaban_tugas']);
     }
 }

@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.peserta.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadTugas">
@@ -46,50 +46,7 @@
 @endsection
 
 @push('modal')
-    <div class="modal fade" id="uploadTugas" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.tugas.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buat Tugas</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama_tugas">Nama Tugas</label>
-                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="batas_waktu">Batas Waktu</label>
-                            <input id="dateTimeFlatpickr" name="batas_waktu" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-file-container" data-upload-id="mySecondImage">
-                                <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-                                <label class="custom-file-container__custom-file" >
-                                    <input type="file" name="tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                </label>
-                                <div class="custom-file-container__image-preview"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 @endpush
 
 @push('styles')
@@ -114,7 +71,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.tugas.index', $kelas_id) }}",
+            ajax: "{{ route('peserta.kelasku.tugas.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_tugas', name: 'nama_tugas'},
@@ -132,49 +89,6 @@
             "stripeClasses": [],
             "lengthMenu": [7, 10, 20, 50],
             "pageLength": 7 
-        });
-    </script>
-    <script>
-        var secondUpload = new FileUploadWithPreview('mySecondImage')
-    </script>
-    <script>
-        function confirmDelete(e) {  
-            let id = e.getAttribute('data-id');
-            Swal.fire({
-                title: 'Apakah kamu yakin?',
-                text: "Anda tidak bisa mengembalikan ini!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Iya, hapus',
-                cancelButtonText: 'Batalkan'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type:'DELETE',
-                        url:'{{route("tutor.kelasku.tugas.destroy", [$kelas_id, '+id+'])}}',
-                        data:{
-                            "_token": "{{ csrf_token() }}",
-                        },
-                        success:function(data) {
-                            if (data.success){
-                                Swal.fire(
-                                    'Berhasil dihapus',
-                                    'Data berhasil dihapus.',
-                                    "success"
-                                );
-                                $("#konfirmasiHapus"+id+"").parents('tr').remove()
-                            }
-                        }
-                    });
-                }
-            }) 
-        }
-    </script>
-    <script>
-        var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true
         });
     </script>
 @endpush

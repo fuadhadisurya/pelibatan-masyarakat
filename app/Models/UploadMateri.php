@@ -15,4 +15,8 @@ class UploadMateri extends Model
         'materi_id',
         'materi',
     ];
+
+    public function uploadMateri(){
+        return $this->belongsTo(UploadMateri::class);
+    }
 }
