@@ -3,6 +3,9 @@ use App\Http\Controllers\admin_dashboard\auth\LoginController;
 use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\HomeController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\MateriController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\PresensiController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\TugasController;
 use App\Http\Controllers\admin_dashboard\admin\DataKelasController;
 use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
@@ -64,6 +67,9 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
+    Route::resource('data-kelas.materi', MateriController::class);
+    Route::resource('data-kelas.tugas', TugasController::class);
+    Route::resource('data-kelas.presensi', PresensiController::class);
 });
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);

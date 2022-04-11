@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
+use App\Models\RegistrasiKelas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class DataPesertaController extends Controller
 {
@@ -64,9 +68,10 @@ class DataPesertaController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
+        $kelas = Kelas::findOrfail($kelas_id);
         $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas_id)->get();
         
-        return view('admin_dashboard.admin.data_peserta.index', ['kelas' => $kelas_id, 'dataPeserta' => $dataPeserta]);
+        return view('admin_dashboard.admin.data-kelas.peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'dataPeserta' => $dataPeserta]);
     }
 
     /**

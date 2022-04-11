@@ -16,6 +16,7 @@
                     </div>
                 </div>
             @endif
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive mb-4 mt-4">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
@@ -160,7 +161,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data-kelas.data-peserta.index', $kelas) }}",
+            ajax: "{{ route('data-kelas.peserta.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'user.nama', name: 'user.nama'},

@@ -58,25 +58,25 @@
 <div class="widget-content widget-content-area simple-pills mb-3">
     <ul class="nav nav-pills" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'home' ? 'active' : '' }}" href="{{ route('tutor.kelasku.home.index',[$kelas->id]) }}">Home</a>
+            <a class="nav-link {{ Request::segment(4) == 'home' ? 'active' : '' }}" href="{{ route('data-kelas.home.index',[$kelas->id]) }}">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ Request::segment(4) == 'silabus' ? 'active' : '' }}" href="{{ route('tutor.kelasku.silabus.index',[$kelas->id]) }}">Silabus</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('tutor.kelasku.peserta.index',[$kelas->id]) }}">Peserta</a>
+            <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('data-kelas.peserta.index',[$kelas->id]) }}">Peserta</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="forum-tab" data-toggle="tab" href="#forum" role="tab" aria-controls="forum" aria-selected="false">Forum</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('tutor.kelasku.materi.index',[$kelas->id]) }}">Materi</a>
+            <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('data-kelas.materi.index',[$kelas->id]) }}">Materi</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'tugas' || Request::segment(4) == 'periksa-tugas' ? 'active' : '' }}" href="{{ route('tutor.kelasku.tugas.index',[$kelas->id]) }}">Tugas</a>
+            <a class="nav-link {{ Request::segment(4) == 'tugas' || Request::segment(4) == 'periksa-tugas' ? 'active' : '' }}" href="{{ route('data-kelas.tugas.index',[$kelas->id]) }}">Tugas</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="presensi-tab" data-toggle="tab" href="#presensi" role="tab" aria-controls="presensi" aria-selected="false">Presensi</a>
+            <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('data-kelas.presensi.index',[$kelas->id]) }}">presensi</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="test-tab" data-toggle="tab" href="#test" role="tab" aria-controls="test" aria-selected="false">Test</a>

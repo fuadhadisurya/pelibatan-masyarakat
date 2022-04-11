@@ -146,6 +146,43 @@
 @endsection
 
 @push('modal')
+    <div class="modal fade" id="submission" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ route('peserta.tugas.jawaban.store', [$kelas->id, $tugas->id]) }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Tugas</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="jawaban">Jawaban</label>
+                            <textarea class="form-control" id="jawaban" name="jawaban" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-file-container" data-upload-id="mySecondImage">
+                                <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                                <label class="custom-file-container__custom-file" >
+                                    <input type="file" name="jawaban_tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
+                                </label>
+                                <small id="uploadHelp" class="form-text text-muted">Jika anda mengupload file baru maka akan menghapus data yang sebelumnya yang sudah di upload</small>
+                                <div class="custom-file-container__image-preview"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="editTugas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -161,13 +198,17 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="jawaban">Jawaban</label>
-                            <textarea class="form-control" id="jawaban" name="jawaban" rows="10">{{ $jawabanTugas->jawaban }}</textarea>
+                            @if ($jawabanTugas != null)
+                                <textarea class="form-control" id="jawaban" name="jawaban" rows="10">{{ $jawabanTugas->jawaban }}</textarea>
+                            @endif
                         </div>
                         <div class="form-group">
                             <h6 for="file_jawaban">File Jawaban</h6>
-                            @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
-                                <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
-                            @endforeach
+                            @if ($jawabanTugas != null)
+                                @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
+                                    <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
+                                @endforeach
+                            @endif
                         </div>
                         <div class="form-group">
                             <div class="custom-file-container" data-upload-id="mySecondImage">
@@ -202,13 +243,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="jawaban">Jawaban</label>
-                        <textarea class="form-control" id="jawaban" name="jawaban" rows="10" readonly>{{ $jawabanTugas->jawaban }}</textarea>
+                        @if ($jawabanTugas != null)
+                            <textarea class="form-control" id="jawaban" name="jawaban" rows="10" readonly>{{ $jawabanTugas->jawaban }}</textarea>
+                        @endif
                     </div>
                     <div class="form-group">
                         <h6 for="file_jawaban">File Jawaban</h6>
-                        @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
-                            <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
-                        @endforeach
+                        @if ($jawabanTugas != null)
+                            @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
+                                <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">
