@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
+use App\Models\DataPresensi;
+use App\Models\JawabanTugas;
 use App\Models\Kelas;
 use App\Models\Presensi;
+use App\Models\Tugas;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -22,13 +27,17 @@ class PresensiController extends Controller
             return DataTables::of($presensi)
                     ->addIndexColumn()
                     ->addColumn('nama', function($row){
-                        return 'Data Kehadiran '.$row->id;
+                        $angka = 0;
+                        $angka++;
+                        return 'Kehadiran '.$angka;
                     })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'. route('kelas.edit', $row->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                <a href="'. route('kelas.edit', $row->id) .'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
+                                <a href="'. route('data-kelas.presensi.show', [$row->kelas_id, $row->id]) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPresensi'.$row->id.'">
+                                    <i class="far fa-edit"></i>
+                                </button>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
@@ -36,7 +45,6 @@ class PresensiController extends Controller
                     ->rawColumns(['aksi', 'nama'])
                     ->make(true);
         }
-
         $kelas = Kelas::findOrfail($kelas_id);
         return view('admin_dashboard.admin.data-kelas.presensi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'presensi' => $presensi]);
     }
@@ -81,9 +89,19 @@ class PresensiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kelas_id, $id)
     {
-        //
+        $kelas = Kelas::findOrfail($kelas_id);
+        $presensi = Presensi::findOrFail($id);
+        $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->get();
+        $user = User::leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('presensi', 'users.id', '=', 'presensi.kelas_id')
+            ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
+            ->select('users.*', 'data_presensi.status')
+            ->where('registrasi_kelas.kelas_id', '=', $kelas_id)
+            ->where('users.level', '=', 'peserta')
+            ->get();
+        return view('admin_dashboard.admin.data-kelas.presensi.show', ['kelas' => $kelas, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'user' => $user]);
     }
 
     /**
@@ -104,9 +122,25 @@ class PresensiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
-        //
+        $this->validate($request, [
+            'tanggal' => 'required',
+        ]);
+        
+        $data = $request->all();
+
+        $dates = explode('to', $request->tanggal);
+        $startDate = trim($dates[0]);
+        $endDate = trim($dates[1]);
+        $data['tanggal_mulai'] = $startDate;
+        $data['tanggal_berakhir'] = $endDate;
+
+        $presensi = Presensi::findOrFail($id);
+        
+        $presensi->update($data);
+
+        return redirect()->route('data-kelas.presensi.index', [$kelas_id])->with('status', 'Kelas berhasil di Perbarui');   
     }
 
     /**
@@ -115,8 +149,14 @@ class PresensiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kelas_id, $id)
     {
-        //
+        $presensi = Presensi::findOrFail($id);
+        $presensi->delete();
+
+        $dataPresensi = DataPresensi::where('presensi_id', '=', $id);
+        $dataPresensi->delete();
+
+        return response()->json(array('success' => true));
     }
 }

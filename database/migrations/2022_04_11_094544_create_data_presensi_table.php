@@ -16,7 +16,7 @@ class CreateDataPresensiTable extends Migration
         Schema::create('data_presensi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('presensi_id');
-            $table->foreignId('users_id');
+            $table->foreignId('user_id');
             $table->string('status');
             $table->timestamps();
         });

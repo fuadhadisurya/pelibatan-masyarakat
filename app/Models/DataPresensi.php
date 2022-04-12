@@ -13,7 +13,7 @@ class DataPresensi extends Model
 
     protected $fillable = [
         "presensi_id", 
-        "users_id",
+        "user_id",
         "status",
     ];
     

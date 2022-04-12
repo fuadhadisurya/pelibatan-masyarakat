@@ -60,7 +60,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="tanggal">Tanggal</label>
-                            <input id="dateTimeFlatpickr" name="tanggal" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Tanggal">
+                            <input id="dateTimeFlatpickr" name="tanggal" class="form-control flatpickr flatpickr-input active dateTimeFlatpickr" type="text" placeholder="Pilih Tanggal">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -71,6 +71,34 @@
             </div>
         </div>
     </div>
+    @foreach ($presensi as $presensi)
+        <div class="modal fade" id="editPresensi{{ $presensi->id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('data-kelas.presensi.update',[$kelas->id, $presensi->id]) }}" method="POST"  >
+                    @csrf
+                    @method('put')
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Presensi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal</label>
+                                <input id="dateTimeFlatpickr" name="tanggal" value="{{ $presensi->tanggal_mulai .' to '. $presensi->tanggal_berakhir }}" class="form-control flatpickr flatpickr-input active dateTimeFlatpickr" type="text" placeholder="Pilih Tanggal">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endpush
 
 @push('styles')
@@ -127,7 +155,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{route("data-kelas.presensi.destroy", [$kelas_id, '+id+'])}}',
+                        url:'{{url("/admin/data-kelas/$kelas_id/presensi")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
@@ -147,7 +175,7 @@
         }
     </script>
     <script>
-        var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
+        var f2 = flatpickr(document.getElementsByClassName('dateTimeFlatpickr'), {
             mode: "range",
             minDate: "today",
             enableTime: true,
