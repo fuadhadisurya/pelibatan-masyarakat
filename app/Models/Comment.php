@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataPresensi extends Model
+class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = "data_presensi";
+    protected $table = "comment";
 
     protected $fillable = [
-        "presensi_id", 
+        "post_id", 
         "user_id",
-        "status",
+        "isi",
     ];
     
-    public function presensi(){
-        return $this->belongsTo(Presensi::class);
+    public function post(){
+        return $this->belongsTo(Post::class);
     }
 
     public function user(){

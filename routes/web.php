@@ -17,12 +17,14 @@ use App\Http\Controllers\admin_dashboard\peserta\kelasku\ForumController as Pese
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\JawabanTugasController as PesertaKelaskuJawabanTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\MateriController as PesertaKelaskuMateriController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\PesertaController as PesertaKelaskuPesertaController;
+use App\Http\Controllers\admin_dashboard\peserta\kelasku\PresensiController as PesertaKelaskuPresensiController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\SilabusController as PesertaKelaskuSilabusController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\TugasController as PesertaKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuController as PesertaKelaskuController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuHomeController as PesertaKelaskuHomeController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\MateriController as TutorKelaskuMateriController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PesertaController as TutorKelaskuPesertaController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\PresensiController as TutorKelaskuPresensiController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuHomeController as TutorKelaskuHomeController;
@@ -66,6 +68,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
+    Route::resource('data-kelas.silabus', HomeController::class);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
     Route::resource('data-kelas.materi', MateriController::class);
     Route::resource('data-kelas.tugas', TugasController::class);
@@ -84,6 +87,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::get('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugas'])->name('kelasku.periksa-tugas.show');
     Route::put('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.periksa-tugas.update');
     Route::resource('kelasku.tugas', TutorKelaskuTugasController::class);
+    Route::resource('kelasku.presensi', TutorKelaskuPresensiController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
@@ -99,7 +103,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('kelasku.materi', PesertaKelaskuMateriController::class);
     Route::post('/kelasku/{kelas}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');
     Route::resource('kelasku.tugas', PesertaKelaskuTugasController::class);
-    Route::resource('kelasku.presensi', PesertaKelaskuMateriController::class);
+    Route::resource('kelasku.presensi', PesertaKelaskuPresensiController::class);
     Route::resource('kelasku.test', PesertaKelaskuMateriController::class);
 });
 

@@ -66,6 +66,28 @@
                                 <th>Status</th>
                             </thead>
                             <tbody>
+                                {{-- <tr>
+                                    <td>0</td>
+                                    <td>{{ $presensi->kelas->tutor->nama }}</td>
+                                    <td>{{ ucwords(strtolower(\Indonesia::findDistrict($presensi->kelas->tutor->kecamatan)->name)) }}</td>
+                                    <td>Tutor</td>
+                                    @if ($dataPresensi )
+                                        <td>{{ $dataPresensi->status }}</td>
+                                    @else
+                                        <td><span class="badge badge-success">Hadir</span></td>
+                                    @endif
+                                </tr> --}}
+                                <tr>
+                                    <td>0</td>
+                                    <td>{{ $tutor->nama }}</td>
+                                    <td>{{ ucwords(strtolower(\Indonesia::findDistrict($tutor->kecamatan)->name)) }}</td>
+                                    <td>Tutor</td>
+                                    @if ($tutor->status != null )
+                                        <td><span class="badge badge-success">{{ $tutor->status }}</span></td>
+                                    @else
+                                        <td><span class="badge badge-warning">Belum Mengisi</span></td>
+                                    @endif
+                                </tr>
                                 @foreach ($user as $user)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>

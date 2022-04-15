@@ -47,9 +47,14 @@ class ForumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kelas_id, $id)
     {
-        //
+        $kelas = Kelas::findOrfail($kelas_id);
+        // $post = PostsViews::where('titleslug', '=' ,$titleslug)->firstOrFail();
+
+        // PostsViews::createViewLog($post);
+
+        return view('admin_dashboard.peserta.kelasku.forum.show', ['kelas' => $kelas]);
     }
 
     /**

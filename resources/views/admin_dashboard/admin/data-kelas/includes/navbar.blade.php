@@ -61,7 +61,7 @@
             <a class="nav-link {{ Request::segment(4) == 'home' ? 'active' : '' }}" href="{{ route('data-kelas.home.index',[$kelas->id]) }}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ Request::segment(4) == 'silabus' ? 'active' : '' }}" href="{{ route('tutor.kelasku.silabus.index',[$kelas->id]) }}">Silabus</a>
+            <a class="nav-link {{ Request::segment(4) == 'silabus' ? 'active' : '' }}" href="{{ route('data-kelas.silabus.index',[$kelas->id]) }}">Silabus</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('data-kelas.peserta.index',[$kelas->id]) }}">Peserta</a>

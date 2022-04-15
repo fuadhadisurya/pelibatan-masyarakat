@@ -20,9 +20,6 @@
             @include('admin_dashboard.peserta.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadTugas">
-                    <i class="far fa-plus-square"></i> Buat Tugas
-                </button>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
                         <thead>

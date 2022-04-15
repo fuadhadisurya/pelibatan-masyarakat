@@ -4,12 +4,9 @@ namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\DataPresensi;
-use App\Models\JawabanTugas;
 use App\Models\Kelas;
 use App\Models\Presensi;
-use App\Models\Tugas;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -95,13 +92,19 @@ class PresensiController extends Controller
         $presensi = Presensi::findOrFail($id);
         $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->get();
         $user = User::leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
-            ->leftJoin('presensi', 'users.id', '=', 'presensi.kelas_id')
             ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
             ->select('users.*', 'data_presensi.status')
             ->where('registrasi_kelas.kelas_id', '=', $kelas_id)
             ->where('users.level', '=', 'peserta')
             ->get();
-        return view('admin_dashboard.admin.data-kelas.presensi.show', ['kelas' => $kelas, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'user' => $user]);
+        $tutor = User::leftJoin('kelas', 'users.id', '=', 'kelas.tutor_id')
+            ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
+            ->select('users.*', 'data_presensi.status')
+            ->where('kelas.id', '=', $kelas_id)
+            ->where('users.level', '=', 'tutor')
+            ->first();
+        // dd($tutor);
+        return view('admin_dashboard.admin.data-kelas.presensi.show', ['kelas' => $kelas, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'user' => $user, 'tutor' => $tutor]);
     }
 
     /**
