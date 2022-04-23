@@ -14,8 +14,7 @@ class Post extends Model
     protected $fillable = [
         "kelas_id",
         "user_id",
-        "judul", 
-        "slug", 
+        "judul",
         "isi",
     ];
     public function comment(){

@@ -99,6 +99,8 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('kelasku.home', PesertaKelaskuHomeController::class);
     Route::resource('kelasku.silabus', PesertaKelaskuSilabusController::class);
     Route::resource('kelasku.peserta', PesertaKelaskuPesertaController::class);
+    Route::post('/kelasku/{kelas_id}/forum/{post_id}/comment', [PesertaKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
+    Route::put('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [PesertaKelaskuForumController::class, 'commentUpdate'])->name('kelasku.forum.comment.update');
     Route::resource('kelasku.forum', PesertaKelaskuForumController::class);
     Route::resource('kelasku.materi', PesertaKelaskuMateriController::class);
     Route::post('/kelasku/{kelas}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');

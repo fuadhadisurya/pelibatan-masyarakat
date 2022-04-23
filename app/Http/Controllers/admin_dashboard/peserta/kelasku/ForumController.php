@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Models\Kelas;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
@@ -16,8 +19,9 @@ class ForumController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $post = Post::all();
 
-        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas]);
+        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas, 'post' => $post]);
     }
 
     /**
@@ -36,9 +40,21 @@ class ForumController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $kelas_id)
     {
-        //
+        $this->validate($request, [
+            'judul' => 'required',
+            'isi' => 'required'
+        ]);
+        
+        $data = $request->all();
+        
+        $data['kelas_id'] = $kelas_id;
+        $data['user_id'] = Auth::user()->id;
+
+        Post::create($data);
+        
+        return redirect()->route('peserta.kelasku.forum.index', $kelas_id)->with('status', 'Forum diskusi berhasil dibuat');
     }
 
     /**
@@ -50,11 +66,13 @@ class ForumController extends Controller
     public function show($kelas_id, $id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
+        $post = Post::findOrFail($id);
+        $comment = Comment::where('post_id', '=', $id)->get();
         // $post = PostsViews::where('titleslug', '=' ,$titleslug)->firstOrFail();
 
         // PostsViews::createViewLog($post);
 
-        return view('admin_dashboard.peserta.kelasku.forum.show', ['kelas' => $kelas]);
+        return view('admin_dashboard.peserta.kelasku.forum.show', ['kelas' => $kelas, 'post' => $post, 'comment' => $comment]);
     }
 
     /**
@@ -75,9 +93,19 @@ class ForumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
-        //
+        $this->validate($request, [
+            'isi' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        $post = Post::findOrFail($id);
+
+        $post->update($data);
+
+        return redirect()->route('peserta.kelasku.forum.show', [$kelas_id, $id])->with('status', 'Postingan berhasil diperbarui');
     }
 
     /**
@@ -89,5 +117,34 @@ class ForumController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function commentStore(Request $request, $kelas_id, $post_id){
+        $this->validate($request, [
+            'isi' => 'required',
+        ]);
+
+        Comment::create([
+            'post_id' => $post_id,
+            'user_id' => Auth::user()->id,
+            'isi' => $request->isi,
+        ]);
+
+        return redirect()->back()->with('status', 'Berhasil membuat forum diskusi baru');
+    }
+
+    public function commentUpdate(Request $request, $kelas_id, $post_id, $id)
+    {
+        $this->validate($request, [
+            'isi' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        $comment = Comment::findOrFail($id);
+
+        $comment->update($data);
+
+        return redirect()->back()->with('status', 'Postingan berhasil diperbarui');
     }
 }

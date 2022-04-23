@@ -17,7 +17,7 @@ class CreateCommentTable extends Migration
             $table->id();
             $table->foreignId('post_id');
             $table->foreignId('user_id');
-            $table->string('isi');
+            $table->text('isi');
             $table->timestamps();
         });
     }

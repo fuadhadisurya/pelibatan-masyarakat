@@ -18,8 +18,7 @@ class CreatePostTable extends Migration
             $table->foreignId('kelas_id');
             $table->foreignId('user_id');
             $table->string('judul');
-            $table->string('slug');
-            $table->string('isi');
+            $table->text('isi');
             $table->timestamps();
         });
     }
