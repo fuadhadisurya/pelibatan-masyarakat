@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
+namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
@@ -21,7 +21,7 @@ class ForumController extends Controller
         $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
         $post = Post::all();
 
-        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas, 'post' => $post]);
+        return view('admin_dashboard.admin.data-kelas.forum.index', ['kelas' => $kelas, 'post' => $post]);
     }
 
     /**
@@ -54,7 +54,7 @@ class ForumController extends Controller
 
         Post::create($data);
         
-        return redirect()->route('peserta.kelasku.forum.index', $kelas_id)->with('status', 'Forum diskusi berhasil dibuat');
+        return redirect()->route('data-kelas.forum.index', $kelas_id)->with('status', 'Forum diskusi berhasil dibuat');
     }
 
     /**
@@ -72,7 +72,7 @@ class ForumController extends Controller
 
         // PostsViews::createViewLog($post);
 
-        return view('admin_dashboard.peserta.kelasku.forum.show', ['kelas' => $kelas, 'post' => $post, 'comment' => $comment]);
+        return view('admin_dashboard.admin.data-kelas.forum.show', ['kelas' => $kelas, 'post' => $post, 'comment' => $comment]);
     }
 
     /**
@@ -105,7 +105,7 @@ class ForumController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('peserta.kelasku.forum.show', [$kelas_id, $id])->with('status', 'Postingan berhasil diperbarui');
+        return redirect()->route('data-kelas.forum.show', [$kelas_id, $id])->with('status', 'Postingan berhasil diperbarui');
     }
 
     /**

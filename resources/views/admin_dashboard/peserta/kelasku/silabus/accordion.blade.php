@@ -8,19 +8,6 @@
 
     <div class="widget-content widget-content-area">
         <h5>Silabus</h5>
-
-        <form>
-            <div class="form-group">
-                <label for="bab">Bab 1</label>
-                <input type="text" class="form-control" id="bab">
-                <div class="form-group ml-5 mt-2">
-                    <label for="materi">Materi 1 - Bab 1</label>
-                    <input type="text" class="form-control" id="materi">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
         <div id="toggleAccordion">
             <div class="card">
                 <div class="card-header" id="...">

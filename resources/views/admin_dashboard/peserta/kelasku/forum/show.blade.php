@@ -23,7 +23,7 @@
 
                                 <div class="dropdown-menu left" aria-labelledby="postAction" style="will-change: transform; position: absolute; transform: translate3d(-141px, 19px, 0px); top: 0px; left: 0px;" x-placement="bottom-end">
                                     <a class="dropdown-item" href="#" onclick="editPostingan(); return false;">Edit Postingan</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Hapus Postingan</a>
+                                    <a class="dropdown-item" href="#" onclick="hapusPostingan(); return false;">Hapus Postingan</a>
                                 </div>
                             </div>
                         @endif
@@ -59,6 +59,7 @@
             <div class="d-flex flex-column comment-section">
                 <div class="bg-white p-2">
                     @forelse ($comment as $comment)
+                    <div id="comment{{ $comment->id }}">
                         <div class="row">
                             <div class="col">
                                 <div class="d-flex flex-row user-info">
@@ -78,7 +79,7 @@
             
                                         <div class="dropdown-menu left" aria-labelledby="postAction" style="will-change: transform; position: absolute; transform: translate3d(-141px, 19px, 0px); top: 0px; left: 0px;" x-placement="bottom-end">
                                             <a class="dropdown-item" href="#" onclick="editKomentar({{ $comment->id }}); return false;">Edit Komentar</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Hapus Komentar</a>
+                                            <a class="dropdown-item" href="#" onclick="hapusKomentar(this); return false;" data-comment="{{ $comment->id }}">Hapus Komentar</a>
                                         </div>
                                     </div>
                                 @endif
@@ -101,6 +102,7 @@
                             </div>
                         </div>
                         <hr>
+                    </div>
                     @empty
                         <div class="d-flex justify-content-center">
                             <div class="my-2">Jadilah orang yang pertama komentar</div>
@@ -139,12 +141,18 @@
     <link href="{{ asset('admin_dashboard/plugins/lightbox/custom-photswipe.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/elements/miscellaneous.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/prismjs/prism.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
     <style>
         .btn-light { border-color: transparent; }
         </style>
 @endpush
 
 @push('scripts')
+    <script src="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/lightbox/photoswipe.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/lightbox/photoswipe-ui-default.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/lightbox/custom-photswipe.js') }}"></script>
@@ -200,7 +208,7 @@
             var showComment = document.getElementById("showComment"+e);
             var editComment = document.getElementById("editComment"+e);
             var comment = document.getElementById("comment");
-            console.log(comment);
+
             if (showComment.style.display === "none") {
                 showComment.style.display = "block";
                 editComment.style.display = "none";
@@ -210,6 +218,73 @@
                 editComment.style.display = "block";
                 comment.style.display = "none";
             }
+        }
+    </script>
+    <script>
+        function hapusPostingan() {
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Anda tidak bisa mengembalikan ini!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Iya, hapus',
+                cancelButtonText: 'Batalkan'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type:'DELETE',
+                        url:'{{route("peserta.kelasku.forum.destroy", [$kelas->id, $post->id])}}',
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success:function(data) {
+                            if (data.success){
+                                Swal.fire(
+                                    'Berhasil dihapus',
+                                    'Data berhasil dihapus.',
+                                    "success"
+                                ).then(function(){
+                                    window.location.href = "{{ route('peserta.kelasku.forum.index', $kelas->id)}}";
+                                });
+                            }
+                        }
+                    });
+                }
+            }) 
+        }
+    </script>
+    <script>
+        function hapusKomentar(e) {  
+            let id = e.getAttribute('data-comment');
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Anda tidak bisa mengembalikan ini!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Iya, hapus',
+                cancelButtonText: 'Batalkan'
+            }).then((result) => {
+                // console.log(result);
+                if (result.value) {
+                    $.ajax({
+                        type:'DELETE',
+                        url:'{{url("/peserta/kelasku/$kelas->id/forum/$post->id/comment")}}/' +id,
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success:function(data) {
+                            if (data.success){
+                                Swal.fire(
+                                    'Berhasil dihapus',
+                                    'Data berhasil dihapus.',
+                                    "success"
+                                );
+                                $("#comment"+id+"").remove()
+                            }
+                        }
+                    });
+                }
+            }) 
         }
     </script>
 @endpush
