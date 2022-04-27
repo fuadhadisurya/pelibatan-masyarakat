@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.admin.data-kelas.includes.navbar')
+            @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive">

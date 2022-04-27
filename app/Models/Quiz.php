@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Quiz extends Model
+{
+    use HasFactory;
+
+    protected $table = "quiz";
+
+    protected $fillable = ['kelas_id', 'nama_quiz', 'batas_waktu', 'aktif', 'status'];
+
+    public function kelas(){
+        return $this->belongsTo(Kelas::class);
+    }
+
+    public function quizSoal(){
+        return $this->hasMany(QuizSoal::class);
+    }
+}
