@@ -25,8 +25,8 @@ class QuizController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('tutor.kelasku.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="edit"><i class="far fa-eye"></i></a>
-                                <a href="'.route('tutor.kelasku.tugas.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <a href="'.route('tutor.kelasku.quiz.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="show"><i class="far fa-eye"></i></a>
+                                <a href="'.route('tutor.kelasku.quiz.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
@@ -75,14 +75,14 @@ class QuizController extends Controller
             "d.*" => "required|string",
             "kunci_jawaban"   => "required|array",
             "kunci_jawaban.*" => "required|string",
-            // "file"   => "required|array",
-            // "file.*" => "required|string",
+            "file"   => "array",
+            "file.*" => "mimetypes:video/*,audio/*,image/*",
         ]);
 
         $data = $request->all();
         $data['kelas_id'] = $kelas_id;
         $quiz = Quiz::create($data);
-        
+
         $soal = $request->soal;
         $a = $request->a;
         $b = $request->b;
@@ -90,40 +90,52 @@ class QuizController extends Controller
         $d = $request->d;
         $kunci_jawaban = $request->kunci_jawaban;
         $total = count($soal);
-        
-        for($i=0;$i<$total;$i++){
-            QuizSoal::create([
-                'quiz_id' => $quiz->id,
-                'soal' => $soal[$i],
-                'a' => $a[$i],
-                'b' => $b[$i],
-                'c' => $c[$i],
-                'd' => $d[$i],
-                'kunci_jawaban' => $kunci_jawaban[$i],
-            ]); 
-        }
-        return 'sukses';
-            
-        // if ($request->file('file')){
-        //     foreach ($request->file('file') as $file) {
-        //         //get filename with extension
-        //         $filenamewithextension = $file->getClientOriginalName();
-            
-        //         //get filename without extension
-        //         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-        
-        //         //get file extension
-        //         $extension = $file->getClientOriginalExtension();
-        
-        //         //filename to store
-        //         $filenametostore = $filename.'_'.time().'.'.$extension;
 
-        //         $data['tugas'] = $file->storeAs('tugas', $filenametostore, 'public');
-                
-        //         // $data['tugas_id'] = $tugas->id;
-        //         UploadTugas::create($data);
-        //     }
-        // }
+        if ($request->file('file')){
+            foreach($request->file('file') as $key=>$data){
+                $file[$key] = $data->store('soal_quiz', 'public');
+            }
+        }
+
+        for($i=0;$i<$total;$i++){
+            if ($request->file('file')){
+                if(!empty($file[$i])) { 
+                    QuizSoal::create([
+                        'quiz_id' => $quiz->id,
+                        'soal' => $soal[$i],
+                        'a' => $a[$i],
+                        'b' => $b[$i],
+                        'c' => $c[$i],
+                        'd' => $d[$i],
+                        'kunci_jawaban' => $kunci_jawaban[$i],
+                        'file' => $file[$i],
+                    ]);
+                } else {
+                    QuizSoal::create([
+                        'quiz_id' => $quiz->id,
+                        'soal' => $soal[$i],
+                        'a' => $a[$i],
+                        'b' => $b[$i],
+                        'c' => $c[$i],
+                        'd' => $d[$i],
+                        'kunci_jawaban' => $kunci_jawaban[$i],
+                        'file' => null,
+                    ]);
+                }
+            } else {
+                QuizSoal::create([
+                    'quiz_id' => $quiz->id,
+                    'soal' => $soal[$i],
+                    'a' => $a[$i],
+                    'b' => $b[$i],
+                    'c' => $c[$i],
+                    'd' => $d[$i],
+                    'kunci_jawaban' => $kunci_jawaban[$i],
+                ]);
+            }
+        }
+        
+        return redirect()->route('tutor.kelasku.quiz.index',[$kelas_id])->with('status', 'Quiz berhasil dibuat');
         
         // echo $request->file->getClientMimeType();
     }
@@ -145,9 +157,12 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kelas_id, $id)
     {
-        //
+        $kelas = Kelas::findOrFail($kelas_id);
+        $quiz = Quiz::with('quizSoal')->findOrFail($id);
+
+        return view('admin_dashboard.tutor.kelasku.quiz.edit', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
     /**
@@ -168,8 +183,16 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kelas_id, $id)
     {
-        //
+        $data = Quiz::with('quizSoal')->findOrFail($id);
+        
+        foreach ($data->quizSoal as $item) {
+            $item->delete();
+        }
+
+        $data->delete();
+
+        return response()->json(array('success' => true));
     }
 }

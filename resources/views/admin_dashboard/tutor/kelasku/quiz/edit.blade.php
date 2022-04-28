@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Tugas | Kegiatan Pelibatan Masyarakat
+    Buat Quiz | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -20,70 +20,306 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('tutor.kelasku.tugas.update', [$kelas->id, $tugas->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('tutor.kelasku.quiz.store', [$kelas->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    @method('put')
-                    <div class="form-group">
-                        <label for="nama_tugas">Nama Tugas</label>
-                        <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" value="{{ $tugas->nama_tugas }}" required>
+                    <div id="quiz">
+                        <h3>Informasi Quiz</h3>
+                        <section> 
+                            <div class="form-group">
+                                <label for="nama_quiz">Nama quiz</label>
+                                <input type="text" class="form-control" id="nama_quiz" name="nama_quiz" value="{{ $quiz->nama_quiz }}" required>
+                            </div> 
+                            <div class="form-group">
+                                <label for="batas_waktu">Batas Waktu</label>
+                                <input id="dateTimeFlatpickr" name="batas_waktu" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." value="{{ $quiz->batas_waktu }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="selectpicker form-control" name="status">
+                                    <option value="Persiapan" {{ ($quiz->status == 'Persiapan') ? 'selected': '' }}>Persiapan</option>
+                                    <option value="Quiz Dimulai" {{ ($quiz->status == 'Quiz Dimulai') ? 'selected': '' }}>Quiz Dimulai</option>
+                                    <option value="Selesai" {{ ($quiz->status == 'Selesai') ? 'selected': '' }}>Selesai</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="aktif">Aktif?</label>
+                                <div class="row">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="aktif1" value="Y" name="aktif" class="custom-control-input" {{ ($quiz->aktif == 'Y') ? 'checked': '' }} required="required">
+                                        <label class="custom-control-label" for="aktif1">Ya</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="aktif2" value="N" name="aktif" class="custom-control-input" {{ ($quiz->aktif == 'N') ? 'checked': '' }}>
+                                        <label class="custom-control-label" for="aktif2">Tidak</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <h3>Soal</h3>
+                        <section>
+                            @foreach ($quiz->quizSoal as $index => $soal)
+                                @if ($loop->first)
+                                    <div id="listSoal">
+                                        <div class="control-group card mb-3">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="soal[]">Soal</label>
+                                                    <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required>{{ $soal->soal }}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="file[]">File (Audio, Gambar, Video)</label>
+                                                    <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*">
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="a[]" class="col-sm-1 col-form-label">A.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="a[]" name="a[]" value="{{ $soal->a }}" placeholder="Jawaban A.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="b[]" class="col-sm-1 col-form-label">B.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="b[]" name="b[]" value="{{ $soal->b }}" placeholder="Jawaban B.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="c[]" class="col-sm-1 col-form-label">C.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="c[]" name="c[]" value="{{ $soal->c }}" placeholder="Jawaban C.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="d[]" class="col-sm-1 col-form-label">D.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="d[]" name="d[]" value="{{ $soal->d }}" placeholder="Jawaban D.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kunci_jawaban[]">Kunci Jawaban</label>
+                                                    <select class="form-control" id="kunci_jawaban[]" name="kunci_jawaban[]">
+                                                        <option value="" hidden selected>Pilih Kunci Jawaban</option>
+                                                        <option value="A" {{ ($soal->kunci_jawaban == 'A') ? 'selected': '' }}>A.</option>
+                                                        <option value="B" {{ ($soal->kunci_jawaban == 'B') ? 'selected': '' }}>B.</option>
+                                                        <option value="C" {{ ($soal->kunci_jawaban == 'C') ? 'selected': '' }}>C.</option>
+                                                        <option value="D" {{ ($soal->kunci_jawaban == 'D') ? 'selected': '' }}>D.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn btn-success add-more" type="button">
+                                                        Tambah
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif ($loop->iteration)
+                                    <div id="listSoal">
+                                        <div class="control-group card mb-3">
+                                            <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="soal[]">Soal</label>
+                                                    <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required>{{ $soal->soal }}</textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="file[]">File (Audio, Gambar, Video)</label>
+                                                    <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*">
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="a[]" class="col-sm-1 col-form-label">A.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="a[]" name="a[]" value="{{ $soal->a }}" placeholder="Jawaban A.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="b[]" class="col-sm-1 col-form-label">B.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="b[]" name="b[]" value="{{ $soal->b }}" placeholder="Jawaban B.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="c[]" class="col-sm-1 col-form-label">C.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="c[]" name="c[]" value="{{ $soal->c }}" placeholder="Jawaban C.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="d[]" class="col-sm-1 col-form-label">D.</label>
+                                                    <div class="col-sm-11">
+                                                        <input type="text" class="form-control" id="d[]" name="d[]" value="{{ $soal->d }}" placeholder="Jawaban D.">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kunci_jawaban[]">Kunci Jawaban</label>
+                                                    <select class="form-control" id="kunci_jawaban[]" name="kunci_jawaban[]">
+                                                        <option value="" hidden selected>Pilih Kunci Jawaban</option>
+                                                        <option value="A" {{ ($soal->kunci_jawaban == 'A') ? 'selected': '' }}>A.</option>
+                                                        <option value="B" {{ ($soal->kunci_jawaban == 'B') ? 'selected': '' }}>B.</option>
+                                                        <option value="C" {{ ($soal->kunci_jawaban == 'C') ? 'selected': '' }}>C.</option>
+                                                        <option value="D" {{ ($soal->kunci_jawaban == 'D') ? 'selected': '' }}>D.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn btn-danger remove" type="button">
+                                                        Hapus
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </section>
                     </div>
-                    <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ $tugas->deskripsi }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="batas_waktu">Batas Waktu</label>
-                        <input id="dateTimeFlatpickr" name="batas_waktu" value="{{ $tugas->batas_waktu }}" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
-                    </div>
-                    <div class="form-group">
-                        @foreach ($tugas->uploadTugas as $fileTugas)
-                            <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->tugas }}</a><br>
-                        @endforeach
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-file-container" data-upload-id="mySecondImage">
-                            <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-                            <label class="custom-file-container__custom-file" >
-                                <input type="file" name="tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
-                                <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-                                <span class="custom-file-container__custom-file__custom-file-control"></span>
-                            </label>
-                            <small id="uploadHelp" class="form-text text-muted">Jika anda mengupload file baru maka akan menghapus data yang sebelumnya yang sudah di upload</small>
-                            <div class="custom-file-container__image-preview"></div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.tugas.index', [$kelas->id]) }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    <hr>
+                    <div class="d-flex justify-content-start">
+                        <a href="{{ route('tutor.kelasku.quiz.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                     </div>
                 </form>
             </div>
         </div>
 
     </div>
+
+    <div class="d-none">
+        <div class="copy">
+            <div class="control-group card mb-3">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="soal[]">Soal</label>
+                        <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="file[]">File (Audio, Gambar, Video)</label>
+                        <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*" multiple>
+                    </div>
+                    <div class="form-group row">
+                        <label for="a[]" class="col-sm-1 col-form-label">A.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="a[]" name="a[]" placeholder="Isi Jawaban A.">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="b[]" class="col-sm-1 col-form-label">B.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="b[]" name="b[]" placeholder="Isi Jawaban B.">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="c[]" class="col-sm-1 col-form-label">C.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="c[]" name="c[]" placeholder="Isi Jawaban C.">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="d[]" class="col-sm-1 col-form-label">D.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="d[]" name="d[]" placeholder="Isi Jawaban D.">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="kunci_jawaban[]">Kunci Jawaban</label>
+                        <select class="form-control" name="kunci_jawaban[]">
+                            <option value="" hidden selected>Pilih Kunci Jawaban</option>
+                            <option value="A">A.</option>
+                            <option value="B">B.</option>
+                            <option value="C">C.</option>
+                            <option value="D">D.</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-danger remove" type="button">
+                            Hapus
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
-    <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/jquery-step/jquery.steps.css') }}">
+    <style>
+        #formValidate .wizard > .content {min-height: 25em;}
+        #example-vertical.wizard > .content {min-height: 24.5em;}
+    </style>
     <style>
         .btn-light { border-color: transparent; }
     </style>
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/jquery-step/jquery.steps.min.js') }}"></script>
     <script>
-        var secondUpload = new FileUploadWithPreview('mySecondImage')
+        $("#quiz").steps({
+            headerTag: "h3",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            autoFocus: true,
+            cssClass: 'pill wizard',
+            onFinished: function (event, currentIndex) {
+                // var form = $(this);
+                // Submit form input
+                // form.submit();
+                $("#form").submit();
+            },
+        });
     </script>
     <script>
         var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
+            minDate: "today",
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             time_24hr: true
         });
     </script>
+    <script>
+        $(".selectpicker").selectpicker({
+            "title": "Pilih Menu"
+        }).selectpicker("render");
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".add-more").click(function(){ 
+                var html = $(".copy").html();
+                $("#listSoal").append(html);
+            });
+        
+            // saat tombol remove dklik control group akan dihapus 
+            $("body").on("click",".remove",function(){ 
+                $(this).parents(".control-group").remove();
+            });
+        });
+    </script>
+    {{-- <script>
+        $(document).ready(function () {
+            var waris = '{{ is_array(old("ktp_ahli_waris")) ? count(old("ktp_ahli_waris"))-1 : 0 }}';
+
+            $('#btnWarisAdd').on('click', function() {
+                waris++;
+                $('#ahli-waris').append(`
+                    <div class="form-group" id="waris`+ waris +`">
+                        <label for="ktp_ahli_waris[`+ waris +`]">KTP Ahli Waris</label>
+                        <input type="file" name="ktp_ahli_waris[`+ waris +`]" id="ktp_ahli_waris[`+ waris +`]" class="form-control-file" required>
+                    </div>
+                `)
+                $('#btnWarisDel').prop('disabled',false);
+            })
+
+            $('#btnWarisDel').click(function(){
+                $('#waris'+waris+'').remove();
+                waris--;
+                if (pcr === 0) {
+                    $('#btnWarisDel').prop('disabled',true);
+                }
+            });
+        })
+    </script> --}}
 @endpush

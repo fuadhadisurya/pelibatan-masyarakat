@@ -36,9 +36,9 @@
                             <div class="form-group">
                                 <label for="status">Status</label>
                                 <select class="selectpicker form-control" name="status">
-                                    <option>Persiapan</option>
-                                    <option>Quiz Dimulai</option>
-                                    <option>Selesai</option>
+                                    <option value="Persiapan">Persiapan</option>
+                                    <option value="Quiz Dimulai">Quiz Dimulai</option>
+                                    <option value="Selesai">Selesai</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -63,6 +63,10 @@
                                         <div class="form-group">
                                             <label for="soal[]">Soal</label>
                                             <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="file[]">File (Audio, Gambar, Video)</label>
+                                            <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*">
                                         </div>
                                         <div class="form-group row">
                                             <label for="a[]" class="col-sm-1 col-form-label">A.</label>
@@ -98,10 +102,6 @@
                                                 <option value="D">D.</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="file[]">File (Audio, Gambar, Video)</label>
-                                            <input type="file" name="file[]" id="file" accept="image/*, video/*, audio/*" multiple>
-                                        </div>
                                         <div class="d-flex justify-content-end">
                                             <button class="btn btn-success add-more" type="button">
                                                 Tambah
@@ -114,7 +114,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-start">
-                        <a href="{{ route('tutor.kelasku.tugas.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('tutor.kelasku.quiz.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                     </div>
                 </form>
             </div>
@@ -129,6 +129,10 @@
                     <div class="form-group">
                         <label for="soal[]">Soal</label>
                         <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="file[]">File (Audio, Gambar, Video)</label>
+                        <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*" multiple>
                     </div>
                     <div class="form-group row">
                         <label for="a[]" class="col-sm-1 col-form-label">A.</label>
@@ -163,10 +167,6 @@
                             <option value="C">C.</option>
                             <option value="D">D.</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="file[]">File (Audio, Gambar, Video)</label>
-                        <input type="file" name="file[]" id="file" accept="image/*, video/*, audio/*" multiple>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-danger remove" type="button">

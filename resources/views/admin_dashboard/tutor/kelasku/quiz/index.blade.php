@@ -70,9 +70,9 @@
             ajax: "{{ route('tutor.kelasku.quiz.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_tugas', name: 'nama_tugas'},
-                {data: 'deskripsi', name: 'deskripsi'},
-                {data: 'batas_waktu', name: 'batas_waktu'},
+                {data: 'nama_quiz', name: 'nama_quiz'},
+                {data: 'status', name: 'status'},
+                {data: 'aktif', name: 'aktif'},
                 {data: 'batas_waktu', name: 'batas_waktu'},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
@@ -102,7 +102,8 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{route("tutor.kelasku.quiz.destroy", [$kelas_id, '+id+'])}}',
+                        // url:'{{route("tutor.kelasku.quiz.destroy", [$kelas_id, '+id+'])}}',
+                        url:'{{url("/tutor/kelasku/$kelas->id/quiz")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
