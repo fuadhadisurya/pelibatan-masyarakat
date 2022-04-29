@@ -70,6 +70,10 @@ table.dataTable {
   letter-spacing: 1px;
   text-transform: uppercase; }
 
+.alignment_top > tbody > tr > td{
+  vertical-align: top;
+}
+
 .table > tbody > tr > td {
   border: none;
   color: #888ea8;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\Quiz;
-use App\Models\QuizSoal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -18,25 +18,53 @@ class QuizController extends Controller
      */
     public function index(Request $request, $kelas_id)
     {
-        $tugas = Quiz::where('kelas_id', '=', $kelas_id)->get();
+        $quiz = Quiz::where('kelas_id', '=', $kelas_id)->get();
         if ($request->ajax()) {
-            return DataTables::of($tugas)
+            return DataTables::of($quiz)
                     ->addIndexColumn()
+                    ->addColumn('keterangan', function($row){
+                        return '
+                            Tanggal : '.Carbon::parse($row->tanggal_quiz)->format('j F Y').',<br>
+                            Waktu : '.$row->waktu_pengerjaan.' Menit
+                        ';
+                    })
+                    ->addColumn('soal', function($row){
+                        return '
+                            <a href="'.route('tutor.kelasku.quiz.soal.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="kelola soal"><i class="far fa-list-alt"></i></a>
+                        ';
+                    })
+                    ->addColumn('hasil_nilai', function($row){
+                        return '
+                            <a href="'.route('tutor.kelasku.quiz.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-secondary" title="lihat nilai"><i class="far fa-eye"></i></a>
+                        ';
+                    })
+                    ->addColumn('aktif', function($row){
+                        if($row->aktif == 'Y'){
+                            $aktif = '<a href="'.route('tutor.kelasku.quiz.aktif', [$row->kelas_id, $row->id]).'" class="badge badge-pill badge-success">Aktif</a>';
+                        } else {
+                            $aktif = '<a href="'.route('tutor.kelasku.quiz.aktif', [$row->kelas_id, $row->id]).'" class="badge badge-pill badge-danger">Tidak Aktif</a>';
+                        }
+                        return $aktif;
+                    })
                     ->addColumn('aksi', function($row){
+                        // if($row->aktif == 'Y'){
+                        //     $aktif = '<a href="'.route('tutor.kelasku.quiz.aktif', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-danger" title="Quiz tidak aktif"><i class="far fa-times-circle"></i></a>';
+                        // } else {
+                        //     $aktif = '<a href="'.route('tutor.kelasku.quiz.aktif', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-success" title="Quiz aktif"><i class="far fa-check-circle"></i></a>';
+                        // }
                         return '
                             <td class="text-center">
-                                <a href="'.route('tutor.kelasku.quiz.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="show"><i class="far fa-eye"></i></a>
                                 <a href="'.route('tutor.kelasku.quiz.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi', 'status'])
+                    ->rawColumns(['keterangan', 'soal', 'hasil_nilai', 'aktif', 'aksi'])
                     ->make(true);
         }
 
         $kelas = Kelas::findOrFail($kelas_id);
-        return view('admin_dashboard.tutor.kelasku.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'tugas' => $tugas]);
+        return view('admin_dashboard.tutor.kelasku.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
     /**
@@ -44,10 +72,9 @@ class QuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($kelas_id)
+    public function create()
     {
-        $kelas = Kelas::findOrFail($kelas_id);
-        return view('admin_dashboard.tutor.kelasku.quiz.create', ['kelas' => $kelas, 'kelas_id' => $kelas_id]);
+        //
     }
 
     /**
@@ -60,84 +87,16 @@ class QuizController extends Controller
     {
         $this->validate($request, [
             'nama_quiz' => 'required',
-            'batas_waktu' => 'required',
+            'tanggal_quiz' => 'required',
+            'waktu_pengerjaan' => 'required',
             'aktif' => 'required',
-            'status' => 'required',
-            "soal"   => "required|array",
-            "soal.*" => "required|string",
-            "a"   => "required|array",
-            "a.*" => "required|string",
-            "b"   => "required|array",
-            "b.*" => "required|string",
-            "c"   => "required|array",
-            "c.*" => "required|string",
-            "d"   => "required|array",
-            "d.*" => "required|string",
-            "kunci_jawaban"   => "required|array",
-            "kunci_jawaban.*" => "required|string",
-            "file"   => "array",
-            "file.*" => "mimetypes:video/*,audio/*,image/*",
         ]);
-
         $data = $request->all();
+        $data['tanggal_quiz'] = Carbon::parse($data['tanggal_quiz'])->format('Y-m-d');
         $data['kelas_id'] = $kelas_id;
         $quiz = Quiz::create($data);
 
-        $soal = $request->soal;
-        $a = $request->a;
-        $b = $request->b;
-        $c = $request->c;
-        $d = $request->d;
-        $kunci_jawaban = $request->kunci_jawaban;
-        $total = count($soal);
-
-        if ($request->file('file')){
-            foreach($request->file('file') as $key=>$data){
-                $file[$key] = $data->store('soal_quiz', 'public');
-            }
-        }
-
-        for($i=0;$i<$total;$i++){
-            if ($request->file('file')){
-                if(!empty($file[$i])) { 
-                    QuizSoal::create([
-                        'quiz_id' => $quiz->id,
-                        'soal' => $soal[$i],
-                        'a' => $a[$i],
-                        'b' => $b[$i],
-                        'c' => $c[$i],
-                        'd' => $d[$i],
-                        'kunci_jawaban' => $kunci_jawaban[$i],
-                        'file' => $file[$i],
-                    ]);
-                } else {
-                    QuizSoal::create([
-                        'quiz_id' => $quiz->id,
-                        'soal' => $soal[$i],
-                        'a' => $a[$i],
-                        'b' => $b[$i],
-                        'c' => $c[$i],
-                        'd' => $d[$i],
-                        'kunci_jawaban' => $kunci_jawaban[$i],
-                        'file' => null,
-                    ]);
-                }
-            } else {
-                QuizSoal::create([
-                    'quiz_id' => $quiz->id,
-                    'soal' => $soal[$i],
-                    'a' => $a[$i],
-                    'b' => $b[$i],
-                    'c' => $c[$i],
-                    'd' => $d[$i],
-                    'kunci_jawaban' => $kunci_jawaban[$i],
-                ]);
-            }
-        }
-        
         return redirect()->route('tutor.kelasku.quiz.index',[$kelas_id])->with('status', 'Quiz berhasil dibuat');
-        
-        // echo $request->file->getClientMimeType();
     }
 
     /**
@@ -172,9 +131,23 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
-        //
+        $this->validate($request, [
+            'nama_quiz' => 'required',
+            'tanggal_quiz' => 'required',
+            'waktu_pengerjaan' => 'required',
+            'aktif' => 'required',
+        ]);
+
+        $quiz = Quiz::with('quizSoal')->findOrFail($id);
+        
+        $data = $request->all();
+        $data['tanggal_quiz'] = Carbon::parse($data['tanggal_quiz'])->format('Y-m-d');
+
+        $quiz->update($data);
+
+        return redirect()->route('tutor.kelasku.quiz.index',[$kelas_id])->with('status', 'Quiz berhasil diperbarui');
     }
 
     /**
@@ -183,9 +156,9 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($kelas_id, $id)
+    public function destroy($id)
     {
-        $data = Quiz::with('quizSoal')->findOrFail($id);
+        $data = Quiz::with('quizSoal')->find($id);
         
         foreach ($data->quizSoal as $item) {
             $item->delete();
@@ -194,5 +167,21 @@ class QuizController extends Controller
         $data->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function aktif($kelas_id, $id){
+        $quiz = Quiz::with('quizSoal')->findOrFail($id);
+        
+        if ($quiz->aktif == "Y") {
+            $aktif = "N";
+        } else {
+            $aktif = "Y";
+        }
+
+        $quiz->update([
+            'aktif' => $aktif,
+        ]);
+
+        return redirect()->route('tutor.kelasku.quiz.index',[$kelas_id])->with('status', 'Quiz berhasil diperbarui');
     }
 }

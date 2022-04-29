@@ -213,6 +213,7 @@ class KelasController extends Controller
     public function destroy($id)
     {
         $kelas = Kelas::findOrFail($id);
+        Storage::disk('public')->delete($kelas->banner);
         $kelas->delete();
 
         $kelasKategori = KelasKategori::where('kelas_id', '=', $id);

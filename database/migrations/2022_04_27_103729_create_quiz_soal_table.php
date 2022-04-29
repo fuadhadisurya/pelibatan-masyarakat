@@ -22,6 +22,7 @@ class CreateQuizSoalTable extends Migration
             $table->string('c');
             $table->string('d');
             $table->string('kunci_jawaban');
+            $table->string('pembahasan')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();
         });

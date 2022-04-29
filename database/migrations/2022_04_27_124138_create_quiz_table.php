@@ -17,9 +17,9 @@ class CreateQuizTable extends Migration
             $table->id();
             $table->foreignId('kelas_id');
             $table->string('nama_quiz');
-            $table->dateTimeTz('batas_waktu');
+            $table->date('tanggal_quiz');
+            $table->integer('waktu_pengerjaan');
             $table->enum('aktif', ['Y', 'N']);
-            $table->string('status');
             $table->timestamps();
         });
     }

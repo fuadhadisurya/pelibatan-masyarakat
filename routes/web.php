@@ -30,6 +30,7 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\MateriController as Tutor
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PesertaController as TutorKelaskuPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PresensiController as TutorKelaskuPresensiController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizController as TutorKelaskuQuizController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as TutorKelaskuSilabusController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
@@ -102,7 +103,10 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::put('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.periksa-tugas.update');
     Route::resource('kelasku.tugas', TutorKelaskuTugasController::class);
     Route::resource('kelasku.presensi', TutorKelaskuPresensiController::class);
+    Route::get('/kelasku/{kelas}/quiz/{tugas_id}/aktif', [TutorKelaskuQuizController::class, 'aktif'])->name('kelasku.quiz.aktif');
     Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
+    Route::get('/kelasku/{kelas}/quiz/{tugas_id}/soal/{}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
+    Route::resource('kelasku.quiz.soal', QuizSoalController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);

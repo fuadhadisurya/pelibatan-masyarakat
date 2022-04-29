@@ -11,7 +11,7 @@ class Quiz extends Model
 
     protected $table = "quiz";
 
-    protected $fillable = ['kelas_id', 'nama_quiz', 'batas_waktu', 'aktif', 'status'];
+    protected $fillable = ['kelas_id', 'nama_quiz', 'tanggal_quiz', 'waktu_pengerjaan', 'aktif'];
 
     public function kelas(){
         return $this->belongsTo(Kelas::class);

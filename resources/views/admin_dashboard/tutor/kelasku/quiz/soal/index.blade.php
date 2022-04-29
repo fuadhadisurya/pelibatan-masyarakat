@@ -21,18 +21,18 @@
 
             <div class="widget-content widget-content-area br-6">
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
-                    <i class="far fa-plus-square"></i> Buat Quiz
+                    <i class="far fa-plus-square"></i> Tambah Soal
                 </button>
+                <a href="{{ route('tutor.kelasku.quiz.soal.create', [$kelas->id, $quiz_id]) }}" class="btn btn-primary mb-3">
+                    <i class="far fa-plus-square"></i> Tambah Soal
+                </a>
                 <div class="table-responsive">
-                    <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
+                    <table id="data-peserta" class="table table-hover table-bordered alignment_top" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Quiz</th>
-                                <th>Keterangan</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Soal</th>
-                                <th class="text-center">Hasil Nilai</th>
+                                <th>Soal</th>
+                                <th class="text-center">Aktif</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -61,27 +61,50 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nama_quiz">Nama quiz</label>
-                        <input type="text" class="form-control" id="nama_quiz" name="nama_quiz" required>
-                    </div> 
-                    <div class="form-group">
-                        <label for="tanggal_quiz">Tanggal Quiz</label>
-                        <input id="basicFlatpickr" name="tanggal_quiz" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
+                        <label for="soal[]">Soal</label>
+                        <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="waktu_pengerjaan">Waktu Pengerjaan (Dalam Menit)</label>
-                        <input name="waktu_pengerjaan" class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Cth : 60" required>
+                        <label for="file[]">File (Audio, Gambar, Video)</label>
+                        <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*" multiple>
+                    </div>
+                    <div class="form-group row">
+                        <label for="a[]" class="col-sm-1 col-form-label text-right">A.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="a[]" name="a[]" placeholder="Isi Jawaban A.">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="b[]" class="col-sm-1 col-form-label text-right">B.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="b[]" name="b[]" placeholder="Isi Jawaban B.">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="c[]" class="col-sm-1 col-form-label text-right">C.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="c[]" name="c[]" placeholder="Isi Jawaban C.">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="d[]" class="col-sm-1 col-form-label text-right">D.</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="d[]" name="d[]" placeholder="Isi Jawaban D.">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="aktif">Aktif?</label>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="aktif1" value="Y" name="aktif" class="custom-control-input" required="required">
-                            <label class="custom-control-label" for="aktif1">Ya</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="aktif2" value="N" name="aktif" class="custom-control-input">
-                            <label class="custom-control-label" for="aktif2">Tidak</label>
-                        </div>
+                        <label for="kunci_jawaban[]">Kunci Jawaban</label>
+                        <select class="form-control" name="kunci_jawaban[]">
+                            <option value="" hidden selected>Pilih Kunci Jawaban</option>
+                            <option value="A">A.</option>
+                            <option value="B">B.</option>
+                            <option value="C">C.</option>
+                            <option value="D">D.</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pembahasan[]">Pembahasan (Opsional)</label>
+                        <textarea class="form-control" id="pembahasan[]" name="pembahasan[]" rows="2" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -116,14 +139,11 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.quiz.index', $kelas_id) }}",
+            ajax: "{{ route('tutor.kelasku.quiz.soal.index', [$kelas_id, $quiz_id]) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_quiz', name: 'nama_quiz'},
-                {data: 'keterangan', name: 'keterangan'},
+                {data: 'soal', name: 'soal'},
                 {data: 'aktif', name: 'aktif', className: 'text-center', orderable: false, searchable: false},
-                {data: 'soal', name: 'soal', className: 'text-center', orderable: false, searchable: false},
-                {data: 'hasil_nilai', name: 'hasil_nilai', className: 'text-center', orderable: false, searchable: false},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
@@ -158,8 +178,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        // url:'{{route("tutor.kelasku.quiz.destroy", [$kelas_id, '+id+'])}}',
-                        url:'{{url("/tutor/kelasku/$kelas->id/quiz")}}/' +id,
+                        url:'{{url("/tutor/kelasku/$kelas->id/quiz/$quiz_id/soal")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
