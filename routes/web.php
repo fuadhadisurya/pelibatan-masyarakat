@@ -105,7 +105,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku.presensi', TutorKelaskuPresensiController::class);
     Route::get('/kelasku/{kelas}/quiz/{tugas_id}/aktif', [TutorKelaskuQuizController::class, 'aktif'])->name('kelasku.quiz.aktif');
     Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
-    Route::get('/kelasku/{kelas}/quiz/{tugas_id}/soal/{}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
+    Route::get('/kelasku/{kelas}/quiz/{quiz_id}/soal/{soal_id}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
     Route::resource('kelasku.quiz.soal', QuizSoalController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
@@ -126,6 +126,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::post('/kelasku/{kelas}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');
     Route::resource('kelasku.tugas', PesertaKelaskuTugasController::class);
     Route::resource('kelasku.presensi', PesertaKelaskuPresensiController::class);
+    Route::post('/kelasku/{kelas}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'jawaban'])->name('quiz.jawaban.store');
     Route::resource('kelasku.quiz', PesertaKelaskuQuizController::class);
 });
 

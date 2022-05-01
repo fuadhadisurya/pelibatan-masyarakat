@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
+use App\Models\Quiz;
+use App\Models\QuizSoal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class QuizController extends Controller
 {
@@ -12,9 +17,39 @@ class QuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $kelas_id)
     {
-        //
+        $quiz = Quiz::where('kelas_id', '=', $kelas_id)->get();
+        if ($request->ajax()) {
+            return DataTables::of($quiz)
+                    ->addIndexColumn()
+                    ->addColumn('keterangan', function($row){
+                        return '
+                            Tanggal : '.Carbon::parse($row->tanggal_quiz)->format('j F Y').',<br>
+                            Waktu : '.$row->waktu_pengerjaan.' Menit
+                        ';
+                    })
+                    ->addColumn('aktif', function($row){
+                        if($row->aktif == 'Y'){
+                            $aktif = '<span class="badge badge-pill badge-success">Aktif</span>';
+                        } else {
+                            $aktif = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
+                        }
+                        return $aktif;
+                    })
+                    ->addColumn('aksi', function($row){
+                        return '
+                            <td class="text-center">
+                                <a href="'.route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="kerjakan soal"><i class="far fa-edit"></i></a>
+                            </td>
+                        ';
+                    })
+                    ->rawColumns(['keterangan', 'aktif', 'aksi'])
+                    ->make(true);
+        }
+
+        $kelas = Kelas::findOrFail($kelas_id);
+        return view('admin_dashboard.peserta.kelasku.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
     /**
@@ -44,9 +79,21 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kelas_id, $id)
     {
-        //
+        $kelas = Kelas::findOrFail($kelas_id);
+        $quiz = Quiz::with('quizSoal')->findOrFail($id); 
+
+        foreach($quiz->quizSoal as $soal){
+            if ($soal->file != null) {
+                $file = explode('.', $soal->file);
+                $path = trim($file[0]);
+                $extension = trim($file[1]);
+                $soal['file_extension'] = $extension;
+            }
+        }
+        
+        return view('admin_dashboard.peserta.kelasku.quiz.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
     /**
@@ -81,5 +128,9 @@ class QuizController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function jawaban(Request $request, $kelas_id, $quiz_id){
+        dd($request);
     }
 }

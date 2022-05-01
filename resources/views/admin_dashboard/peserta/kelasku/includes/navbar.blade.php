@@ -83,7 +83,7 @@
             <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('peserta.kelasku.presensi.index',[$kelas->id]) }}">Presensi</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="test-tab" data-toggle="tab" href="#test" role="tab" aria-controls="test" aria-selected="false">Test</a>
+            <a class="nav-link {{ Request::segment(4) == 'quiz' ? 'active' : '' }}" href="{{ route('peserta.kelasku.quiz.index',[$kelas->id]) }}">Quiz</a>
         </li>
         {{-- <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

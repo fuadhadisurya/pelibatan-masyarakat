@@ -74,6 +74,7 @@ class QuizSoalController extends Controller
                 ->addColumn('aksi', function($row){
                     return '
                         <td class="text-center">
+                            <a href="'.route('tutor.kelasku.quiz.soal.show', [$row->quiz->kelas_id, $row->quiz_id, $row->id]).'" class="btn btn-sm btn-info" title="lihat"><i class="far fa-file-alt"></i></a>
                             <a href="'.route('tutor.kelasku.quiz.soal.edit', [$row->quiz->kelas_id, $row->quiz_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
                             <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                         </td>
@@ -135,7 +136,20 @@ class QuizSoalController extends Controller
 
         if ($request->file('file')){
             foreach($request->file('file') as $key=>$data){
-                $file[$key] = $data->store('soal_quiz', 'public');
+                //get filename with extension
+                $filenamewithextension = $data->getClientOriginalName();
+            
+                //get filename without extension
+                $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        
+                //get file extension
+                $extension = $data->getClientOriginalExtension();
+        
+                //filename to store
+                $filenametostore = $filename.'_'.time().'.'.$extension;
+
+                $file[$key] = $data->storeAs('soal_quiz', $filenametostore, 'public');
+                // $file[$key] = $data->store('soal_quiz', 'public');
             }
         }
 
@@ -151,6 +165,7 @@ class QuizSoalController extends Controller
                     'kunci_jawaban' => $kunci_jawaban[$i],
                     'pembahasan' => $pembahasan[$i],
                     'file' => $file[$i],
+                    'aktif' => 'Y',
                 ]);
             } else {
                 QuizSoal::create([
@@ -163,6 +178,7 @@ class QuizSoalController extends Controller
                     'kunci_jawaban' => $kunci_jawaban[$i],
                     'pembahasan' => $pembahasan[$i],
                     'file' => null,
+                    'aktif' => 'Y',
                 ]);
             }
         }
@@ -176,9 +192,17 @@ class QuizSoalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kelas_id, $quiz_id, $id)
     {
-        //
+        $kelas = Kelas::findOrFail($kelas_id);
+        $soal = QuizSoal::with('quiz')->findOrFail($id);
+        
+        $file = explode('.', $soal->file);
+        $path = trim($file[0]);
+        $extension = trim($file[1]);
+        $soal['file_extension'] = $extension;
+        
+        return view('admin_dashboard.tutor.kelasku.quiz.soal.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'soal' => $soal]);
     }
 
     /**
@@ -191,6 +215,12 @@ class QuizSoalController extends Controller
     {
         $kelas = Kelas::findOrFail($kelas_id);
         $soal = QuizSoal::with('quiz')->findOrFail($id);
+
+        $file = explode('.', $soal->file);
+        $path = trim($file[0]);
+        $extension = trim($file[1]);
+        $soal['file_extension'] = $extension;
+        
         return view('admin_dashboard.tutor.kelasku.quiz.soal.edit', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'soal' => $soal]);
     }
 
@@ -203,6 +233,24 @@ class QuizSoalController extends Controller
      */
     public function update(Request $request, $kelas_id, $quiz_id, $id)
     {
+        if( $request->hasFile('file') ) {
+            $file = $request->file('file');
+            $imagemimes = ['image/png', 'image/jpg', 'image/jpeg']; //Add more mimes that you want to support
+            $videomimes = ['video/mp4']; //Add more mimes that you want to support
+            $audiomimes = ['audio/mpeg']; //Add more mimes that you want to support
+    
+            if(in_array($file->getMimeType() ,$imagemimes)) {
+                $filevalidate = 'required|mimes:jpeg,jpg,png|max:2048';
+            }
+            //Validate video
+            if (in_array($file->getMimeType() ,$videomimes)) {
+                $filevalidate = 'required|mimes:mp4';
+            }
+            //validate audio
+            if (in_array($file->getMimeType() ,$audiomimes)) {
+                $filevalidate = 'required|mimes:mpeg';
+            }		
+        }
         $this->validate($request, [
             "soal"   => "required",
             "a"   => "required",
@@ -210,16 +258,29 @@ class QuizSoalController extends Controller
             "c"   => "required",
             "d"   => "required",
             "kunci_jawaban"   => "required",
-            "file" => "mimetypes:video/*,audio/*,image/*",
+            "file" => $filevalidate,
         ]);
 
         $soal = QuizSoal::with('quiz')->findOrFail($id);
         
         $data = $request->all();
-
+        
         if ($request->file('file')) {
             Storage ::disk('public')->delete($soal->file);
-            $data['file'] = $request->file('file')->store('soal_quiz', 'public');
+
+            //get filename with extension
+            $filenamewithextension = $request->file('file')->getClientOriginalName();
+        
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+    
+            //get file extension
+            $extension = $request->file('file')->getClientOriginalExtension();
+    
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
+
+            $data['file'] = $request->file('file')->storeAs('soal_quiz', $filenametostore, 'public');
         }
 
         $soal->update($data);
@@ -242,5 +303,21 @@ class QuizSoalController extends Controller
         $data->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function aktif($kelas_id, $soal_id, $id){
+        $quiz = QuizSoal::findOrFail($id);
+        
+        if ($quiz->aktif == "Y") {
+            $aktif = "N";
+        } else {
+            $aktif = "Y";
+        }
+
+        $quiz->update([
+            'aktif' => $aktif,
+        ]);
+
+        return redirect()->route('tutor.kelasku.quiz.soal.index',[$kelas_id, $soal_id])->with('status', 'Quiz berhasil diperbarui');
     }
 }

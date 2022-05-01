@@ -20,9 +20,9 @@
             @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
+                {{-- <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
                     <i class="far fa-plus-square"></i> Tambah Soal
-                </button>
+                </button> --}}
                 <a href="{{ route('tutor.kelasku.quiz.soal.create', [$kelas->id, $quiz_id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Soal
                 </a>
@@ -48,7 +48,7 @@
 @endsection
 
 @push('modal')
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,7 +114,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 @endpush
 
 @push('styles')

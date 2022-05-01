@@ -11,7 +11,7 @@ class QuizSoal extends Model
 
     protected $table = "quiz_soal";
 
-    protected $fillable = ['quiz_id', 'soal', 'a', 'b', 'c', 'd', 'kunci_jawaban', 'file', 'aktif', 'pembahasan'];
+    protected $fillable = ['quiz_id', 'soal', 'a', 'b', 'c', 'd', 'kunci_jawaban', 'file', 'aktif', 'pembahasan', 'aktif'];
 
     public function quiz(){
         return $this->belongsTo(Quiz::class);

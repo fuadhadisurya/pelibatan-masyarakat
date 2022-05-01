@@ -32,6 +32,23 @@
                                         <label for="soal">Soal</label>
                                         <textarea class="form-control" id="soal" name="soal" rows="2" required>{{ $soal->soal }}</textarea>
                                     </div>
+                                    <div class="mb-3">
+                                        @if ($soal->file_extension == 'jpg' || $soal->file_extension == 'jpeg' || $soal->file_extension == 'png')
+                                            <img src="{{ Storage::url($soal->file) }}" class="img-fluid" alt="...">
+                                        @elseif($soal->file_extension == 'mp4')
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <video class="embed-responsive-item" controls>
+                                                    <source src="{{ Storage::url($soal->file) }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </div>
+                                        @elseif($soal->file_extension == 'mp3')
+                                            <audio controls>
+                                                <source src="{{ Storage::url($soal->file) }}" type="audio/mpeg">
+                                                Your browser does not support the audio tag.
+                                            </audio>
+                                        @endif
+                                    </div>
                                     <div class="form-group">
                                         <label for="file">File (Audio, Gambar, Video)</label>
                                         <input type="file" name="file" id="file" accept="image/*, video/*, audio/*">
@@ -70,7 +87,7 @@
                     </section>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.quiz.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('tutor.kelasku.quiz.soal.index', [$kelas->id, $soal->quiz->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>
