@@ -4,8 +4,8 @@
 @endsection
 
 @section('content')
-    @include('admin_dashboard.tutor.kelasku.includes.navbar')
-    <form action="{{ route('peserta.quiz.jawaban.store', [$kelas->id, $quiz->id]) }}" method="post" onsubmit="setFormSubmitting()">
+    @include('admin_dashboard.peserta.kelasku.includes.navbar')
+    <form action="{{ route('peserta.quiz.jawaban.store', [$kelas->id, $quiz->id]) }}" method="post" id="jawabanQuiz">
         @csrf
         <div class="row layout-top-spacing">
             {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing"> --}}
@@ -27,6 +27,7 @@
                             <div class="card mb-3">
                                 <div class="card-header">
                                     <div class="mb-3">
+                                        <input type="hidden" name="quiz_soal_id[{{ $index }}]" value="{{ $soal->id }}">
                                         <p>{{ $index+1 . ". " . $soal->soal }}</p>
                                     </div>
                                     <div class="mb-3">
@@ -50,7 +51,6 @@
                                 <div class="card-body">
                                     <table>
                                         <tr>
-                                            {{-- <td><input name="jawaban[{{ $index }}]" type="radio" value="A" required="required"></td> --}}
                                             <td><input name="jawaban[{{ $index }}]" type="radio" value="A"></td>
                                             <td> A. </td>
                                             <td>{{ $soal->a }}</td>
@@ -106,14 +106,14 @@
                                     </tr>
                                     <tr>
                                         <td><b>Sisa Waktu</b></td>
-                                        <td>: <span class="badge badge-pill badge-warning"><span class="text-light" id="menit">44</span><span class="text-light">:</span><span class="text-light" id="detik">49</span></span></td>
+                                        <td>: <span class="badge badge-pill badge-warning"><span class="text-light" id="menit">{{ $quiz->waktu_pengerjaan }}</span><span class="text-light">:</span><span class="text-light" id="detik">00</span></span></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="d-flex justify-content-center mt-3">
-                            {{-- <button type="submit" id="btn-submit" class="btn btn-block btn-primary">Kirim Jawaban</button> --}}
-                            <input type="submit" id="btn-submit" class="btn btn-block btn-primary" value="Kirim Jawaban" />
+                            <button type="submit" id="btn-submit" class="btn btn-block btn-primary">Kirim Jawaban</button>
+                            {{-- <input type="submit" id="btn-submit" class="btn btn-block btn-primary" value="Kirim Jawaban" /> --}}
                         </div>
                     </div>
                 </div>
@@ -133,24 +133,6 @@
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
-    <script>
-        var formSubmitting = false;
-        var setFormSubmitting = function() { formSubmitting = true; };
-
-        window.onload = function() {
-            window.addEventListener("beforeunload", function (e) {
-                if (formSubmitting) {
-                    return undefined;
-                }
-
-                var confirmationMessage="It looks like you have been editing something. "
-                                        + 'If you leave before saving, your changes will be lost.';
-                
-                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-            });
-        };
-    </script>
     <script type="text/javascript">
         document.addEventListener('keydown', (e) => {
             e = e || window.event;
@@ -194,7 +176,49 @@
                 if (result.value) {
                     if (result) form.submit();
                 }
-            })
+            });
         });
+    </script>
+    <script> 
+        var detik=00;
+        var menit={{ $quiz->waktu_pengerjaan }};
+   
+        function waktu()
+        { 
+            if (menit==0&&detik==0) {
+                Swal.fire({
+                    title: "Peringatan",
+                    text: "Mohon maaf waktu ujian sudah habis, klik OK untuk melihat hasil ujian anda.",
+                    type: "info",
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if(result.value) {
+                        var formSubmitting = true;
+                        document.getElementById('jawabanQuiz').submit();
+                    }
+                });
+                return false;
+            }
+        
+            if (detik<=0){ 
+                detik=60;
+                menit-=1;
+            } 
+            if (menit<=-1){ 
+                detik=0;
+                menit+=1;
+            } else {
+                detik-=1 
+            }
+            
+            detik="" + detik
+            menit="" + menit
+            var pad = "00"
+            document.getElementById("menit").innerHTML=pad.substring(0, pad.length - menit.length) + menit;
+            document.getElementById("detik").innerHTML=pad.substring(0, pad.length - detik.length) + detik;
+
+            setTimeout("waktu()",1000) 
+        } 
+        waktu(); 
     </script>
 @endpush

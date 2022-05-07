@@ -72,4 +72,8 @@ class User extends Authenticatable
     public function dataPresensi(){
         return $this->hasMany(DataPresensi::class);
     }
+
+    public function quizJawaban(){
+        return $this->hasMany(QuizJawaban::class);
+    }
 }

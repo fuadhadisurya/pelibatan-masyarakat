@@ -30,6 +30,7 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\MateriController as Tutor
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PesertaController as TutorKelaskuPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PresensiController as TutorKelaskuPresensiController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizController as TutorKelaskuQuizController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as TutorKelaskuSilabusController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
@@ -107,6 +108,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
     Route::get('/kelasku/{kelas}/quiz/{quiz_id}/soal/{soal_id}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
     Route::resource('kelasku.quiz.soal', QuizSoalController::class);
+    Route::resource('kelasku.quiz.jawaban', QuizJawabanController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
@@ -126,6 +128,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::post('/kelasku/{kelas}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');
     Route::resource('kelasku.tugas', PesertaKelaskuTugasController::class);
     Route::resource('kelasku.presensi', PesertaKelaskuPresensiController::class);
+    Route::get('/kelasku/{kelas}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'hasil'])->name('quiz.jawaban.show');
     Route::post('/kelasku/{kelas}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'jawaban'])->name('quiz.jawaban.store');
     Route::resource('kelasku.quiz', PesertaKelaskuQuizController::class);
 });

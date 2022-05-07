@@ -16,4 +16,8 @@ class QuizSoal extends Model
     public function quiz(){
         return $this->belongsTo(Quiz::class);
     }
+
+    public function quizJawaban(){
+        return $this->hasMany(QuizJawaban::class);
+    }
 }

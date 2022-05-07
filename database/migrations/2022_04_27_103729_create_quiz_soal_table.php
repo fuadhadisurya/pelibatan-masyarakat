@@ -21,7 +21,7 @@ class CreateQuizSoalTable extends Migration
             $table->string('b');
             $table->string('c');
             $table->string('d');
-            $table->string('kunci_jawaban');
+            $table->enum('kunci_jawaban', ['A', 'B', 'C', 'D']);
             $table->string('pembahasan')->nullable();
             $table->string('file')->nullable();
             $table->enum('aktif', ['Y', 'N']);

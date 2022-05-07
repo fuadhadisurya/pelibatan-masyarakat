@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
+use App\Models\JawabanTugas;
 use App\Models\Kelas;
 use App\Models\Quiz;
+use App\Models\QuizJawaban;
 use App\Models\QuizSoal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class QuizController extends Controller
@@ -22,30 +25,39 @@ class QuizController extends Controller
         $quiz = Quiz::where('kelas_id', '=', $kelas_id)->get();
         if ($request->ajax()) {
             return DataTables::of($quiz)
-                    ->addIndexColumn()
-                    ->addColumn('keterangan', function($row){
-                        return '
-                            Tanggal : '.Carbon::parse($row->tanggal_quiz)->format('j F Y').',<br>
-                            Waktu : '.$row->waktu_pengerjaan.' Menit
+                ->addIndexColumn()
+                ->addColumn('keterangan', function ($row) {
+                    return '
+                            Tanggal : ' . Carbon::parse($row->tanggal_quiz)->format('j F Y') . ',<br>
+                            Waktu : ' . $row->waktu_pengerjaan . ' Menit
                         ';
-                    })
-                    ->addColumn('aktif', function($row){
-                        if($row->aktif == 'Y'){
-                            $aktif = '<span class="badge badge-pill badge-success">Aktif</span>';
-                        } else {
-                            $aktif = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
-                        }
-                        return $aktif;
-                    })
-                    ->addColumn('aksi', function($row){
-                        return '
+                })
+                ->addColumn('aktif', function ($row) {
+                    if ($row->aktif == 'Y') {
+                        $aktif = '<span class="badge badge-pill badge-success">Aktif</span>';
+                    } else {
+                        $aktif = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
+                    }
+                    return $aktif;
+                })
+                ->addColumn('aksi', function ($row) {
+                    if(QuizJawaban::where('user_id', Auth::user()->id) != null && QuizJawaban::where('quiz_id', $row->id)){
+                        $return = '
                             <td class="text-center">
-                                <a href="'.route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="kerjakan soal"><i class="far fa-edit"></i></a>
+                                <a href="' . route('peserta.quiz.jawaban.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
                             </td>
                         ';
-                    })
-                    ->rawColumns(['keterangan', 'aktif', 'aksi'])
-                    ->make(true);
+                    } else {
+                        $return = '
+                            <td class="text-center">
+                                <a href="' . route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-primary" title="kerjakan soal"><i class="far fa-edit"></i></a>
+                            </td>
+                        ';
+                    }
+                    return $return;
+                })
+                ->rawColumns(['keterangan', 'aktif', 'aksi'])
+                ->make(true);
         }
 
         $kelas = Kelas::findOrFail($kelas_id);
@@ -82,9 +94,9 @@ class QuizController extends Controller
     public function show($kelas_id, $id)
     {
         $kelas = Kelas::findOrFail($kelas_id);
-        $quiz = Quiz::with('quizSoal')->findOrFail($id); 
+        $quiz = Quiz::with('quizSoal')->findOrFail($id);
 
-        foreach($quiz->quizSoal as $soal){
+        foreach ($quiz->quizSoal as $soal) {
             if ($soal->file != null) {
                 $file = explode('.', $soal->file);
                 $path = trim($file[0]);
@@ -92,7 +104,7 @@ class QuizController extends Controller
                 $soal['file_extension'] = $extension;
             }
         }
-        
+
         return view('admin_dashboard.peserta.kelasku.quiz.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
@@ -130,7 +142,49 @@ class QuizController extends Controller
         //
     }
 
-    public function jawaban(Request $request, $kelas_id, $quiz_id){
-        dd($request);
+    public function jawaban(Request $request, $kelas_id, $quiz_id)
+    {
+        $jawaban = $request->jawaban;
+        $quiz_soal_id = $request->quiz_soal_id;
+        $total = count($quiz_soal_id);
+
+        for ($i = 0; $i < $total; $i++) {
+            if (!empty($jawaban[$i])) {
+                QuizJawaban::create([
+                    'user_id' => Auth::user()->id,
+                    'quiz_id' => $quiz_id,
+                    'quiz_soal_id' => $quiz_soal_id[$i],
+                    'jawaban' => $jawaban[$i],
+                ]);
+            } else {
+                QuizJawaban::create([
+                    'user_id' => Auth::user()->id,
+                    'quiz_id' => $quiz_id,
+                    'quiz_soal_id' => $quiz_soal_id[$i],
+                    'jawaban' => null,
+                ]);
+            }
+        }
+
+        return redirect()->route('peserta.kelasku.quiz.index', [$kelas_id])->with('status', 'Berhasil menyelesaikan quiz');
+    }
+
+    public function hasil($kelas_id, $id)
+    {
+        $kelas = Kelas::findOrFail($kelas_id);
+        $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
+        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->get();
+        foreach ($quiz as $jawaban){
+            $soal = $jawaban->quizSoal;
+            
+            if ($soal->file != null) {
+                $file = explode('.', $soal->file);
+                $path = trim($file[0]);
+                $extension = trim($file[1]);
+                $soal['file_extension'] = $extension;
+            }
+        } 
+
+        return view('admin_dashboard.peserta.kelasku.quiz.hasil', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz]);
     }
 }

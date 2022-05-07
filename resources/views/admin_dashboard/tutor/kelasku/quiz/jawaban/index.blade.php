@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Silabus | Kegiatan Pelibatan Masyarakat
+    Quiz | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -20,17 +20,17 @@
             @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <a href="{{ route('tutor.kelasku.silabus.create', [$kelas->id]) }}" class="btn btn-primary mb-3">
-                    <i class="far fa-plus-square"></i> Tambah Silabus Bab
-                </a>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Bab</th>
-                                <th class="text-center">Subbab</th>
-                                <th class="text-center">Aksi</th>
+                                <th>Nama Lengkap</th>
+                                <th>Jawaban Benar</th>
+                                <th>Jawaban Salah</th>
+                                <th>Jawaban Kosong</th>
+                                <th>Skor</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,23 +55,31 @@
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
 @endpush
 
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/table/datatable/datatables.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script>
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.silabus.index', $kelas->id) }}",
-            columns: [
-                {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_bab', name: 'nama_bab'},
-                {data: 'subbab', name: 'subbab', className: 'text-center', orderable: false, searchable: false},
-                {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
-            ],
+            ajax: "{{ route('tutor.kelasku.quiz.jawaban.index', [$kelas_id, $quiz_id]) }}",
+            // columns: [
+            //     {"width": "5%", data: 'DT_RowIndex', name: 'id'},
+            //     {data: 'user.nama', name: 'nama_lengkap'},
+            //     {data: 'jawaban_benar', name: 'jawaban_benar', className: 'text-center'},
+            //     {data: 'jawaban_salah', name: 'jawaban_salah', className: 'text-center'},
+            //     {data: 'jawaban_kosong', name: 'jawaban_kosong', className: 'text-center'},
+            //     {data: 'skor', name: 'skor', className: 'text-center'},
+            //     {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
+            // ],
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
                 "sInfo": "Showing page _PAGE_ of _PAGES_",
@@ -82,6 +90,12 @@
             "stripeClasses": [],
             "lengthMenu": [7, 10, 20, 50],
             "pageLength": 7 
+        });
+    </script>
+    <script>
+        var f1 = flatpickr(document.getElementById('basicFlatpickr'),{
+            minDate: "today",
+            dateFormat: "j F Y",
         });
     </script>
     <script>
@@ -98,8 +112,8 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        // url:'{{route("tutor.kelasku.quiz.destroy", [$kelas->id, '+id+'])}}',
-                        url:'{{url("/tutor/kelasku/$kelas->id/silabus")}}/' +id,
+                        // url:'{{route("tutor.kelasku.quiz.destroy", [$kelas_id, '+id+'])}}',
+                        url:'{{url("/tutor/kelasku/$kelas->id/quiz")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
@@ -116,6 +130,16 @@
                     });
                 }
             }) 
+        }
+    </script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
         }
     </script>
 @endpush

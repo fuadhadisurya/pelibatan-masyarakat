@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuizJawabanTable extends Migration
+class CreateNilaiQuizTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateQuizJawabanTable extends Migration
      */
     public function up()
     {
-        Schema::create('quiz_jawaban', function (Blueprint $table) {
+        Schema::create('nilai_quiz', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
             $table->foreignId('quiz_id');
-            $table->foreignId('quiz_soal_id');
-            $table->string('jawaban')->nullable();
+            $table->foreignId('user_id');
+            $table->integer('jawaban_benar');
+            $table->integer('jawaban_salah');
+            $table->integer('jawaban_kosong');
+            $table->integer('nilai');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateQuizJawabanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quiz_jawaban');
+        Schema::dropIfExists('nilai_quiz');
     }
 }

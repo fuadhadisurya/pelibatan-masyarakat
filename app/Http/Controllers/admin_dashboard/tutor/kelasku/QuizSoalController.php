@@ -197,10 +197,12 @@ class QuizSoalController extends Controller
         $kelas = Kelas::findOrFail($kelas_id);
         $soal = QuizSoal::with('quiz')->findOrFail($id);
         
-        $file = explode('.', $soal->file);
-        $path = trim($file[0]);
-        $extension = trim($file[1]);
-        $soal['file_extension'] = $extension;
+        if($soal->file != null){
+            $file = explode('.', $soal->file);
+            $path = trim($file[0]);
+            $extension = trim($file[1]);
+            $soal['file_extension'] = $extension;
+        }
         
         return view('admin_dashboard.tutor.kelasku.quiz.soal.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'soal' => $soal]);
     }
@@ -216,10 +218,12 @@ class QuizSoalController extends Controller
         $kelas = Kelas::findOrFail($kelas_id);
         $soal = QuizSoal::with('quiz')->findOrFail($id);
 
-        $file = explode('.', $soal->file);
-        $path = trim($file[0]);
-        $extension = trim($file[1]);
-        $soal['file_extension'] = $extension;
+        if($soal->file != null){
+            $file = explode('.', $soal->file);
+            $path = trim($file[0]);
+            $extension = trim($file[1]);
+            $soal['file_extension'] = $extension;
+        }
         
         return view('admin_dashboard.tutor.kelasku.quiz.soal.edit', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'soal' => $soal]);
     }
