@@ -72,31 +72,12 @@
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
-    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
     <style>
         .btn-light { border-color: transparent; }
     </style>
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script>
-        var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
-            minDate: "today",
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true
-        });
-    </script>
-    <script>
-        $(".selectpicker").selectpicker({
-            "title": "Pilih Menu"
-        }).selectpicker("render");
-    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $(".add-more").click(function(){ 

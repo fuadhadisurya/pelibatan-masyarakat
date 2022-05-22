@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.silabus.detail.store', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('data-kelas.silabus.detail.store', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <h3>Silabus Subbab</h3>
                     <section>
@@ -42,7 +42,7 @@
                     </section>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $silabus->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('data-kelas.silabus.detail.index', [$kelas->id, $silabus->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>

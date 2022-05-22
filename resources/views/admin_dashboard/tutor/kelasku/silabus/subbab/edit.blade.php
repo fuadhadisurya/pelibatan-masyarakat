@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Silabus | Kegiatan Pelibatan Masyarakat
+    Edit Silabus Subbab | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -20,16 +20,16 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.silabus.update', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('tutor.kelasku.silabus.detail.update', [$kelas->id, $silabus->id, $silabusSubbab->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="nama_bab">Nama Bab</label>
-                        <input class="form-control" id="nama_bab" name="nama_bab" value="{{ $silabus->nama_bab }}" autocomplete="off" required>
+                        <label for="nama_subbab">Nama Subbab</label>
+                        <input class="form-control" id="nama_subbab" name="nama_subbab" value="{{ $silabusSubbab->nama_subbab }}" autocomplete="off" required>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.silabus.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $silabus->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>

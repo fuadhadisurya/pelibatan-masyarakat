@@ -17,18 +17,19 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <a href="{{ route('tutor.kelasku.silabus.detail.create', [$kelas->id, $silabus->id]) }}" class="btn btn-primary mb-3">
-                    <i class="far fa-plus-square"></i> Tambah Silabus Subbab
+                <a href="{{ route('data-kelas.silabus.create', [$kelas->id]) }}" class="btn btn-primary mb-3">
+                    <i class="far fa-plus-square"></i> Tambah Silabus Bab
                 </a>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Subbab</th>
+                                <th>Nama Bab</th>
+                                <th class="text-center">Subbab</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -64,10 +65,11 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $silabus->id]) }}",
+            ajax: "{{ route('data-kelas.silabus.index', $kelas->id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_subbab', name: 'nama_subbab'},
+                {data: 'nama_bab', name: 'nama_bab'},
+                {data: 'subbab', name: 'subbab', className: 'text-center', orderable: false, searchable: false},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
@@ -96,8 +98,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        // url:'{{route("tutor.kelasku.quiz.destroy", [$kelas->id, '+id+'])}}',
-                        url:'{{url("/tutor/kelasku/$kelas->id/silabus/$silabus->id/detail")}}/' +id,
+                        url:'{{url("/admin/data-kelas/$kelas->id/silabus")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

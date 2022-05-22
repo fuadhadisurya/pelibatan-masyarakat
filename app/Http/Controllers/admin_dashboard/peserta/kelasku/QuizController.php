@@ -41,19 +41,19 @@ class QuizController extends Controller
                     return $aktif;
                 })
                 ->addColumn('aksi', function ($row) {
-                    if(QuizJawaban::where('user_id', Auth::user()->id) != null && QuizJawaban::where('quiz_id', $row->id)){
-                        $return = '
-                            <td class="text-center">
-                                <a href="' . route('peserta.quiz.jawaban.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
-                            </td>
-                        ';
-                    } else {
+                    // if(QuizJawaban::where('user_id', Auth::user()->id) != null && QuizJawaban::where('quiz_id', $row->id)){
+                    //     $return = '
+                    //         <td class="text-center">
+                    //             <a href="' . route('peserta.quiz.jawaban.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
+                    //         </td>
+                    //     ';
+                    // } else {
                         $return = '
                             <td class="text-center">
                                 <a href="' . route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-primary" title="kerjakan soal"><i class="far fa-edit"></i></a>
                             </td>
                         ';
-                    }
+                    // }
                     return $return;
                 })
                 ->rawColumns(['keterangan', 'aktif', 'aksi'])

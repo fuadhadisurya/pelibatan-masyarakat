@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
+namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
@@ -10,11 +10,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SilabusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request, $kelas_id)
     {
         $silabusBab = SilabusBab::where('kelas_id', '=', $kelas_id)->get();
@@ -23,13 +18,13 @@ class SilabusController extends Controller
                     ->addIndexColumn()
                     ->addColumn('subbab', function($row){
                         return '
-                            <a href="'.route('tutor.kelasku.silabus.detail.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="kelola soal"><i class="far fa-list-alt"></i></a>
+                            <a href="'.route('data-kelas.silabus.detail.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="kelola soal"><i class="far fa-list-alt"></i></a>
                         ';
                     })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('tutor.kelasku.silabus.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <a href="'.route('data-kelas.silabus.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
@@ -40,7 +35,7 @@ class SilabusController extends Controller
 
         $kelas = Kelas::findOrFail($kelas_id);
 
-        return view('admin_dashboard.tutor.kelasku.silabus.index', ['kelas' => $kelas]);
+        return view('admin_dashboard.admin.data-kelas.silabus.index', ['kelas' => $kelas]);
     }
 
     /**
@@ -51,7 +46,7 @@ class SilabusController extends Controller
     public function create($kelas_id)
     {
         $kelas = Kelas::findOrFail($kelas_id);
-        return view('admin_dashboard.tutor.kelasku.silabus.create', ['kelas' => $kelas]);
+        return view('admin_dashboard.admin.data-kelas.silabus.create', ['kelas' => $kelas]);
     }
 
     /**
@@ -77,7 +72,7 @@ class SilabusController extends Controller
             ]);
         }
         
-        return redirect()->route('tutor.kelasku.silabus.index',[$kelas_id])->with('status', 'Silabus Bab berhasil dibuat');
+        return redirect()->route('data-kelas.silabus.index',[$kelas_id])->with('status', 'Silabus Bab berhasil dibuat');
     }
 
     /**
@@ -101,7 +96,7 @@ class SilabusController extends Controller
     {
         $kelas = Kelas::findOrFail($kelas_id);
         $silabus = SilabusBab::findOrFail($id);
-        return view('admin_dashboard.tutor.kelasku.silabus.edit', ['kelas' => $kelas, 'silabus' => $silabus]);
+        return view('admin_dashboard.admin.data-kelas.silabus.edit', ['kelas' => $kelas, 'silabus' => $silabus]);
     }
 
     /**
@@ -122,7 +117,7 @@ class SilabusController extends Controller
             'nama_bab' => $request->nama_bab,
         ]);
 
-        return redirect()->route('tutor.kelasku.silabus.index', [$kelas_id])->with('status', 'Silabus Bab berhasil diperbarui');
+        return redirect()->route('data-kelas.silabus.index', [$kelas_id])->with('status', 'Silabus Bab berhasil diperbarui');
     }
 
     /**

@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.silabus.update', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('data-kelas.silabus.update', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -29,7 +29,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.silabus.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('data-kelas.silabus.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>

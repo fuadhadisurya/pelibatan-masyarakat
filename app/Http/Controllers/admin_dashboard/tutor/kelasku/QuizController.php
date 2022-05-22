@@ -156,7 +156,7 @@ class QuizController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kelas_id, $id)
     {
         $data = Quiz::with('quizSoal')->find($id);
         

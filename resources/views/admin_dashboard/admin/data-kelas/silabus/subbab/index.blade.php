@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Silabus Subbab | Kegiatan Pelibatan Masyarakat
+    Silabus | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -17,10 +17,10 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <a href="{{ route('tutor.kelasku.silabus.detail.create', [$kelas->id, $silabus->id]) }}" class="btn btn-primary mb-3">
+                <a href="{{ route('data-kelas.silabus.detail.create', [$kelas->id, $silabus->id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Silabus Subbab
                 </a>
                 <div class="table-responsive">
@@ -64,7 +64,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $silabus->id]) }}",
+            ajax: "{{ route('data-kelas.silabus.detail.index', [$kelas->id, $silabus->id]) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_subbab', name: 'nama_subbab'},
@@ -96,8 +96,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        // url:'{{route("tutor.kelasku.quiz.destroy", [$kelas->id, '+id+'])}}',
-                        url:'{{url("/tutor/kelasku/$kelas->id/silabus/$silabus->id/detail")}}/' +id,
+                        url:'{{url("/admin/data-kelas/$kelas->id/silabus/$silabus->id/detail")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

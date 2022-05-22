@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\SilabusBab;
 use Illuminate\Http\Request;
 
 class SilabusController extends Controller
@@ -16,8 +17,9 @@ class SilabusController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $silabus = SilabusBab::where('kelas_id', '=', $kelas_id)->get();
 
-        return view('admin_dashboard.peserta.kelasku.silabus.index', ['kelas' => $kelas]);
+        return view('admin_dashboard.peserta.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus]);
     }
 
     /**

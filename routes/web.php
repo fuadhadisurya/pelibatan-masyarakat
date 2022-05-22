@@ -10,6 +10,8 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\TugasController;
 use App\Http\Controllers\admin_dashboard\admin\DataKelasController;
 use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\ForumController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
@@ -33,6 +35,7 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizController as TutorKe
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as TutorKelaskuSilabusController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusDetailController as TutorKelaskuSilabusDetailController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuHomeController as TutorKelaskuHomeController;
@@ -76,7 +79,8 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
-    Route::resource('data-kelas.silabus', HomeController::class);
+    Route::resource('data-kelas.silabus', SilabusController::class);
+    Route::resource('data-kelas.silabus.detail', SilabusDetailController::class);
     Route::post('/data-kelas/{kelas_id}/forum/{post_id}/comment', [ForumController::class, 'commentStore'])->name('data-kelas.forum.comment.store');
     Route::put('/data-kelas/{kelas_id}/forum/{post_id}/comment/{id}', [ForumController::class, 'commentUpdate'])->name('data-kelas.forum.comment.update');
     Route::delete('/data-kelas/{kelas_id}/forum/{post_id}/comment/{id}', [ForumController::class, 'commentDestroy'])->name('data-kelas.forum.comment.destroy');
@@ -94,6 +98,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku', TutorKelaskuController::class)->only(['index']);
     Route::resource('kelasku.home', TutorKelaskuHomeController::class);
     Route::resource('kelasku.silabus', TutorKelaskuSilabusController::class);
+    Route::resource('kelasku.silabus.detail', TutorKelaskuSilabusDetailController::class);
     Route::resource('kelasku.peserta', TutorKelaskuPesertaController::class);
     Route::post('/kelasku/{kelas_id}/forum/{post_id}/comment', [TutorKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
     Route::put('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [TutorKelaskuForumController::class, 'commentUpdate'])->name('kelasku.forum.comment.update');

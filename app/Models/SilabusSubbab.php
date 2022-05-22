@@ -17,6 +17,6 @@ class SilabusSubbab extends Model
     ];
 
     public function bab(){
-        return $this->belongsTo(SilabusBab::class);
+        return $this->belongsTo(SilabusBab::class, 'silabus_bab_id');
     }
 }

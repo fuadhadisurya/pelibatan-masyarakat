@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Tambah Silabus Subbab | Kegiatan Pelibatan Masyarakat
+    Tambah Silabus | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -20,16 +20,16 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.silabus.detail.store', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('data-kelas.silabus.store', [$kelas->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <h3>Silabus Subbab</h3>
+                    <h3>Silabus</h3>
                     <section>
                         <div id="listSoal">
                             <div class="control-group card mb-3">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="nama_subbab[]">Nama Subbab</label>
-                                        <input class="form-control" id="nama_subbab[]" name="nama_subbab[]" autocomplete="off" required>
+                                        <label for="nama_bab[]">Nama Bab</label>
+                                        <input class="form-control" id="nama_bab[]" name="nama_bab[]" autocomplete="off" required>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-success add-more" type="button">
@@ -42,7 +42,7 @@
                     </section>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $silabus->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('data-kelas.silabus.index', [$kelas->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>
@@ -56,8 +56,8 @@
             <div class="control-group card mb-3">
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="nama_subbab[]">Nama Subbab</label>
-                        <input class="form-control" id="nama_subbab[]" name="nama_subbab[]" autocomplete="off" required>
+                        <label for="nama_bab[]">Nama Bab</label>
+                        <input class="form-control" id="nama_bab[]" name="nama_bab[]" autocomplete="off" required>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-danger remove" type="button">
