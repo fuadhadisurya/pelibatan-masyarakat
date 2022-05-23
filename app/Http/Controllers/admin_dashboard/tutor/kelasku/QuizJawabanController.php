@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\NilaiQuiz;
 use App\Models\Quiz;
 use App\Models\QuizJawaban;
 use App\Models\QuizSoal;
@@ -21,81 +22,23 @@ class QuizJawabanController extends Controller
      */
     public function index(Request $request, $kelas_id, $quiz_id)
     {
-        $quiz = Quiz::findOrFail($quiz_id);
-        $nilai = QuizJawaban::with('user')
-            ->leftJoin('quiz_soal', 'quiz_soal.id', '=', 'quiz_jawaban.quiz_soal_id')
-            ->where('quiz_soal.quiz_id', $quiz_id)
-            ->get();
-
-        $no = 0;
-        $jawabanBenar = 0;
-        $jawabanSalah = 0;
-        $jawabanKosong = 0;
-        $data = array();
-        foreach ($quiz as $n) {
-            if($n->jawaban == $n->kunci_jawaban){
-                $jawabanBenar+=1;
-            }
-            if($n->jawaban == $n->kunci_jawaban){
-                $jawabanSalah+=1;
-            }
-            if($n->jawaban == null){
-                $jawabanKosong=1;
-            }
-            // $jumlahSoal = count($quiz);
-            // $skorTotal = round($jawabanBenar/$jumlahSoal * 100, 0);
-
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $n->user->nama;
-            $row[] = $jawabanBenar;
-            $row[] = $jawabanKosong;
-            $row[] = $jawabanKosong;
-            $row[] = 1;
-            $row[] = '<a href="/trixmath/nilai/' . $n->id_kuis . '/siswa/' . $n->id_user . '/jawaban" class="btn btn-sm btn-primary">Jawaban Siswa</a>';
-            $data[] = $row;
-        }
-        // dd($data);
+        $jawaban = NilaiQuiz::with('users')->with('quiz')->where('quiz_id', $quiz_id)->get();
         if ($request->ajax()) {
-            return DataTables::of($data)->escapeColumns([])->make(true);
+            return DataTables::of($jawaban)
+                    ->addIndexColumn()
+                    ->addColumn('nama', function($row){
+                        return $row->users->nama;
+                    })
+                    ->addColumn('aksi', function($row){
+                        return '
+                            <td class="text-center">
+                                <a href="' . route('tutor.kelasku.quiz.jawaban.show', [$row->quiz->kelas_id, $row->quiz->id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
+                            </td>
+                        ';
+                    })
+                    ->rawColumns(['nama', 'aksi'])
+                    ->make(true);
         }
-
-
-        // $jawaban = Quiz::where('kelas_id', $kelas_id)->where('id', $quiz_id)->with('quizSoal.quizJawaban')->get();
-        // if ($request->ajax()) {
-        //     return DataTables::of(['nama' =>'1'])
-        //             ->addIndexColumn()
-        //             ->addColumn('jawaban_benar', function($row){
-        //                 $jawabanBenar = 0;
-        //                 // if($row->kelas->quiz == $row->user->quizJawaban->jawaban){
-        //                 //     $jawabanBenar+=1;
-        //                 // }
-        //                 return $row;
-        //             })
-        //             ->addColumn('jawaban_salah', function($row){
-        //                 $jawabanSalah = 0;
-        //                 // if($row->user->quizJawaban != $row->user->quizJawaban->jawaban){
-        //                 //     $jawabanSalah+=1;
-        //                 // }
-        //             })
-        //             ->addColumn('jawaban_kosong', function($row){
-        //                 $jawabanKosong = 0;
-        //                 // if($row->user->quizJawaban == null){
-        //                 //     $jawabanKosong+=1;
-        //                 // }
-        //             })
-        //             ->addColumn('skor', function($row){
-        //                 // $jumlahSoal = count($quiz);
-
-        //                 // $skorTotal = round($jawabanBenar/$jumlahSoal * 100, 0);
-        //             })
-        //             ->addColumn('aksi', function($row){
-
-        //             })
-        //             ->rawColumns(['jawaban_benar', 'jawaban_salah', 'jawaban_kosong', 'skor', 'aksi'])
-        //             ->make(true);
-        // }
 
         $kelas = Kelas::findOrFail($kelas_id);
         return view('admin_dashboard.tutor.kelasku.quiz.jawaban.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz_id' => $quiz_id]);
@@ -128,9 +71,25 @@ class QuizJawabanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kelas_id, $quiz_id, $id)
     {
-        //
+        $kelas = Kelas::findOrFail($kelas_id);
+        $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
+        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->where('user_id', Auth::user()->id)->get();
+        $hasil = NilaiQuiz::where('quiz_id', $id)->where('user_id', Auth::user()->id)->first();
+
+        foreach ($quiz as $jawaban){
+            $soal = $jawaban->quizSoal;
+            
+            if ($soal->file != null) {
+                $file = explode('.', $soal->file);
+                $path = trim($file[0]);
+                $extension = trim($file[1]);
+                $soal['file_extension'] = $extension;
+            }
+        }
+
+        return view('admin_dashboard.tutor.kelasku.quiz.show', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz, 'hasil' => $hasil]);
     }
 
     /**

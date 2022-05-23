@@ -24,4 +24,8 @@ class Quiz extends Model
     public function quizJawaban(){
         return $this->hasMany(QuizJawaban::class);
     }
+
+    public function quizNilai(){
+        return $this->hasMany(NilaiQuiz::class);
+    }
 }

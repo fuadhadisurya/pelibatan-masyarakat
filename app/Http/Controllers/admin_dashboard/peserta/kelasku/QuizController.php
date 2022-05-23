@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 use App\Http\Controllers\Controller;
 use App\Models\JawabanTugas;
 use App\Models\Kelas;
+use App\Models\NilaiQuiz;
 use App\Models\Quiz;
 use App\Models\QuizJawaban;
 use App\Models\QuizSoal;
@@ -165,15 +166,42 @@ class QuizController extends Controller
                 ]);
             }
         }
+        
+        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $quiz_id)->where('user_id', Auth::user()->id)->get();
+        $jawaban_benar = 0;
+        $jawaban_salah = 0;
+        $jawaban_kosong = 0;
+        
+        foreach ($quiz as $jawaban){
+            if($jawaban->quizSoal->kunci_jawaban == $jawaban->jawaban){
+                $jawaban_benar+=1;
+            } elseif($jawaban->quizSoal->kunci_jawaban == $jawaban->jawaban){
+                $jawaban_salah+=1;
+            } elseif($jawaban->jawaban == null){
+                $jawaban_kosong+=1;
+            }
+        }
+        $jumlah_soal = count($quiz);
+        $nilai = round($jawaban_benar/$jumlah_soal * 100, 0);
+        NilaiQuiz::create([
+            'quiz_id' => $quiz_id,
+            'user_id' => Auth::user()->id,
+            "jawaban_benar" => $jawaban_benar,
+            "jawaban_salah" => $jawaban_salah,
+            "jawaban_kosong" => $jawaban_kosong,
+            "nilai" => $nilai,
+        ]);
 
-        return redirect()->route('peserta.kelasku.quiz.index', [$kelas_id])->with('status', 'Berhasil menyelesaikan quiz');
+        return redirect()->route('peserta.quiz.jawaban.show', [$kelas_id, $kelas_id])->with('status', 'Berhasil menyelesaikan quiz');
     }
 
     public function hasil($kelas_id, $id)
     {
         $kelas = Kelas::findOrFail($kelas_id);
         $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
-        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->get();
+        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->where('user_id', Auth::user()->id)->get();
+        $hasil = NilaiQuiz::where('quiz_id', $id)->where('user_id', Auth::user()->id)->first();
+
         foreach ($quiz as $jawaban){
             $soal = $jawaban->quizSoal;
             
@@ -183,8 +211,8 @@ class QuizController extends Controller
                 $extension = trim($file[1]);
                 $soal['file_extension'] = $extension;
             }
-        } 
+        }
 
-        return view('admin_dashboard.peserta.kelasku.quiz.hasil', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz]);
+        return view('admin_dashboard.peserta.kelasku.quiz.hasil', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz, 'hasil' => $hasil]);
     }
 }
