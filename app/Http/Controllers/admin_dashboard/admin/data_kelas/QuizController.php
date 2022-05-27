@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
+use App\Models\Quiz;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class QuizController extends Controller
 {
@@ -12,9 +16,37 @@ class QuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $kelas_id)
     {
-        //
+        $quiz = Quiz::where('kelas_id', '=', $kelas_id)->get();
+        if ($request->ajax()) {
+            return DataTables::of($quiz)
+                    ->addIndexColumn()
+                    ->addColumn('keterangan', function($row){
+                        return '
+                            Tanggal : '.Carbon::parse($row->tanggal_quiz)->format('j F Y').',<br>
+                            Waktu : '.$row->waktu_pengerjaan.' Menit
+                        ';
+                    })
+                    ->addColumn('hasil_nilai', function($row){
+                        return '
+                            <a href="'.route('data-kelas.quiz.jawaban.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-secondary" title="lihat nilai"><i class="far fa-eye"></i></a>
+                        ';
+                    })
+                    ->addColumn('aktif', function($row){
+                        if($row->aktif == 'Y'){
+                            $aktif = '<span class="badge badge-pill badge-success">Aktif</span>';
+                        } else {
+                            $aktif = '<span class="badge badge-pill badge-danger">Tidak Aktif</span>';
+                        }
+                        return $aktif;
+                    })
+                    ->rawColumns(['keterangan', 'hasil_nilai', 'aktif'])
+                    ->make(true);
+        }
+
+        $kelas = Kelas::findOrFail($kelas_id);
+        return view('admin_dashboard.admin.data-kelas.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
     /**
@@ -35,7 +67,7 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     /**
@@ -57,7 +89,7 @@ class QuizController extends Controller
      */
     public function edit($id)
     {
-        //
+        // 
     }
 
     /**
@@ -69,7 +101,7 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // 
     }
 
     /**

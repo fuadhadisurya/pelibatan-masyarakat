@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
+namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
@@ -29,7 +29,7 @@ class QuizJawabanController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="' . route('tutor.kelasku.quiz.jawaban.show', [$row->quiz->kelas_id, $row->quiz->id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
+                                <a href="' . route('data-kelas.quiz.jawaban.show', [$row->quiz->kelas_id, $row->quiz->id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
                             </td>
                         ';
                     })
@@ -38,7 +38,7 @@ class QuizJawabanController extends Controller
         }
 
         $kelas = Kelas::findOrFail($kelas_id);
-        return view('admin_dashboard.tutor.kelasku.quiz.jawaban.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz_id' => $quiz_id]);
+        return view('admin_dashboard.admin.data-kelas.quiz.jawaban.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz_id' => $quiz_id]);
     }
 
     /**
@@ -86,7 +86,7 @@ class QuizJawabanController extends Controller
             }
         }
 
-        return view('admin_dashboard.tutor.kelasku.quiz.jawaban.show', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz, 'hasil' => $hasil]);
+        return view('admin_dashboard.admin.data-kelas.quiz.jawaban.show', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz, 'hasil' => $hasil]);
     }
 
     /**

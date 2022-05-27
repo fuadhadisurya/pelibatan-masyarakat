@@ -62,26 +62,26 @@
                         <i class="far fa-times-circle"></i>
                     </button>
                 </div>
-                <form action="{{ route('tutor.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tutor.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control" id="nama">
+                            <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama') }}">
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com">
+                                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="email@example.com">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="nomor_telepon">Nomor Telepon</label>
-                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" placeholder="08123456789">
+                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" value="{{ old('nomor_telepon') }}" placeholder="08123456789">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" name="username" class="form-control" id="username">
+                            <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>

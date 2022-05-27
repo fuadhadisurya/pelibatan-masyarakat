@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive">
@@ -25,12 +25,10 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Lengkap</th>
-                                <th>Jawaban Benar</th>
-                                <th>Jawaban Salah</th>
-                                <th>Jawaban Kosong</th>
-                                <th>Skor</th>
-                                <th>Aksi</th>
+                                <th>Nama Quiz</th>
+                                <th>Keterangan</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Hasil Nilai</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,15 +68,13 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.quiz.jawaban.index', [$kelas_id, $quiz_id]) }}",
+            ajax: "{{ route('data-kelas.quiz.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama', name: 'nama'},
-                {data: 'jawaban_benar', name: 'jawaban_benar', className: 'text-center'},
-                {data: 'jawaban_salah', name: 'jawaban_salah', className: 'text-center'},
-                {data: 'jawaban_kosong', name: 'jawaban_kosong', className: 'text-center'},
-                {data: 'nilai', name: 'nilai', className: 'text-center'},
-                {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
+                {data: 'nama_quiz', name: 'nama_quiz'},
+                {data: 'keterangan', name: 'keterangan'},
+                {data: 'aktif', name: 'aktif', className: 'text-center', orderable: false, searchable: false},
+                {data: 'hasil_nilai', name: 'hasil_nilai', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },

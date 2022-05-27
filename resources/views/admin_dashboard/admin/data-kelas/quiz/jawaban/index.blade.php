@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive">
@@ -70,7 +70,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('tutor.kelasku.quiz.jawaban.index', [$kelas_id, $quiz_id]) }}",
+            ajax: "{{ route('data-kelas.quiz.jawaban.index', [$kelas_id, $quiz_id]) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama', name: 'nama'},

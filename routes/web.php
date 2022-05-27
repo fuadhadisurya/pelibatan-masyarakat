@@ -1,7 +1,6 @@
 <?php
 use App\Http\Controllers\admin_dashboard\auth\LoginController;
 use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\admin_dashboard\admin\data\QuizController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\HomeController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\MateriController;
@@ -10,6 +9,8 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\TugasController;
 use App\Http\Controllers\admin_dashboard\admin\DataKelasController;
 use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\ForumController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
@@ -32,7 +33,7 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\MateriController as Tutor
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PesertaController as TutorKelaskuPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PresensiController as TutorKelaskuPresensiController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizController as TutorKelaskuQuizController;
-use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizJawabanController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizJawabanController as TutorQuizJawabanController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as TutorKelaskuSilabusController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusDetailController as TutorKelaskuSilabusDetailController;
@@ -89,7 +90,8 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-kelas.materi', MateriController::class);
     Route::resource('data-kelas.tugas', TugasController::class);
     Route::resource('data-kelas.presensi', PresensiController::class);
-    Route::resource('kelasku.quiz', QuizController::class);
+    Route::resource('data-kelas.quiz', QuizController::class);
+    Route::resource('data-kelas.quiz.jawaban', QuizJawabanController::class);
 });
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
@@ -113,7 +115,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
     Route::get('/kelasku/{kelas}/quiz/{quiz_id}/soal/{soal_id}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
     Route::resource('kelasku.quiz.soal', QuizSoalController::class);
-    Route::resource('kelasku.quiz.jawaban', QuizJawabanController::class);
+    Route::resource('kelasku.quiz.jawaban', TutorQuizJawabanController::class);
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);

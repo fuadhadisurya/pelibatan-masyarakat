@@ -8,7 +8,7 @@
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
             <div class="widget-content-area mb-3">
                 <div class="table-responsive">
@@ -249,7 +249,7 @@
                 </section>
                 <hr>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('tutor.kelasku.quiz.jawaban.index', [$kelas->id, $informasiQuiz->id]) }}" class="btn btn-block btn-sm btn-secondary">Kembali</a>
+                    <a href="{{ route('data-kelas.quiz.jawaban.index', [$kelas->id, $informasiQuiz->id]) }}" class="btn btn-block btn-sm btn-secondary">Kembali</a>
                 </div>
             </div>
         </div>

@@ -17,27 +17,27 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('tutor.update', $tutor->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tutor.update', $tutor->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control" id="nama" value="{{ $tutor->nama }}" required>
+                            <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama', $tutor->nama) }}" required>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com" value="{{ $tutor->email }}" required>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com" value="{{ old('email', $tutor->email) }}" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="nomor_telepon">Nomor Telepon</label>
-                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" placeholder="08123456789" value="{{ $tutor->nomor_telepon }}" required>
+                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" placeholder="08123456789" value="{{ old('nomor_telepon', $tutor->nomor_telepon) }}" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" name="username" class="form-control" id="username" value="{{ $tutor->username }}" required>
+                            <input type="text" name="username" class="form-control" id="username" value="{{ old('username', $tutor->username) }}" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password <sup>(Opsional)</sup></label>
