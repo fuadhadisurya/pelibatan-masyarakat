@@ -8,6 +8,7 @@ use App\Models\SilabusBab;
 use App\Models\SilabusSubbab;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class SilabusDetailController extends Controller
 {
@@ -34,8 +35,8 @@ class SilabusDetailController extends Controller
                     ->make(true);
         }
 
-        $kelas = Kelas::findOrFail($kelas_id);
-        $silabus = SilabusBab::findOrFail($silabus_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
+        $silabus = SilabusBab::where('kelas_id', $kelas_id)->findOrFail($silabus_id);
 
         return view('admin_dashboard.tutor.kelasku.silabus.subbab.index', ['kelas' => $kelas, 'silabus' => $silabus]);
     }
@@ -47,8 +48,8 @@ class SilabusDetailController extends Controller
      */
     public function create($kelas_id, $silabus_id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
-        $silabus = SilabusBab::findOrFail($silabus_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
+        $silabus = SilabusBab::where('kelas_id', $kelas_id)->findOrFail($silabus_id);
 
         return view('admin_dashboard.tutor.kelasku.silabus.subbab.create', ['kelas' => $kelas, 'silabus' => $silabus]);
     }
@@ -98,9 +99,9 @@ class SilabusDetailController extends Controller
      */
     public function edit($kelas_id, $silabus_id, $id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
-        $silabus = SilabusBab::findOrFail($silabus_id);
-        $silabusSubbab = SilabusSubbab::findOrFail($id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
+        $silabus = SilabusBab::where('kelas_id', $kelas_id)->findOrFail($silabus_id);
+        $silabusSubbab = SilabusSubbab::where('silabus_bab_id', $silabus_id)->findOrFail($id);
         return view('admin_dashboard.tutor.kelasku.silabus.subbab.edit', ['kelas' => $kelas, 'silabus' => $silabus, 'silabusSubbab' => $silabusSubbab]);
     }
 

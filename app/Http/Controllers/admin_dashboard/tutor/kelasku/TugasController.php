@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class TugasController extends Controller
 {
@@ -37,7 +38,7 @@ class TugasController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         
         return view('admin_dashboard.tutor.kelasku.tugas.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'tugas' => $tugas]);
     }
@@ -102,7 +103,7 @@ class TugasController extends Controller
      */
     public function show($kelas_id, $id)
     {
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
         $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->get();
         $tugasBelum = User::leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
@@ -123,7 +124,7 @@ class TugasController extends Controller
      */
     public function edit($kelas_id, $id)
     {
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
         return view('admin_dashboard.tutor.kelasku.tugas.edit', ['kelas' => $kelas, 'tugas' => $tugas]);
     }
@@ -199,7 +200,7 @@ class TugasController extends Controller
     }
 
     public function periksaTugas($kelas_id, $id){
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
         $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->first();
         return view('admin_dashboard.tutor.kelasku.tugas.periksa-tugas', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas]);

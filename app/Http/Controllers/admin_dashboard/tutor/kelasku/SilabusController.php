@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class SilabusController extends Controller
 {
@@ -38,7 +39,7 @@ class SilabusController extends Controller
                     ->make(true);
         }
 
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
 
         return view('admin_dashboard.tutor.kelasku.silabus.index', ['kelas' => $kelas]);
     }
@@ -50,7 +51,7 @@ class SilabusController extends Controller
      */
     public function create($kelas_id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         return view('admin_dashboard.tutor.kelasku.silabus.create', ['kelas' => $kelas]);
     }
 
@@ -99,7 +100,7 @@ class SilabusController extends Controller
      */
     public function edit($kelas_id, $id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         $silabus = SilabusBab::findOrFail($id);
         return view('admin_dashboard.tutor.kelasku.silabus.edit', ['kelas' => $kelas, 'silabus' => $silabus]);
     }

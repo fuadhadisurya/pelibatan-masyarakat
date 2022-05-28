@@ -24,18 +24,20 @@ class KelasController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_berakhir . ' - ' . $row->tanggal_berakhir;
+                        return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
                     })
                     ->editColumn('tutor_id', function($row){
                         return $row->tutor->nama;
                     })
                     ->editColumn('status', function($row){
-                        if($row->status == 'Pendaftaran'){
+                        if($row->status == 'Persiapan'){
+                            $status = '<span class="badge badge-warning">Persiapan</span>';
+                        }elseif($row->status == 'Pendaftaran'){
                             $status = '<span class="badge badge-success">Pendaftaran</span>';
                         } elseif($row->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-warning">Proses Seleksi</span>';
+                            $status = '<span class="badge badge-info">Proses Seleksi</span>';
                         } elseif($row->status == 'Kegiatan Berlangsung'){
-                            $status = '<span class="badge badge-danger">Proses Seleksi</span>';
+                            $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
                         } else {
                             $status = '<span class="badge badge-dark">Selesai</span>';
                         }

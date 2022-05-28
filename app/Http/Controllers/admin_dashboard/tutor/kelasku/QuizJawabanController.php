@@ -9,6 +9,7 @@ use App\Models\Quiz;
 use App\Models\QuizJawaban;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class QuizJawabanController extends Controller
 {
@@ -37,7 +38,7 @@ class QuizJawabanController extends Controller
                     ->make(true);
         }
 
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         return view('admin_dashboard.tutor.kelasku.quiz.jawaban.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz_id' => $quiz_id]);
     }
 
@@ -70,7 +71,7 @@ class QuizJawabanController extends Controller
      */
     public function show($kelas_id, $quiz_id, $id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
         $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->get();
         $hasil = NilaiQuiz::with('users')->findOrFail($id);

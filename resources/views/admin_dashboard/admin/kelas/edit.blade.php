@@ -17,13 +17,13 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('kelas.update', $kelas->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('kelas.update', $kelas->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                         <label for="banner">Banner</label><br>
                         <div class="custom-file mb-4">
-                            <input type="file" class="custom-file-input" id="banner" name="banner" accept="image/*" required>
+                            <input type="file" class="custom-file-input" id="banner" name="banner" accept="image/*">
                             <label class="custom-file-label" for="banner">Pilih Gambar</label>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -59,13 +59,14 @@
                         <select class="placeholder form-control" name="tutor_id">
                             <option value="">Pilih Tutor...</option>
                             @foreach ($tutor as $tutor)
-                            <option value="{{ $tutor->id }}" {{ ($tutor->id == $kelas->tutor_id) ? 'selected': '' }}>{{ $tutor->nama }}</option>
+                                <option value="{{ $tutor->id }}" {{ ($tutor->id == $kelas->tutor_id) ? 'selected': '' }}>{{ $tutor->nama }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select class="form-control selectpicker" name="status">
+                            <option value="Persiapan" {{ ($kelas->status == 'Persiapan') ? 'selected': '' }}>Persiapan</option>
                             <option value="Pendaftaran" {{ ($kelas->status == 'Pendaftaran') ? 'selected': '' }}>Pendaftaran</option>
                             <option value="Proses Seleksi" {{ ($kelas->status == 'Proses Seleksi') ? 'selected': '' }}>Proses Seleksi</option>
                             <option value="Kegiatan Berlangsung" {{ ($kelas->status == 'Kegiatan Berlangsung') ? 'selected': '' }}>Kegiatan Berlangsung</option>

@@ -58,7 +58,7 @@ class PresensiController extends Controller
                     ->rawColumns(['aksi', 'nama', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         return view('admin_dashboard.tutor.kelasku.presensi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'presensi' => $presensi]);
     }
 

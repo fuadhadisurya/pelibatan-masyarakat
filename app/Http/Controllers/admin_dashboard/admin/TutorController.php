@@ -116,6 +116,8 @@ class TutorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = $request->except(['password']);
+
         if ($request->password) {
             $this->validate($request, [
                 'nama' => 'required',
@@ -125,6 +127,8 @@ class TutorController extends Controller
                 'password' => 'required|min:6',
                 'konfirmasi_password' => 'required|same:password',
             ]);
+
+            $data['password'] = bcrypt($request->password);
         } else {
             $this->validate($request, [
                 'nama' => 'required',
@@ -133,8 +137,6 @@ class TutorController extends Controller
                 'username' => 'required|alpha_dash|unique:users,username,' . $id,
             ]);
         }
-        $data = $request->all();
-        $data['password'] = bcrypt($request->password);
 
         $tutor = User::findOrFail($id);
 

@@ -8,6 +8,7 @@ use App\Models\Quiz;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -63,7 +64,7 @@ class QuizController extends Controller
                     ->make(true);
         }
 
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         return view('admin_dashboard.tutor.kelasku.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
 
@@ -118,7 +119,7 @@ class QuizController extends Controller
      */
     public function edit($kelas_id, $id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         $quiz = Quiz::with('quizSoal')->findOrFail($id);
 
         return view('admin_dashboard.tutor.kelasku.quiz.edit', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);

@@ -62,7 +62,7 @@
                         <i class="far fa-times-circle"></i>
                     </button>
                 </div>
-                <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -77,73 +77,73 @@
                         </div>
                         <div class="form-group">
                             <label for="nama_kelas">Nama Kelas</label>
-                            <input type="text" name="nama_kelas" class="form-control" id="nama_kelas">
+                            <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ old('nama_kelas') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="periode_kelas">Periode Kelas</label>
-                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kelas..">
+                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kelas.." value="{{ old('periode_kelas') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="tutor">Tutor</label>
                             <select class="placeholder form-control" name="tutor_id">
                                 <option value="">Pilih Tutor...</option>
                                 @foreach ($tutor as $tutor)
-                                    <option value="{{ $tutor->id }}">{{ $tutor->nama }}</option>
+                                    <option value="{{ $tutor->id }}" {{ (old("tutor_id") == $tutor->id ? "selected":"") }}>{{ $tutor->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="persyaratan">persyaratan Kelas</label>
-                            <textarea name="persyaratan" class="editor" id="editor1" rows="10">
+                            <textarea name="persyaratan" class="editor" id="editor1" rows="10" value="{{ old('persyaratan_kelas') }}" required>
                             </textarea>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi Kelas</label>
-                            <textarea name="deskripsi" class="editor" id="editor2" rows="10">
+                            <textarea name="deskripsi" class="editor" id="editor2" rows="10" value="{{ old('deskripsi') }}" required>
                             </textarea>
                         </div>
-                        <input type="hidden" name="status" value="Pendaftaran">
+                        <input type="hidden" name="status" value="Persiapan">
                         <div class="form-group">
                             <label for="Sasaran">Sasaran</label>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1">
+                                    <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1" {{ old('TK_PAUD') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>TK/PAUD
                                 </label>
                             </div>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SD_MI" class="new-control-input" value="1">
+                                    <input type="checkbox" name="SD_MI" class="new-control-input" value="1" {{ old('SD_MI') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>SD/MI
                                 </label>
                             </div>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1">
+                                    <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1" {{ old('SMP_MTS') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>SMP/MTS
                                 </label>
                             </div>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1">
+                                    <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1" {{ old('SMA_SMK_MA') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>SMA/SMK/MA
                                 </label>
                             </div>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1">
+                                    <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1" {{ old('Mahasiswa') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>Mahasiswa
                                 </label>
                             </div>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1">
+                                    <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1" {{ old('Masyarakat Umum') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>Masyarakat Umum
                                 </label>
                             </div>
                             <div class="n-chk">
                                 <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1">
+                                    <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1" {{ old('ASN/Polri/TNI') == '1' ? 'checked' : '' }}>
                                     <span class="new-control-indicator"></span>ASN/Polri/TNI
                                 </label>
                             </div>

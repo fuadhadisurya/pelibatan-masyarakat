@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 use App\Http\Controllers\Controller;
 use App\Models\JawabanTugas;
 use App\Models\Kelas;
+use App\Models\RegistrasiKelas;
 use App\Models\Tugas;
 use App\Models\UploadJawabanTugas;
 use Illuminate\Http\Request;
@@ -37,7 +38,9 @@ class TugasController extends Controller
         }
 
         $kelas = Kelas::findOrfail($kelas_id);
-        return view('admin_dashboard.peserta.kelasku.tugas.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'tugas' => $tugas]);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
+        
+        return view('admin_dashboard.peserta.kelasku.tugas.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'tugas' => $tugas, 'registrasi' => $registrasi]);
     }
 
     /**
@@ -72,7 +75,8 @@ class TugasController extends Controller
         $kelas = Kelas::findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
         $jawabanTugas = JawabanTugas::where('users_id', '=', Auth::user()->id)->where('tugas_id', '=', $id)->first();
-        return view('admin_dashboard.peserta.kelasku.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas]);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
+        return view('admin_dashboard.peserta.kelasku.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas, 'registrasi' => $registrasi]);
     }
 
     /**

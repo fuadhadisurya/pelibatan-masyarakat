@@ -63,7 +63,11 @@
                         <div class="row">
                             <div class="col">
                                 <div class="d-flex flex-row user-info">
-                                    <img class="rounded-circle" src="{{ Storage::url($comment->user->foto) }}" width="40" height="40">
+                                    @if($comment->user->foto != null)
+                                        <img class="rounded-circle" src="{{ Storage::url($comment->user->foto) }}" width="40" height="40">
+                                    @else
+                                        <img class="rounded-circle" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar" width="40" height="40">
+                                    @endif
                                     <div class="d-flex flex-column justify-content-start ml-2">
                                         <span class="d-block font-weight-bold name">{{ $comment->user->nama }}</span>
                                         <span class="date text-black-50">{{ $comment->user->username . ' - ' . $comment->created_at }}</span>
@@ -111,7 +115,11 @@
                 </div>
                 <div class="bg-light p-2" id="comment">
                     <div class="d-flex align-items-center mb-3">
-                        <img class="rounded-circle ml-1 mr-3" src="{{ Storage::url(Auth::user()->foto) }}" height="42" width="42">
+                        @if(Auth::user()->foto != null)
+                            <img class="rounded-circle ml-1 mr-3" src="{{ Storage::url(Auth::user()->foto) }}" height="42" width="42">
+                        @else
+                            <img class="rounded-circle ml-1 mr-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar" width="42" height="42">
+                        @endif
                         <strong>{{ Auth::user()->nama }}:</strong>
                     </div>
                     <form action="{{ route('peserta.kelasku.forum.comment.store', [$kelas->id, $post->id]) }}" method="POST" enctype="multipart/form-data">

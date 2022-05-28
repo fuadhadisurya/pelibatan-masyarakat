@@ -4,8 +4,10 @@ namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\RegistrasiKelas;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SilabusController extends Controller
 {
@@ -16,10 +18,11 @@ class SilabusController extends Controller
      */
     public function index($kelas_id)
     {
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $kelas = Kelas::findOrfail($kelas_id);
         $silabus = SilabusBab::where('kelas_id', '=', $kelas_id)->get();
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
-        return view('admin_dashboard.peserta.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus]);
+        return view('admin_dashboard.peserta.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus, 'registrasi' => $registrasi]);
     }
 
     /**

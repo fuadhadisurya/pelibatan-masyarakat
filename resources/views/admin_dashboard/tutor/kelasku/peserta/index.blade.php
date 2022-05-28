@@ -111,7 +111,7 @@
                                     <tr>
                                         <td>Alamat</td>
                                         <td>:</td>
-                                        {{-- <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td> --}}
+                                        <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td>
                                     </tr>
                                     <tr>
                                         <td>Motivasi</td>
@@ -120,22 +120,26 @@
                                     </tr>
                                 </tbody>
                             </table>  
-                            <div class="form-group">
-                                <label for="status">Status</label>
-                                <select class="form-control selectpicker" name="status" required>
-                                    <option value="Diterima" {{ ($dataPeserta->status == 'Diterima') ? 'selected': '' }}>Diterima</option>
-                                    <option value="Ditolak" {{ ($dataPeserta->status == 'Ditolak') ? 'selected': '' }}>Ditolak</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="catatan">Catatan</label>
-                                <textarea class="form-control" id="catatan" name="catatan" rows="3">{{ $dataPeserta->catatan }}</textarea>
-                            </div>
+                            @if($kelas->status == 'Proses Seleksi')
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control selectpicker" name="status" required>
+                                        <option value="Diterima" {{ ($dataPeserta->status == 'Diterima') ? 'selected': '' }}>Diterima</option>
+                                        <option value="Ditolak" {{ ($dataPeserta->status == 'Ditolak') ? 'selected': '' }}>Ditolak</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="catatan">Catatan</label>
+                                    <textarea class="form-control" id="catatan" name="catatan" rows="3">{{ $dataPeserta->catatan }}</textarea>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        @if($kelas->status == 'Proses Seleksi')
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        @endif
                     </div>
                 </form>
             </div>

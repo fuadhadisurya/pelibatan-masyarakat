@@ -9,6 +9,7 @@ use App\Models\UploadMateri;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class MateriController extends Controller
 {
@@ -37,7 +38,7 @@ class MateriController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         
         return view('admin_dashboard.tutor.kelasku.materi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'materi' => $materi]);
     }
@@ -112,7 +113,7 @@ class MateriController extends Controller
      */
     public function edit($kelas_id, $id)
     {
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $materi = Materi::findOrFail($id);
         return view('admin_dashboard.tutor.kelasku.materi.edit', ['kelas' => $kelas, 'materi' => $materi]);
     }

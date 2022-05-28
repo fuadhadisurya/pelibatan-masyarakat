@@ -19,7 +19,7 @@ class DataPesertaController extends Controller
     public function index(Request $request, $kelas_id)
     {
         if ($request->ajax()) {
-            $data = RegistrasiKelas::all();
+            $data = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('user.nama', function($row){
@@ -51,19 +51,29 @@ class DataPesertaController extends Controller
                         return '<td class="text-center">'. $status .'</td>';
                     })
                     ->addColumn('aksi', function($row){
-                        if($row->status == 'Diterima'){
-                            $message = '<a href="whatsapp://send?phone='.$row->user->nomor_telepon.'&text=test '.$row->status.'"><span class="btn btn-sm" style="background-color: #e7f7ff;"><i class="far fa-comment-dots"></i></span></a>';
+                        if($row->kelas->status == "Proses Seleksi"){
+                            if($row->status == 'Diterima'){
+                                $message = '<a href="whatsapp://send?phone='.$row->user->nomor_telepon.'&text=test '.$row->status.'"><span class="btn btn-sm" style="background-color: #e7f7ff;"><i class="far fa-comment-dots"></i></span></a>';
+                            } else {
+                                $message = '<a href="whatsapp://send?phone='.$row->user->nomor_telepon.'&text=test '.$row->status.'"><span class="btn btn-sm" style="background-color: #e7f7ff;"><i class="far fa-comment-dots"></i></span></a>';
+                            }
+                            return '
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat'.$row->id.'" title="Lihat">
+                                            <i class="far fa-file-alt"></i>
+                                    </button>
+                                    '.$message.'
+                                </td>
+                            ';
                         } else {
-                            $message = '<a href="whatsapp://send?phone='.$row->user->nomor_telepon.'&text=test '.$row->status.'"><span class="btn btn-sm" style="background-color: #e7f7ff;"><i class="far fa-comment-dots"></i></span></a>';
+                            return '
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat'.$row->id.'" title="Lihat">
+                                            <i class="far fa-file-alt"></i>
+                                    </button>
+                                </td>
+                            ';
                         }
-                        return '
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat'.$row->id.'" title="Lihat">
-                                        <i class="far fa-file-alt"></i>
-                                </button>
-                                '.$message.'
-                            </td>
-                        ';
                     })
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);

@@ -18,7 +18,7 @@ class ForumController extends Controller
      */
     public function index($kelas_id)
     {
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $post = Post::all();
 
         return view('admin_dashboard.tutor.kelasku.forum.index', ['kelas' => $kelas, 'post' => $post]);
@@ -65,7 +65,7 @@ class ForumController extends Controller
      */
     public function show($kelas_id, $id)
     {
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $post = Post::findOrFail($id);
         $comment = Comment::where('post_id', '=', $id)->get();
         // $post = PostsViews::where('titleslug', '=' ,$titleslug)->firstOrFail();

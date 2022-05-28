@@ -9,6 +9,7 @@ use App\Models\QuizSoal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class QuizSoalController extends Controller
 {
@@ -84,7 +85,7 @@ class QuizSoalController extends Controller
                 ->make(true);
         }
 
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         return view('admin_dashboard.tutor.kelasku.quiz.soal.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'soal' => $soal, 'quiz_id' => $quiz_id]);
     }
 
@@ -95,7 +96,7 @@ class QuizSoalController extends Controller
      */
     public function create($kelas_id, $quiz_id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         $quiz = Quiz::findOrFail($quiz_id);
         return view('admin_dashboard.tutor.kelasku.quiz.soal.create', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
     }
@@ -194,7 +195,7 @@ class QuizSoalController extends Controller
      */
     public function show($kelas_id, $quiz_id, $id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         $soal = QuizSoal::with('quiz')->findOrFail($id);
         
         if($soal->file != null){
@@ -215,7 +216,7 @@ class QuizSoalController extends Controller
      */
     public function edit($kelas_id, $quiz_id, $id)
     {
-        $kelas = Kelas::findOrFail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
         $soal = QuizSoal::with('quiz')->findOrFail($id);
 
         if($soal->file != null){

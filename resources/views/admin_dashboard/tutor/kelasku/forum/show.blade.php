@@ -26,6 +26,16 @@
                                     <a class="dropdown-item" href="#" onclick="hapusPostingan(); return false;">Hapus Postingan</a>
                                 </div>
                             </div>
+                        @else
+                            <div class="dropdown d-inline-block">
+                                <a class="dropdown-toggle" href="#" role="button" id="postAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                </a>
+
+                                <div class="dropdown-menu left" aria-labelledby="postAction" style="will-change: transform; position: absolute; transform: translate3d(-141px, 19px, 0px); top: 0px; left: 0px;" x-placement="bottom-end">
+                                    <a class="dropdown-item" href="#" onclick="hapusPostingan(); return false;">Hapus Postingan</a>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -63,7 +73,11 @@
                         <div class="row">
                             <div class="col">
                                 <div class="d-flex flex-row user-info">
-                                    <img class="rounded-circle" src="{{ Storage::url($comment->user->foto) }}" width="40" height="40">
+                                    @if($comment->user->foto != null)
+                                        <img class="rounded-circle" src="{{ Storage::url($comment->user->foto) }}" width="40" height="40">
+                                    @else
+                                        <img class="rounded-circle" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar" width="40" height="40">
+                                    @endif
                                     <div class="d-flex flex-column justify-content-start ml-2">
                                         <span class="d-block font-weight-bold name">{{ $comment->user->nama }}</span>
                                         <span class="date text-black-50">{{ $comment->user->username . ' - ' . $comment->created_at }}</span>
@@ -79,6 +93,16 @@
             
                                         <div class="dropdown-menu left" aria-labelledby="postAction" style="will-change: transform; position: absolute; transform: translate3d(-141px, 19px, 0px); top: 0px; left: 0px;" x-placement="bottom-end">
                                             <a class="dropdown-item" href="#" onclick="editKomentar({{ $comment->id }}); return false;">Edit Komentar</a>
+                                            <a class="dropdown-item" href="#" onclick="hapusKomentar(this); return false;" data-comment="{{ $comment->id }}">Hapus Komentar</a>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="dropdown d-inline-block">
+                                        <a class="dropdown-toggle" href="#" role="button" id="postAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                        </a>
+            
+                                        <div class="dropdown-menu left" aria-labelledby="postAction" style="will-change: transform; position: absolute; transform: translate3d(-141px, 19px, 0px); top: 0px; left: 0px;" x-placement="bottom-end">
                                             <a class="dropdown-item" href="#" onclick="hapusKomentar(this); return false;" data-comment="{{ $comment->id }}">Hapus Komentar</a>
                                         </div>
                                     </div>
@@ -111,7 +135,11 @@
                 </div>
                 <div class="bg-light p-2" id="comment">
                     <div class="d-flex align-items-center mb-3">
-                        <img class="rounded-circle ml-1 mr-3" src="{{ Storage::url(Auth::user()->foto) }}" height="42" width="42">
+                        @if(Auth::user()->foto != null)
+                            <img class="rounded-circle ml-1 mr-3" src="{{ Storage::url(Auth::user()->foto) }}" height="42" width="42">
+                        @else
+                            <img class="rounded-circle ml-1 mr-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar" width="42" height="42">
+                        @endif
                         <strong>{{ Auth::user()->nama }}:</strong>
                     </div>
                     <form action="{{ route('tutor.kelasku.forum.comment.store', [$kelas->id, $post->id]) }}" method="POST" enctype="multipart/form-data">
@@ -268,7 +296,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{url("/tutor/kelasku/$kelas->id/forum/$post->id/comment")}}/' +id,
+                        url:'{{url("/admin/kelasku/$kelas->id/forum/$post->id/comment")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin_dashboard.tutor.kelasku.includes.navbar')
+    @include('admin_dashboard.peserta.kelasku.includes.navbar')
 
     <div class="widget-content widget-content-area">
         <h5>Silabus</h5>

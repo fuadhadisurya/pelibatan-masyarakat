@@ -9,6 +9,7 @@ use App\Models\NilaiQuiz;
 use App\Models\Quiz;
 use App\Models\QuizJawaban;
 use App\Models\QuizSoal;
+use App\Models\RegistrasiKelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,9 @@ class QuizController extends Controller
         }
 
         $kelas = Kelas::findOrFail($kelas_id);
-        return view('admin_dashboard.peserta.kelasku.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
+
+        return view('admin_dashboard.peserta.kelasku.quiz.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz, 'registrasi' => $registrasi]);
     }
 
     /**
@@ -96,6 +99,7 @@ class QuizController extends Controller
     {
         $kelas = Kelas::findOrFail($kelas_id);
         $quiz = Quiz::with('quizSoal')->findOrFail($id);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
         foreach ($quiz->quizSoal as $soal) {
             if ($soal->file != null) {
@@ -106,7 +110,7 @@ class QuizController extends Controller
             }
         }
 
-        return view('admin_dashboard.peserta.kelasku.quiz.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz]);
+        return view('admin_dashboard.peserta.kelasku.quiz.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz, 'registrasi' => $registrasi]);
     }
 
     /**
@@ -201,6 +205,7 @@ class QuizController extends Controller
         $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
         $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->where('user_id', Auth::user()->id)->get();
         $hasil = NilaiQuiz::where('quiz_id', $id)->where('user_id', Auth::user()->id)->first();
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
         foreach ($quiz as $jawaban){
             $soal = $jawaban->quizSoal;
@@ -213,6 +218,6 @@ class QuizController extends Controller
             }
         }
 
-        return view('admin_dashboard.peserta.kelasku.quiz.hasil', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz, 'hasil' => $hasil]);
+        return view('admin_dashboard.peserta.kelasku.quiz.hasil', ['kelas' => $kelas, 'quiz' => $quiz, 'informasiQuiz' =>  $informasiQuiz, 'hasil' => $hasil, 'registrasi' => $registrasi]);
     }
 }

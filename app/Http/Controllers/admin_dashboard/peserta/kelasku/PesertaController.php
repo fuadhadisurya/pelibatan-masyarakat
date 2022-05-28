@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PesertaController extends Controller
 {
@@ -18,8 +19,9 @@ class PesertaController extends Controller
     {
         $kelas = Kelas::findOrfail($kelas_id);
         $peserta = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('status', '=', 'Diterima' )->get();
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
-        return view('admin_dashboard.peserta.kelasku.peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'peserta' => $peserta]);
+        return view('admin_dashboard.peserta.kelasku.peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'peserta' => $peserta, 'registrasi' => $registrasi]);
     }
 
     /**

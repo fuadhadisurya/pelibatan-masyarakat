@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DataPresensi;
 use App\Models\Kelas;
 use App\Models\Presensi;
+use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -59,7 +60,9 @@ class PresensiController extends Controller
                     ->make(true);
         }
         $kelas = Kelas::findOrfail($kelas_id);
-        return view('admin_dashboard.peserta.kelasku.presensi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'presensi' => $presensi]);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
+
+        return view('admin_dashboard.peserta.kelasku.presensi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'presensi' => $presensi, 'registrasi' => $registrasi]);
     }
 
     /**

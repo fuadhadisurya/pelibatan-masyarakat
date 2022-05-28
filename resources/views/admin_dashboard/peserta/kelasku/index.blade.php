@@ -46,7 +46,7 @@
             ajax: "{{ route('peserta.kelasku.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_kelas', name: 'nama_kelas'},
+                {data: 'kelas.nama_kelas', name: 'kelas.nama_kelas'},
                 {data: 'periode_kelas', name: 'periode_kelas'},
                 {data: 'tutor', name: 'tutor'},
                 {data: 'status', name: 'status', className: 'text-center'},

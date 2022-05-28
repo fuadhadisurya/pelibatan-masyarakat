@@ -8,7 +8,7 @@
         
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
             <div class="widget-content-area br-4">
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">

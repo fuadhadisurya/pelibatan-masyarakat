@@ -8,6 +8,7 @@ use App\Models\RegistrasiKelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class PesertaController extends Controller
 {
@@ -62,7 +63,7 @@ class PesertaController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::findOrfail($kelas_id);
+        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas_id)->get();
         
         return view('admin_dashboard.tutor.kelasku.peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'dataPeserta' => $dataPeserta]);

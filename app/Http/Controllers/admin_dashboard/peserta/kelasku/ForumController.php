@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Kelas;
 use App\Models\Post;
+use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +19,11 @@ class ForumController extends Controller
      */
     public function index($kelas_id)
     {
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($kelas_id);
+        $kelas = Kelas::findOrfail($kelas_id);
         $post = Post::all();
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
-        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas, 'post' => $post]);
+        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas, 'post' => $post, 'registrasi' => $registrasi]);
     }
 
     /**
@@ -68,11 +70,9 @@ class ForumController extends Controller
         $kelas = Kelas::findOrfail($kelas_id);
         $post = Post::findOrFail($id);
         $comment = Comment::where('post_id', '=', $id)->get();
-        // $post = PostsViews::where('titleslug', '=' ,$titleslug)->firstOrFail();
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
-        // PostsViews::createViewLog($post);
-
-        return view('admin_dashboard.peserta.kelasku.forum.show', ['kelas' => $kelas, 'post' => $post, 'comment' => $comment]);
+        return view('admin_dashboard.peserta.kelasku.forum.show', ['kelas' => $kelas, 'post' => $post, 'comment' => $comment, 'registrasi' => $registrasi]);
     }
 
     /**

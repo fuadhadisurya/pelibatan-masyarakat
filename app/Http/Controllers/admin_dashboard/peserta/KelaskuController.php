@@ -4,29 +4,33 @@ namespace App\Http\Controllers\admin_dashboard\peserta;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelaskuController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Kelas::all();
+            $data = RegistrasiKelas::with('kelas')->where('user_id', Auth::user()->id)->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_berakhir . ' - ' . $row->tanggal_berakhir;
+                        return $row->kelas->tanggal_berakhir . ' - ' . $row->kelas->tanggal_berakhir;
                     })
                     ->addColumn('tutor', function($row){
-                        return $row->tutor->nama;
+                        return $row->kelas->tutor->nama;
                     })
                     ->editColumn('status', function($row){
-                        if($row->status == 'Pendaftaran'){
+                        if($row->kelas->status == 'Persiapan'){
+                            $status = '<span class="badge badge-warning">Persiapan</span>';
+                        }elseif($row->kelas->status == 'Pendaftaran'){
                             $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-warning">Proses Seleksi</span>';
-                        } elseif($row->status == 'Kegiatan Berlangsung'){
-                            $status = '<span class="badge badge-danger">Proses Seleksi</span>';
+                        } elseif($row->kelas->status == 'Proses Seleksi'){
+                            $status = '<span class="badge badge-info">Proses Seleksi</span>';
+                        } elseif($row->kelas->status == 'Kegiatan Berlangsung'){
+                            $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
                         } else {
                             $status = '<span class="badge badge-dark">Selesai</span>';
                         }
@@ -35,8 +39,8 @@ class KelaskuController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'. route('peserta.kelasku.home.index', $row->id) .'" class="btn btn-sm btn-info" title="Edit"><i class="far fa-eye"></i></a>
-                                <a href="'. route('peserta.kelasku.home.index', $row->id) .'" class="btn btn-sm btn-light" title="Edit"><i class="bi bi-patch-check-fill"></i></a>
+                                <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
+                                <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-light" title="Unduh Sertifikat"><i class="bi bi-patch-check-fill"></i></a>
                             </td>
                         ';
                     })

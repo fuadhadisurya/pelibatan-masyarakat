@@ -72,6 +72,10 @@
                             <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                 Terimakasih sudah mendaftar
                             </button>
+                        @elseif(Auth::user()->status == 'Belum Verifikasi')
+                            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                Verifikasi akun terlebih dahulu
+                            </button>
                         @else
                             <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
                                 Daftar Sekarang
@@ -125,7 +129,7 @@
                         </div>
                         <div class="form-group mb-4">
                             <label for="motivasi">Motivasi</label>
-                            <textarea class="form-control" id="motivasi" name="motivasi" rows="5"></textarea>
+                            <textarea class="form-control" id="motivasi" name="motivasi" rows="5">{{ old("motivasi") }}</textarea>
                         </div>
                         <div id="result"><b style="font-size:16px;font-family:Arial">Jumlah Kata</b> : <b style="font-size:16px;font-family:Arial;color:#2980b9">0</b></div>
                     </div>
