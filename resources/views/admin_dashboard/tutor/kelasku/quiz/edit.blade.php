@@ -1,9 +1,11 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Quiz | Kegiatan Pelibatan Masyarakat
+    Edit Quiz | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
+    @include('admin_dashboard.tutor.kelasku.includes.navbar')
+    
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -16,8 +18,6 @@
                     </div>
                 </div>
             @endif
-
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <form action="{{ route('tutor.kelasku.quiz.update', [$kelas->id, $quiz->id]) }}" method="post" autocomplete="off">
@@ -64,6 +64,8 @@
 @endpush
 
 @push('styles')
+    <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">

@@ -4,11 +4,12 @@
 @endsection
 
 @section('content')
+    @include('admin_dashboard.admin.data-kelas.includes.navbar')
+
     <div class="row layout-top-spacing">
         
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
 
-            @include('admin_dashboard.admin.data-kelas.includes.navbar')
             <div class="widget-content-area br-4 mb-3">
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
@@ -142,6 +143,7 @@
 @endpush
 
 @push('styles')
+    <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">

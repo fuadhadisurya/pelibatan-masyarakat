@@ -19,6 +19,7 @@ use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashb
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\ForumController as PesertaKelaskuForumController;
+use App\Http\Controllers\admin_dashboard\peserta\kelasku\HomeController as PesertaKelaskuHomeController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\JawabanTugasController as PesertaKelaskuJawabanTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\MateriController as PesertaKelaskuMateriController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\PesertaController as PesertaKelaskuPesertaController;
@@ -27,8 +28,8 @@ use App\Http\Controllers\admin_dashboard\peserta\kelasku\QuizController as Peser
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\SilabusController as PesertaKelaskuSilabusController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\TugasController as PesertaKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuController as PesertaKelaskuController;
-use App\Http\Controllers\admin_dashboard\peserta\KelaskuHomeController as PesertaKelaskuHomeController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\ForumController as TutorKelaskuForumController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\HomeController as TutorKelaskuHomeController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\MateriController as TutorKelaskuMateriController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PesertaController as TutorKelaskuPesertaController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\PresensiController as TutorKelaskuPresensiController;
@@ -39,7 +40,6 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as Tuto
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusDetailController as TutorKelaskuSilabusDetailController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
-use App\Http\Controllers\admin_dashboard\tutor\KelaskuHomeController as TutorKelaskuHomeController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\PengaturanController;

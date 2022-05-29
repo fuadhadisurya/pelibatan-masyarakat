@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\admin_dashboard\peserta;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,12 +36,20 @@ class KelaskuController extends Controller
                         return '<td class="text-center">'. $status .'</td>';
                     })
                     ->addColumn('aksi', function($row){
-                        return '
-                            <td class="text-center">
-                                <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-light" title="Unduh Sertifikat"><i class="bi bi-patch-check-fill"></i></a>
-                            </td>
-                        ';
+                        if ($row->kelas->status == "Selesai") {
+                            return '
+                                <td class="text-center">
+                                    <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
+                                    <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-light" title="Unduh Sertifikat"><i class="bi bi-patch-check-fill"></i></a>
+                                </td>
+                            ';   
+                        } else {
+                            return '
+                                <td class="text-center">
+                                    <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
+                                </td>
+                            ';   
+                        }
                     })
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);

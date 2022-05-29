@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+    @include('admin_dashboard.peserta.kelasku.includes.navbar')
+    
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -16,8 +18,6 @@
                     </div>
                 </div>
             @endif
-
-            @include('admin_dashboard.peserta.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive">
@@ -97,6 +97,8 @@
 @endpush
 
 @push('styles')
+    <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />

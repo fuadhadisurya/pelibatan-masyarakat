@@ -1,9 +1,11 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Quiz | Kegiatan Pelibatan Masyarakat
+    Soal Quiz | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
+    @include('admin_dashboard.tutor.kelasku.includes.navbar')
+    
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -17,12 +19,7 @@
                 </div>
             @endif
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
-
             <div class="widget-content widget-content-area br-6">
-                {{-- <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
-                    <i class="far fa-plus-square"></i> Tambah Soal
-                </button> --}}
                 <a href="{{ route('tutor.kelasku.quiz.soal.create', [$kelas->id, $quiz_id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Soal
                 </a>
@@ -48,76 +45,12 @@
 @endsection
 
 @push('modal')
-{{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{ route('tutor.kelasku.quiz.store', $kelas->id) }}" method="post">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="soal[]">Soal</label>
-                        <textarea class="form-control" id="soal[]" name="soal[]" rows="2" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="file[]">File (Audio, Gambar, Video)</label>
-                        <input type="file" name="file[]" id="file[]" accept="image/*, video/*, audio/*" multiple>
-                    </div>
-                    <div class="form-group row">
-                        <label for="a[]" class="col-sm-1 col-form-label text-right">A.</label>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="a[]" name="a[]" placeholder="Isi Jawaban A.">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="b[]" class="col-sm-1 col-form-label text-right">B.</label>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="b[]" name="b[]" placeholder="Isi Jawaban B.">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="c[]" class="col-sm-1 col-form-label text-right">C.</label>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="c[]" name="c[]" placeholder="Isi Jawaban C.">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="d[]" class="col-sm-1 col-form-label text-right">D.</label>
-                        <div class="col-sm-11">
-                            <input type="text" class="form-control" id="d[]" name="d[]" placeholder="Isi Jawaban D.">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="kunci_jawaban[]">Kunci Jawaban</label>
-                        <select class="form-control" name="kunci_jawaban[]">
-                            <option value="" hidden selected>Pilih Kunci Jawaban</option>
-                            <option value="A">A.</option>
-                            <option value="B">B.</option>
-                            <option value="C">C.</option>
-                            <option value="D">D.</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pembahasan[]">Pembahasan (Opsional)</label>
-                        <textarea class="form-control" id="pembahasan[]" name="pembahasan[]" rows="2" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
-                    <button type="submit" class="btn btn-primary">Kirim</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
+
 @endpush
 
 @push('styles')
+    <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />

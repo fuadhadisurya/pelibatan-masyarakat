@@ -1,14 +1,14 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Soal Quiz | Kegiatan Pelibatan Masyarakat
+    Pengerjaan Quiz | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
     @include('admin_dashboard.peserta.kelasku.includes.navbar')
+
     <form action="{{ route('peserta.quiz.jawaban.store', [$kelas->id, $quiz->id]) }}" method="post" id="jawabanQuiz">
         @csrf
         <div class="row layout-top-spacing">
-            {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing"> --}}
             <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
                 <div class="widget-content-area br-4">
                     @if ($errors->any())
@@ -123,6 +123,7 @@
 @endsection
 
 @push('styles')
+    <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />

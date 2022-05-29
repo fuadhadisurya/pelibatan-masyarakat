@@ -20,7 +20,7 @@
                 <form action="{{ route('tutor.update', $tutor->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('PUT')
-                    <div class="modal-body">
+                    <div class="mb-3">
                         <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
                             <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama', $tutor->nama) }}" required>
@@ -48,9 +48,9 @@
                             <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_password">
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('tutor.index') }}" class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="{{ route('tutor.index') }}" class="btn">Batal</a>
                     </div>
                 </form>
             </div>

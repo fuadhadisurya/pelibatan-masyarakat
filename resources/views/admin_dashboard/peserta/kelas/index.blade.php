@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        @foreach ($kelas as $kelas)
+                        @foreach ($class as $kelas)
                             <div class="col-sm-6">
                                 <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
                                     <div class="card component-card_9 mb-3">
@@ -142,6 +142,7 @@
                             </div>
                         @endforeach
                     </div>
+                    {{ $class->links() }}
                 </div>
             </div>
         </div>

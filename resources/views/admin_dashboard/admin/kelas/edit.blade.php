@@ -44,13 +44,13 @@
                     </div>
                     <div class="form-group">
                         <label for="persyaratan">persyaratan Kelas</label>
-                        <textarea name="persyaratan" class="editor" id="editor1" rows="10">
+                        <textarea name="persyaratan" class="textarea tinymce" id="editor1" rows="10">
                             {!! $kelas->persyaratan !!}
                         </textarea>
                     </div>
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi Kelas</label>
-                        <textarea name="deskripsi" class="editor" id="editor2" rows="10">
+                        <textarea name="deskripsi" class="textarea tinymce" id="editor2" rows="10">
                             {!! $kelas->deskripsi !!}
                         </textarea>
                     </div>
@@ -120,7 +120,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('kelas.index') }}" class="btn">Batal</a>
+                        <a href="{{ route('kelas.index') }}" class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
@@ -136,13 +136,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/select2/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/prismjs/prism.css') }}">
 @endpush
 
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/editors/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/editors/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('admin_dashboard/plugins/prismjs/prism.js') }}"></script>
     <script>
         var f3 = flatpickr(document.getElementById('periode_kelas'), {
             mode: "range",
@@ -159,9 +161,26 @@
             "title": "Select Options"        
         }).selectpicker("render");
     </script>
-    <script>
-        $('.editor').each(function () {
-            CKEDITOR.replace($(this).prop('id'));
+    <script type='text/javascript'> 
+        tinymce.init({
+            selector: 'textarea.tinymce',
+            // height: 500,
+            plugins: 'fullscreen lists link image media codesample table wordcount autoresize',
+            menubar: false,
+            toolbar: 'fullscreen bold italic underline strikethrough subscript superscript | fontsize color | blocks alignment numlist bullist outdent indent blockquote | link image media codesample table | removeformat | undo redo',
+            setup: (editor) => {
+                editor.ui.registry.addGroupToolbarButton('alignment', {
+                    icon: 'align-left',
+                    tooltip: 'Alignment',
+                    items: 'alignleft aligncenter alignright alignjustify'
+                });
+                editor.ui.registry.addGroupToolbarButton('color', {
+                    icon: 'color-levels',
+                    tooltip: 'Color',
+                    items: 'forecolor backcolor'
+                });
+            },
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
         });
     </script>
     <script>

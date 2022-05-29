@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\tutor;
+namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
@@ -8,7 +8,7 @@ use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class KelaskuHomeController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,10 @@ class KelaskuHomeController extends Controller
      */
     public function index($kelas_id)
     {
-        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
-        $peserta = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('status', '=', 'Diterima' )->get();
+        $kelas = Kelas::findOrfail($kelas_id);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
-        return view('admin_dashboard.tutor.kelasku.home.index', ['kelas' => $kelas, 'peserta' => $peserta]);
+        return view('admin_dashboard.peserta.kelasku.home.index', ['kelas' => $kelas, 'registrasi' => $registrasi]);
     }
 
     /**

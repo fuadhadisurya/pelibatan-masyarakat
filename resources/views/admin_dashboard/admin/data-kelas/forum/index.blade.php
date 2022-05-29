@@ -6,43 +6,58 @@
 @section('content')
     @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
-    <div class="widget-content widget-content-area">
-        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#buatDiskusi"><i class="far fa-plus-square"></i> Buat Diskusi Baru</button>
-        <hr>
-        @forelse ($posts as $post)
-            <a href="{{ route('data-kelas.forum.show', [$kelas->id, $post->id]) }}">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>{{ $post->judul }}</div>
-                            <div>{{ $post->created_at }}</div>
-                        </div>
+    <div class="row layout-top-spacing">
+        <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            @if(session('status'))
+                <div class="alert alert-success alert-dismissible show fade">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {{ session('status') }}
                     </div>
-                    <div class="card-body">
-                        @php
-                            $praIsi = $post->isi;
-                            $postIsi = strip_tags($praIsi, ['p', 'a', 'pre', 'code']);
-                        @endphp
-                        {!! Str::words($postIsi,99, '...') !!}
-                    </div>
-                    <div class="card-footer">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="badge badge-info">{{ count($post->comment) }} komentar</span>
+                </div>
+            @endif
+            
+            <div class="widget-content widget-content-area">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#buatDiskusi"><i class="far fa-plus-square"></i> Buat Diskusi Baru</button>
+                <hr>
+                @forelse ($posts as $post)
+                    <a href="{{ route('data-kelas.forum.show', [$kelas->id, $post->id]) }}">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <div>{{ $post->judul }}</div>
+                                    <div>{{ $post->created_at }}</div>
+                                </div>
                             </div>
-                            <span class="badge badge-light">Postingan oleh : {{ $post->user->nama }}</span>
+                            <div class="card-body">
+                                @php
+                                    $praIsi = $post->isi;
+                                    $postIsi = strip_tags($praIsi, ['p', 'a', 'pre', 'code']);
+                                @endphp
+                                {!! Str::words($postIsi,99, '...') !!}
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <span class="badge badge-info">{{ count($post->comment) }} komentar</span>
+                                    </div>
+                                    <span class="badge badge-light">Postingan oleh : {{ $post->user->nama }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @empty
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            Forum diskusi masih kosong silahkan membuat baru
                         </div>
                     </div>
-                </div>
-            </a>
-        @empty
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    Forum diskusi masih kosong silahkan membuat baru
-                </div>
+                @endforelse
+                {{ $posts->links() }}
             </div>
-        @endforelse
-        {{ $posts->links() }}
+        </div>
     </div>
 @endsection
 
@@ -79,9 +94,8 @@
 @endpush
 
 @push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin_dashboard/assets/css/components/cards/card.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/prismjs/prism.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />

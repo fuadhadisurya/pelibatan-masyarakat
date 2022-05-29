@@ -18,8 +18,9 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->get();
-        return view('admin_dashboard.peserta.kelas.index', ['kelas' => $kelas]);
+        
+        $kelas = Kelas::where('status', '=', 'Pendaftaran')->orderBy('created_at', 'desc')->paginate(1);
+        return view('admin_dashboard.peserta.kelas.index', ['class' => $kelas]);
     }
 
     /**
