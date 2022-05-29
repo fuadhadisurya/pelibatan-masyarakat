@@ -52,9 +52,9 @@
                         <table class="table table-bordered mb-4">
                             <thead>
                                 <tr>
-                                    <th class="text-center">No.</th>
+                                    <th class="text-center" width="5%">No.</th>
                                     <th class="text-center">Soal</th>
-                                    <th class="text-center">Keterangan</th>
+                                    <th class="text-center" width="15%">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>

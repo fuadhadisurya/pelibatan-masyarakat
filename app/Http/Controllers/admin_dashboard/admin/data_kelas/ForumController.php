@@ -19,9 +19,9 @@ class ForumController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $post = Post::all();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
 
-        return view('admin_dashboard.admin.data-kelas.forum.index', ['kelas' => $kelas, 'post' => $post]);
+        return view('admin_dashboard.admin.data-kelas.forum.index', ['kelas' => $kelas, 'posts' => $posts]);
     }
 
     /**

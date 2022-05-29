@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.quiz.soal.update', [$kelas->id, $soal->quiz->id, $soal->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('tutor.kelasku.quiz.soal.update', [$kelas->id, $soal->quiz->id, $soal->id]) }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('PUT')
                     <h3>Soal</h3>

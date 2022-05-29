@@ -20,9 +20,6 @@
             @include('admin_dashboard.admin.data-kelas.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadTugas">
-                    <i class="far fa-plus-square"></i> Buat Tugas
-                </button>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
                         <thead>
@@ -46,50 +43,7 @@
 @endsection
 
 @push('modal')
-    <div class="modal fade" id="uploadTugas" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form action="{{ route('data-kelas.tugas.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buat Tugas</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama_tugas">Nama Tugas</label>
-                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="batas_waktu">Batas Waktu</label>
-                            <input id="dateTimeFlatpickr" name="batas_waktu" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-file-container" data-upload-id="mySecondImage">
-                                <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
-                                <label class="custom-file-container__custom-file" >
-                                    <input type="file" name="tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
-                                    <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-                                    <span class="custom-file-container__custom-file__custom-file-control"></span>
-                                </label>
-                                <div class="custom-file-container__image-preview"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    
 @endpush
 
 @push('styles')

@@ -57,12 +57,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('tutor.kelasku.quiz.store', $kelas->id) }}" method="post">
+            <form action="{{ route('tutor.kelasku.quiz.store', $kelas->id) }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nama_quiz">Nama quiz</label>
-                        <input type="text" class="form-control" id="nama_quiz" name="nama_quiz" required>
+                        <input type="text" class="form-control" id="nama_quiz" name="nama_quiz" value="{{ old('nama_quiz') }}" required>
                     </div> 
                     <div class="form-group">
                         <label for="tanggal_quiz">Tanggal Quiz</label>
@@ -70,16 +70,16 @@
                     </div>
                     <div class="form-group">
                         <label for="waktu_pengerjaan">Waktu Pengerjaan (Dalam Menit)</label>
-                        <input name="waktu_pengerjaan" class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Cth : 60" required>
+                        <input name="waktu_pengerjaan" class="form-control" type="text" onkeypress="return isNumber(event)" placeholder="Cth : 60"  value="{{ old('waktu_pengerjaan') }}" required>
                     </div>
                     <div class="form-group">
                         <label for="aktif">Aktif?</label>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="aktif1" value="Y" name="aktif" class="custom-control-input" required="required">
+                            <input type="radio" id="aktif1" value="Y" name="aktif" class="custom-control-input" {{ old('aktif') == 'Y' ? 'checked' : '' }} required="required">
                             <label class="custom-control-label" for="aktif1">Ya</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" id="aktif2" value="N" name="aktif" class="custom-control-input">
+                            <input type="radio" id="aktif2" value="N" name="aktif" class="custom-control-input" {{ old('aktif') == 'N' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="aktif2">Tidak</label>
                         </div>
                     </div>

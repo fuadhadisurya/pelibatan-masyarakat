@@ -19,9 +19,15 @@ class CekRegistrasi
     public function handle(Request $request, Closure $next)
     {
         $registrasi = RegistrasiKelas::where('kelas_id', $request->route('kelasku'))->where('user_id', Auth::user()->id)->first();
-        if ($registrasi->status == 'Diterima') {
-            return $next($request);
-        } elseif ($registrasi->status == 'Ditolak') {
+        if($registrasi != null){
+            if ($registrasi->status == 'Diterima') {
+                return $next($request);
+            } elseif ($registrasi->status == 'Ditolak') {
+                abort(404);
+            } else {
+                abort(404);
+            }
+        } else {
             abort(404);
         }
     }

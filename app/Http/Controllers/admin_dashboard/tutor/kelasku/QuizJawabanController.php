@@ -30,7 +30,7 @@ class QuizJawabanController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="' . route('tutor.kelasku.quiz.jawaban.show', [$row->quiz->kelas_id, $row->quiz->id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
+                                <a href="' . route('tutor.kelasku.quiz.jawaban.show', [$row->quiz->kelas_id, $row->quiz->id, $row->users->id]) . '" class="btn btn-sm btn-info" title="Lihat nilai"><i class="far fa-eye"></i></a>
                             </td>
                         ';
                     })
@@ -71,11 +71,11 @@ class QuizJawabanController extends Controller
      */
     public function show($kelas_id, $quiz_id, $id)
     {
-        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
-        $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
-        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->get();
-        $hasil = NilaiQuiz::with('users')->findOrFail($id);
-
+        $kelas = Kelas::findOrFail($kelas_id);
+        $informasiQuiz = Quiz::findOrFail($quiz_id);
+        $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $quiz_id)->where('user_id', $id)->get();
+        $hasil = NilaiQuiz::with('users')->where('quiz_id', $quiz_id)->where('user_id', $id)->firstOrFail();
+        
         foreach ($quiz as $jawaban){
             $soal = $jawaban->quizSoal;
             

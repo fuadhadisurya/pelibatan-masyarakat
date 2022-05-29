@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
 
 use App\Http\Controllers\Controller;
-use App\Models\JawabanTugas;
 use App\Models\Kelas;
 use App\Models\NilaiQuiz;
 use App\Models\Quiz;
 use App\Models\QuizJawaban;
-use App\Models\QuizSoal;
 use App\Models\RegistrasiKelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,19 +41,28 @@ class QuizController extends Controller
                     return $aktif;
                 })
                 ->addColumn('aksi', function ($row) {
-                    // if(QuizJawaban::where('user_id', Auth::user()->id) != null && QuizJawaban::where('quiz_id', $row->id)){
-                    //     $return = '
-                    //         <td class="text-center">
-                    //             <a href="' . route('peserta.quiz.jawaban.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-info" title="lihat hasil jawaban"><i class="far fa-eye"></i></a>
-                    //         </td>
-                    //     ';
-                    // } else {
+                    $nilai = NilaiQuiz::where('quiz_id', $row->id)->where('user_id', Auth::user()->id)->first();
+                    if($nilai != null){
                         $return = '
                             <td class="text-center">
-                                <a href="' . route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-primary" title="kerjakan soal"><i class="far fa-edit"></i></a>
+                                <a href="' . route('peserta.quiz.jawaban.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-info" title="Lihat hasil"><i class="far fa-eye"></i></a>
                             </td>
                         ';
-                    // }
+                    } else {
+                        if ($row->aktif == 'Y') {
+                            $return = '
+                                <td class="text-center">
+                                    <a href="' . route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-primary" title="Kerjakan soal"><i class="far fa-edit"></i></a>
+                                </td>
+                            ';
+                        } else {
+                            $return = '
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary" title="Kerjakan soal" disabled><i class="far fa-edit"></i></button>
+                                </td>
+                            ';
+                        }
+                    }
                     return $return;
                 })
                 ->rawColumns(['keterangan', 'aktif', 'aksi'])
@@ -98,7 +105,7 @@ class QuizController extends Controller
     public function show($kelas_id, $id)
     {
         $kelas = Kelas::findOrFail($kelas_id);
-        $quiz = Quiz::with('quizSoal')->findOrFail($id);
+        $quiz = Quiz::with('quizSoal')->where('kelas_id', $kelas_id)->findOrFail($id);
         $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
         foreach ($quiz->quizSoal as $soal) {
@@ -177,11 +184,13 @@ class QuizController extends Controller
         $jawaban_kosong = 0;
         
         foreach ($quiz as $jawaban){
-            if($jawaban->quizSoal->kunci_jawaban == $jawaban->jawaban){
-                $jawaban_benar+=1;
-            } elseif($jawaban->quizSoal->kunci_jawaban == $jawaban->jawaban){
-                $jawaban_salah+=1;
-            } elseif($jawaban->jawaban == null){
+            if($jawaban->jawaban != null){
+                if($jawaban->quizSoal->kunci_jawaban == $jawaban->jawaban){
+                    $jawaban_benar+=1;
+                } elseif($jawaban->quizSoal->kunci_jawaban != $jawaban->jawaban){
+                    $jawaban_salah+=1;
+                }
+            } else {
                 $jawaban_kosong+=1;
             }
         }
@@ -196,7 +205,7 @@ class QuizController extends Controller
             "nilai" => $nilai,
         ]);
 
-        return redirect()->route('peserta.quiz.jawaban.show', [$kelas_id, $kelas_id])->with('status', 'Berhasil menyelesaikan quiz');
+        return redirect()->route('peserta.quiz.jawaban.show', [$kelas_id, $quiz_id])->with('status', 'Berhasil menyelesaikan quiz');
     }
 
     public function hasil($kelas_id, $id)
@@ -204,7 +213,7 @@ class QuizController extends Controller
         $kelas = Kelas::findOrFail($kelas_id);
         $informasiQuiz = Quiz::with('quizSoal')->findOrFail($id);
         $quiz = QuizJawaban::with('quizSoal')->where('quiz_id', $id)->where('user_id', Auth::user()->id)->get();
-        $hasil = NilaiQuiz::where('quiz_id', $id)->where('user_id', Auth::user()->id)->first();
+        $hasil = NilaiQuiz::where('quiz_id', $id)->where('user_id', Auth::user()->id)->firstOrFail();
         $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
         foreach ($quiz as $jawaban){

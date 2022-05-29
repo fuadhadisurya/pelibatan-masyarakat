@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.quiz.soal.store', [$kelas->id, $quiz->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('tutor.kelasku.quiz.soal.store', [$kelas->id, $quiz->id]) }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <h3>Soal</h3>
                     <section>
@@ -37,21 +37,21 @@
                                     </div>
                                     <ol type="A">
                                         <li>
-                                            <input type="text" class="form-control ml-2 my-3" id="a[]" name="a[]" placeholder="Jawaban A.">
+                                            <input type="text" class="form-control ml-2 my-3" id="a[]" name="a[]" placeholder="Jawaban A." required>
                                         </li>
                                         <li>                                            
-                                            <input type="text" class="form-control ml-2 my-3" id="b[]" name="b[]" placeholder="Jawaban B.">
+                                            <input type="text" class="form-control ml-2 my-3" id="b[]" name="b[]" placeholder="Jawaban B." required>
                                         </li>
                                         <li>
-                                            <input type="text" class="form-control ml-2 my-3" id="c[]" name="c[]" placeholder="Jawaban C.">
+                                            <input type="text" class="form-control ml-2 my-3" id="c[]" name="c[]" placeholder="Jawaban C." required>
                                         </li>
                                         <li>
-                                            <input type="text" class="form-control ml-2 my-3" id="d[]" name="d[]" placeholder="Jawaban D.">
+                                            <input type="text" class="form-control ml-2 my-3" id="d[]" name="d[]" placeholder="Jawaban D." required>
                                         </li>
                                     </ol>
                                     <div class="form-group">
                                         <label for="kunci_jawaban[]">Kunci Jawaban</label>
-                                        <select class="form-control" id="kunci_jawaban[]" name="kunci_jawaban[]">
+                                        <select class="form-control" id="kunci_jawaban[]" name="kunci_jawaban[]" required>
                                             <option value="" hidden selected>Pilih Kunci Jawaban</option>
                                             <option value="A">A.</option>
                                             <option value="B">B.</option>

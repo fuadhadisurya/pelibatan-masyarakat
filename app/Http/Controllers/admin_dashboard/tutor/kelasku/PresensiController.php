@@ -24,14 +24,16 @@ class PresensiController extends Controller
             return DataTables::of($presensi)
                     ->addIndexColumn()
                     ->addColumn('nama', function($row){
-                        $angka = 0;
-                        $angka++;
+                        $angka = 1;
+                        for ($i=1; $i < $row->id; $i++) { 
+                            $angka++;
+                        }
                         return 'Kehadiran '.$angka;
                     })
                     ->addColumn('status', function($row){
                         $dataPresensi = DataPresensi::where('presensi_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
                         if ($dataPresensi != null) {
-                            return '<span class="badge badge-success">'.$dataPresensi->status.'</span>';
+                            return '<span class="badge badge-info">'.$dataPresensi->status.'</span>';
                         } else {
                             return '<span class="badge badge-warning">Belum Mengisi</span>';
                         }

@@ -50,7 +50,7 @@
     <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.peserta.update', [$kelas_id, $dataPeserta->id]) }}" method="POST">
+                <form action="{{ route('tutor.kelasku.peserta.update', [$kelas_id, $dataPeserta->id]) }}" method="POST" autocomplete="off">
                     @csrf
                     @method('put')
                     <div class="modal-header">
@@ -130,13 +130,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="catatan">Catatan</label>
-                                    <textarea class="form-control" id="catatan" name="catatan" rows="3">{{ $dataPeserta->catatan }}</textarea>
+                                    <textarea class="form-control" id="catatan" name="catatan" rows="3">{{ old('catatan', $dataPeserta->catatan) }}</textarea>
                                 </div>
                             @endif
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
                         @if($kelas->status == 'Proses Seleksi')
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         @endif
@@ -152,6 +152,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')

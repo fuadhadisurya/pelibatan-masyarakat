@@ -30,7 +30,7 @@ class MateriController extends Controller
                                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#lihat'.$row->id.'" title="Lihat">
                                     <i class="far fa-eye"></i>
                                 </button>
-                                <a href="'.route('tutor.kelasku.materi.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <a href="'.route('tutor.kelasku.materi.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';

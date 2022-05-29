@@ -9,7 +9,7 @@
     <div class="widget-content widget-content-area">
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#buatDiskusi"><i class="far fa-plus-square"></i> Buat Diskusi Baru</button>
         <hr>
-        @forelse ($post as $post)
+        @forelse ($posts as $post)
             <a href="{{ route('data-kelas.forum.show', [$kelas->id, $post->id]) }}">
                 <div class="card mb-3">
                     <div class="card-header">
@@ -28,8 +28,7 @@
                     <div class="card-footer">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <span class="badge badge-secondary">0 Dilihat</span>
-                                <span class="badge badge-info">0 komentar</span>
+                                <span class="badge badge-info">{{ count($post->comment) }} komentar</span>
                             </div>
                             <span class="badge badge-light">Postingan oleh : {{ $post->user->nama }}</span>
                         </div>
@@ -43,6 +42,7 @@
                 </div>
             </div>
         @endforelse
+        {{ $posts->links() }}
     </div>
 @endsection
 
@@ -56,20 +56,20 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('data-kelas.forum.store', $kelas->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('data-kelas.forum.store', $kelas->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mb-3">
                             <label for="judul">Judul</label>
-                            <input type="text" class="form-control" name="judul" id="judul" placeholder="Judul Diskusi">
+                            <input type="text" class="form-control" name="judul" id="judul" placeholder="Judul Diskusi" value="{{ old('judul') }}">
                         </div>
                         <div class="form-group mb-4">
                             <label for="isi">Isi Pertanyaan</label>
-                            <textarea class="form-control" name="isi" id="isi" rows="3"></textarea>
+                            <textarea class="form-control" name="isi" id="isi" rows="3">{{ old('isi') }}</textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
                         <button type="submit" class="btn btn-primary">Publish</button>
                     </div>
                 </form>                    
@@ -83,6 +83,8 @@
     <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/cards/card.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/prismjs/prism.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .btn-light { border-color: transparent; }
     </style>

@@ -82,6 +82,20 @@
                                                 <td><span class="badge badge-success">{{ $jawabanTugas->status }}</span></td>
                                             </tr>
                                             <tr>
+                                                <th>Waktu Kirim</th>
+                                                <td>:</td>
+                                                <td>{{ $jawabanTugas->updated_at }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Keterangan</th>
+                                                <td>:</td>
+                                                @if ($jawabanTugas->updated_at <= $tugas->batas_waktu)
+                                                    <td><span class="badge badge-success">Tepat Waktu</span></td>
+                                                @else
+                                                    <td><span class="badge badge-danger">Terlambat</span></td>
+                                                @endif
+                                            </tr>
+                                            <tr>
                                                 <th>Nilai</th>
                                                 <td>:</td>
                                                 @if ($jawabanTugas->nilai != null)
@@ -163,7 +177,7 @@
                             <textarea class="form-control" id="jawaban" name="jawaban" rows="10"></textarea>
                         </div>
                         <div class="form-group">
-                            <div class="custom-file-container" data-upload-id="mySecondImage">
+                            <div class="custom-file-container" data-upload-id="myInsertFile">
                                 <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                 <label class="custom-file-container__custom-file" >
                                     <input type="file" name="jawaban_tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
@@ -176,7 +190,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
                         <button type="submit" class="btn btn-primary">Kirim</button>
                     </div>
                 </form>
@@ -211,7 +225,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <div class="custom-file-container" data-upload-id="mySecondImage">
+                            <div class="custom-file-container" data-upload-id="myUpdateFile">
                                 <label>Upload File Tugas <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
                                 <label class="custom-file-container__custom-file" >
                                     <input type="file" name="jawaban_tugas[]" class="custom-file-container__custom-file__custom-file-input" multiple>
@@ -224,7 +238,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
                         <button type="submit" class="btn btn-primary">Kirim</button>
                     </div>
                 </form>
@@ -257,7 +271,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
                 </div>
             </div>
         </div>
@@ -268,11 +282,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-media_object.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <script>
-        var secondUpload = new FileUploadWithPreview('mySecondImage')
+        var secondUpload = new FileUploadWithPreview('myInsertFile')
+        var secondUpload = new FileUploadWithPreview('myUpdateFile')
     </script>
 @endpush

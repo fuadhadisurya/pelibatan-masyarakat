@@ -72,15 +72,23 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-text">
-                                    @foreach ($tugasBelum as $tugasBelum)
-                                        <div class="row">
-                                            <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
-                                            <div class="col">
-                                                <h6 class=""><strong>{{ $tugasBelum->nama }}</strong></h6>
-                                                <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                    @if(count($tugasBelum) > 0)
+                                        @foreach ($tugasBelum as $tugasBelum)
+                                            <div class="row">
+                                                @if ($tugasBelum->foto != null)
+                                                    <img class="rounded ml-3" src="{{ Storage::url($tugasBelum->foto) }}" width="50px" height="50px" alt="pic1">
+                                                @else
+                                                    <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
+                                                @endif
+                                                <div class="col">
+                                                    <h6 class=""><strong>{{ $tugasBelum->nama }}</strong></h6>
+                                                    <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <span class="d-flex justify-content-center">Yeay, Semuanya sudah mengumpulkan tugas</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -92,27 +100,32 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-text">
-                                    @foreach ($jawabanTugas as $jawabanTugas)
-                                    <div class="row">
-                                        <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
-                                        <div class="col">
-                                            <h6 class=""><strong>{{ $jawabanTugas->users->nama }}</strong></h6>
-                                            @if ($jawabanTugas->nilai != null)
-                                                <p class=""><span class="badge badge-success">Nilai : {{ $jawabanTugas->nilai }}</span></p>                                            
+                                    @if(count($jawabanTugas) > 0)
+                                        @foreach ($jawabanTugas as $index=>$jawabanTugas)
+                                        <div class="row">
+                                            @if ($jawabanTugas->users->foto != null)
+                                                <img class="rounded ml-3" src="{{ Storage::url($jawabanTugas->users->foto) }}" width="50px" height="50px" alt="pic1">
                                             @else
-                                                <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
+                                                <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
                                             @endif
-                                        </div>
-                                        <div class="d-flex align-items-center">
                                             <div class="col">
-                                                {{-- <a href="#" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a> --}}
-                                                <button type="button" class="btn btn-primary btn-round btn-sm" data-toggle="modal" data-target="#jawabanTugas{{ $jawabanTugas->id }}">
-                                                    <i class="far fa-check-square"></i>
-                                                </button>
+                                                <h6 class=""><strong>{{ $jawabanTugas->users->nama }}</strong></h6>
+                                                @if ($jawabanTugas->nilai != null)
+                                                    <p class=""><span class="badge badge-success">Nilai : {{ $jawabanTugas->nilai }}</span></p>                                            
+                                                @else
+                                                    <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
+                                                @endif
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="col">
+                                                    <a href="{{ route('data-kelas.tugas.periksa-tugas.show', [$kelas->id, $tugas->id, $jawabanTugas->id]) }}" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <span class="d-flex justify-content-center">Yah, semua peserta belum mengumpulkan tugas</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -125,88 +138,7 @@
 @endsection
 
 @push('modal')
-    <div class="modal fade" id="jawabanTugas{{ $jawabanTugas->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 12%">Nama Tugas</td>
-                                    <td style="width: 1%">:</td>
-                                    <td>{{ $tugas->nama_tugas }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Deskripsi Tugas</td>
-                                    <td>:</td>
-                                    <td>{{ $tugas->deskripsi }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Nama Pengirim</td>
-                                    <td>:</td>
-                                    <td>{{ $jawabanTugas->users->nama }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Batas Waktu</td>
-                                    <td>:</td>
-                                    <td>{{ $tugas->batas_waktu }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Waktu Kirim</td>
-                                    <td>:</td>
-                                    <td>{{ $jawabanTugas->updated_at }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Keterangan</td>
-                                    <td>:</td>
-                                    <td><span class="badge badge-success">Tepat Waktu</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td>:</td>
-                                    <td><span class="badge badge-warning">Belum Dinilai</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Nilai</td>
-                                    <td>:</td>
-                                    <td>{{ $jawabanTugas->nilai }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Catatan</td>
-                                    <td>:</td>
-                                    @if ($jawabanTugas->catatan != null)
-                                        <td>{{ $jawabanTugas->catatan }}</td>
-                                    @else
-                                        <td>Tidak ada catatan</td>
-                                    @endif
-                                </tr>
-                            </tbody>
-                        </table>  
-                    </div>
-                    <hr>
-                    <div>
-                        <h6><strong>Jawaban :</strong></h6>
-                        <p>{{ $jawabanTugas->jawaban }}</p>
-                    </div>
-                    <div>
-                        @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
-                            <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>  
+
 @endpush
 
 @push('styles')

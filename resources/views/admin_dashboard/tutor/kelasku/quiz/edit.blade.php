@@ -20,7 +20,7 @@
             @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content widget-content-area br-6">
-                <form action="{{ route('tutor.kelasku.quiz.update', [$kelas->id, $quiz->id]) }}" method="post">
+                <form action="{{ route('tutor.kelasku.quiz.update', [$kelas->id, $quiz->id]) }}" method="post" autocomplete="off">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">

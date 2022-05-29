@@ -8,7 +8,7 @@
         
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
 
-            @include('admin_dashboard.tutor.kelasku.includes.navbar')
+            @include('admin_dashboard.admin.data-kelas.includes.navbar')
             <div class="widget-content-area br-4 mb-3">
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
@@ -67,6 +67,20 @@
                                     <td><span class="badge badge-warning">Belum Dinilai</span></td>
                                 @endif
                             </tr>
+                            <tr>
+                                <td>Nilai</td>
+                                <td>:</td>
+                                <td>{{ $jawabanTugas->nilai }}</td>
+                            </tr>
+                            <tr>
+                                <td>Catatan</td>
+                                <td>:</td>
+                                @if ($jawabanTugas->catatan != null)                                
+                                    <td>{{ $jawabanTugas->catatan }}</td>
+                                @else
+                                <td>Tidak ada catatan</td>
+                                @endif
+                            </tr>
                         </tbody>
                     </table>  
                 </div>
@@ -80,32 +94,10 @@
                         <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
                     @endforeach
                 </div>
-            </div>
-
-            <div class="widget-content-area br-4">
-                <form action="{{ route('tutor.kelasku.tugas.periksa-tugas.update', [$kelas->id, $tugas->id, $jawabanTugas->id]) }}" method="POST" autocomplete="off">
-                    @csrf
-                    @method('put')
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="catatan">Catatan</label>
-                                <textarea class="form-control" name="catatan" id="catatan" rows="3" placeholder="Catatan untuk peserta (opsional)">{{ $jawabanTugas->catatan }}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="nilai">Nilai</label>
-                                <input id="nilai" type="text" name="nilai" class="form-control" onchange="changeHandler(this)" onkeypress="return isNumber(event)" value="{{ $jawabanTugas->nilai }}" min="0" max="3" required>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.tugas.show', [$kelas->id, $tugas->id]) }}" class="btn btn-secondary">Kembali</a>
-                        <button class="btn btn-primary">Kirim</button>
-                    </div>
-                </form>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ route('data-kelas.tugas.show', [$kelas->id, $tugas->id]) }}" class="btn btn-secondary">Kembali</a>
+                </div>
             </div>
         </div>
     </div>

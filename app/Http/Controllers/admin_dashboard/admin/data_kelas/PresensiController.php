@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DataPresensi;
 use App\Models\Kelas;
 use App\Models\Presensi;
+use App\Models\RegistrasiKelas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -32,7 +33,7 @@ class PresensiController extends Controller
                         return '
                             <td class="text-center">
                                 <a href="'. route('data-kelas.presensi.show', [$row->kelas_id, $row->id]) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPresensi'.$row->id.'">
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editPresensi'.$row->id.'" title="Edit">
                                     <i class="far fa-edit"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
@@ -89,22 +90,16 @@ class PresensiController extends Controller
     public function show($kelas_id, $id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $presensi = Presensi::findOrFail($id);
-        $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->get();
-        $user = User::leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
-            ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
-            ->select('users.*', 'data_presensi.status')
-            ->where('registrasi_kelas.kelas_id', '=', $kelas_id)
-            ->where('users.level', '=', 'peserta')
-            ->get();
+        $presensi = Presensi::where('kelas_id', $kelas_id)->findOrFail($id);
+        $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->whereRelation('presensi', 'kelas_id', '=', $kelas_id)->whereRelation('user', 'level', '=', 'peserta')->get();
         $tutor = User::leftJoin('kelas', 'users.id', '=', 'kelas.tutor_id')
             ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
             ->select('users.*', 'data_presensi.status')
             ->where('kelas.id', '=', $kelas_id)
             ->where('users.level', '=', 'tutor')
             ->first();
-        // dd($tutor);
-        return view('admin_dashboard.admin.data-kelas.presensi.show', ['kelas' => $kelas, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'user' => $user, 'tutor' => $tutor]);
+        
+        return view('admin_dashboard.admin.data-kelas.presensi.show', ['kelas' => $kelas, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'tutor' => $tutor]);
     }
 
     /**

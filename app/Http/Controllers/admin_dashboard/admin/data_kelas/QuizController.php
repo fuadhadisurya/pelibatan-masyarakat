@@ -30,7 +30,7 @@ class QuizController extends Controller
                     })
                     ->addColumn('hasil_nilai', function($row){
                         return '
-                            <a href="'.route('data-kelas.quiz.jawaban.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-secondary" title="lihat nilai"><i class="far fa-eye"></i></a>
+                            <a href="'.route('data-kelas.quiz.jawaban.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="Lihat nilai"><i class="far fa-eye"></i></a>
                         ';
                     })
                     ->addColumn('aktif', function($row){

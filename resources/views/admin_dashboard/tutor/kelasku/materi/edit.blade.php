@@ -11,16 +11,16 @@
             @include('admin_dashboard.tutor.kelasku.includes.navbar')
 
             <div class="widget-content-area br-4">
-                <form action="{{ route('tutor.kelasku.materi.update', [$kelas->id, $materi->id]) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('tutor.kelasku.materi.update', [$kelas->id, $materi->id]) }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('put')
                     <div class="form-group">
                         <label for="nama_materi">Nama Materi</label>
-                        <input type="text" class="form-control" id="nama_materi" name="nama_materi" placeholder="Nama Materi" value="{{ $materi->nama_materi }}" required>
+                        <input type="text" class="form-control" id="nama_materi" name="nama_materi" placeholder="Nama Materi" value="{{ old('nama_materi', $materi->nama_materi) }}" required>
                     </div>
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ $materi->deskripsi }}</textarea>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ old('deskripsi', $materi->deskripsi) }}</textarea>
                     </div>
                     <div class="form-group">
                         @foreach ($materi->uploadMateri as $fileMateri)

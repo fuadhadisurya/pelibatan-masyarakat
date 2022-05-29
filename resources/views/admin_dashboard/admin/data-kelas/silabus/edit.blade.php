@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('data-kelas.silabus.update', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('data-kelas.silabus.update', [$kelas->id, $silabus->id]) }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

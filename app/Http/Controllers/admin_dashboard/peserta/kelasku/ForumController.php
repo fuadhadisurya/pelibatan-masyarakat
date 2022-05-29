@@ -20,10 +20,10 @@ class ForumController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $post = Post::all();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(10);
         $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
-        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas, 'post' => $post, 'registrasi' => $registrasi]);
+        return view('admin_dashboard.peserta.kelasku.forum.index', ['kelas' => $kelas, 'posts' => $posts, 'registrasi' => $registrasi]);
     }
 
     /**

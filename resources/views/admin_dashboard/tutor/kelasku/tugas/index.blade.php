@@ -49,7 +49,7 @@
     <div class="modal fade" id="uploadTugas" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.tugas.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tutor.kelasku.tugas.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                     <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Buat Tugas</h5>
@@ -60,15 +60,15 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama_tugas">Nama Tugas</label>
-                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" required>
+                            <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" value="{{ old('nama_tugas') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required>{{ old('deskripsi') }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="batas_waktu">Batas Waktu</label>
-                            <input id="dateTimeFlatpickr" name="batas_waktu" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
+                            <input id="dateTimeFlatpickr" name="batas_waktu" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." value="{{ old('batas_waktu') }}" required>
                         </div>
                         <div class="form-group">
                             <div class="custom-file-container" data-upload-id="mySecondImage">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
                         <button type="submit" class="btn btn-primary">Kirim</button>
                     </div>
                 </form>
@@ -95,6 +95,8 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />

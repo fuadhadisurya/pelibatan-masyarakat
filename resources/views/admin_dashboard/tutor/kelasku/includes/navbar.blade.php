@@ -21,7 +21,7 @@
                     <a class="nav-link {{ Request::segment(4) == 'tugas' || Request::segment(4) == 'periksa-tugas' ? 'active' : '' }}" href="{{ route('tutor.kelasku.tugas.index',[$kelas->id]) }}">Tugas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('tutor.kelasku.presensi.index',[$kelas->id]) }}">Tugas</a>
+                    <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('tutor.kelasku.presensi.index',[$kelas->id]) }}">Presensi</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'quiz' ? 'active' : '' }}" href="{{ route('tutor.kelasku.quiz.index',[$kelas->id]) }}">Quiz</a>

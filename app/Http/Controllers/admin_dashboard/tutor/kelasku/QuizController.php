@@ -36,7 +36,7 @@ class QuizController extends Controller
                     })
                     ->addColumn('hasil_nilai', function($row){
                         return '
-                            <a href="'.route('tutor.kelasku.quiz.jawaban.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-secondary" title="lihat nilai"><i class="far fa-eye"></i></a>
+                            <a href="'.route('tutor.kelasku.quiz.jawaban.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="Lihat nilai"><i class="far fa-eye"></i></a>
                         ';
                     })
                     ->addColumn('aktif', function($row){
@@ -48,14 +48,9 @@ class QuizController extends Controller
                         return $aktif;
                     })
                     ->addColumn('aksi', function($row){
-                        // if($row->aktif == 'Y'){
-                        //     $aktif = '<a href="'.route('tutor.kelasku.quiz.aktif', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-danger" title="Quiz tidak aktif"><i class="far fa-times-circle"></i></a>';
-                        // } else {
-                        //     $aktif = '<a href="'.route('tutor.kelasku.quiz.aktif', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-success" title="Quiz aktif"><i class="far fa-check-circle"></i></a>';
-                        // }
                         return '
                             <td class="text-center">
-                                <a href="'.route('tutor.kelasku.quiz.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <a href="'.route('tutor.kelasku.quiz.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';

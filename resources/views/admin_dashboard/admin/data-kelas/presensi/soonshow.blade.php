@@ -53,7 +53,7 @@
 
             <div class="card shadow-sm mb-3">
                 <div class="card-header">
-                    <h5 class="card-title">Data Presensi Tutor</h5>
+                    <h5 class="card-title">Presensi Tutor</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -79,9 +79,7 @@
                                         @endif
                                     </tr>
                                 @else
-                                    <tr>
-                                        <td colspan="5" class="text-center">Data tidak ditemukan</td>
-                                    </tr>
+                                    
                                 @endif
                             </tbody>
                         </table>  
@@ -91,7 +89,7 @@
 
             <div class="card shadow-sm mb-3">
                 <div class="card-header">
-                    <h5 class="card-title">Data Presensi Peserta</h5>
+                    <h5 class="card-title">Presensi Peserta</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -104,24 +102,22 @@
                                 <th>Status</th>
                             </thead>
                             <tbody>
-                                @if (count($dataPresensi) > 0)
-                                    @foreach ($dataPresensi as $dataPresensi)
+                                @if ($user != null)
+                                    @foreach ($user as $user)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $dataPresensi->user->nama }}</td>
-                                            <td>{{ $dataPresensi->user->tipe_anggota }}</td>
-                                            <td>{{ $dataPresensi->created_at }}</td>
-                                            @if ($dataPresensi->status)
-                                                <td><span class="badge badge-info">{{ $dataPresensi->status }}</span></td>
+                                            <td>{{ $user->nama }}</td>
+                                            <td>{{ $user->tipe_anggota }}</td>
+                                            <td>{{ $user->dataPresensi }}</td>
+                                            @if ($user->status)
+                                                <td><span class="badge badge-info">{{ $user->status }}</span></td>
                                             @else
                                                 <td><span class="badge badge-warning">Belum Mengisi</span></td>
                                             @endif
                                         </tr>
                                     @endforeach
                                 @else
-                                    <tr>
-                                        <td colspan="5" class="text-center">Data tidak ditemukan</td>
-                                    </tr>
+                                    <span>Data tidak ditemukan</span>
                                 @endif
                             </tbody>
                         </table>  

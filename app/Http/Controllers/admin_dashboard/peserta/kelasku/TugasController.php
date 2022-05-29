@@ -29,7 +29,7 @@ class TugasController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('peserta.kelasku.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="edit"><i class="far fa-eye"></i></a>
+                                <a href="'.route('peserta.kelasku.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
                             </td>
                         ';
                     })

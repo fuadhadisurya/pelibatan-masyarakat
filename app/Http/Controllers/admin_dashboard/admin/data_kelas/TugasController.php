@@ -26,7 +26,7 @@ class TugasController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('data-kelas.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="edit"><i class="far fa-eye"></i></a>
+                                <a href="'.route('data-kelas.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
                             </td>
                         ';
                     })
@@ -112,5 +112,12 @@ class TugasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function periksaTugas($kelas_id, $tugas_id, $id){
+        $kelas = Kelas::findOrfail($kelas_id);
+        $tugas = Tugas::findOrFail($tugas_id);
+        $jawabanTugas = JawabanTugas::where('tugas_id', '=', $tugas_id)->findOrFail($id);
+        return view('admin_dashboard.admin.data-kelas.tugas.periksa-tugas', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas]);
     }
 }

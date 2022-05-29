@@ -18,7 +18,7 @@ class DataPresensi extends Model
     ];
     
     public function presensi(){
-        return $this->belongsTo(Presensi::class);
+        return $this->belongsTo(Presensi::class, 'presensi_id');
     }
 
     public function user(){

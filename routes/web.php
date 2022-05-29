@@ -88,6 +88,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-kelas.forum', ForumController::class);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
     Route::resource('data-kelas.materi', MateriController::class);
+    Route::get('/data-kelas/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TugasController::class, 'periksaTugas'])->name('data-kelas.tugas.periksa-tugas.show');
     Route::resource('data-kelas.tugas', TugasController::class);
     Route::resource('data-kelas.presensi', PresensiController::class);
     Route::resource('data-kelas.quiz', QuizController::class);
@@ -107,8 +108,8 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::delete('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [TutorKelaskuForumController::class, 'commentDestroy'])->name('kelasku.forum.comment.destroy');
     Route::resource('kelasku.forum', TutorKelaskuForumController::class);
     Route::resource('kelasku.materi', TutorKelaskuMateriController::class);
-    Route::get('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugas'])->name('kelasku.periksa-tugas.show');
-    Route::put('/kelasku/{kelas}/periksa-tugas/{tugas_id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.periksa-tugas.update');
+    Route::get('/kelasku/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TutorKelaskuTugasController::class, 'periksaTugas'])->name('kelasku.tugas.periksa-tugas.show');
+    Route::put('/kelasku/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.tugas.periksa-tugas.update');
     Route::resource('kelasku.tugas', TutorKelaskuTugasController::class);
     Route::resource('kelasku.presensi', TutorKelaskuPresensiController::class);
     Route::get('/kelasku/{kelas}/quiz/{tugas_id}/aktif', [TutorKelaskuQuizController::class, 'aktif'])->name('kelasku.quiz.aktif');

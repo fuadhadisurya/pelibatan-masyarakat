@@ -48,100 +48,96 @@
     <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                {{-- <form action="{{ route('tutor.kelas.data-peserta.update', [$kelas, $dataPeserta->id]) }}" method="POST">
-                    @csrf
-                    @method('put') --}}
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="data_peserta">Data Peserta</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="data_peserta">Data Peserta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 22%">Tanggal Mendaftar</td>
+                                    <td style="width: 1%">:</td>
+                                    <td>{{ $dataPeserta->created_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nama</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->user->nama }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Umur</td>
+                                    <td>:</td>
+                                    @php
+                                        $hari_ini = Carbon\Carbon::now();
+                                        $tanggal_lahir = Carbon\Carbon::parse($dataPeserta->user->tanggal_lahir);
+                                        $umur = $tanggal_lahir->diffInYears($hari_ini); 
+                                    @endphp
+                                    <td>{{ $umur }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tempat Lahir</td>
+                                    <td>:</td>
+                                    <td>{{ ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->tempat_lahir)->name)) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Lahir</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->user->tanggal_lahir }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Jenis Kelamin</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->user->jenis_kelamin }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tipe Anggota</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->user->tipe_anggota }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nomor Telepon</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->user->nomor_telepon }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Motivasi</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->motivasi }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>:</td>
+                                    <td>
+                                        @if ($dataPeserta->status == 'Diterima')
+                                            <span class="badge badge-success">{{ $dataPeserta->status }}</span>
+                                        @elseif($dataPeserta->status == 'Ditolak')
+                                            <span class="badge badge-danger">{{ $dataPeserta->status }}</span>
+                                        @else
+                                            <span class="badge badge-warning">{{ $dataPeserta->status }}</span>    
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Catatan</td>
+                                    <td>:</td>
+                                    <td>{{ $dataPeserta->catatan }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="modal-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 22%">Tanggal Mendaftar</td>
-                                        <td style="width: 1%">:</td>
-                                        <td>{{ $dataPeserta->created_at }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->user->nama }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Umur</td>
-                                        <td>:</td>
-                                        @php
-                                            $hari_ini = Carbon\Carbon::now();
-                                            $tanggal_lahir = Carbon\Carbon::parse($dataPeserta->user->tanggal_lahir);
-                                            $umur = $tanggal_lahir->diffInYears($hari_ini); 
-                                        @endphp
-                                        <td>{{ $umur }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tempat Lahir</td>
-                                        <td>:</td>
-                                        <td>{{ ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->tempat_lahir)->name)) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tanggal Lahir</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->user->tanggal_lahir }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jenis Kelamin</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->user->jenis_kelamin }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tipe Anggota</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->user->tipe_anggota }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nomor Telepon</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->user->nomor_telepon }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alamat</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Motivasi</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->motivasi }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status</td>
-                                        <td>:</td>
-                                        <td>
-                                            @if ($dataPeserta->status == 'Diterima')
-                                                <span class="badge badge-success">{{ $dataPeserta->status }}</span>
-                                            @elseif($dataPeserta->status == 'Ditolak')
-                                                <span class="badge badge-danger">{{ $dataPeserta->status }}</span>
-                                            @else
-                                                <span class="badge badge-warning">{{ $dataPeserta->status }}</span>    
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Catatan</td>
-                                        <td>:</td>
-                                        <td>{{ $dataPeserta->catatan }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    </div>
-                {{-- </form> --}}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
+                </div>
             </div>
         </div>
     </div>
@@ -152,6 +148,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')

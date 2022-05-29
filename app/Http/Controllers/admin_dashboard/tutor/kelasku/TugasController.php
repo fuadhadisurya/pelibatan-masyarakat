@@ -29,8 +29,8 @@ class TugasController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('tutor.kelasku.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="edit"><i class="far fa-eye"></i></a>
-                                <a href="'.route('tutor.kelasku.tugas.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <a href="'.route('tutor.kelasku.tugas.show', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
+                                <a href="'.route('tutor.kelasku.tugas.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
@@ -199,14 +199,15 @@ class TugasController extends Controller
         return response()->json(array('success' => true));
     }
 
-    public function periksaTugas($kelas_id, $id){
-        $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
-        $tugas = Tugas::findOrFail($id);
-        $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->first();
+    public function periksaTugas($kelas_id, $tugas_id, $id){
+        $kelas = Kelas::findOrfail($kelas_id);
+        $tugas = Tugas::findOrFail($tugas_id);
+        $jawabanTugas = JawabanTugas::where('tugas_id', '=', $tugas_id)->findOrFail($id);
+
         return view('admin_dashboard.tutor.kelasku.tugas.periksa-tugas', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas]);
     }
 
-    public function periksaTugasStore(Request $request, $kelas_id, $id){
+    public function periksaTugasStore(Request $request, $kelas_id, $tugas_id, $id){
         $this->validate($request, [
             'nilai' => 'required',
         ]);
@@ -218,6 +219,6 @@ class TugasController extends Controller
 
         $jawabanTugas->update($data);
 
-        return redirect()->route('tutor.kelasku.tugas.show', [$kelas_id, $id])->with('status', 'Tugas Berhasil Dinilai');
+        return redirect()->route('tutor.kelasku.tugas.show', [$kelas_id, $tugas_id])->with('status', 'Tugas Berhasil Dinilai');
     }
 }

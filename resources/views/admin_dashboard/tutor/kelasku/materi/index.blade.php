@@ -48,10 +48,10 @@
     <div class="modal fade" id="uploadMateri" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="{{ route('tutor.kelasku.materi.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tutor.kelasku.materi.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Materi Baru</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -59,11 +59,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama_materi">Nama Materi</label>
-                            <input type="text" class="form-control" id="nama_materi" name="nama_materi" placeholder="Nama Materi" required>
+                            <input type="text" class="form-control" id="nama_materi" name="nama_materi" placeholder="Nama Materi" value="{{ old('nama_materi') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5"></textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ old('deskripsi') }}</textarea>
                         </div>
                         <div class="form-group">
                             <div class="custom-file-container" data-upload-id="mySecondImage">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
                         <button type="submit" class="btn btn-primary">Upload</button>
                     </div>
                 </form>
@@ -89,54 +89,50 @@
         <div class="modal fade" id="lihat{{ $materi->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <form action="{{ route('tutor.kelasku.peserta.update', [$kelas_id, $materi->id]) }}" method="POST">
-                        @csrf
-                        @method('put')
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="data_peserta">{{ $materi->nama_materi }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="data_peserta">{{ $materi->nama_materi }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 15%">Tanggal</td>
+                                        <td style="width: 1%">:</td>
+                                        <td>{{ $materi->created_at }}</td>
+                                    </tr>
+                                    @if ($materi->created_at != $materi->updated_at)
                                         <tr>
-                                            <td style="width: 15%">Tanggal</td>
-                                            <td style="width: 1%">:</td>
-                                            <td>{{ $materi->created_at }}</td>
-                                        </tr>
-                                        @if ($materi->created_at != $materi->updated_at)
-                                            <tr>
-                                                <td>Tanggal Diperbarui</td>
-                                                <td>:</td>
-                                                <td>{{ $materi->updated_at }}</td>
-                                            </tr>
-                                        @endif
-                                        <tr>
-                                            <td>Nama Materi</td>
+                                            <td>Tanggal Diperbarui</td>
                                             <td>:</td>
-                                            <td>{{ $materi->nama_materi }}</td>
+                                            <td>{{ $materi->updated_at }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>Deskripsi</td>
-                                            <td>:</td>
-                                            <td>{{ $materi->deskripsi }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>  
-                            </div>
-                            <div>
-                                @foreach ($materi->uploadMateri as $fileMateri)
-                                    <a href="{{ route('materi.download', [$kelas->id, $fileMateri->id]) }}"><i class="far fa-save"></i> {{ $fileMateri->materi }}</a><br>
-                                @endforeach
-                            </div>
+                                    @endif
+                                    <tr>
+                                        <td>Nama Materi</td>
+                                        <td>:</td>
+                                        <td>{{ $materi->nama_materi }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Deskripsi</td>
+                                        <td>:</td>
+                                        <td>{{ $materi->deskripsi }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>  
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <div>
+                            @foreach ($materi->uploadMateri as $fileMateri)
+                                <a href="{{ route('materi.download', [$kelas->id, $fileMateri->id]) }}"><i class="far fa-save"></i> {{ $fileMateri->materi }}</a><br>
+                            @endforeach
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,6 +147,8 @@
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
+    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')

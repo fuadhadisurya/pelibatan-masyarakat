@@ -72,15 +72,23 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-text">
-                                    @foreach ($tugasBelum as $tugasBelum)
-                                        <div class="row">
-                                            <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
-                                            <div class="col">
-                                                <h6 class=""><strong>{{ $tugasBelum->nama }}</strong></h6>
-                                                <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                    @if(count($tugasBelum) > 0)
+                                        @foreach ($tugasBelum as $tugasBelum)
+                                            <div class="row">
+                                                @if ($tugasBelum->foto != null)
+                                                    <img class="rounded ml-3" src="{{ Storage::url($tugasBelum->foto) }}" width="50px" height="50px" alt="pic1">
+                                                @else
+                                                    <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
+                                                @endif
+                                                <div class="col">
+                                                    <h6 class=""><strong>{{ $tugasBelum->nama }}</strong></h6>
+                                                    <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <span class="d-flex justify-content-center">Yeay, Semuanya sudah mengumpulkan tugas</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -92,24 +100,32 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-text">
-                                    @foreach ($jawabanTugas as $jawabanTugas)
-                                    <div class="row">
-                                        <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
-                                        <div class="col">
-                                            <h6 class=""><strong>{{ $jawabanTugas->users->nama }}</strong></h6>
-                                            @if ($jawabanTugas->nilai != null)
-                                                <p class=""><span class="badge badge-success">Nilai : {{ $jawabanTugas->nilai }}</span></p>                                            
+                                    @if(count($jawabanTugas) > 0)
+                                        @foreach ($jawabanTugas as $jawabanTugas)
+                                        <div class="row">
+                                            @if ($jawabanTugas->users->foto != null)
+                                                <img class="rounded ml-3" src="{{ Storage::url($jawabanTugas->users->foto) }}" width="50px" height="50px" alt="pic1">
                                             @else
-                                                <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
+                                                <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
                                             @endif
-                                        </div>
-                                        <div class="d-flex align-items-center">
                                             <div class="col">
-                                                <a href="{{ route('tutor.kelasku.periksa-tugas.show', [$kelas->id, $tugas->id]) }}" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a>
+                                                <h6 class=""><strong>{{ $jawabanTugas->users->nama }}</strong></h6>
+                                                @if ($jawabanTugas->nilai != null)
+                                                    <p class=""><span class="badge badge-success">Nilai : {{ $jawabanTugas->nilai }}</span></p>                                            
+                                                @else
+                                                    <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
+                                                @endif
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <div class="col">
+                                                    <a href="{{ route('tutor.kelasku.tugas.periksa-tugas.show', [$kelas->id, $tugas->id, $jawabanTugas->id]) }}" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <span class="d-flex justify-content-center">Yah, semua peserta belum mengumpulkan tugas</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

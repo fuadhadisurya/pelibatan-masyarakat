@@ -20,20 +20,20 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('tutor.kelasku.tugas.update', [$kelas->id, $tugas->id]) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('tutor.kelasku.tugas.update', [$kelas->id, $tugas->id]) }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     @method('put')
                     <div class="form-group">
                         <label for="nama_tugas">Nama Tugas</label>
-                        <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" value="{{ $tugas->nama_tugas }}" required>
+                        <input type="text" class="form-control" id="nama_tugas" name="nama_tugas" placeholder="Nama Tugas" value="{{ old('nama_tugas', $tugas->nama_tugas) }}" required>
                     </div>
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi</label>
-                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ $tugas->deskripsi }}</textarea>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ old('deskripsi', $tugas->deskripsi) }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="batas_waktu">Batas Waktu</label>
-                        <input id="dateTimeFlatpickr" name="batas_waktu" value="{{ $tugas->batas_waktu }}" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
+                        <input id="dateTimeFlatpickr" name="batas_waktu" value="{{ old('batas_waktu', $tugas->batas_waktu) }}" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Waktu.." required>
                     </div>
                     <div class="form-group">
                         @foreach ($tugas->uploadTugas as $fileTugas)

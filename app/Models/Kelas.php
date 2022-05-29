@@ -37,4 +37,8 @@ class Kelas extends Model
     public function registasiKelas(){
         return $this->hasMany(RegistrasiKelas::class);
     }
+
+    public function presensi(){
+        return $this->hasMany(Presensi::class);
+    }
 }

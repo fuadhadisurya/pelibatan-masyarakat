@@ -48,8 +48,7 @@
                 </form>
             </div>
             <div class="mt-2">
-                <span class="badge badge-secondary">0 Dilihat</span>
-                <span class="badge badge-info">0 komentar</span>
+                <span class="badge badge-info">{{ count($comment) }} komentar</span>
             </div>
         </div>
     </div>
@@ -125,7 +124,7 @@
                     <form action="{{ route('peserta.kelasku.forum.comment.store', [$kelas->id, $post->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <textarea class="form-control shadow-none textarea tinymce" name="isi"></textarea>
+                            <textarea class="form-control shadow-none textarea tinymce" name="isi">{{ old('isi') }}</textarea>
                         </div>
                         <div class="mt-2 text-right">
                             <button class="btn btn-primary btn-sm shadow-none" type="submit">Beri Komentar</button>
