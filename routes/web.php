@@ -13,6 +13,7 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
@@ -25,7 +26,9 @@ use App\Http\Controllers\admin_dashboard\peserta\kelasku\MateriController as Pes
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\PesertaController as PesertaKelaskuPesertaController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\PresensiController as PesertaKelaskuPresensiController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\QuizController as PesertaKelaskuQuizController;
+use App\Http\Controllers\admin_dashboard\peserta\kelasku\SertifikatController as PesertaKelaskuSertifikatController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\SilabusController as PesertaKelaskuSilabusController;
+use App\Http\Controllers\admin_dashboard\peserta\kelasku\TestimoniController as PesertaKelaskuTestimoniController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\TugasController as PesertaKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\peserta\KelaskuController as PesertaKelaskuController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\ForumController as TutorKelaskuForumController;
@@ -38,11 +41,14 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizJawabanController as 
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as TutorKelaskuSilabusController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusDetailController as TutorKelaskuSilabusDetailController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\TestimoniController as TutorKelaskuTestimoniController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\FillPDFController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\SertifikatPDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,17 +65,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
+
+Route::middleware(['cekLogin'])->group(function(){
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
+    Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+    Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
+    Route::post('/registrasi', [RegistrasiController::class, 'postRegistrasi'])->name('postRegistrasi');
+});
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
-Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
-Route::post('/registrasi', [RegistrasiController::class, 'postRegistrasi'])->name('postRegistrasi');
 
 Route::get('provinces', [DaerahController::class, 'provinces'])->name('provinces');
 Route::get('cities', [DaerahController::class, 'cities'])->name('cities');
 Route::get('districts', [DaerahController::class, 'districts'])->name('districts');
 Route::get('villages', [DaerahController::class, 'villages'])->name('villages');
+
+Route::get('/sertifikat', [SertifikatPDFController::class, 'index']);
 
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
@@ -82,17 +93,20 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-kelas.home', HomeController::class);
     Route::resource('data-kelas.silabus', SilabusController::class);
     Route::resource('data-kelas.silabus.detail', SilabusDetailController::class);
-    Route::post('/data-kelas/{kelas_id}/forum/{post_id}/comment', [ForumController::class, 'commentStore'])->name('data-kelas.forum.comment.store');
-    Route::put('/data-kelas/{kelas_id}/forum/{post_id}/comment/{id}', [ForumController::class, 'commentUpdate'])->name('data-kelas.forum.comment.update');
-    Route::delete('/data-kelas/{kelas_id}/forum/{post_id}/comment/{id}', [ForumController::class, 'commentDestroy'])->name('data-kelas.forum.comment.destroy');
-    Route::resource('data-kelas.forum', ForumController::class);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
-    Route::resource('data-kelas.materi', MateriController::class);
-    Route::get('/data-kelas/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TugasController::class, 'periksaTugas'])->name('data-kelas.tugas.periksa-tugas.show');
-    Route::resource('data-kelas.tugas', TugasController::class);
-    Route::resource('data-kelas.presensi', PresensiController::class);
-    Route::resource('data-kelas.quiz', QuizController::class);
-    Route::resource('data-kelas.quiz.jawaban', QuizJawabanController::class);
+    Route::middleware(['statusKelasAdmin:Kegiatan Berlangsung,Selesai'])->group(function(){
+        Route::post('/data-kelas/{data_kela}/forum/{post_id}/comment', [ForumController::class, 'commentStore'])->name('data-kelas.forum.comment.store');
+        Route::put('/data-kelas/{data_kela}/forum/{post_id}/comment/{id}', [ForumController::class, 'commentUpdate'])->name('data-kelas.forum.comment.update');
+        Route::delete('/data-kelas/{data_kela}/forum/{post_id}/comment/{id}', [ForumController::class, 'commentDestroy'])->name('data-kelas.forum.comment.destroy');
+        Route::resource('data-kelas.forum', ForumController::class);
+        Route::resource('data-kelas.materi', MateriController::class);
+        Route::get('/data-kelas/{data_kela}/tugas/{tugas}/periksa-tugas/{id}', [TugasController::class, 'periksaTugas'])->name('data-kelas.tugas.periksa-tugas.show');
+        Route::resource('data-kelas.tugas', TugasController::class);
+        Route::resource('data-kelas.presensi', PresensiController::class);
+        Route::resource('data-kelas.quiz', QuizController::class);
+        Route::resource('data-kelas.quiz.jawaban', QuizJawabanController::class);
+        Route::resource('data-kelas.testimoni', TestimoniController::class);
+    });
 });
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
@@ -103,20 +117,23 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku.silabus', TutorKelaskuSilabusController::class);
     Route::resource('kelasku.silabus.detail', TutorKelaskuSilabusDetailController::class);
     Route::resource('kelasku.peserta', TutorKelaskuPesertaController::class);
-    Route::post('/kelasku/{kelas_id}/forum/{post_id}/comment', [TutorKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
-    Route::put('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [TutorKelaskuForumController::class, 'commentUpdate'])->name('kelasku.forum.comment.update');
-    Route::delete('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [TutorKelaskuForumController::class, 'commentDestroy'])->name('kelasku.forum.comment.destroy');
-    Route::resource('kelasku.forum', TutorKelaskuForumController::class);
-    Route::resource('kelasku.materi', TutorKelaskuMateriController::class);
-    Route::get('/kelasku/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TutorKelaskuTugasController::class, 'periksaTugas'])->name('kelasku.tugas.periksa-tugas.show');
-    Route::put('/kelasku/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.tugas.periksa-tugas.update');
-    Route::resource('kelasku.tugas', TutorKelaskuTugasController::class);
-    Route::resource('kelasku.presensi', TutorKelaskuPresensiController::class);
-    Route::get('/kelasku/{kelas}/quiz/{tugas_id}/aktif', [TutorKelaskuQuizController::class, 'aktif'])->name('kelasku.quiz.aktif');
-    Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
-    Route::get('/kelasku/{kelas}/quiz/{quiz_id}/soal/{soal_id}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
-    Route::resource('kelasku.quiz.soal', QuizSoalController::class);
-    Route::resource('kelasku.quiz.jawaban', TutorQuizJawabanController::class);
+    Route::middleware(['statusKelas:Kegiatan Berlangsung,Selesai'])->group(function(){
+        Route::post('/kelasku/{kelas_id}/forum/{post_id}/comment', [TutorKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
+        Route::put('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [TutorKelaskuForumController::class, 'commentUpdate'])->name('kelasku.forum.comment.update');
+        Route::delete('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [TutorKelaskuForumController::class, 'commentDestroy'])->name('kelasku.forum.comment.destroy');
+        Route::resource('kelasku.forum', TutorKelaskuForumController::class);
+        Route::resource('kelasku.materi', TutorKelaskuMateriController::class);
+        Route::get('/kelasku/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TutorKelaskuTugasController::class, 'periksaTugas'])->name('kelasku.tugas.periksa-tugas.show');
+        Route::put('/kelasku/{kelas}/tugas/{tugas}/periksa-tugas/{id}', [TutorKelaskuTugasController::class, 'periksaTugasStore'])->name('kelasku.tugas.periksa-tugas.update');
+        Route::resource('kelasku.tugas', TutorKelaskuTugasController::class);
+        Route::resource('kelasku.presensi', TutorKelaskuPresensiController::class);
+        Route::get('/kelasku/{kelas}/quiz/{tugas_id}/aktif', [TutorKelaskuQuizController::class, 'aktif'])->name('kelasku.quiz.aktif');
+        Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
+        Route::get('/kelasku/{kelas}/quiz/{quiz_id}/soal/{soal_id}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
+        Route::resource('kelasku.quiz.soal', QuizSoalController::class);
+        Route::resource('kelasku.quiz.jawaban', TutorQuizJawabanController::class);
+        Route::resource('kelasku.testimoni', TutorKelaskuTestimoniController::class);
+    });
 });
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
@@ -127,22 +144,26 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('kelasku', PesertaKelaskuController::class)->only(['index']);
     Route::resource('kelasku.home', PesertaKelaskuHomeController::class);
     Route::resource('kelasku.silabus', PesertaKelaskuSilabusController::class);
-    // Forum
-    Route::post('/kelasku/{kelas_id}/forum/{post_id}/comment', [PesertaKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
-    Route::put('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [PesertaKelaskuForumController::class, 'commentUpdate'])->name('kelasku.forum.comment.update');
-    Route::delete('/kelasku/{kelas_id}/forum/{post_id}/comment/{id}', [PesertaKelaskuForumController::class, 'commentDestroy'])->name('kelasku.forum.comment.destroy');
-    // Kirim Tugas
-    Route::post('/kelasku/{kelas}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');
-    // Jawaban Quiz
-    Route::get('/kelasku/{kelas}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'hasil'])->name('quiz.jawaban.show');
-    Route::post('/kelasku/{kelas}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'jawaban'])->name('quiz.jawaban.store');
-    Route::middleware(['cekRegistrasi'])->group(function(){
+    Route::middleware(['cekRegistrasi', 'statusKelas:Kegiatan Berlangsung,Selesai'])->group(function(){
+        // Forum
+        Route::post('/kelasku/{kelasku}/forum/{post_id}/comment', [PesertaKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
+        Route::put('/kelasku/{kelasku}/forum/{post_id}/comment/{id}', [PesertaKelaskuForumController::class, 'commentUpdate'])->name('kelasku.forum.comment.update');
+        Route::delete('/kelasku/{kelasku}/forum/{post_id}/comment/{id}', [PesertaKelaskuForumController::class, 'commentDestroy'])->name('kelasku.forum.comment.destroy');
+        // Kirim Tugas
+        Route::post('/kelasku/{kelasku}/kirim-tugas/{tugas_id}', [PesertaKelaskuJawabanTugasController::class, 'store'])->name('tugas.jawaban.store');
+        // Jawaban Quiz
+        Route::get('/kelasku/{kelasku}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'hasil'])->name('quiz.jawaban.show');
+        Route::post('/kelasku/{kelasku}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'jawaban'])->name('quiz.jawaban.store');
+        
         Route::resource('kelasku.peserta', PesertaKelaskuPesertaController::class);
         Route::resource('kelasku.forum', PesertaKelaskuForumController::class);
         Route::resource('kelasku.materi', PesertaKelaskuMateriController::class);
         Route::resource('kelasku.tugas', PesertaKelaskuTugasController::class);
         Route::resource('kelasku.presensi', PesertaKelaskuPresensiController::class);
         Route::resource('kelasku.quiz', PesertaKelaskuQuizController::class);
+        Route::resource('kelasku.testimoni', PesertaKelaskuTestimoniController::class);
+        Route::get('/kelasku/{kelasku}/sertifikat', [PesertaKelaskuSertifikatController::class, 'index']);
+        Route::post('/kelasku/{kelasku}/sertifikat', [PesertaKelaskuSertifikatController::class, 'store'])->name('kelasku.sertikat.store');
     });
 });
 

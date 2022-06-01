@@ -26,6 +26,15 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'quiz' ? 'active' : '' }}" href="{{ route('data-kelas.quiz.index',[$kelas->id]) }}">Quiz</a>
                 </li>
+                @if ($kelas->status == 'Selesai')
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(4) == 'testimoni' ? 'active' : '' }}" href="{{ route('data-kelas.testimoni.index',[$kelas->id]) }}">Testimoni</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Testimoni</a>
+                    </li>
+                @endif
             @else
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Forum</a>
@@ -41,6 +50,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Quiz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Testimoni</a>
                 </li>
             @endif
         </ul>
