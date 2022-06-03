@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\admin_dashboard\admin\BeritaController;
 use App\Http\Controllers\admin_dashboard\auth\LoginController;
 use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
+use App\Http\Controllers\admin_dashboard\admin\KategoriBeritaController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
@@ -87,7 +90,6 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::get('/profil', [PengaturanController::class, 'profil']);
     Route::get('/akun', [PengaturanController::class, 'akun']);
     Route::resource('tutor', TutorController::class);
-    // Route::get('kelas-status/{id}', [KelasController::class, 'status'])->name('kelas.status');
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
@@ -107,6 +109,9 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
         Route::resource('data-kelas.quiz.jawaban', QuizJawabanController::class);
         Route::resource('data-kelas.testimoni', TestimoniController::class);
     });
+    // Berita Area
+    Route::resource('kategori-berita', KategoriBeritaController::class);
+    Route::resource('berita', BeritaController::class);
 });
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);

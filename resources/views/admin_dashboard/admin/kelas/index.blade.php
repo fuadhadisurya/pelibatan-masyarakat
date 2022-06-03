@@ -188,7 +188,6 @@
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/editors/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/editors/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/prismjs/prism.js') }}"></script>
@@ -267,11 +266,6 @@
             "title": "Pilih Status..."        
         }).selectpicker("render");
     </script>
-    {{-- <script>
-        $('.editor').each(function () {
-            CKEDITOR.replace($(this).prop('id'));
-        });
-    </script> --}}
     <script type='text/javascript'> 
         tinymce.init({
             selector: 'textarea.tinymce',
