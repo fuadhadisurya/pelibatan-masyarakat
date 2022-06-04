@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\admin_dashboard\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelas;
-use App\Models\KelasKategori;
-use App\Models\User;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
-class KelasController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,14 +18,11 @@ class KelasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Kelas::all();
+            $data = Event::all();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->editColumn('periode_kelas', function($row){
+                    ->editColumn('periode_event', function($row){
                         return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
-                    })
-                    ->editColumn('tutor_id', function($row){
-                        return $row->tutor->nama;
                     })
                     ->editColumn('status', function($row){
                         if($row->status == 'Persiapan'){
@@ -42,18 +37,11 @@ class KelasController extends Controller
                             $status = '<span class="badge badge-dark">Selesai</span>';
                         }
                         return '<td class="text-center">'. $status .'</td>';
-                        // return '
-                        // <td class="text-center">
-                        //     <a href="'. route("kelas.status", $row) .'" class="d-flex justify-content-center">
-                        //         '. $status .'
-                        //     </a>
-                        // </td>
-                        // ';
                     })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'. route('kelas.edit', $row->id) .'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
+                                <a href="'. route('event.edit', $row->id) .'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
@@ -61,8 +49,8 @@ class KelasController extends Controller
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
         }
-        $tutor = User::all()->where('level', '=', 'tutor');
-        return view('admin_dashboard.admin.kelas.index', ['tutor' => $tutor]);
+        
+        return view('admin_dashboard.admin.event.index');
     }
 
     /**
@@ -85,15 +73,17 @@ class KelasController extends Controller
     {
         $this->validate($request, [
             'banner' => 'image|required|max:10240',
-            'nama_kelas' => 'required',
-            'periode_kelas' => 'required',
-            'persyaratan' => 'required',
+            'nama_event' => 'required',
+            'periode_event' => 'required',
             'deskripsi' => 'required',
-            'tutor_id' => 'required',
+            'lokasi' => 'required',
+            'deadline_pendaftaran' => 'required',
+            'kuota' => 'required',
             'status' => 'required',
         ]);
         
         $data = $request->all();
+        // $data['sisa_kuota'] = $request->kuota;
         
         if ($request->file('banner')){
             //get filename with extension
@@ -108,20 +98,17 @@ class KelasController extends Controller
             //filename to store
             $filenametostore = $filename.'_'.time().'.'.$extension;
 
-            $data['banner'] = $request->file('banner')->storeAs('kelas_banner', $filenametostore, 'public');
+            $data['banner'] = $request->file('banner')->storeAs('event_banner', $filenametostore, 'public');
         }
 
-        $dates = explode('to', $request->periode_kelas);
+        $dates = explode('to', $request->periode_event);
         $startDate = trim($dates[0]);
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
         $data['tanggal_berakhir'] = $endDate;
-        $kelas = Kelas::create($data);
-       
-        $data['kelas_id'] = $kelas->id;
-        KelasKategori::create($data);
+        Event::create($data);
 
-        return redirect()->route('kelas.index')->with('status', 'Kelas Berhasil Dibuat');
+        return redirect()->route('event.index')->with('status', 'Event Berhasil Dibuat');
     }
 
     /**
@@ -143,9 +130,8 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        $tutor = User::all()->where('level', '=', 'tutor');
-        $kelas = Kelas::findOrFail($id);
-        return view('admin_dashboard.admin.kelas.edit', ['kelas' => $kelas, 'tutor' => $tutor]);
+        $event = Event::findOrFail($id);
+        return view('admin_dashboard.admin.event.edit', ['event' => $event]);
     }
 
     /**
@@ -159,23 +145,26 @@ class KelasController extends Controller
     {
         $this->validate($request, [
             'banner' => 'image|nullable|max:10240',
-            'nama_kelas' => 'required',
-            'periode_kelas' => 'required',
-            'tutor_id' => 'required',
+            'nama_event' => 'required',
+            'periode_event' => 'required',
+            'deskripsi' => 'required',
+            'lokasi' => 'required',
+            'deadline_pendaftaran' => 'required',
+            'kuota' => 'required',
             'status' => 'required',
         ]);
         
         $data = $request->all();
 
-        $dates = explode('to', $request->periode_kelas);
+        $dates = explode('to', $request->periode_event);
         $startDate = trim($dates[0]);
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
         $data['tanggal_berakhir'] = $endDate;
 
-        $kelas = Kelas::findOrFail($id);
+        $event = Event::findOrFail($id);
         if ($request->file('banner')){
-            Storage::disk('public')->delete($kelas['banner']);
+            Storage::disk('public')->delete($event['banner']);
             //get filename with extension
             $filenamewithextension = $request->file('banner')->getClientOriginalName();
         
@@ -188,22 +177,11 @@ class KelasController extends Controller
             //filename to store
             $filenametostore = $filename.'_'.time().'.'.$extension;
 
-            $data['banner'] = $request->file('banner')->storeAs('kelas_banner', $filenametostore, 'public');
+            $data['banner'] = $request->file('banner')->storeAs('event_banner', $filenametostore, 'public');
         }
-        $kelas->update($data);
+        $event->update($data);
 
-        $kelasKategori = KelasKategori::where('kelas_id', '=', $id);
-        $kelasKategori->update([
-            'TK_PAUD' => $request->has('TK_PAUD'),
-            'SD_MI' => $request->has('SD_MI'),
-            'SMP_MTS' => $request->has('SMP_MTS'),
-            'SMA_SMK_MA' => $request->has('SMA_SMK_MA'),
-            'Mahasiswa' => $request->has('Mahasiswa'),
-            'Masyarakat_Umum' => $request->has('Masyarakat_Umum'),
-            'ASN_Polri_TNI' => $request->has('ASN_Polri_TNI'),
-        ]);
-
-        return redirect()->route('kelas.index')->with('status', 'Kelas berhasil di Perbarui');
+        return redirect()->route('event.index')->with('status', 'Event berhasil di Perbarui');
     }
 
     /**
@@ -214,25 +192,10 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Kelas::findOrFail($id);
-        Storage::disk('public')->delete($kelas->banner);
-        $kelas->delete();
-
-        $kelasKategori = KelasKategori::where('kelas_id', '=', $id);
-        $kelasKategori->delete();
+        $event = Event::findOrFail($id);
+        Storage::disk('public')->delete($event->banner);
+        $event->delete();
 
         return response()->json(array('success' => true));
     }
-
-    // public function status($id){
-    //     $data = Kelas::findOrFail($id);
-        
-    //     ($data->status == 'Aktif') ? $status = "Tidak Aktif" : $status = "Aktif" ;
-        
-    //     $data->update([
-    //         'status' => $status
-    //     ]);
-
-    //     return back()->with('status','Status berhasil diganti');
-    // }
 }

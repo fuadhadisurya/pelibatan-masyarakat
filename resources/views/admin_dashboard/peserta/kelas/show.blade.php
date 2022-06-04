@@ -69,7 +69,7 @@
                         </div>
                         <hr>
                         @if(count($registrasi_kelas) > 0)
-                            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                            <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                 Terimakasih sudah mendaftar
                             </button>
                         @elseif(Auth::user()->status == 'Belum Verifikasi')

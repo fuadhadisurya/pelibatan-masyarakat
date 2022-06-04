@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\admin_dashboard\peserta;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelas;
+use App\Models\Event;
+use App\Models\RegistrasiEvent;
 use App\Models\RegistrasiKelas;
-use App\Rules\wordCount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class KelasController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class KelasController extends Controller
     public function index()
     {
         
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->orderBy('created_at', 'desc')->paginate(10);
-        return view('admin_dashboard.peserta.kelas.index', ['class' => $kelas]);
+        $event = Event::where('status', '=', 'Pendaftaran')->orderBy('created_at', 'desc')->paginate(10);
+        return view('admin_dashboard.peserta.event.index', ['events' => $event]);
     }
 
     /**
@@ -41,7 +41,7 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     /**
@@ -52,11 +52,12 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($id);
-
-        $registrasi_kelas = RegistrasiKelas::where('user_id', '=', Auth::user()->id)->where('kelas_id', '=', $kelas->id)->get();
+        $event = Event::where('status', '=', 'Pendaftaran')->findOrfail($id);
+        $registrasi_event = RegistrasiEvent::where('user_id', '=', Auth::user()->id)->where('event_id', '=', $event->id)->first();
+        $jumlahPendaftar = count(RegistrasiEvent::where('event_id', '=', $event->id)->get());
+        $kuota = $event->kuota - $jumlahPendaftar;
         
-        return view('admin_dashboard.peserta.kelas.show', ['kelas' => $kelas, 'registrasi_kelas' => $registrasi_kelas]);
+        return view('admin_dashboard.peserta.event.show', ['event' => $event, 'registrasi_event' => $registrasi_event, 'kuota' => $kuota]);
     }
 
     /**
@@ -94,15 +95,11 @@ class KelasController extends Controller
     }
 
     public function daftar(Request $request, $id){
-        $this->validate($request, [
-            'motivasi' => ['required', new wordCount(29)],
-        ]);
-
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        $data['kelas_id'] = $id;
-        RegistrasiKelas::create($data);
+        $data['event_id'] = $id;
+        RegistrasiEvent::create($data);
         
-        return redirect()->route('peserta.kelas.show', $id)->with('success', 'Berhasil Mendaftar Kelas');
+        return redirect()->route('peserta.event.show', $id)->with('success', 'Berhasil Mendaftar event');
     }
 }

@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Kelas | Kegiatan Pelibatan Masyarakat
+    Event | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -8,34 +8,35 @@
     <div class="row layout-top-spacing" id="cancel-row">
     
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            @if ($errors->any())
+                <div class="alert alert-warning" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(session('status'))
+                <div class="alert alert-success mb-4" role="alert"> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                    <strong>{{ session('status') }} </strong>
+                </div>
+            @endif
             <div class="widget-content widget-content-area br-6">
-                @if ($errors->any())
-                    <div class="alert alert-warning" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @if(session('status'))
-                    <div class="alert alert-success mb-4" role="alert"> 
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                        </button>
-                        <strong>{{ session('status') }} </strong>
-                    </div>
-                @endif
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahKelas">Tambah Kelas</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahKelas">Tambah Event</button>
                 <div class="table-responsive mb-4 mt-2">
                     <table id="tab_kelas" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th>Periode Kelas</th>
-                                <th>Tutor</th>
+                                <th class="text-center">Periode Event</th>
+                                <th class="text-center">Batas Waktu Pendaftaran</th>
+                                <th class="text-center">Kuota</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -57,12 +58,12 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kelas</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Event</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="far fa-times-circle"></i>
                     </button>
                 </div>
-                <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{ route('event.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -76,80 +77,44 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nama_kelas">Nama Kelas</label>
-                            <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ old('nama_kelas') }}" required>
+                            <label for="nama_event">Nama Event</label>
+                            <input type="text" name="nama_event" class="form-control" id="nama_event" value="{{ old('nama_event') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="periode_kelas">Periode Kelas</label>
-                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kelas.." value="{{ old('periode_kelas') }}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tutor">Tutor</label>
-                            <select class="placeholder form-control" name="tutor_id">
-                                <option value="">Pilih Tutor...</option>
-                                @foreach ($tutor as $tutor)
-                                    <option value="{{ $tutor->id }}" {{ (old("tutor_id") == $tutor->id ? "selected":"") }}>{{ $tutor->nama }}</option>
-                                @endforeach
+                            <label for="kategori">Kategori Event</label>
+                            <select class="form-control selectpicker" name="kategori" required>
+                                <option value="Diskusi Online" {{  old('kategori') ==  "Diskusi Online" ? "selected" : ""  }}>Diskusi Online</option>
+                                <option value="Seminar" {{  old('kategori') ==  "Seminar" ? "selected" : ""  }}>Seminar</option>
+                                <option value="Workshop" {{  old('kategori') ==  "Workshop" ? "selected" : ""  }}>Workshop</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="persyaratan">persyaratan Kelas</label>
-                            <textarea name="persyaratan" class="textarea tinymce" id="editor1" rows="10">
-                                {!! old('persyaratan') !!}
-                            </textarea>
+                            <label for="pembuat_event">Nama Pembuat Event</label>
+                            <input type="text" name="pembuat_event" class="form-control" id="pembuat_event" value="{{ old('pembuat_event') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="deskripsi">Deskripsi Kelas</label>
-                            <textarea name="deskripsi" class="textarea tinymce" id="editor2" rows="10">
+                            <label for="periode_event">Periode Event</label>
+                            <input id="periode_event" name="periode_event" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Event.." value="{{ old('periode_event') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi">Deskripsi</label>
+                            <textarea name="deskripsi" class="textarea tinymce" id="editor1" rows="10" required>
                                 {!! old('deskripsi') !!}
                             </textarea>
                         </div>
-                        <input type="hidden" name="status" value="Persiapan">
                         <div class="form-group">
-                            <label for="Sasaran">Sasaran</label>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1" {{ old('TK_PAUD') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>TK/PAUD
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SD_MI" class="new-control-input" value="1" {{ old('SD_MI') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>SD/MI
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1" {{ old('SMP_MTS') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>SMP/MTS
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1" {{ old('SMA_SMK_MA') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>SMA/SMK/MA
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1" {{ old('Mahasiswa') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>Mahasiswa
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1" {{ old('Masyarakat Umum') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>Masyarakat Umum
-                                </label>
-                            </div>
-                            <div class="n-chk">
-                                <label class="new-control new-checkbox checkbox-primary">
-                                    <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1" {{ old('ASN/Polri/TNI') == '1' ? 'checked' : '' }}>
-                                    <span class="new-control-indicator"></span>ASN/Polri/TNI
-                                </label>
-                            </div>
+                            <label for="lokasi">Lokasi</label>
+                            <input id="lokasi" name="lokasi" class="form-control" type="text" placeholder="Lokasi Kegiatan" value="{{ old('lokasi') }}" required>
                         </div>
+                        <div class="form-group">
+                            <label for="deadline_pendaftaran">Batas Waktu Pendaftaran</label>
+                            <input id="deadline_pendaftaran" name="deadline_pendaftaran" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Event.." value="{{ old('deadline_pendaftaran') }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kuota">Kuota Peserta</label>
+                            <input id="kuota" type="text" name="kuota" class="form-control" onkeypress="return isNumber(event)" value="{{ old('kuota') }}" required>
+                        </div>
+                        <input type="hidden" name="status" value="Persiapan">
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
@@ -165,7 +130,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin_dashboard/assets/css/scrollspyNav.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
@@ -173,7 +137,6 @@
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/select2/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
     <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
@@ -182,11 +145,9 @@
 
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/table/datatable/datatables.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/assets/js/scrollspyNav.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/editors/tinymce/tinymce.min.js') }}"></script>
@@ -195,12 +156,13 @@
         $('#tab_kelas').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('kelas.index') }}",
+            ajax: "{{ route('event.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_kelas', name: 'nama_kelas'},
-                {data: 'periode_kelas', name: 'periode_kelas'},
-                {data: 'tutor_id', name: 'tutor_id'},
+                {data: 'nama_event', name: 'nama_event'},
+                {data: 'periode_event', name: 'periode_event', className: 'text-center'},
+                {data: 'deadline_pendaftaran', name: 'deadline_pendaftaran', className: 'text-center'},
+                {data: 'kuota', name: 'kuota', className: 'text-center'},
                 {data: 'status', name: 'status', className: 'text-center'},
                 {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
             ],
@@ -230,7 +192,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{url("/admin/kelas")}}/' +id,
+                        url:'{{url("/admin/event")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
@@ -250,21 +212,18 @@
         }
     </script>
     <script>
-        var f3 = flatpickr(document.getElementById('periode_kelas'), {
+        var f3 = flatpickr(document.getElementById('periode_event'), {
             mode: "range",
-            minDate: "today"
+            minDate: "today",
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            time_24hr: true,
         });
     </script>
     <script>
-        $(".placeholder").select2({
-            placeholder: "Pilih Tutor...",
-            dropdownParent: $('.modal-body')
+        var f3 = flatpickr(document.getElementById('deadline_pendaftaran'), {
+            minDate: "today",
         });
-    </script>
-    <script>
-        $(".selectpicker").selectpicker({
-            "title": "Pilih Status..."        
-        }).selectpicker("render");
     </script>
     <script type='text/javascript'> 
         tinymce.init({
@@ -299,5 +258,20 @@
                 preview.src = URL.createObjectURL(file)
             }
         }
+    </script>
+    <script>
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script>
+        $(".selectpicker").selectpicker({
+            "title": "Pilih Status..."        
+        }).selectpicker("render");
     </script>
 @endpush

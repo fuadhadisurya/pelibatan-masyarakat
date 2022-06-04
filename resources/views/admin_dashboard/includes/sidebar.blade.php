@@ -52,12 +52,23 @@
                     </ul>
                 </li>
                 <li class="menu">
-                    <a href="{{ url('/admin/notifikasi') }}" aria-expanded="false" class="dropdown-toggle">
+                    <a href="#event" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'event' || Request::segment(2) == 'data-event' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                            <span> Workshop</span>
+                            <span> Event</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         </div>
                     </a>
+                    <ul class="{{ Request::segment(2) == 'event' || Request::segment(2) == 'data-event' ? 'toggle' : 'collapse' }} submenu list-unstyled" id="event" data-parent="#accordionExample">
+                        <li class="{{ Request::segment(2) == 'event' ? 'active' : '' }}">
+                            <a href="{{ route('event.index') }}"> Kelola Event </a>
+                        </li>
+                        <li class="{{ Request::segment(2) == 'data-event' ? 'active' : '' }}">
+                            <a href="{{ Route('data-event.index') }}"> Data Event </a>
+                        </li>      
+                    </ul>
                 </li>
                 <li class="menu">
                     <a href="#berita" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'berita' || Request::segment(2) == 'kategori-berita' ? 'true' : 'false' }}" class="dropdown-toggle">
@@ -213,6 +224,25 @@
                         <li class="{{ Request::segment(2) == 'kelasku' ? 'active' : '' }}">
                             <a href="{{ route('peserta.kelasku.index') }}"> Kelasku </a>
                         </li>                           
+                    </ul>
+                </li>
+                <li class="menu">
+                    <a href="#event" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'event' || Request::segment(2) == 'eventku' ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            <span> Event</span>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </a>
+                    <ul class="{{ Request::segment(2) == 'event' || Request::segment(2) == 'eventku' ? 'toggle' : 'collapse' }} submenu list-unstyled" id="event" data-parent="#accordionExample">
+                        <li class="{{ Request::segment(2) == 'event' ? 'active' : '' }}">
+                            <a href="{{ route('peserta.event.index') }}"> Pilih Event </a>
+                        </li>
+                        <li class="{{ Request::segment(2) == 'eventku' ? 'active' : '' }}">
+                            <a href="{{ Route('peserta.eventku.index') }}"> Eventku </a>
+                        </li>      
                     </ul>
                 </li>
                 <li class="menu">
