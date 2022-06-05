@@ -1,40 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\admin;
+namespace App\Http\Controllers\admin_dashboard\peserta\eventku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
-class DataEventController extends Controller
+class DeskripsiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($event_id)
     {
-        if ($request->ajax()) {
-            $data = Event::orderBy('id', 'desc')->get();
-            return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->editColumn('periode_event', function($row){
-                        return $row->tanggal_mulai;
-                    })
-                    ->addColumn('aksi', function($row){
-                        return '
-                            <td class="text-center">
-                                <a href="'. route('data-event.deskripsi.index', $row->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                            </td>
-                        ';
-                    })
-                    ->rawColumns(['aksi'])
-                    ->make(true);
-        }
+        $event = Event::findOrfail($event_id);
 
-        return view("admin_dashboard.admin.data-event.index");
+        return view('admin_dashboard.peserta.eventku.deskripsi.index', ['event' => $event]);
     }
 
     /**

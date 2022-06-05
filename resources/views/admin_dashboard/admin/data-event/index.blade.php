@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Data Kelas | Kegiatan Pelibatan Masyarakat
+    Data Event | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
@@ -13,10 +13,8 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Kelas</th>
-                                <th>Periode Kelas</th>
-                                <th>Tutor</th>
-                                <th class="text-center">Status</th>
+                                <th>Nama Event</th>
+                                <th>Tanggal</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -42,13 +40,11 @@
         $('#data-kelas_admin').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data-kelas.index') }}",
+            ajax: "{{ route('data-event.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_kelas', name: 'nama_kelas'},
-                {data: 'periode_kelas', name: 'periode_kelas'},
-                {data: 'tutor', name: 'tutor'},
-                {data: 'status', name: 'status', className: 'text-center'},
+                {data: 'nama_event', name: 'nama_event'},
+                {data: 'periode_event', name: 'periode_event'},
                 {"width": "12%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

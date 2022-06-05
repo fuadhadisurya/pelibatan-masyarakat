@@ -2,33 +2,33 @@
     <div class="widget-content widget-content-area simple-pills mb-3">
         <ul class="nav nav-pills" id="pills-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link {{ Request::segment(4) == 'home' ? 'active' : '' }}" href="{{ route('data-kelas.home.index',[$kelas->id]) }}">Home</a>
+                <a class="nav-link {{ Request::segment(4) == 'deskripsi' ? 'active' : '' }}" href="{{ route('data-event.deskripsi.index',[$event->id]) }}">Deskripsi</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::segment(4) == 'silabus' ? 'active' : '' }}" href="{{ route('data-kelas.silabus.index',[$kelas->id]) }}">Silabus</a>
+             <li class="nav-item">
+                <a class="nav-link {{ Request::segment(4) == 'dokumentasi' ? 'active' : '' }}" href="{{ route('data-event.dokumentasi.index',[$event->id]) }}">Dokumentasi</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('data-kelas.peserta.index',[$kelas->id]) }}">Peserta</a>
+            {{-- <li class="nav-item">
+                <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('data-event.peserta.index',[$event->id]) }}">Peserta</a>
             </li>
-            @if ($kelas->status == 'Kegiatan Berlangsung' || $kelas->status == 'Selesai')
+            @if ($event->status == 'Kegiatan Berlangsung' || $event->status == 'Selesai')
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::segment(4) == 'forum' ? 'active' : '' }}" href="{{ route('data-kelas.forum.index',[$kelas->id]) }}">Forum</a>
+                    <a class="nav-link {{ Request::segment(4) == 'forum' ? 'active' : '' }}" href="{{ route('data-event.forum.index',[$event->id]) }}">Forum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('data-kelas.materi.index',[$kelas->id]) }}">Materi</a>
+                    <a class="nav-link {{ Request::segment(4) == 'materi' ? 'active' : '' }}" href="{{ route('data-event.materi.index',[$event->id]) }}">Materi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::segment(4) == 'tugas' || Request::segment(4) == 'periksa-tugas' ? 'active' : '' }}" href="{{ route('data-kelas.tugas.index',[$kelas->id]) }}">Tugas</a>
+                    <a class="nav-link {{ Request::segment(4) == 'tugas' || Request::segment(4) == 'periksa-tugas' ? 'active' : '' }}" href="{{ route('data-event.tugas.index',[$event->id]) }}">Tugas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('data-kelas.presensi.index',[$kelas->id]) }}">Presensi</a>
+                    <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('data-event.presensi.index',[$event->id]) }}">Presensi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::segment(4) == 'quiz' ? 'active' : '' }}" href="{{ route('data-kelas.quiz.index',[$kelas->id]) }}">Quiz</a>
+                    <a class="nav-link {{ Request::segment(4) == 'quiz' ? 'active' : '' }}" href="{{ route('data-event.quiz.index',[$event->id]) }}">Quiz</a>
                 </li>
-                @if ($kelas->status == 'Selesai')
+                @if ($event->status == 'Selesai')
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::segment(4) == 'testimoni' ? 'active' : '' }}" href="{{ route('data-kelas.testimoni.index',[$kelas->id]) }}">Testimoni</a>
+                        <a class="nav-link {{ Request::segment(4) == 'testimoni' ? 'active' : '' }}" href="{{ route('data-event.testimoni.index',[$event->id]) }}">Testimoni</a>
                     </li>
                 @else
                     <li class="nav-item">
@@ -54,7 +54,7 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Testimoni</a>
                 </li>
-            @endif
+            @endif --}}
         </ul>
     </div>
 </div>

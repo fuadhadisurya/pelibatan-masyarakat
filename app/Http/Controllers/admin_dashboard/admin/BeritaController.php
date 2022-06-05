@@ -19,7 +19,7 @@ class BeritaController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Berita::all();
+        $data = Berita::orderBy('id', 'desc')->get();
         if ($request->ajax()) {
             return DataTables::of($data)
                     ->addIndexColumn()

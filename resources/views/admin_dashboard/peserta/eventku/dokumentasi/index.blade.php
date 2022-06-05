@@ -1,10 +1,10 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Materi | Kegiatan Pelibatan Masyarakat
+    Dokumentasi | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    @include('admin_dashboard.peserta.kelasku.includes.navbar')
+    @include('admin_dashboard.peserta.eventku.includes.navbar')
     
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -20,7 +20,7 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
-                <div class="table-responsive">
+                {{-- <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
@@ -34,6 +34,18 @@
 
                         </tbody>
                     </table>
+                </div> --}}
+
+                <div class="mb-5">
+                    <h3>Foto</h3>
+                    <div class="alert alert-info">
+                        Belum ada foto yang diunggah oleh pengelola Event.
+                    </div>
+                    <h3>Presentasi</h3>
+                    <div class="alert alert-info">
+                        Belum ada presentasi yang diunggah oleh pengelola Event.
+                    </div>
+                    <iframe src="//www.slideshare.net/slideshow/embed_code/key/dCylTYuzhqeAtW" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/APIdays_official/apidays-paris-2019-innovation-scale-apis-as-digital-factories-new-machines-by-cyril-vart-fabernovel" title="APIdays Paris 2019 - Innovation @ scale, APIs as Digital Factories&#39; New Machines? by Cyril Vart, Fabernovel" target="_blank">APIdays Paris 2019 - Innovation @ scale, APIs as Digital Factories&#39; New Machines? by Cyril Vart, Fabernovel</a> </strong> from <strong><a href="//www.slideshare.net/APIdays_official" target="_blank">apidays</a></strong> </div>
                 </div>
             </div>
         </div>
@@ -42,58 +54,7 @@
 @endsection
 
 @push('modal')
-    @foreach ($materi as $materi)
-        <div class="modal fade" id="lihat{{ $materi->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="data_peserta">{{ $materi->nama_materi }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 15%">Tanggal</td>
-                                        <td style="width: 1%">:</td>
-                                        <td>{{ $materi->created_at }}</td>
-                                    </tr>
-                                    @if ($materi->created_at != $materi->updated_at)
-                                        <tr>
-                                            <td>Tanggal Diperbarui</td>
-                                            <td>:</td>
-                                            <td>{{ $materi->updated_at }}</td>
-                                        </tr>
-                                    @endif
-                                    <tr>
-                                        <td>Nama Materi</td>
-                                        <td>:</td>
-                                        <td>{{ $materi->nama_materi }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Deskripsi</td>
-                                        <td>:</td>
-                                        <td>{{ $materi->deskripsi }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>  
-                        </div>
-                        <div>
-                            @foreach ($materi->uploadMateri as $fileMateri)
-                                <a href="{{ route('materi.download', [$kelas->id, $fileMateri->id]) }}"><i class="far fa-save"></i> {{ $fileMateri->materi }}</a><br>
-                            @endforeach
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
+    
 @endpush
 
 @push('styles')
@@ -101,8 +62,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/datatables.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/table/datatable/dt-global_style.css') }}">
-    <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -111,11 +70,11 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('peserta.kelasku.materi.index', $kelas_id) }}",
+            ajax: "{{ route('peserta.eventku.dokumentasi.index', $event->id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_materi', name: 'nama_materi'},
-                {data: 'deskripsi', name: 'deskripsi'},
+                {data: 'nama_file', name: 'nama_file'},
+                {data: 'tipe', name: 'tipe'},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

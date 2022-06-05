@@ -17,11 +17,11 @@ class DataKelasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Kelas::all();
+            $data = Kelas::orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_berakhir . ' - ' . $row->tanggal_berakhir;
+                        return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
                     })
                     ->addColumn('tutor', function($row){
                         return $row->tutor->nama;

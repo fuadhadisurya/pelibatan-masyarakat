@@ -20,7 +20,7 @@ class KelasController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Kelas::all();
+            $data = Kelas::orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){

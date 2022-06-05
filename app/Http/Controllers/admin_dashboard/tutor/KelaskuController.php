@@ -16,7 +16,7 @@ class KelaskuController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_berakhir . ' - ' . $row->tanggal_berakhir;
+                        return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
                     })
                     ->editColumn('status', function($row){
                         if($row->status == 'Persiapan'){

@@ -1,49 +1,45 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\peserta;
+namespace App\Http\Controllers\admin_dashboard\peserta\eventku;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dokumentasi;
+use App\Models\Event;
 use App\Models\RegistrasiEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class EventkuController extends Controller
+class DokumentasiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
-        $data = RegistrasiEvent::with('event')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
+    public function index(Request $request, $event_id)
+    {
+        $dokumentasi = Dokumentasi::where('event_id', '=', $event_id)->get();
         if ($request->ajax()) {
-            return DataTables::of($data)
+            return DataTables::of($dokumentasi)
                     ->addIndexColumn()
-                    ->editColumn('periode_event', function($row){
-                        return $row->event->tanggal_mulai;
-                    })
                     ->addColumn('aksi', function($row){
-                        if ($row->event->status == "Selesai") {
-                            return '
-                                <td class="text-center">
-                                    <a href="'. route('peserta.eventku.deskripsi.index', $row->event->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                    <a href="'. url('peserta/eventku/'.$row->event->id.'/sertifikat') .'" class="btn btn-sm btn-light" title="Unduh Sertifikat"><i class="bi bi-patch-check-fill"></i></a>
-                                </td>
-                            ';   
-                        } else {
-                            return '
-                                <td class="text-center">
-                                    <a href="'. route('peserta.eventku.deskripsi.index', $row->event->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                </td>
-                            ';   
-                        }
+                        return '
+                            <td class="text-center">
+                                <a href="'.route('dokumentasi.download', [$row->event_id, $row->id]).'" class="btn btn-sm btn-primary" title="Download File">
+                                    <i class="far fa-save"></i>
+                                </a>
+                            </td>
+                        ';
                     })
                     ->rawColumns(['aksi'])
                     ->make(true);
         }
-        
-        return view("admin_dashboard.peserta.eventku.index");
+
+        $event = Event::findOrfail($event_id);
+        $registrasi = RegistrasiEvent::where('event_id', '=', $event_id)->where('user_id', Auth::user()->id)->first();
+
+        return view('admin_dashboard.peserta.eventku.dokumentasi.index', ['event' => $event, 'dokumentasi' => $dokumentasi, 'registrasi' => $registrasi]);
     }
 
     /**

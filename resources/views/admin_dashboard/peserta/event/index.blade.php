@@ -55,7 +55,11 @@
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-end">
-                                            <span>Selesai</span>
+                                            @if (\Carbon\Carbon::now()->format('Y-m-d') <= $event->deadline_pendaftaran)
+                                                <span>Batas Pendaftaran: {{ \Carbon\Carbon::parse($event->deadline_pendaftaran)->format('d M Y')}}</span>
+                                            @else
+                                                <span>Pendaftaran Ditutup</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </a>

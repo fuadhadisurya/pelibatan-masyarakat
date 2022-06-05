@@ -29,9 +29,9 @@ class Event extends Model
         return $this->hasMany(RegistrasiEvent::class);
     }
 
-    // public function dokumentasi(){
-    //     return $this->hasMany(Dokumentasi::class);
-    // }
+    public function dokumentasi(){
+        return $this->hasMany(Dokumentasi::class);
+    }
 
     // public function presensi(){
     //     return $this->hasMany(Presensi::class);

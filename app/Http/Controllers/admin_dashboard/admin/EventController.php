@@ -18,7 +18,7 @@ class EventController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Event::all();
+            $data = Event::orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_event', function($row){
@@ -29,8 +29,6 @@ class EventController extends Controller
                             $status = '<span class="badge badge-warning">Persiapan</span>';
                         }elseif($row->status == 'Pendaftaran'){
                             $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-info">Proses Seleksi</span>';
                         } elseif($row->status == 'Kegiatan Berlangsung'){
                             $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
                         } else {

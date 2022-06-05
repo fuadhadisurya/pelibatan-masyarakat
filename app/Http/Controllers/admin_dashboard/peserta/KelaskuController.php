@@ -12,11 +12,11 @@ class KelaskuController extends Controller
 {
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = RegistrasiKelas::with('kelas')->where('user_id', Auth::user()->id)->get();
+            $data = RegistrasiKelas::with('kelas')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->kelas->tanggal_berakhir . ' - ' . $row->kelas->tanggal_berakhir;
+                        return $row->kelas->tanggal_mulai . ' - ' . $row->kelas->tanggal_berakhir;
                     })
                     ->addColumn('tutor', function($row){
                         return $row->kelas->tutor->nama;

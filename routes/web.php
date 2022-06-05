@@ -3,6 +3,8 @@
 use App\Http\Controllers\admin_dashboard\admin\BeritaController;
 use App\Http\Controllers\admin_dashboard\auth\LoginController;
 use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin_dashboard\admin\data_event\DeskripsiController;
+use App\Http\Controllers\admin_dashboard\admin\data_event\DokumentasiController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\HomeController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\MateriController;
@@ -24,6 +26,8 @@ use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\EventController as PesertaEventController;
+use App\Http\Controllers\admin_dashboard\peserta\eventku\DeskripsiController as PesertaEventkuDeskripsiController;
+use App\Http\Controllers\admin_dashboard\peserta\eventku\DokumentasiController as PesertaEventkuDokumentasiController;
 use App\Http\Controllers\admin_dashboard\peserta\EventkuController as PesertaEventkuController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\ForumController as PesertaKelaskuForumController;
@@ -119,6 +123,8 @@ Route::prefix('admin')->group(function(){
     // Event
     Route::resource('event', EventController::class);
     Route::resource('data-event', DataEventController::class);
+    Route::resource('data-event.deskripsi', DeskripsiController::class);
+    Route::resource('data-event.dokumentasi', DokumentasiController::class);
 });
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
@@ -182,12 +188,15 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::post('event/{id}', [PesertaEventController::class, 'daftar'])->name('event.daftar');
     Route::resource('event', PesertaEventController::class);
     Route::resource('eventku', PesertaEventkuController::class)->only(['index']);
+    Route::resource('eventku.deskripsi', PesertaEventkuDeskripsiController::class);
+    Route::resource('eventku.dokumentasi', PesertaEventkuDokumentasiController::class);
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){
     Route::get('/kelasku/{kelas}/materi/download/{id}', [DownloadController::class, 'materi'])->name("materi.download");
     Route::get('/kelasku/{kelas}/tugas/download/{id}', [DownloadController::class, 'tugas'])->name("tugas.download");
     Route::get('/kelasku/{kelas}/jawaban-tugas/download/{id}', [DownloadController::class, 'jawabanTugas'])->name("jawaban.tugas.download");
+    Route::get('/eventku/{kelas}/dokumentasi/download/{id}', [DownloadController::class, 'dokumentasi'])->name("dokumentasi.download");
     Route::put('/profil', [PengaturanController::class, 'update_profil'])->name('profil.update');
     Route::put('/akun', [PengaturanController::class, 'update_akun'])->name('akun.update');
 });
