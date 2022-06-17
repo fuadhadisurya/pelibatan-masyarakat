@@ -1,41 +1,3 @@
-{{-- @extends('admin_dashboard.layouts.main')
-@section('title')
-    Sertifikat | Kegiatan Pelibatan Masyarakat
-@endsection
-
-@section('content')
-    <div class="row layout-top-spacing">
-            
-        <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-            <div class="widget-content-area br-4">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                
-                <a data-fancybox data-type="pdf" href="{{ url('/sertifikat') }}">
-                    PDF file
-                </a>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
-
-@endpush
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-@endpush --}}
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -51,7 +13,7 @@
             height: 100%;
         }
     </style>
-    <title>Selamat!</title>
+    <title>Sertifikat | Kegiatana Pelibatan masyarakat</title>
   </head>
   <body>
     <div class="container h-100">
@@ -62,14 +24,14 @@
             <div class="col">
                 <div class="container">
                     <h2 class="text-center">Selamat</h2>
-                    <p class="text-center">Akhirnya kita sudah sudah menyelesaikan kelas <strong>{{ $kelas->nama_kelas }}</strong>. silahkan unduh sertifikat dibawah ini</p>
+                    <p class="text-center">Akhirnya kamu sudah bisa mendapatkan sertifikat dari kegiatan <strong>{{ $event->nama_event }}</strong>. silahkan unduh sertifikat dibawah ini</p>
                     <div class="mb-1 d-flex justify-content-center">
                         <a data-fancybox data-type="pdf" href="{{ url('/sertifikat') }}" class="btn btn-primary">
                             Unduh Sertifikat
                         </a>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="{{ route('peserta.kelasku.index') }}" class="btn btn-secondary">Kembali ke dashboard</a>
+                        <a href="{{ route('peserta.eventku.index') }}" class="btn btn-secondary">Kembali ke dashboard</a>
                     </div>
                 </div>
             </div>

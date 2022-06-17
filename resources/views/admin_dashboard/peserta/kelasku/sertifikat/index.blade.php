@@ -51,7 +51,7 @@
             height: 100%;
         }
     </style>
-    <title>Selamat!</title>
+     <title>Sertifikat | Kegiatana Pelibatan masyarakat</title>
   </head>
   <body>
     <div class="container h-100">

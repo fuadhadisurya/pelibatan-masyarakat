@@ -23,11 +23,13 @@ use App\Http\Controllers\admin_dashboard\admin\EventController;
 use App\Http\Controllers\admin_dashboard\admin\KategoriBeritaController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
+use App\Http\Controllers\admin_dashboard\auth\ResetPasswordController;
 use App\Http\Controllers\admin_dashboard\tutor\DashboardController as TutorDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaDashboardController;
 use App\Http\Controllers\admin_dashboard\peserta\EventController as PesertaEventController;
 use App\Http\Controllers\admin_dashboard\peserta\eventku\DeskripsiController as PesertaEventkuDeskripsiController;
 use App\Http\Controllers\admin_dashboard\peserta\eventku\DokumentasiController as PesertaEventkuDokumentasiController;
+use App\Http\Controllers\admin_dashboard\peserta\eventku\SertifikatController as PesertaEventkuSertifikatController;
 use App\Http\Controllers\admin_dashboard\peserta\EventkuController as PesertaEventkuController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
 use App\Http\Controllers\admin_dashboard\peserta\kelasku\ForumController as PesertaKelaskuForumController;
@@ -79,7 +81,10 @@ Route::get('/', function () {
 Route::middleware(['cekLogin'])->group(function(){
     Route::get('/login', [LoginController::class, 'login'])->name('login');
     Route::post('/login', [LoginController::class, 'postLogin'])->name('postlogin');
-    Route::get('/lupa-password', [LoginController::class, 'lupaPassword']);
+    Route::get('/lupa-password', [ResetPasswordController::class, 'lupaPassword']);
+    Route::post('/lupa-password', [ResetPasswordController::class, 'postLupaPassword'])->name('password.reset');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('password.edit');
+    Route::post('/reset-password', [ResetPasswordController::class, 'postResetPassword'])->name('password.update');
     Route::get('/registrasi', [RegistrasiController::class, 'registrasi'])->name('registrasi');
     Route::post('/registrasi', [RegistrasiController::class, 'postRegistrasi'])->name('postRegistrasi');
 });
@@ -190,6 +195,8 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('eventku', PesertaEventkuController::class)->only(['index']);
     Route::resource('eventku.deskripsi', PesertaEventkuDeskripsiController::class);
     Route::resource('eventku.dokumentasi', PesertaEventkuDokumentasiController::class);
+    Route::get('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'index']);
+    Route::post('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'store'])->name('kelasku.sertikat.store');
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){

@@ -29,34 +29,50 @@
                         <h5 class="nama-kelas">{{ $kelas->nama_kelas }}</h5>
                         @php
                             if($kelas->kelasKategori->TK_PAUD == 1){
-                                $sasaran[] = "TK/PAUD";
+                                $sasaran['TK/PAUD'] = "TK/PAUD";
+                            } else {
+                                $sasaran['TK/PAUD'] = null;
                             }
                             if($kelas->kelasKategori->SD_MI == 1){
-                                $sasaran[] = "SD/MI";
+                                $sasaran['SD/MI'] = "SD/MI";
+                            } else {
+                                $sasaran['SD/MI'] = null;
                             }
                             if($kelas->kelasKategori->SMP_MTS == 1){
-                                $sasaran[] = "SMP/MTS";
+                                $sasaran["SMP/MTS"] = "SMP/MTS";
+                            } else {
+                                $sasaran['SMP/MTS'] = null;
                             }
                             if($kelas->kelasKategori->SMA_SMK_MA == 1){
-                                $sasaran[] = "SMA/SMK/MA";
+                                $sasaran["SMA/SMK/MA"] = "SMA/SMK/MA";
+                            } else {
+                                $sasaran['SMA/SMK/MA'] = null;
                             }
                             if($kelas->kelasKategori->Mahasiswa == 1){
-                                $sasaran[] = "Mahasiswa";
+                                $sasaran["Mahasiswa"] = "Mahasiswa";
+                            } else {
+                                $sasaran['TK/PAUD'] = null;
                             }
                             if($kelas->kelasKategori->Masyarakat_Umum == 1){
-                                $sasaran[] = "Masyarakat Umum";
+                                $sasaran["Masyarakat Umum"] = "Masyarakat Umum";
+                            } else {
+                                $sasaran['Masyarakat Umum'] = null;
                             }
                             if($kelas->kelasKategori->ASN_Polri_TNI == 1){
-                                $sasaran[] = "ASN/Polri/TNI";
+                                $sasaran["ASN/Polri/TNI"] = "ASN/Polri/TNI";
+                            } else {
+                                $sasaran['ASN/TNI/POLRI'] = null;
                             }
                         @endphp
                         <p> 
                             Sasaran : 
                             @foreach ($sasaran as $item)
-                                @if($loop->last)
-                                    {{ $item }}
-                                @else
-                                    {{ $item }},
+                                @if ($item != null)
+                                    @if($loop->last)
+                                        {{ $item }}
+                                    @else
+                                        {{ $item }},
+                                    @endif
                                 @endif
                             @endforeach
                         </p>
@@ -68,6 +84,7 @@
                             <div class="user-name">{{ $kelas->tutor->nama }}</div>
                         </div>
                         <hr>
+                        {{-- {{ dd($sasaran) }} --}}
                         @if(count($registrasi_kelas) > 0)
                             <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                 Terimakasih sudah mendaftar
@@ -75,6 +92,10 @@
                         @elseif(Auth::user()->status == 'Belum Verifikasi')
                             <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                 Verifikasi akun terlebih dahulu
+                            </button>
+                        @elseif(Auth::user()->tipe_anggota != $sasaran[Auth::user()->tipe_anggota])
+                            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                Tipe anggotamu adalah {{ Auth::user()->tipe_anggota }}. tidak bisa mengikuti kegiatan ini.
                             </button>
                         @else
                             <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">

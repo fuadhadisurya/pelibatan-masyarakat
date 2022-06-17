@@ -48,9 +48,10 @@ class PengaturanController extends Controller
             ]);
         }
         $data = $request->all();
-
         if ($request->file('foto')){
-            Storage::disk('public')->delete($id['foto']);
+            if(Auth::user()->foto){
+                Storage::disk('public')->delete($id['foto']);
+            }
 
             //get filename with extension
             $filenamewithextension = $request->file('foto')->getClientOriginalName();

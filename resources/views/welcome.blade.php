@@ -52,16 +52,16 @@ https://templatemo.com/tm-568-digimedia
             <div class="row">
                 <div class="col-lg-8 col-sm-8 col-7">
                     <ul class="info">
-                        <li><a href="#"><i class="fa fa-envelope"></i>digimedia@company.com</a></li>
-                        <li><a href="#"><i class="fa fa-phone"></i>010-020-0340</a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i>arpusindramayu7@gmail.com</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i>0234 - 277139</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 col-sm-4 col-5">
                     <ul class="social-media">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href="https://www.facebook.com/disarpusindramayu/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/perpusdaimyu"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/dpa_indramayu/"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="https://www.youtube.com/channel/UCetO3E36sJ1Qfv_R5pAeY2w"><i class="fa fa-youtube"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +136,7 @@ https://templatemo.com/tm-568-digimedia
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="border-first-button scroll-to-section">
-                                            <a href="#contact">Free Quote</a>
+                                            <a href="#services">Lihat Kelas</a>
                                         </div>
                                     </div>
                                 </div>
@@ -637,7 +637,7 @@ https://templatemo.com/tm-568-digimedia
                             </div>
                             <div class="col-lg-5">
                                 <div id="map">
-                                    <iframe src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="636px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15862.002000962684!2d108.3195666!3d-6.329133!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x56b333828a7c4ce8!2sDINAS%20PERPUSTAKAAN%20DAN%20ARSIP%20KABUPATEN%20INDRAMAYU!5e0!3m2!1sid!2sid!4v1654502397408!5m2!1sid!2sid" width="100%" height="636px" frameborder="0" style="border:0" allowfullscreen></iframe>
                                 </div>
                             </div>
                             <div class="col-lg-7">
@@ -647,7 +647,7 @@ https://templatemo.com/tm-568-digimedia
                                             <div class="info-post">
                                                 <div class="icon">
                                                     <img src="{{ asset('landing_page/assets/images/phone-icon.png') }}" alt="">
-                                                    <a href="#">010-020-0340</a>
+                                                    <a href="#">0234 - 277139</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -655,7 +655,7 @@ https://templatemo.com/tm-568-digimedia
                                             <div class="info-post">
                                                 <div class="icon">
                                                     <img src="{{ asset('landing_page/assets/images/email-icon.png') }}" alt="">
-                                                    <a href="#">our@email.com</a>
+                                                    <a href="#">arpusindramayu7@gmail.com</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -663,7 +663,7 @@ https://templatemo.com/tm-568-digimedia
                                             <div class="info-post">
                                                 <div class="icon">
                                                     <img src="{{ asset('landing_page/assets/images/location-icon.png') }}" alt="">
-                                                    <a href="#">123 Rio de Janeiro</a>
+                                                    <a href="#">Jl. MT Haryono No. 49</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -702,7 +702,7 @@ https://templatemo.com/tm-568-digimedia
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright © 2022 DigiMedia Co., Ltd. All Rights Reserved.
+                    <p>Copyright © {{ Carbon\Carbon::now()->year }} DigiMedia Co., Ltd. All Rights Reserved.
                         <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
                         <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free css templates">ThemeWagon</a>
                     </p>
