@@ -35,6 +35,16 @@ class KelaskuController extends Controller
                         }
                         return '<td class="text-center">'. $status .'</td>';
                     })
+                    ->addColumn('status_seleksi', function($row){
+                        if($row->status == 'Diterima'){
+                            $status = '<span class="badge badge-success">Diterima</span>';
+                        } elseif($row->status == "Ditolak"){
+                            $status = '<span class="badge badge-danger">Ditolak</span>';
+                        } else {
+                            $status = '<span class="badge badge-info">Sedang Proses Seleksi</span>';
+                        }
+                        return '<td class="text-center">'. $status .'</td>';
+                    })
                     ->addColumn('aksi', function($row){
                         if ($row->kelas->status == "Selesai") {
                             return '
@@ -51,7 +61,7 @@ class KelaskuController extends Controller
                             ';   
                         }
                     })
-                    ->rawColumns(['aksi', 'status'])
+                    ->rawColumns(['aksi', 'status', 'status_seleksi'])
                     ->make(true);
         }
         

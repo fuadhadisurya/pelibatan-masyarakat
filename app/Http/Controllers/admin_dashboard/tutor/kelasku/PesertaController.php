@@ -119,7 +119,7 @@ class PesertaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
         $this->validate($request, [
             'status' => 'required',
@@ -129,7 +129,7 @@ class PesertaController extends Controller
         $dataPeserta = RegistrasiKelas::findOrFail($id);
         $dataPeserta->update($data);
 
-        return redirect()->route('tutor.kelasku.peserta.index', $id)->with('status', 'Data berhasil diperbarui');
+        return redirect()->route('tutor.kelasku.peserta.index', $kelas_id)->with('status', 'Data berhasil diperbarui');
     }
 
     /**

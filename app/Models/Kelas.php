@@ -22,6 +22,28 @@ class Kelas extends Model
         "status",
     ];
 
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['search'] ?? false, function($query, $search){
+            return $query->where('nama_kelas', 'like', '%' . $search . '%')
+            ->orWhere('deskripsi', 'like', '%' . $search . '%');
+        });
+
+        $query->when($filters['sort'] ?? false, function($query, $sort){
+            if($sort == "Terbaru"){
+                return $query->orderBy('created_at', 'desc');
+            } elseif($sort == "Terlama"){
+                return $query->orderBy('created_at', 'asc');
+            }
+        });
+
+        // $query->when($filters['category'] ?? false, function($query, $category){
+        //     return $query->whereHas('kelasKategori', function($query) use ($category){
+        //         $data = $query->where('TK_PAUD', 1);
+        //         dd($data->get());
+        //     });
+        // });
+    }
+
     public function tutor(){
         return $this->belongsTo(User::class);
     }

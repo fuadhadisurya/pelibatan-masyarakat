@@ -18,9 +18,15 @@ class EventController extends Controller
      */
     public function index()
     {
+        if (request('sort')) {
+            $event = Event::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort']))->paginate(10);
+        } else {
+            $event = Event::where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
+        }
         
-        $event = Event::where('status', '=', 'Pendaftaran')->orderBy('created_at', 'desc')->paginate(10);
-        return view('admin_dashboard.peserta.event.index', ['events' => $event]);
+        $search = request('search');
+        $sort = request('sort');
+        return view('admin_dashboard.peserta.event.index', ['events' => $event, 'search' => $search, 'sort' => $sort]);
     }
 
     /**

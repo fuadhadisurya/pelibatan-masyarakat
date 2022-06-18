@@ -18,9 +18,15 @@ class KelasController extends Controller
      */
     public function index()
     {
+        if (request('sort')) {
+            $kelas = Kelas::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort']))->paginate(10);
+        } else {
+            $kelas = Kelas::latest()->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
+        }
         
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->orderBy('created_at', 'desc')->paginate(10);
-        return view('admin_dashboard.peserta.kelas.index', ['class' => $kelas]);
+        $search = request('search');
+        $sort = request('sort');
+        return view('admin_dashboard.peserta.kelas.index', ['class' => $kelas, 'search' => $search, 'sort' => $sort]);
     }
 
     /**

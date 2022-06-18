@@ -51,7 +51,7 @@
                             if($kelas->kelasKategori->Mahasiswa == 1){
                                 $sasaran["Mahasiswa"] = "Mahasiswa";
                             } else {
-                                $sasaran['TK/PAUD'] = null;
+                                $sasaran['Mahasiswa'] = null;
                             }
                             if($kelas->kelasKategori->Masyarakat_Umum == 1){
                                 $sasaran["Masyarakat Umum"] = "Masyarakat Umum";
@@ -84,7 +84,6 @@
                             <div class="user-name">{{ $kelas->tutor->nama }}</div>
                         </div>
                         <hr>
-                        {{-- {{ dd($sasaran) }} --}}
                         @if(count($registrasi_kelas) > 0)
                             <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                 Terimakasih sudah mendaftar
@@ -165,11 +164,12 @@
 @endpush
 
 @push('styles')
+    <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_dashboard/plugins/font-icons/fontawesome/css/fontawesome.css') }}">
     <link href="{{ asset('admin_dashboard/assets/css/users/user-profile.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin_dashboard/assets/css/components/cards/card.css')}}" rel="stylesheet" type="text/css" />
-    <link href="assets/css/elements/avatar.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_dashboard/assets/css/elements/avatar.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <style>
         .nama-kelas {

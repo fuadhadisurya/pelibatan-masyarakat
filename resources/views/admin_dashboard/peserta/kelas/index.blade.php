@@ -10,137 +10,149 @@
                 <div class="col-sm-3 mb-3">
                     <div class="card sticky-top" style="top: 100px;">
                         <div class="card-body">
-                            <h4 class="mb-3">Filter</h4>
-                            <div class="input-group input-group-sm mb-4">
-                                <input type="text" class="form-control" placeholder="Pencarian" aria-label="Pencarian">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                            <form action="{{ route('peserta.kelas.index') }}" method="GET" autocomplete="off">
+                                <h4 class="mb-3">Filter</h4>
+                                <div class="input-group input-group-sm mb-4">
+                                    <input type="text" class="form-control" name="search" placeholder="Pencarian" value="{{ $search }}" aria-label="Pencarian">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <h5 class="mb-2">Urutkan</h5>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio1">Terbaru</label>
+                                <div class="mb-3">
+                                    <h5 class="mb-2">Urutkan</h5>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="sort" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="sort">Terbaru</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="sort2" value="Terlama" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terlama" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="sort2">Terlama</label>
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label" for="customRadio2">Terpopuler</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <h5 class="mb-2">Tipe Peserta</h5>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="TK_PAUD" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>TK/PAUD
-                                    </label>
-                                </div>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="SD_MI" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>SD/MI
-                                    </label>
-                                </div>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="SMP_MTS" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>SMP/MTS
-                                    </label>
-                                </div>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="SMA_SMK_MA" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>SMA/SMK/MA
-                                    </label>
-                                </div>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="Mahasiswa" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>Mahasiswa
-                                    </label>
-                                </div>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="Masyarakat_Umum" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>Masyarakat Umum
-                                    </label>
-                                </div>
-                                <div class="n-chk">
-                                    <label class="new-control new-checkbox checkbox-primary">
-                                        <input type="checkbox" name="ASN_Polri_TNI" class="new-control-input" value="1">
-                                        <span class="new-control-indicator"></span>ASN/Polri/TNI
-                                    </label>
-                                </div>
-                            </div>
+                                {{-- <div class="mb-3">
+                                    <h5 class="mb-2">Tipe Peserta</h5>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="TK/PAUD">
+                                            <span class="new-control-indicator"></span>TK/PAUD
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="SD/MI">
+                                            <span class="new-control-indicator"></span>SD/MI
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="SMP/MTS">
+                                            <span class="new-control-indicator"></span>SMP/MTS
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="SMA/SMK/MA">
+                                            <span class="new-control-indicator"></span>SMA/SMK/MA
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="Mahasiswa">
+                                            <span class="new-control-indicator"></span>Mahasiswa
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="Masyarakat Umum">
+                                            <span class="new-control-indicator"></span>Masyarakat Umum
+                                        </label>
+                                    </div>
+                                    <div class="n-chk">
+                                        <label class="new-control new-checkbox checkbox-primary">
+                                            <input type="checkbox" name='category[]' id="category" class="new-control-input" value="ASN/Polri/TNI">
+                                            <span class="new-control-indicator"></span>ASN/Polri/TNI
+                                        </label>
+                                    </div>
+                                </div> --}}
+                            </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
-                        @foreach ($class as $kelas)
-                            <div class="col-sm-6">
-                                <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
-                                    <div class="card component-card_9 mb-3">
-                                        @if($kelas->banner != null)
-                                            <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
-                                        @else
-                                            <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
-                                        @endif
-                                        <div class="card-body">
-                                            <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
-                                            <h5 class="card-title">{{ $kelas->nama_kelas }}</h5>
-                                            <p class="card-text">{!! Str::limit($kelas->deskripsi, 150, $end='...') !!}</p>
-                                            @php
-                                                if($kelas->kelasKategori->TK_PAUD == 1){
-                                                    $sasaran[] = "TK/PAUD";
-                                                }
-                                                if($kelas->kelasKategori->SD_MI == 1){
-                                                    $sasaran[] = "SD/MI";
-                                                }
-                                                if($kelas->kelasKategori->SMP_MTS == 1){
-                                                    $sasaran[] = "SMP/MTS";
-                                                }
-                                                if($kelas->kelasKategori->SMA_SMK_MA == 1){
-                                                    $sasaran[] = "SMA/SMK/MA";
-                                                }
-                                                if($kelas->kelasKategori->Mahasiswa == 1){
-                                                    $sasaran[] = "Mahasiswa";
-                                                }
-                                                if($kelas->kelasKategori->Masyarakat_Umum == 1){
-                                                    $sasaran[] = "Masyarakat Umum";
-                                                }
-                                                if($kelas->kelasKategori->ASN_Polri_TNI == 1){
-                                                    $sasaran[] = "ASN/Polri/TNI";
-                                                }
-                                            @endphp
-                                            <p> 
-                                                Sasaran : 
-                                                @foreach ($sasaran as $item)
-                                                    @if($loop->last)
-                                                        {{ $item }}
-                                                    @else
-                                                        {{ $item }},
-                                                    @endif
-                                                @endforeach
-                                            </p>
-                                            <div class="meta-info">
-                                                <div class="meta-user">
-                                                    <div class="avatar avatar-sm">
+                        @if ($class->count())     
+                            @foreach ($class as $kelas)
+                                <div class="col-sm-6">
+                                    <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
+                                        <div class="card h-100">
+                                            @if($kelas->banner != null)
+                                                <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
+                                            @else
+                                                <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
+                                            @endif
+                                            <div class="card-body">
+                                                <p class="meta-date text-primary"><strong>{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</strong></p>
+                                                <h5 class="card-title"><strong>{{ $kelas->nama_kelas }}</strong></h5>
+                                                <p class="card-text">{!! Str::limit($kelas->deskripsi, 150, $end='...') !!}</p>
+                                                @php
+                                                    if($kelas->kelasKategori->TK_PAUD == 1){
+                                                        $sasaran[] = "TK/PAUD";
+                                                    }
+                                                    if($kelas->kelasKategori->SD_MI == 1){
+                                                        $sasaran[] = "SD/MI";
+                                                    }
+                                                    if($kelas->kelasKategori->SMP_MTS == 1){
+                                                        $sasaran[] = "SMP/MTS";
+                                                    }
+                                                    if($kelas->kelasKategori->SMA_SMK_MA == 1){
+                                                        $sasaran[] = "SMA/SMK/MA";
+                                                    }
+                                                    if($kelas->kelasKategori->Mahasiswa == 1){
+                                                        $sasaran[] = "Mahasiswa";
+                                                    }
+                                                    if($kelas->kelasKategori->Masyarakat_Umum == 1){
+                                                        $sasaran[] = "Masyarakat Umum";
+                                                    }
+                                                    if($kelas->kelasKategori->ASN_Polri_TNI == 1){
+                                                        $sasaran[] = "ASN/Polri/TNI";
+                                                    }
+                                                @endphp
+                                                <p> 
+                                                    Sasaran : 
+                                                    @foreach ($sasaran as $item)
+                                                        @if($loop->last)
+                                                            {{ $item }}
+                                                        @else
+                                                            {{ $item }},
+                                                        @endif
+                                                    @endforeach
+                                                </p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="row d-flex justify-content-start align-items-center">
+                                                    <div class="ml-3 mr-1">
                                                         @if ($kelas->tutor->foto != null)
                                                             <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ Storage::url($kelas->tutor->foto) }}" width="30" height="30" class="rounded-circle" /></span>
                                                         @else
                                                             <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
                                                         @endif
                                                     </div>
-                                                    <div class="user-name">{{ $kelas->tutor->nama }}</div>
+                                                    <div class="">{{ $kelas->tutor->nama }}</div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="text-center"><b>Kelas Tidak Ditemukan</b></p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
-                        @endforeach
+                        @endif
                     </div>
                     {{ $class->links() }}
                 </div>

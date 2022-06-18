@@ -16,7 +16,8 @@
                                 <th>Nama Kelas</th>
                                 <th>Periode Kelas</th>
                                 <th>Tutor</th>
-                                <th class="text-center">Status</th>
+                                <th class="text-center">Status Kelas</th>
+                                <th class="text-center">Status Seleksi</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -50,6 +51,7 @@
                 {data: 'periode_kelas', name: 'periode_kelas'},
                 {data: 'tutor', name: 'tutor'},
                 {data: 'status', name: 'status', className: 'text-center'},
+                {data: 'status_seleksi', name: 'status_seleksi', className: 'text-center'},
                 {"width": "12%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

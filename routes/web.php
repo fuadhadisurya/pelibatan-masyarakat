@@ -131,6 +131,7 @@ Route::prefix('admin')->group(function(){
     Route::resource('data-event.deskripsi', DeskripsiController::class);
     Route::resource('data-event.dokumentasi', DokumentasiController::class);
 });
+
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
     Route::get('/dashboard', [TutorDashboardController::class, 'index']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
@@ -158,6 +159,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
         Route::resource('kelasku.testimoni', TutorKelaskuTestimoniController::class);
     });
 });
+
 Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:peserta'])->group(function(){
     Route::get('/dashboard', [PesertaDashboardController::class, 'index']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
@@ -166,8 +168,10 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::post('kelas/{id}', [PesertaKelasController::class, 'daftar'])->name('kelas.daftar');
     Route::resource('kelas', PesertaKelasController::class);
     Route::resource('kelasku', PesertaKelaskuController::class)->only(['index']);
-    Route::resource('kelasku.home', PesertaKelaskuHomeController::class);
-    Route::resource('kelasku.silabus', PesertaKelaskuSilabusController::class);
+    Route::middleware(['cekUserRegistrasi'])->group(function(){
+        Route::resource('kelasku.home', PesertaKelaskuHomeController::class);
+        Route::resource('kelasku.silabus', PesertaKelaskuSilabusController::class);
+    });
     Route::middleware(['cekRegistrasi', 'statusKelas:Kegiatan Berlangsung,Selesai'])->group(function(){
         // Forum
         Route::post('/kelasku/{kelasku}/forum/{post_id}/comment', [PesertaKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');
