@@ -18,7 +18,8 @@ class SertifikatController extends Controller
         if($testimoni != null){
             return view('admin_dashboard.peserta.kelasku.sertifikat.index', ['kelas' => $kelas]);
         } else {
-            return redirect()->route('peserta.kelasku.testimoni.create', [$kelas_id]);
+            // return redirect()->route('peserta.kelasku.testimoni.create', [$kelas_id])->with('status', 'Mohon isikan testimoni terlebih dahulu sebelum mendapatkan sertifikat');
+            return redirect('peserta/kelasku/'.$kelas_id.'/testimoni/create?next=sertifikat')->with('status', 'Mohon isikan testimoni terlebih dahulu sebelum mendapatkan sertifikat');
         }
     }
 
@@ -31,6 +32,6 @@ class SertifikatController extends Controller
         dd($data);
         Post::create($data);
         
-        return redirect()->route('tutor.kelasku.forum.index', $kelas_id)->with('status', 'Forum diskusi berhasil dibuat');
+        return redirect()->route('tutor.kelasku.forum.index', $kelas_id)->with('status', 'Sertifikat berhasil dibuat');
     }
 }

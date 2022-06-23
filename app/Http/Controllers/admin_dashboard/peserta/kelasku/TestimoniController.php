@@ -39,7 +39,7 @@ class TestimoniController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($kelas_id)
-    { 
+    {
         $testimoni = Testimoni::where('kelas_id', $kelas_id)->where('user_id', Auth::user()->id)->first();
         if($testimoni != null){
             return redirect()->route('peserta.kelasku.testimoni.index', [$kelas_id]);
@@ -74,7 +74,11 @@ class TestimoniController extends Controller
 
         Testimoni::create($data);
         
-        return redirect()->route('peserta.kelasku.testimoni.index', $kelas_id)->with('status', 'Testimoni berhasil dibuat');
+        if($data['next'] == 'sertifikat'){
+            return redirect('peserta/kelasku/'.$kelas_id.'/sertifikat');
+        } else {
+            return redirect()->route('peserta.kelasku.testimoni.index', $kelas_id)->with('status', 'Testimoni berhasil dibuat');
+        }
     }
 
     /**

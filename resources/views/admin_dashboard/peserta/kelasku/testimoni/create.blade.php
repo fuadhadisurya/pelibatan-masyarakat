@@ -18,8 +18,21 @@
                         </ul>
                     </div>
                 @endif
+                @if(session('status'))
+                    <div class="alert alert-info alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>&times;</span>
+                            </button>
+                            {{ session('status') }}
+                        </div>
+                    </div>
+                @endif
                 <form action="{{ route('peserta.kelasku.testimoni.store', $kelas->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
+                    @if(Request::get('next') != null)
+                        <input type="hidden" name="next" value="{{ Request::get('next') }}">
+                    @endif
                     <div class="form-group">
                         <label for="rating">Rating</label>
                         <div class="custom-progress progress-up" style="width: 100%">
