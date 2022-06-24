@@ -20,6 +20,7 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailControlle
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
 use App\Http\Controllers\admin_dashboard\admin\DataEventController;
 use App\Http\Controllers\admin_dashboard\admin\EventController;
+use App\Http\Controllers\admin_dashboard\admin\FaqController;
 use App\Http\Controllers\admin_dashboard\admin\KategoriBeritaController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
@@ -125,6 +126,7 @@ Route::prefix('admin')->group(function(){
     // Berita Area
     Route::resource('kategori-berita', KategoriBeritaController::class);
     Route::resource('berita', BeritaController::class);
+    Route::resource('faq', FaqController::class);
     // Event
     Route::resource('event', EventController::class);
     Route::resource('data-event', DataEventController::class);
