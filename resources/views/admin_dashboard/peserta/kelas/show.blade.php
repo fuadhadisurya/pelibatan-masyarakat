@@ -25,7 +25,7 @@
                         <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                     @endif
                     <div class="card-body">
-                        <p class="meta-date">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
+                        <p class="meta-date">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</p>
                         <h5 class="nama-kelas">{{ $kelas->nama_kelas }}</h5>
                         @php
                             if($kelas->kelasKategori->TK_PAUD == 1){

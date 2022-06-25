@@ -12,7 +12,7 @@
                 <div class="media-body d-flex justify-content-between">
                     <div>
                         <h4 class="media-heading">{{ $post->judul }}</h4>
-                        <p class="media-text">Postingan oleh : {{ $post->user->nama . ' , ' . $post->created_at }}</p>
+                        <p class="media-text">Postingan oleh : {{ $post->user->nama . ' , ' . \Carbon\Carbon::parse($post->created_at)->format('j F Y H:i') }}</p>
                     </div>
                     <div>
                         @if ($post->user->id == Auth::user()->id)
@@ -69,7 +69,7 @@
                                     @endif
                                     <div class="d-flex flex-column justify-content-start ml-2">
                                         <span class="d-block font-weight-bold name">{{ $comment->user->nama }}</span>
-                                        <span class="date text-black-50">{{ $comment->user->username . ' - ' . $comment->created_at }}</span>
+                                        <span class="date text-black-50">{{ $comment->user->username . ' - ' . \Carbon\Carbon::parse($comment->created_at)->format('j F Y H:i') }}</span>
                                     </div>
                                 </div>
                             </div>

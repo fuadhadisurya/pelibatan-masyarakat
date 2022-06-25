@@ -39,14 +39,14 @@
                             <div class="row">
                                 <div class="col-sm-3">Mulai</div>
                                 <div class="col-sm-9">: 
-                                    <b>{{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('d M Y')}}</b> 
+                                    <b>{{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('j F Y')}}</b> 
                                     {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('H:i')}}
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3">Selesai</div>
                                 <div class="col-sm-9">: 
-                                    <b>{{ \Carbon\Carbon::parse($event->tanggal_berakhir)->format('d M Y')}}</b> 
+                                    <b>{{ \Carbon\Carbon::parse($event->tanggal_berakhir)->format('j F Y')}}</b> 
                                     {{ \Carbon\Carbon::parse($event->tanggal_berakhir)->format('H:i')}}
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                             <div class="row">
                                 <div class="col-sm-4">Batas Pendaftaran</div>
                                 <div class="col-sm-8">: 
-                                    <b>{{ \Carbon\Carbon::parse($event->deadline_pendaftaran)->format('d M Y')}}</b> 
+                                    <b>{{ \Carbon\Carbon::parse($event->deadline_pendaftaran)->format('j F Y')}}</b> 
                                 </div>
                             </div>
                             <div class="row">

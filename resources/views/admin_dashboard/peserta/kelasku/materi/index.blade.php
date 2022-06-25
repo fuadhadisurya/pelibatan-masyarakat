@@ -59,13 +59,13 @@
                                     <tr>
                                         <td style="width: 15%">Tanggal</td>
                                         <td style="width: 1%">:</td>
-                                        <td>{{ $materi->created_at }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($materi->created_at)->format('j F Y H:i') }}</td>
                                     </tr>
                                     @if ($materi->created_at != $materi->updated_at)
                                         <tr>
                                             <td>Tanggal Diperbarui</td>
                                             <td>:</td>
-                                            <td>{{ $materi->updated_at }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($materi->updated_at)->format('j F Y H:i') }}</td>
                                         </tr>
                                     @endif
                                     <tr>

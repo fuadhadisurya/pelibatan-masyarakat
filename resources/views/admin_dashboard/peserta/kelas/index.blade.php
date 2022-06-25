@@ -20,10 +20,17 @@
                                 </div>
                                 <div class="mb-3">
                                     <h5 class="mb-2">Urutkan</h5>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="sort" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
-                                        <label class="custom-control-label" for="sort">Terbaru</label>
-                                    </div>
+                                    @if ($sort != null)
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="sort" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
+                                            <label class="custom-control-label" for="sort">Terbaru</label>
+                                        </div>
+                                    @else
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="sort" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" checked>
+                                            <label class="custom-control-label" for="sort">Terbaru</label>
+                                        </div>
+                                    @endif
                                     <div class="custom-control custom-radio">
                                         <input type="radio" id="sort2" value="Terlama" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terlama" ? "checked" : "" }}>
                                         <label class="custom-control-label" for="sort2">Terlama</label>
@@ -81,8 +88,8 @@
                 <div class="col-sm-9">
                     <div class="row">
                         @if ($class->count())     
-                            @foreach ($class as $kelas)
-                                <div class="col-sm-6">
+                            @foreach ($class as $key=>$kelas)
+                                <div class="col-sm-6 mb-3">
                                     <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
                                         <div class="card h-100">
                                             @if($kelas->banner != null)
@@ -91,35 +98,35 @@
                                                 <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                                             @endif
                                             <div class="card-body">
-                                                <p class="meta-date text-primary"><strong>{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</strong></p>
+                                                <p class="meta-date text-primary"><strong>{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</strong></p>
                                                 <h5 class="card-title"><strong>{{ $kelas->nama_kelas }}</strong></h5>
                                                 <p class="card-text">{!! Str::limit($kelas->deskripsi, 150, $end='...') !!}</p>
                                                 @php
                                                     if($kelas->kelasKategori->TK_PAUD == 1){
-                                                        $sasaran[] = "TK/PAUD";
+                                                        $sasaran[$key][] = "TK/PAUD";
                                                     }
                                                     if($kelas->kelasKategori->SD_MI == 1){
-                                                        $sasaran[] = "SD/MI";
+                                                        $sasaran[$key][] = "SD/MI";
                                                     }
                                                     if($kelas->kelasKategori->SMP_MTS == 1){
-                                                        $sasaran[] = "SMP/MTS";
+                                                        $sasaran[$key][] = "SMP/MTS";
                                                     }
                                                     if($kelas->kelasKategori->SMA_SMK_MA == 1){
-                                                        $sasaran[] = "SMA/SMK/MA";
+                                                        $sasaran[$key][] = "SMA/SMK/MA";
                                                     }
                                                     if($kelas->kelasKategori->Mahasiswa == 1){
-                                                        $sasaran[] = "Mahasiswa";
+                                                        $sasaran[$key][] = "Mahasiswa";
                                                     }
                                                     if($kelas->kelasKategori->Masyarakat_Umum == 1){
-                                                        $sasaran[] = "Masyarakat Umum";
+                                                        $sasaran[$key][] = "Masyarakat Umum";
                                                     }
                                                     if($kelas->kelasKategori->ASN_Polri_TNI == 1){
-                                                        $sasaran[] = "ASN/Polri/TNI";
+                                                        $sasaran[$key][] = "ASN/Polri/TNI";
                                                     }
                                                 @endphp
                                                 <p> 
                                                     Sasaran : 
-                                                    @foreach ($sasaran as $item)
+                                                    @foreach ($sasaran[$key] as $item)
                                                         @if($loop->last)
                                                             {{ $item }}
                                                         @else

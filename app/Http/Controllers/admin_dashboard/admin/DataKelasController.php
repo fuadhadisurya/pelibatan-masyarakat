@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,7 +22,7 @@ class DataKelasController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
+                        return Carbon::parse($row->tanggal_mulai)->format('j F Y') . ' - ' . Carbon::parse($row->tanggal_berakhir)->format('j F Y');
                     })
                     ->addColumn('tutor', function($row){
                         return $row->tutor->nama;

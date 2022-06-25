@@ -21,7 +21,7 @@
                             <tr>
                             </tr>
                                 <td><b>Tanggal</b></td>
-                                <td>: {{ $informasiQuiz->tanggal_quiz }}</td>
+                                <td>: {{ \Carbon\Carbon::parse($informasiQuiz->tanggal_quiz)->format('j F Y') }}</td>
                             </tr>
                             <tr>
                                 <td><b>Waktu Pengerjaan</b></td>

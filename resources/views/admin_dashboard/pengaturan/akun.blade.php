@@ -49,7 +49,7 @@
                 <div class="card-body shadow-sm rounded-lg">
                     <h5 class="card-title">Ganti Username</h5>
                     <hr>
-                    <form method="post" action="{{ route('akun.update') }}">
+                    <form method="post" action="{{ route('akun.update') }}" autocomplete="off">
                         @csrf
                         @method('put')
                         <div class="form-group">

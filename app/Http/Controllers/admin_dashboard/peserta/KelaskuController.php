@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\peserta;
 
 use App\Http\Controllers\Controller;
 use App\Models\RegistrasiKelas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -16,7 +17,7 @@ class KelaskuController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_kelas', function($row){
-                        return $row->kelas->tanggal_mulai . ' - ' . $row->kelas->tanggal_berakhir;
+                        return Carbon::parse($row->kelas->tanggal_mulai)->format('j F Y') . ' - ' . Carbon::parse($row->kelas->tanggal_berakhir)->format('j F Y');
                     })
                     ->addColumn('tutor', function($row){
                         return $row->kelas->tutor->nama;

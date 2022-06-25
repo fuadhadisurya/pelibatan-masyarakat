@@ -38,7 +38,7 @@
                             <tr>
                                 <td>Tanggal</td>
                                 <td>:</td>
-                                <td>{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('d M Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('j H Y') }}</td>
                             </tr>
                             <tr>
                                 <td>Waktu Pengisian</td>

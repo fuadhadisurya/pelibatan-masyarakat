@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,8 +22,27 @@ class EventController extends Controller
             $data = Event::orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('checkbox', function($row){
+                        return '<input type="checkbox" class="cb-child" name="id[]" value='.$row->id.'>';
+                    })
                     ->editColumn('periode_event', function($row){
-                        return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
+                        return '
+                            <div class="row">
+                                <div class="col-sm-3">Mulai</div>
+                                <div class="col-sm-9">: 
+                                    ' . Carbon::parse($row->tanggal_mulai)->format('j F Y H:i') . ' 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Selesai</div>
+                                <div class="col-sm-9">: 
+                                    ' . Carbon::parse($row->tanggal_berakhir)->format('j F Y H:i') . ' 
+                                </div>
+                            </div>
+                        ';
+                    })
+                    ->editColumn('deadline_pendaftaran', function($row){
+                        return Carbon::parse($row->deadline_pendaftaran)->format('j F Y');
                     })
                     ->editColumn('status', function($row){
                         if($row->status == 'Persiapan'){
@@ -44,7 +64,7 @@ class EventController extends Controller
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi', 'status'])
+                    ->rawColumns(['aksi', 'status', 'periode_event', 'checkbox'])
                     ->make(true);
         }
         
@@ -195,5 +215,14 @@ class EventController extends Controller
         $event->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function status(Request $request){
+        $event = Event::whereIn('id',$request->ids)->update(['status' => $request->status]);
+        if($event){
+            return response()->json(array('success' => true));
+        } else {
+            return response()->json(array('success' => false));
+        }
     }
 }

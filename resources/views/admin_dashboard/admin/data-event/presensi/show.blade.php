@@ -36,7 +36,7 @@
                             <tr>
                                 <td>Tanggal</td>
                                 <td>:</td>
-                                <td>{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('d M Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('j F Y') }}</td>
                             </tr>
                             <tr>
                                 <td>Waktu Pengisian</td>
@@ -109,7 +109,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $dataPresensi->user->nama }}</td>
                                             <td>{{ $dataPresensi->user->tipe_anggota }}</td>
-                                            <td>{{ $dataPresensi->created_at }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($dataPresensi->created_at)->format('j F Y H:i') }}</td>
                                             @if ($dataPresensi->status)
                                                 <td><span class="badge badge-info">{{ $dataPresensi->status }}</span></td>
                                             @else

@@ -17,7 +17,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h2 class="card-title">{{ $kelas->nama_kelas }}</h2>
-                    <p class="tanggal" style="color: blue; font-weight: bold">{{ $kelas->tanggal_mulai }} - {{ $kelas->tanggal_berakhir }}</p>
+                    <p class="tanggal" style="color: blue; font-weight: bold">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</p>
                     @php
                         if($kelas->kelasKategori->TK_PAUD == 1){
                             $sasaran[] = "TK/PAUD";

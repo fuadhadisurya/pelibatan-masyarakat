@@ -50,7 +50,7 @@
                 <div class="card-body shadow-sm rounded-lg">
                     <h5 class="card-title">Data Profil</h5>
                     <hr>
-                    <form method="post" action="{{ route('profil.update') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('profil.update') }}" enctype="multipart/form-data" autocomplete="off">
                         @csrf
                         @method('put')
                         <div class="form-group">
@@ -75,9 +75,14 @@
                             @if (Auth::user()->level == 'admin')
                                 <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" required>
                             @else
-                                <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" readonly required>
+                                @if (Auth::user()->status == 'Sudah Verifikasi')
+                                    <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" readonly required>
+                                    <small id="namaHelp" class="form-text text-muted">Nama Anda sudah terverifikasi dan tidak dapat diubah. Jika Anda merasa terdapat kesalahan dan ingin memperbaikinya, silakan hubungi kami dengan menyertakan dokumen identitas asli.</small>
+                                @else
+                                    <input id="nama" type="text" name="nama" class="form-control" value="{{ $peserta->nama }}" required>
+                                    <small id="namaHelp" class="form-text text-muted">Jika nama Anda sudah terverifikasi maka tidak dapat diubah. Mohon isi kolom nama dengan hati-hati dan teliti.</small>
+                                @endif
                             @endif
-                            <small id="namaHelp" class="form-text text-muted">Nama Anda sudah terverifikasi dan tidak dapat diubah. Jika Anda merasa terdapat kesalahan dan ingin memperbaikinya, silakan hubungi kami dengan menyertakan dokumen identitas asli.</small>
                         </div>
                         <div class="form-group">
                             <label for="jenis_kelamin">Jenis Kelamin</label>

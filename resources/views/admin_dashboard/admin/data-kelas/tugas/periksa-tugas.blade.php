@@ -48,7 +48,7 @@
                             <tr>
                                 <td>Waktu Kirim</td>
                                 <td>:</td>
-                                <td>{{ $jawabanTugas->updated_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($jawabanTugas->updated_at)->format('j F Y H:i') }}</td>
                             </tr>
                             <tr>
                                 <td>Keterangan</td>

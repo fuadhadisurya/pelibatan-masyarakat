@@ -18,7 +18,7 @@ class QuizSeeder extends Seeder
         Quiz::truncate();
         $quizzes = ([
             [
-                'kelas_id' => 1,
+                'kelas_id' => 3,
                 'nama_quiz' => 'Quiz 1',
                 'tanggal_quiz' => Carbon::now()->addDays(7),
                 'waktu_pengerjaan' => 26,

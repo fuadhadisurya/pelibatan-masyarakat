@@ -153,7 +153,7 @@
                                                 <tr>
                                                 </tr>
                                                     <td><b>Tanggal</b></td>
-                                                    <td>: {{ $quiz->tanggal_quiz }}</td>
+                                                    <td>: {{ \Carbon\Carbon::parse($informasiQuiz->tanggal_quiz)->format('j F Y') }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td><b>Jumlah Soal</b></td>

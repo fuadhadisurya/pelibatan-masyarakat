@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\peserta;
 
 use App\Http\Controllers\Controller;
 use App\Models\RegistrasiEvent;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,7 +22,20 @@ class EventkuController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_event', function($row){
-                        return $row->event->tanggal_mulai;
+                        return '
+                            <div class="row">
+                                <div class="col-sm-3">Mulai</div>
+                                <div class="col-sm-9">: 
+                                    ' . Carbon::parse($row->event->tanggal_mulai)->format('j F Y H:i') . ' 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Selesai</div>
+                                <div class="col-sm-9">: 
+                                    ' . Carbon::parse($row->event->tanggal_berakhir)->format('j F Y H:i') . ' 
+                                </div>
+                            </div>
+                        ';
                     })
                     ->addColumn('aksi', function($row){
                         if ($row->event->status == "Selesai") {

@@ -63,7 +63,7 @@
                                 <tr>
                                     <td style="width: 22%">Tanggal Mendaftar</td>
                                     <td style="width: 1%">:</td>
-                                    <td>{{ $dataPeserta->created_at }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($dataPeserta->created_at)->format('j F Y H:i') }}</td>
                                 </tr>
                                 <tr>
                                     <td>Nama</td>
@@ -88,7 +88,7 @@
                                 <tr>
                                     <td>Tanggal Lahir</td>
                                     <td>:</td>
-                                    <td>{{ $dataPeserta->user->tanggal_lahir }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($dataPeserta->user->tanggal_lahir)->format('j F Y') }}</td>
                                 </tr>
                                 <tr>
                                     <td>Jenis Kelamin</td>

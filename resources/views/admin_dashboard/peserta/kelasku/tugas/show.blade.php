@@ -30,13 +30,13 @@
                                     <tr>
                                         <td style="width: 15%">Tanggal</td>
                                         <td style="width: 1%">:</td>
-                                        <td>{{ $tugas->created_at }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($tugas->created_at)->format('j F Y H:i') }}</td>
                                     </tr>
                                     @if ($tugas->created_at != $tugas->updated_at)
                                         <tr>
                                             <td>Tanggal Diperbarui</td>
                                             <td>:</td>
-                                            <td>{{ $tugas->updated_at }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($tugas->updated_at)->format('j F Y H:i') }}</td>
                                         </tr>
                                     @endif
                                     <tr>
@@ -85,7 +85,7 @@
                                             <tr>
                                                 <th>Waktu Kirim</th>
                                                 <td>:</td>
-                                                <td>{{ $jawabanTugas->updated_at }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($jawabanTugas->updated_at)->format('j F Y H:i') }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Keterangan</th>

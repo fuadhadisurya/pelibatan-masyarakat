@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\KelasKategori;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -23,8 +24,11 @@ class KelasController extends Controller
             $data = Kelas::orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
+                    ->addColumn('checkbox', function($row){
+                        return '<input type="checkbox" class="cb-child" name="id[]" value='.$row->id.'>';
+                    })
                     ->editColumn('periode_kelas', function($row){
-                        return $row->tanggal_mulai . ' - ' . $row->tanggal_berakhir;
+                        return Carbon::parse($row->tanggal_mulai)->format('j F Y') . ' - ' . Carbon::parse($row->tanggal_berakhir)->format('j F Y');
                     })
                     ->editColumn('tutor_id', function($row){
                         return $row->tutor->nama;
@@ -58,7 +62,7 @@ class KelasController extends Controller
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi', 'status'])
+                    ->rawColumns(['aksi', 'status', 'checkbox'])
                     ->make(true);
         }
         $tutor = User::all()->where('level', '=', 'tutor');
@@ -235,4 +239,13 @@ class KelasController extends Controller
 
     //     return back()->with('status','Status berhasil diganti');
     // }
+
+    public function status(Request $request){
+        $kelas = Kelas::whereIn('id',$request->ids)->update(['status' => $request->status]);
+        if($kelas){
+            return response()->json(array('success' => true));
+        } else {
+            return response()->json(array('success' => false));
+        }
+    }
 }

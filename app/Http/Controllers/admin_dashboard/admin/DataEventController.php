@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,7 +22,20 @@ class DataEventController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->editColumn('periode_event', function($row){
-                        return $row->tanggal_mulai;
+                        return '
+                            <div class="row">
+                                <div class="col-sm-3">Mulai</div>
+                                <div class="col-sm-9">: 
+                                    ' . Carbon::parse($row->tanggal_mulai)->format('j F Y H:i') . ' 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Selesai</div>
+                                <div class="col-sm-9">: 
+                                    ' . Carbon::parse($row->tanggal_berakhir)->format('j F Y H:i') . ' 
+                                </div>
+                            </div>
+                        ';
                     })
                     ->addColumn('aksi', function($row){
                         return '
@@ -30,7 +44,7 @@ class DataEventController extends Controller
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi'])
+                    ->rawColumns(['aksi', 'periode_event'])
                     ->make(true);
         }
 

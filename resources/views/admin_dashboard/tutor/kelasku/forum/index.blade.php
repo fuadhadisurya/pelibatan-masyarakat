@@ -15,7 +15,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <div>{{ $post->judul }}</div>
-                            <div>{{ $post->created_at }}</div>
+                            <div>{{ \Carbon\Carbon::parse($post->created_at)->format('j F Y H:i') }}</div>
                         </div>
                     </div>
                     <div class="card-body">

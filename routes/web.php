@@ -98,12 +98,13 @@ Route::get('villages', [DaerahController::class, 'villages'])->name('villages');
 
 Route::get('/sertifikat', [SertifikatPDFController::class, 'index']);
 
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
     Route::get('/akun', [PengaturanController::class, 'akun']);
     // Kelas Pelibatan Masyuarakat
     Route::resource('tutor', TutorController::class);
+    Route::put('/kelas', [KelasController::class, 'status'])->name('kelas.update.status');
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
@@ -128,6 +129,7 @@ Route::prefix('admin')->group(function(){
     Route::resource('berita', BeritaController::class);
     Route::resource('faq', FaqController::class);
     // Event
+    Route::put('/event', [EventController::class, 'status'])->name('event.update.status');
     Route::resource('event', EventController::class);
     Route::resource('data-event', DataEventController::class);
     Route::resource('data-event.deskripsi', DeskripsiController::class);
