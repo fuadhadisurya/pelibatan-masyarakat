@@ -86,25 +86,28 @@ https://templatemo.com/tm-568-digimedia
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#services">Services</a></li>
                             <li class="scroll-to-section"><a href="#portfolio">Projects</a></li>
-                            <li class="scroll-to-section"><a href="#blog">Blog</a></li>
+                            @if (count($berita)>0)
+                                <li class="scroll-to-section"><a href="#blog">Berita</a></li>
+                            @endif
+                            <li class="scroll-to-section"><a href="#faq">Bantuan</a></li>
                             <li class="scroll-to-section"><a href="#contact">Contact</a></li>
                             @if (Route::has('login'))
                                 @auth
                                     @if (Auth::user()->level == 'admin')
-                                    <li class="scroll-to-section">
+                                    <li class="">
                                         <div class="border-first-button"><a href="{{ url('admin/dashboard') }}">Dashboard</a></div>
                                     </li>
                                     @elseif (Auth::user()->level == 'tutor')
-                                    <li class="scroll-to-section">
+                                    <li class="">
                                         <div class="border-first-button"><a href="{{ url('tutor/dashboard') }}">Dashboard</a></div>
                                     </li>
                                     @elseif (Auth::user()->level == 'peserta')
-                                    <li class="scroll-to-section">
+                                    <li class="">
                                         <div class="border-first-button"><a href="{{ url('peserta/dashboard') }}">Dashboard</a></div>
                                     </li>
                                     @endif
                                 @else
-                                    <li class="scroll-to-section">
+                                    <li class="">
                                         <div class="border-first-button"><a href="{{ route('login') }}">Log in</a></div>
                                     </li>
                                 @endauth
@@ -424,19 +427,19 @@ https://templatemo.com/tm-568-digimedia
                 <div class="col-lg-8 offset-lg-2  wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
                     <form id="search" action="#" method="GET">
                         <div class="row">
-                            <div class="col-lg-4 col-sm-4">
+                            {{-- <div class="col-lg-4 col-sm-4">
                                 <fieldset>
                                     <input type="web" name="web" class="website" placeholder="Your website URL..." autocomplete="on" required>
                                 </fieldset>
-                            </div>
-                            <div class="col-lg-4 col-sm-4">
+                            </div> --}}
+                            <div class="col-lg-8 col-sm-8">
                                 <fieldset>
-                                    <input type="address" name="address" class="email" placeholder="Email Address..." autocomplete="on" required>
+                                    <input type="text" name="kode_sertifikat" class="" placeholder="Kode Sertifikat..." autocomplete="off" required>
                                 </fieldset>
                             </div>
                             <div class="col-lg-4 col-sm-4">
                                 <fieldset>
-                                    <button type="submit" class="main-button">Get Quote Now</button>
+                                    <button type="submit" class="main-button">Periksa Sekarang</button>
                                 </fieldset>
                             </div>
                         </div>
@@ -452,8 +455,8 @@ https://templatemo.com/tm-568-digimedia
             <div class="row">
                 <div class="col-lg-5">
                     <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-                        <h6>Our Portofolio</h6>
-                        <h4>See Our Recent <em>Projects</em></h4>
+                        <h6>Portofolio Peserta</h6>
+                        <h4>Lihat Portofolio Dari <em>Peserta</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>
@@ -534,84 +537,104 @@ https://templatemo.com/tm-568-digimedia
         </div>
     </div>
 
-    <div id="blog" class="blog">
+    @if (count($berita)>0)
+        <div id="blog" class="blog">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <div class="section-heading">
+                            <h6>Berita Terbaru</h6>
+                            <h4>Silahkan baca informasi dari <em>kami</em></h4>
+                            <div class="line-dec"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($berita as $key => $item)
+                        @if($loop->iteration == 4)
+                            @break
+                        @endif
+                        <div class="col-lg-4 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <a href="{{ url('berita/'.$item->slug) }}">
+                                <div class="blog-post h-100">
+                                    <div class="thumb">
+                                        <img height="230px" class="fit-image" src="{{ Storage::url($item->banner) }}" alt="">
+                                    </div>
+                                    <div class="down-content">
+                                        <span class="category">{{ $item->kategori->nama_kategori }}</span>
+                                        <span class="date">{{ \Carbon\Carbon::parse($item->created_at)->format('j F Y') }}</span>
+                                        <h4>{{ $item->judul }}</h4>
+                                        <div>
+                                            {!! substr($item->isi, 0, 200) !!}
+                                        </div>
+                                        <span class="author">
+                                            {{-- <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt=""> --}}
+                                            By: Admin
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                    @if (count($berita)>3)
+                        <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                            <div class="border-first-button scroll-to-section d-flex justify-content-center mt-3">
+                                <a href="{{ url('berita') }}">Lihat Selengkapnya</a>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <div id="faq" class="faq section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="section-heading">
-                        <h6>Recent News</h6>
-                        <h4>Check Our Blog <em>Posts</em></h4>
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+                        <h6>Pusat Bantuan</h6>
+                        <h4>Pertanyaan yang sering <em>ditanyakan</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>
-                <div class="col-lg-6 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="blog-post">
-                        <div class="thumb">
-                            <a href="#"><img src="{{ asset('landing_page/assets/images/blog-post-01.jpg') }}" alt=""></a>
-                        </div>
-                        <div class="down-content">
-                            <span class="category">SEO Analysis</span>
-                            <span class="date">03 August 2021</span>
-                            <a href="#">
-                                <h4>Lorem Ipsum Dolor Sit Amet, Consectetur Adelore
-                                    Eiusmod Tempor Incididunt</h4>
-                            </a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
-                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
-                            <div class="border-first-button"><a href="#">Discover More</a></div>
-                        </div>
+                <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                    <div class="accordion" id="accordionExample">
+                        @forelse ($faq as $key => $item) 
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{ $key }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $key }}" aria-expanded="false" aria-controls="collapse{{ $key }}">
+                                        {{ $item->pertanyaan }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ $key }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $key }}" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        {{ $item->jawaban }}
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        Apa itu kegiatan pelibatan masyarakat?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        Kegiatan Pelibatan Masyarakat merupakan kegiatan di perpustakaan untuk memfasilitasi kebutuhan masyarakat melalui penyediaan informasi yang luas (buku, internet, pelatihan) dengan melibatkan masyarakat secara aktif.
+                                    </div>
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="blog-posts">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="post-item">
-                                    <div class="thumb">
-                                        <a href="#"><img src="{{ asset('landing_page/assets/images/blog-post-02.jpg') }}" alt=""></a>
-                                    </div>
-                                    <div class="right-content">
-                                        <span class="category">SEO Analysis</span>
-                                        <span class="date">24 September 2021</span>
-                                        <a href="#">
-                                            <h4>Lorem Ipsum Dolor Sit Amei Eiusmod Tempor</h4>
-                                        </a>
-                                        <p>Lorem ipsum dolor sit amet, cocteturi adipiscing eliterski.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="post-item">
-                                    <div class="thumb">
-                                        <a href="#"><img src="{{ asset('landing_page/assets/images/blog-post-03.jpg') }}" alt=""></a>
-                                    </div>
-                                    <div class="right-content">
-                                        <span class="category">SEO Analysis</span>
-                                        <span class="date">24 September 2021</span>
-                                        <a href="#">
-                                            <h4>Lorem Ipsum Dolor Sit Amei Eiusmod Tempor</h4>
-                                        </a>
-                                        <p>Lorem ipsum dolor sit amet, cocteturi adipiscing eliterski.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="post-item last-post-item">
-                                    <div class="thumb">
-                                        <a href="#"><img src="{{ asset('landing_page/assets/images/blog-post-04.jpg') }}" alt=""></a>
-                                    </div>
-                                    <div class="right-content">
-                                        <span class="category">SEO Analysis</span>
-                                        <span class="date">24 September 2021</span>
-                                        <a href="#">
-                                            <h4>Lorem Ipsum Dolor Sit Amei Eiusmod Tempor</h4>
-                                        </a>
-                                        <p>Lorem ipsum dolor sit amet, cocteturi adipiscing eliterski.</p>
-                                    </div>
-                                </div>
+                    @if (count($faq)>0)
+                        <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                            <div class="border-first-button scroll-to-section d-flex justify-content-center mt-3">
+                                <a href="{{ url('/faq') }}">Lihat Selengkapnya</a>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -622,8 +645,8 @@ https://templatemo.com/tm-568-digimedia
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <h6>Contact Us</h6>
-                        <h4>Get In Touch With Us <em>Now</em></h4>
+                        <h6>Hubungi Kami</h6>
+                        <h4>Lebih Dekat Dengan <em>Kami</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>

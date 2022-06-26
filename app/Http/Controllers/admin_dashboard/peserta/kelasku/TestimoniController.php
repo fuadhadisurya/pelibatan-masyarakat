@@ -74,8 +74,10 @@ class TestimoniController extends Controller
 
         Testimoni::create($data);
         
-        if($data['next'] == 'sertifikat'){
-            return redirect('peserta/kelasku/'.$kelas_id.'/sertifikat');
+        if(!empty($data['next'])){
+            if($data['next'] == 'sertifikat'){
+                return redirect('peserta/kelasku/'.$kelas_id.'/sertifikat');
+            }
         } else {
             return redirect()->route('peserta.kelasku.testimoni.index', $kelas_id)->with('status', 'Testimoni berhasil dibuat');
         }

@@ -42,7 +42,7 @@
                                     <tr>
                                         <td>Batas Waktu</td>
                                         <td>:</td>
-                                        <td><span class="badge badge-info">{{ $tugas->batas_waktu }}</span></td>
+                                        <td><span class="badge badge-info">{{ \Carbon\Carbon::parse($tugas->batas_waktu)->format('j F Y H:i') }}</span></td>
                                     </tr>
                                     <tr>
                                         <td>Nama Tugas</td>
@@ -146,7 +146,7 @@
                             </div>
                             <hr>
                             <div class="widget-content">
-                                <p>Tugas belum dikerjakan. Segera dikerjakan sebelum <span class="badge badge-info">{{ $tugas->batas_waktu }}</span></p>
+                                <p>Tugas belum dikerjakan. Segera dikerjakan sebelum <span class="badge badge-info">{{ \Carbon\Carbon::parse($tugas->batas_waktu)->format('j F Y H:i') }}</span></p>
                                 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#submission">
                                     Kirim Jawaban
                                 </button>

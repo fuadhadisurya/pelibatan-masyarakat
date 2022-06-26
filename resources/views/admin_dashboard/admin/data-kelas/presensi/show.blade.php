@@ -70,7 +70,7 @@
                                         <td>1</td>
                                         <td>{{ $tutor->nama }}</td>
                                         <td>Tutor</td>
-                                        <td></td>
+                                        <td>{{ \Carbon\Carbon::parse($tutor->waktu_mengisi)->format('j F Y H:i') }}</td>
                                         @if ($tutor->status != null )
                                             <td><span class="badge badge-info">{{ $tutor->status }}</span></td>
                                         @else

@@ -1,10 +1,10 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Kelas | Kegiatan Pelibatan Masyarakat
+    Peserta Event | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    @include('admin_dashboard.admin.data-kelas.includes.navbar')
+    @include('admin_dashboard.admin.data-event.includes.navbar')
 
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -30,8 +30,6 @@
                                 <th>Tipe Anggota</th>
                                 <th>Nomor Telepon</th>
                                 <th>Alamat</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,104 +44,7 @@
 @endsection
 
 @push('modal')
-    @foreach ($dataPeserta as $dataPeserta)
-    <div class="modal fade" id="lihat{{ $dataPeserta->id }}" tabindex="-1" aria-labelledby="data_peserta" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="data_peserta">Data Peserta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 22%">Tanggal Mendaftar</td>
-                                    <td style="width: 1%">:</td>
-                                    <td>{{ \Carbon\Carbon::parse($dataPeserta->created_at)->format('j F Y H:i') }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Nama</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->nama }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Umur</td>
-                                    <td>:</td>
-                                    @php
-                                        $hari_ini = Carbon\Carbon::now();
-                                        $tanggal_lahir = Carbon\Carbon::parse($dataPeserta->user->tanggal_lahir);
-                                        $umur = $tanggal_lahir->diffInYears($hari_ini); 
-                                    @endphp
-                                    <td>{{ $umur }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tempat Lahir</td>
-                                    <td>:</td>
-                                    <td>{{ ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->tempat_lahir)->name)) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Lahir</td>
-                                    <td>:</td>
-                                    <td>{{ \Carbon\Carbon::parse($dataPeserta->user->tanggal_lahir)->format('j F Y') }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Jenis Kelamin</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->jenis_kelamin }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tipe Anggota</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->tipe_anggota }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Nomor Telepon</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->nomor_telepon }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->user->alamat. ', ' .ucwords(strtolower(\Indonesia::findVillage($dataPeserta->user->desa_kelurahan)->name)). ', ' .ucwords(strtolower(\Indonesia::findDistrict($dataPeserta->user->kecamatan)->name)). ', ' .ucwords(strtolower(\Indonesia::findCity($dataPeserta->user->kabupaten_kota)->name)). ', ' .ucwords(strtolower(\Indonesia::findProvince($dataPeserta->user->provinsi)->name)) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Motivasi</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->motivasi }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Status</td>
-                                    <td>:</td>
-                                    <td>
-                                        @if ($dataPeserta->status == 'Diterima')
-                                            <span class="badge badge-success">{{ $dataPeserta->status }}</span>
-                                        @elseif($dataPeserta->status == 'Ditolak')
-                                            <span class="badge badge-danger">{{ $dataPeserta->status }}</span>
-                                        @else
-                                            <span class="badge badge-warning">{{ $dataPeserta->status }}</span>    
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Catatan</td>
-                                    <td>:</td>
-                                    <td>{{ $dataPeserta->catatan }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
+
 @endpush
 
 @push('styles')
@@ -163,7 +64,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data-kelas.peserta.index', $kelas_id) }}",
+            ajax: "{{ route('data-event.peserta.index', $event_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'user.nama', name: 'user.nama'},
@@ -171,8 +72,6 @@
                 {data: 'user.tipe_anggota', name: 'user.tipe_anggota'},
                 {data: 'user.nomor_telepon', name: 'user.nomor_telepon'},
                 {data: 'user.alamat', name: 'user.alamat'},
-                {data: 'status', name: 'status', className: 'text-center'},
-                {"width": "12%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },

@@ -43,7 +43,7 @@
                             <tr>
                                 <td>Batas Waktu</td>
                                 <td>:</td>
-                                <td>{{ $tugas->batas_waktu }}</td>
+                                <td>{{ \Carbon\Carbon::parse($tugas->batas_waktu)->format('j F Y H:i') }}</td>
                             </tr>
                             <tr>
                                 <td>Waktu Kirim</td>

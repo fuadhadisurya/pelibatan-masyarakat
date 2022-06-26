@@ -255,6 +255,15 @@ class QuizSoalController extends Controller
             if (in_array($file->getMimeType() ,$audiomimes)) {
                 $filevalidate = 'required|mimes:mpeg';
             }		
+            $this->validate($request, [
+                "soal"   => "required",
+                "a"   => "required",
+                "b"   => "required",
+                "c"   => "required",
+                "d"   => "required",
+                "kunci_jawaban"   => "required",
+                "file" => $filevalidate,
+            ]);
         }
         $this->validate($request, [
             "soal"   => "required",
@@ -263,7 +272,6 @@ class QuizSoalController extends Controller
             "c"   => "required",
             "d"   => "required",
             "kunci_jawaban"   => "required",
-            "file" => $filevalidate,
         ]);
 
         $soal = QuizSoal::with('quiz')->findOrFail($id);

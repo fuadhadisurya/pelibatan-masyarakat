@@ -18,7 +18,16 @@
                     </div>
                 </div>
             @endif
-
+            @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="widget-content widget-content-area br-6">
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#buatPresensi">
                     <i class="far fa-plus-square"></i> Buat Presensi

@@ -53,7 +53,7 @@ class EventkuController extends Controller
                             ';   
                         }
                     })
-                    ->rawColumns(['aksi'])
+                    ->rawColumns(['aksi', 'periode_event'])
                     ->make(true);
         }
         

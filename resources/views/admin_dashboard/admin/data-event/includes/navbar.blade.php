@@ -4,13 +4,13 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::segment(4) == 'deskripsi' ? 'active' : '' }}" href="{{ route('data-event.deskripsi.index',[$event->id]) }}">Deskripsi</a>
             </li>
-             <li class="nav-item">
-                <a class="nav-link {{ Request::segment(4) == 'dokumentasi' ? 'active' : '' }}" href="{{ route('data-event.dokumentasi.index',[$event->id]) }}">Dokumentasi</a>
-            </li>
-            {{-- <li class="nav-item">
+            <li class="nav-item">
+               <a class="nav-link {{ Request::segment(4) == 'dokumentasi' ? 'active' : '' }}" href="{{ route('data-event.dokumentasi.index',[$event->id]) }}">Dokumentasi</a>
+           </li>
+            <li class="nav-item">
                 <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('data-event.peserta.index',[$event->id]) }}">Peserta</a>
             </li>
-            @if ($event->status == 'Kegiatan Berlangsung' || $event->status == 'Selesai')
+            {{-- @if ($event->status == 'Kegiatan Berlangsung' || $event->status == 'Selesai')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'forum' ? 'active' : '' }}" href="{{ route('data-event.forum.index',[$event->id]) }}">Forum</a>
                 </li>

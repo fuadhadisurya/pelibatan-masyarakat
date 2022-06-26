@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DataPresensi;
 use App\Models\Kelas;
 use App\Models\Presensi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -40,7 +41,7 @@ class PresensiController extends Controller
                     })
                     ->addColumn('aksi', function($row){
                         $dataPresensi = DataPresensi::where('presensi_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
-                        if ($dataPresensi != null) {
+                        if(Carbon::now() < $row->tanggal_mulai){
                             $aksi = '
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'" disabled>
@@ -48,12 +49,21 @@ class PresensiController extends Controller
                                 </button>
                             </td>';
                         } else {
-                            $aksi = '
-                            <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'">
-                                    <i class="far fa-file-alt"></i>
-                                </button>
-                            </td>';
+                            if ($dataPresensi != null) {
+                                $aksi = '
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'" disabled>
+                                        <i class="far fa-file-alt"></i>
+                                    </button>
+                                </td>';
+                            } else {
+                                $aksi = '
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'">
+                                        <i class="far fa-file-alt"></i>
+                                    </button>
+                                </td>';
+                            }
                         }
                         return $aksi;
                     })
