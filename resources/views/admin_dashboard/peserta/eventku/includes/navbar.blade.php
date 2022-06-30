@@ -7,6 +7,9 @@
              <li class="nav-item">
                 <a class="nav-link {{ Request::segment(4) == 'dokumentasi' ? 'active' : '' }}" href="{{ route('peserta.eventku.dokumentasi.index',[$event->id]) }}">Dokumentasi</a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('peserta.eventku.presensi.index',[$event->id]) }}">Presensi</a>
+            </li>
             {{-- @if($registrasi->status == 'Diterima' && $kelas->status == 'Kegiatan Berlangsung' || $kelas->status == 'Selesai')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('peserta.kelasku.peserta.index',[$kelas->id]) }}">Peserta</a>

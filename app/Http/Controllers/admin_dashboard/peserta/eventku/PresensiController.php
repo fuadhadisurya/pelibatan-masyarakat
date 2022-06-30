@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
+namespace App\Http\Controllers\admin_dashboard\peserta\eventku;
 
 use App\Http\Controllers\Controller;
-use App\Models\DataPresensi;
-use App\Models\Kelas;
-use App\Models\Presensi;
-use App\Models\RegistrasiKelas;
+use App\Models\DataPresensiEvent;
+use App\Models\Event;
+use App\Models\PresensiEvent;
+use App\Models\RegistrasiEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,9 +19,9 @@ class PresensiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $kelas_id)
+    public function index(Request $request, $event_id)
     {
-        $presensi = Presensi::where('kelas_id', '=', $kelas_id)->get();
+        $presensi = PresensiEvent::where('event_id', '=', $event_id)->get();
         if ($request->ajax()) {
             return DataTables::of($presensi)
                     ->addIndexColumn()
@@ -39,7 +39,7 @@ class PresensiController extends Controller
                         return Carbon::parse($row->tanggal_berakhir)->format('j F Y H:i');
                     })
                     ->addColumn('status', function($row){
-                        $dataPresensi = DataPresensi::where('presensi_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
+                        $dataPresensi = DataPresensiEvent::where('presensi_event_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
                         if ($dataPresensi != null) {
                             return '<span class="badge badge-info">'.$dataPresensi->status.'</span>';
                         } else {
@@ -47,7 +47,7 @@ class PresensiController extends Controller
                         }
                     })
                     ->addColumn('aksi', function($row){
-                        $dataPresensi = DataPresensi::where('presensi_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
+                        $dataPresensi = DataPresensiEvent::where('presensi_event_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
                         if(Carbon::now() < $row->tanggal_mulai){
                             $aksi = '
                             <td class="text-center">
@@ -77,10 +77,10 @@ class PresensiController extends Controller
                     ->rawColumns(['aksi', 'nama', 'status'])
                     ->make(true);
         }
-        $kelas = Kelas::findOrfail($kelas_id);
-        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
+        $event = Event::findOrfail($event_id);
+        $registrasi = RegistrasiEvent::where('event_id', '=', $event_id)->where('user_id', Auth::user()->id)->first();
 
-        return view('admin_dashboard.peserta.kelasku.presensi.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'presensi' => $presensi, 'registrasi' => $registrasi]);
+        return view('admin_dashboard.peserta.eventku.presensi.index', ['event' => $event, 'event_id' => $event_id, 'presensi' => $presensi, 'registrasi' => $registrasi]);
     }
 
     /**
@@ -99,13 +99,13 @@ class PresensiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $kelas_id)
+    public function store(Request $request, $event_id)
     {
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
-        DataPresensi::create($data);
+        DataPresensiEvent::create($data);
 
-        return redirect()->route('peserta.kelasku.presensi.index', [$kelas_id])->with('status', 'Berhasil mengisi presensi');
+        return redirect()->route('peserta.eventku.presensi.index', [$event_id])->with('status', 'Berhasil mengisi presensi');
     }
 
     /**

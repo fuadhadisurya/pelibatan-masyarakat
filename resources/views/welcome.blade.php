@@ -594,7 +594,7 @@ https://templatemo.com/tm-568-digimedia
                 <div class="col-lg-6 offset-lg-3">
                     <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                         <h6>Pusat Bantuan</h6>
-                        <h4>Pertanyaan yang sering <em>ditanyakan</em></h4>
+                        <h4>Dika Nakon Kula <em>Jawab</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>

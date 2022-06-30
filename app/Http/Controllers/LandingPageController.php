@@ -10,8 +10,8 @@ class LandingPageController extends Controller
 {
     public function index(){
         $berita = Berita::where('publish', 'Ya')->orderBy('id', 'desc')->get();
-        if(count(Faq::all())>10){
-            $faq = Faq::all()->random(10);
+        if(count(Faq::all())>5){
+            $faq = Faq::all()->random(5);
         } else {
             $faq = Faq::all();
         }
@@ -19,7 +19,7 @@ class LandingPageController extends Controller
     }
 
     public function faq(){
-        $faq = Faq::all();
+        $faq = Faq::paginate(10);
         return view('faq', ['faq' => $faq]);
     }
     

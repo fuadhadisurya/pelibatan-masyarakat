@@ -19,27 +19,13 @@ class DokumentasiController extends Controller
      */
     public function index(Request $request, $event_id)
     {
-        $dokumentasi = Dokumentasi::where('event_id', '=', $event_id)->get();
-        if ($request->ajax()) {
-            return DataTables::of($dokumentasi)
-                    ->addIndexColumn()
-                    ->addColumn('aksi', function($row){
-                        return '
-                            <td class="text-center">
-                                <a href="'.route('dokumentasi.download', [$row->event_id, $row->id]).'" class="btn btn-sm btn-primary" title="Download File">
-                                    <i class="far fa-save"></i>
-                                </a>
-                            </td>
-                        ';
-                    })
-                    ->rawColumns(['aksi'])
-                    ->make(true);
-        }
-
         $event = Event::findOrfail($event_id);
         $registrasi = RegistrasiEvent::where('event_id', '=', $event_id)->where('user_id', Auth::user()->id)->first();
-
-        return view('admin_dashboard.peserta.eventku.dokumentasi.index', ['event' => $event, 'dokumentasi' => $dokumentasi, 'registrasi' => $registrasi]);
+        $foto = Dokumentasi::where('event_id', '=', $event_id)->whereIn('tipe', ['jpg','jpeg','png'])->get();
+        $presentasi = Dokumentasi::where('event_id', '=', $event_id)->whereIn('tipe', ['ppt','pptx','pdf'])->get();
+        $slideshare = Dokumentasi::where('event_id', '=', $event_id)->where('tipe', 'Slideshare')->get();
+        
+        return view('admin_dashboard.peserta.eventku.dokumentasi.index', ['event' => $event, 'foto' => $foto, 'presentasi' => $presentasi, 'slideshare' => $slideshare, 'registrasi' => $registrasi]);
     }
 
     /**

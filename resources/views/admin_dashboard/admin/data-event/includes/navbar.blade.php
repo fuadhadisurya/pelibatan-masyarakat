@@ -10,6 +10,12 @@
             <li class="nav-item">
                 <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('data-event.peserta.index',[$event->id]) }}">Peserta</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('data-event.presensi.index',[$event->id]) }}">Presensi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::segment(4) == 'sertifikat' ? 'active' : '' }}" href="{{ route('data-event.peserta.index',[$event->id]) }}">Sertifikat</a>
+            </li>
             {{-- @if ($event->status == 'Kegiatan Berlangsung' || $event->status == 'Selesai')
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'forum' ? 'active' : '' }}" href="{{ route('data-event.forum.index',[$event->id]) }}">Forum</a>

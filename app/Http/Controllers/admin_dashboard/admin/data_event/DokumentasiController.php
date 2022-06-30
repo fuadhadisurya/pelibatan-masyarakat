@@ -24,15 +24,24 @@ class DokumentasiController extends Controller
             return DataTables::of($dokumentasi)
                     ->addIndexColumn()
                     ->addColumn('aksi', function($row){
-                        return '
-                            <td class="text-center">
-                                <a href="'.route('dokumentasi.download', [$row->event_id, $row->id]).'" class="btn btn-sm btn-primary" title="Download File">
-                                    <i class="far fa-save"></i>
-                                </a>
-                                <a href="'.route('data-event.dokumentasi.edit', [$row->event_id, $row->id]).'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
-                                <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
-                            </td>
-                        ';
+                        if($row->tipe == "Slideshare"){
+                            return '
+                                <td class="text-center">
+                                    <a href="'.route('data-event.dokumentasi.edit', [$row->event_id, $row->id]).'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            ';
+                        } else {
+                            return '
+                                <td class="text-center">
+                                    <a href="'.route('dokumentasi.download', [$row->event_id, $row->id]).'" class="btn btn-sm btn-primary" title="Download File">
+                                        <i class="far fa-save"></i>
+                                    </a>
+                                    <a href="'.route('data-event.dokumentasi.edit', [$row->event_id, $row->id]).'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
+                                </td>
+                            ';
+                        }
                     })
                     ->rawColumns(['aksi', 'status'])
                     ->make(true);
@@ -60,14 +69,35 @@ class DokumentasiController extends Controller
      */
     public function store(Request $request, $event_id)
     {
-        $this->validate($request, [
-            'dokumentasi' => 'required',
-        ]);
-
         $data = $request->all();
         $data['event_id'] = $event_id; 
 
-        if ($request->file('dokumentasi')){
+        if($request->tipe == 'Slideshare'){
+            $this->validate($request, [
+                'nama_file' => 'required',
+                'dokumentasi' => 'required',
+            ]);
+            
+            $nama_file = $request->nama_file;
+            $dokumentasi = $request->dokumentasi;
+            $total = count($nama_file);
+        } else {
+            $this->validate($request, [
+                'dokumentasi' => 'required|array',
+                'dokumentasi.*' => 'mimes:jpg,jpeg,png,ppt,pptx,pdf',
+            ]);
+        }
+
+        if ($request->tipe == 'Slideshare'){
+            for($i=0;$i<$total;$i++){
+                Dokumentasi::create([
+                    'event_id' => $event_id,
+                    'nama_file' => $nama_file[$i],
+                    'tipe' => $request->tipe,
+                    'dokumentasi' => $dokumentasi[$i],
+                ]);
+            }
+        } else {
             foreach ($request->file('dokumentasi') as $file) {
                 //get filename with extension
                 $filenamewithextension = $file->getClientOriginalName();
@@ -126,10 +156,18 @@ class DokumentasiController extends Controller
      */
     public function update(Request $request, $event_id, $id)
     {
-        $this->validate($request, [
-            'dokumentasi' => 'required',
-        ]);
-
+        if($request->tipe == 'Slideshare'){
+            $this->validate($request, [
+                'nama_file' => 'required',
+                'dokumentasi' => 'required',
+            ]);
+        } else {
+            $this->validate($request, [
+                'dokumentasi' => 'required|array',
+                'dokumentasi.*' => 'mimes:jpg,jpeg,png,ppt,pptx,pdf',
+            ]);
+        }
+        
         $dokumentasi = Dokumentasi::findOrFail($id);
         
         $data = $request->all();

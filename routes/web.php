@@ -6,6 +6,7 @@ use App\Http\Controllers\admin_dashboard\admin\DashboardController as AdminDashb
 use App\Http\Controllers\admin_dashboard\admin\data_event\DeskripsiController;
 use App\Http\Controllers\admin_dashboard\admin\data_event\DokumentasiController;
 use App\Http\Controllers\admin_dashboard\admin\data_event\PesertaController;
+use App\Http\Controllers\admin_dashboard\admin\data_event\PresensiController as Data_eventPresensiController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\HomeController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\MateriController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\admin_dashboard\peserta\DashboardController as PesertaD
 use App\Http\Controllers\admin_dashboard\peserta\EventController as PesertaEventController;
 use App\Http\Controllers\admin_dashboard\peserta\eventku\DeskripsiController as PesertaEventkuDeskripsiController;
 use App\Http\Controllers\admin_dashboard\peserta\eventku\DokumentasiController as PesertaEventkuDokumentasiController;
+use App\Http\Controllers\admin_dashboard\peserta\eventku\PresensiController as PesertaEventkuPresensiController;
 use App\Http\Controllers\admin_dashboard\peserta\eventku\SertifikatController as PesertaEventkuSertifikatController;
 use App\Http\Controllers\admin_dashboard\peserta\EventkuController as PesertaEventkuController;
 use App\Http\Controllers\admin_dashboard\peserta\KelasController as PesertaKelasController;
@@ -137,6 +139,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-event', DataEventController::class);
     Route::resource('data-event.deskripsi', DeskripsiController::class);
     Route::resource('data-event.peserta', PesertaController::class)->only('index');
+    Route::resource('data-event.presensi', Data_eventPresensiController::class);
     Route::resource('data-event.dokumentasi', DokumentasiController::class);
 });
 
@@ -207,6 +210,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('eventku', PesertaEventkuController::class)->only(['index']);
     Route::resource('eventku.deskripsi', PesertaEventkuDeskripsiController::class);
     Route::resource('eventku.dokumentasi', PesertaEventkuDokumentasiController::class);
+    Route::resource('eventku.presensi', PesertaEventkuPresensiController::class);
     Route::get('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'index']);
     Route::post('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'store'])->name('kelasku.sertikat.store');
 });

@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\Presensi;
 use App\Models\RegistrasiKelas;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -28,6 +29,12 @@ class PresensiController extends Controller
                     $angka = 0;
                     $angka++;
                     return 'Kehadiran ' . $angka;
+                })
+                ->editColumn('tanggal_mulai', function($row){
+                    return Carbon::parse($row->tanggal_mulai)->format('j F Y H:i');
+                })
+                ->editColumn('tanggal_berakhir', function($row){
+                    return Carbon::parse($row->tanggal_berakhir)->format('j F Y H:i');
                 })
                 ->addColumn('aksi', function ($row) {
                     return '
@@ -144,7 +151,7 @@ class PresensiController extends Controller
 
         $presensi->update($data);
 
-        return redirect()->route('data-kelas.presensi.index', [$kelas_id])->with('status', 'Kelas berhasil di Perbarui');
+        return redirect()->route('data-kelas.presensi.index', [$kelas_id])->with('status', 'Presensi berhasil di Perbarui');
     }
 
     /**

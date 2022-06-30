@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin_dashboard.admin.data-kelas.includes.navbar')
+    @include('admin_dashboard.admin.data-event.includes.navbar')
 
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
@@ -26,12 +26,7 @@
                             <tr>
                                 <td style="width: 15%">Kegiatan</td>
                                 <td style="width: 1%">:</td>
-                                <td>{{ $presensi->kelas->nama_kelas }}</td>
-                            </tr>
-                            <tr>
-                                <td>Tutor</td>
-                                <td>:</td>
-                                <td>{{ $presensi->kelas->tutor->nama }}</td>
+                                <td>{{ $presensi->event->nama_event }}</td>
                             </tr>
                             <tr>
                                 <td>Tanggal</td>
@@ -47,45 +42,7 @@
                     </table>  
                 </div>
                 <hr>
-                <a href="{{ route('data-kelas.presensi.index', [$kelas->id]) }}" class="btn btn-secondary">Kembali</a>
-            </div>
-
-            <div class="card shadow-sm mb-3">
-                <div class="card-header">
-                    <h5 class="card-title">Data Presensi Tutor</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <th>No.</th>
-                                <th>Nama</th>
-                                <th>Tipe Anggota</th>
-                                <th>Waktu Mengisi</th>
-                                <th>Status</th>
-                            </thead>
-                            <tbody>
-                                @if ($tutor != null)
-                                    <tr>
-                                        <td>1</td>
-                                        <td>{{ $tutor->nama }}</td>
-                                        <td>Tutor</td>
-                                        <td></td>
-                                        @if ($tutor->status != null )
-                                            <td><span class="badge badge-info">{{ $tutor->status }}</span></td>
-                                        @else
-                                            <td><span class="badge badge-warning">Belum Mengisi</span></td>
-                                        @endif
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td colspan="5" class="text-center">Data tidak ditemukan</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>  
-                    </div> 
-                </div>
+                <a href="{{ route('data-event.presensi.index', [$event->id]) }}" class="btn btn-secondary">Kembali</a>
             </div>
 
             <div class="card shadow-sm mb-3">

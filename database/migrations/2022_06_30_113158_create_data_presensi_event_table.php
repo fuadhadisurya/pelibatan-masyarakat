@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDokumentasiTable extends Migration
+class CreateDataPresensiEventTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateDokumentasiTable extends Migration
      */
     public function up()
     {
-        Schema::create('dokumentasi', function (Blueprint $table) {
+        Schema::create('data_presensi_event', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id');
-            $table->string('nama_file');
-            $table->string('tipe');
-            $table->text('dokumentasi');
+            $table->foreignId('presensi_event_id');
+            $table->foreignId('user_id');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateDokumentasiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dokumentasi');
+        Schema::dropIfExists('data_presensi_event');
     }
 }

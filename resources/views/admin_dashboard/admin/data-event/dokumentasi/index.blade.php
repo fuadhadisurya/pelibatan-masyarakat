@@ -33,6 +33,9 @@
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadDokumentasi">
                     <i class="far fa-plus-square"></i> Upload Dokumentasi
                 </button>
+                <button type="button" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#uploadSlideshare">
+                    <i class="far fa-plus-square"></i> Tambah Data dari Slideshare
+                </button>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
                         <thead>
@@ -51,6 +54,29 @@
             </div>
         </div>
 
+    </div>
+
+
+    {{-- Addmore field --}}
+    <div class="d-none">
+        <div class="copy">
+            <div class="control-group mb-3">
+                <hr>
+                <div class="form-group">
+                    <label for="nama_file">Nama File</label>
+                    <input id="name_file" name="nama_file[]" class="form-control" type="text" placeholder="Masukkan nama file">
+                </div>
+                <div class="form-group">
+                    <label for="dokumentasi">Link Slideshare</label>
+                    {{-- <input id="dokumentasi" name="dokumentasi[]" class="form-control" type="text" placeholder='pastekan link share embed dari slideshare'> --}}
+                    <textarea name="dokumentasi[]" id="dokumentasi" class="form-control" rows="5" placeholder='pastekan link share embed dari slideshare'>{{ old('dokumentasi') }}</textarea>
+                    <small>Untuk bagian link slideshare. Pada slideshare klik icon share lalu atur ukuran dan copy yang ada di embed</small>    
+                </div>
+                <button class="btn btn-danger remove" type="button">
+                    Hapus
+                </button>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -82,6 +108,50 @@
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
                         <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="uploadSlideshare" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ route('data-event.dokumentasi.store',[$event->id]) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Tambah Data dari Slideshare</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="listDokumentasi">
+                            <div class="control-group mb-3">
+                                <div class="form-group">
+                                    <label for="nama_file">Nama File</label>
+                                    <input id="name_file" name="nama_file[]" class="form-control" type="text" placeholder="Masukkan nama file">
+                                </div>
+                                <input type="hidden" name="tipe" value="Slideshare">
+                                <div class="form-group">
+                                    <label for="dokumentasi">Link Slideshare</label>
+                                    <textarea name="dokumentasi[]" id="dokumentasi" class="form-control" rows="5" placeholder='pastekan link share embed dari slideshare'>{{ old('dokumentasi') }}</textarea>
+                                    {{-- <input id="dokumentasi" name="dokumentasi[]" class="form-control" type="text" placeholder='pastekan link share embed dari slideshare'> --}}
+                                    <small>Untuk bagian link slideshare. Pada slideshare klik icon share lalu atur ukuran dan copy yang ada di embed</small>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                            <span class="mr-auto">
+                                <button class="btn btn-success add-more" type="button">
+                                    Tambah
+                                </button>
+                            </span>
+                            <span>
+                                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>
+                                <button type="submit" class="btn btn-primary">Tambah</button>
+                            </span>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -166,5 +236,18 @@
                 }
             }) 
         }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".add-more").click(function(){ 
+                var html = $(".copy").html();
+                $("#listDokumentasi").append(html);
+            });
+        
+            // saat tombol remove dklik control group akan dihapus 
+            $("body").on("click",".remove",function(){ 
+                $(this).parents(".control-group").remove();
+            });
+        });
     </script>
 @endpush

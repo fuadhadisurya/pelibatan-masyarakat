@@ -8,15 +8,6 @@
 <div id="blog" class="berita">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 offset-lg-4  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.3s">
-                <div class="section-heading">
-                    <h6>Berita Terbaru</h6>
-                    <h4>Silahkan baca informasi dari <em>kami</em></h4>
-                    <div class="line-dec"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-8">
                 <div class="col-lg-12 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
                     <div class="blog-post h-100 mb-3">

@@ -11,22 +11,22 @@
             <div class="col-lg-6 offset-lg-3">
                 <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
                     <h6>Pusat Bantuan</h6>
-                    <h4>Pertanyaan yang sering <em>ditanyakan</em></h4>
+                    <h4>Dika Nakon Kula <em>Jawab</em></h4>
                     <div class="line-dec"></div>
                 </div>
             </div>
             <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
                 <div class="accordion" id="accordionExample">
-                    @forelse ($faq as $key => $faq)
+                    @forelse ($faq as $key => $dataFaq)
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading{{ $key }}">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $key }}" aria-expanded="false" aria-controls="collapse{{ $key }}">
-                                    {{ $faq->pertanyaan }}
+                                    {{ $dataFaq->pertanyaan }}
                                 </button>
                             </h2>
                             <div id="collapse{{ $key }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $key }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    {{ $faq->jawaban }}
+                                    {{ $dataFaq->jawaban }}
                                 </div>
                             </div>
                         </div>
@@ -44,6 +44,9 @@
                             </div>
                         </div>
                     @endforelse
+                </div>
+                <div class="mt-2">
+                    {{ $faq->links() }}
                 </div>
             </div>
         </div>

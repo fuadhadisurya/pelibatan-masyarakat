@@ -20,32 +20,30 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
-                {{-- <div class="table-responsive">
-                    <table id="data-peserta" class="table table-hover" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Nama</th>
-                                <th>Deskripsi</th>
-                                <th class="text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div> --}}
-
                 <div class="mb-5">
                     <h3>Foto</h3>
-                    <div class="alert alert-info">
-                        Belum ada foto yang diunggah oleh pengelola Event.
-                    </div>
+                    @if (count($foto)>0)
+                        @foreach ($foto as $item)
+                            <img class="rounded" src="{{ Storage::url($item->dokumentasi) }}" alt="foto" id="preview" width="240px" height="">
+                        @endforeach
+                    @else
+                        <div class="alert alert-info">
+                            Belum ada foto yang diunggah oleh pengelola Event.
+                        </div>
+                    @endif
                     <h3>Presentasi</h3>
-                    <div class="alert alert-info">
-                        Belum ada presentasi yang diunggah oleh pengelola Event.
-                    </div>
-                    <iframe src="//www.slideshare.net/slideshow/embed_code/key/dCylTYuzhqeAtW" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/APIdays_official/apidays-paris-2019-innovation-scale-apis-as-digital-factories-new-machines-by-cyril-vart-fabernovel" title="APIdays Paris 2019 - Innovation @ scale, APIs as Digital Factories&#39; New Machines? by Cyril Vart, Fabernovel" target="_blank">APIdays Paris 2019 - Innovation @ scale, APIs as Digital Factories&#39; New Machines? by Cyril Vart, Fabernovel</a> </strong> from <strong><a href="//www.slideshare.net/APIdays_official" target="_blank">apidays</a></strong> </div>
+                    @if (count($presentasi)>0 || count($slideshare)>0)
+                        @foreach ($slideshare as $ss)
+                            {!! $ss->dokumentasi !!}
+                        @endforeach
+                        @foreach ($presentasi as $present)
+                            {{ $present->tipe }}
+                        @endforeach
+                    @else
+                        <div class="alert alert-info">
+                            Belum ada presentasi yang diunggah oleh pengelola Event.
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

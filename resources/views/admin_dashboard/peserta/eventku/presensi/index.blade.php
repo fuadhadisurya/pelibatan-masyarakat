@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin_dashboard.peserta.kelasku.includes.navbar')
+    @include('admin_dashboard.peserta.eventku.includes.navbar')
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -47,7 +47,7 @@
         <div class="modal fade" id="isiPresensi{{ $presensi->id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('peserta.kelasku.presensi.store', [$kelas->id]) }}" method="POST"  >
+                    <form action="{{ route('peserta.eventku.presensi.store', [$event->id]) }}" method="POST"  >
                     @csrf
                         <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Mengisi Presensi</h5>
@@ -56,7 +56,7 @@
                         </button>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" name="presensi_id" value="{{ $presensi->id }}">
+                            <input type="hidden" name="presensi_event_id" value="{{ $presensi->id }}">
                             <div class="d-flex justify-content-center mt-2">
                                 <div class="n-chk">
                                     <label class="new-control new-radio new-radio-text radio-primary">
@@ -105,7 +105,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('peserta.kelasku.presensi.index', $kelas_id) }}",
+            ajax: "{{ route('peserta.eventku.presensi.index', $event_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama', name: 'nama'},

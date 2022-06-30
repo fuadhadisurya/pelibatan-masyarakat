@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin_dashboard.admin.data-kelas.includes.navbar')
+    @include('admin_dashboard.admin.data-event.includes.navbar')
     
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -24,7 +24,7 @@
                     <i class="far fa-plus-square"></i> Buat Presensi
                 </button>
                 <div class="table-responsive">
-                    <table id="data-peserta" class="table table-hover" style="width:100%">
+                    <table id="data-presensi" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -49,7 +49,7 @@
     <div class="modal fade" id="buatPresensi" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('data-kelas.presensi.store',[$kelas->id]) }}" method="POST"  >
+                <form action="{{ route('data-event.presensi.store',[$event->id]) }}" method="POST"  >
                 @csrf
                     <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Buat Presensi</h5>
@@ -75,7 +75,7 @@
         <div class="modal fade" id="editPresensi{{ $presensi->id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('data-kelas.presensi.update',[$kelas->id, $presensi->id]) }}" method="POST"  >
+                    <form action="{{ route('data-event.presensi.update',[$event->id, $presensi->id]) }}" method="POST"  >
                     @csrf
                     @method('put')
                         <div class="modal-header">
@@ -122,10 +122,10 @@
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script>
-        $('#data-peserta').DataTable({
+        $('#data-presensi').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data-kelas.presensi.index', $kelas_id) }}",
+            ajax: "{{ route('data-event.presensi.index', $event_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama', name: 'nama'},
@@ -159,7 +159,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{url("/admin/data-kelas/$kelas_id/presensi")}}/' +id,
+                        url:'{{url("/admin/data-event/$event_id/presensi")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
