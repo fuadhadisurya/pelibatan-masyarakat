@@ -12,7 +12,7 @@
     		margin: 0;
     		height: 8.27in;
     		width: 11.69in;
-    		background-image: url({{ public_path('background-sertifikat/template.jpg') }});
+    		background-image: url({{ public_path('background-sertifikat/template.png') }});
     		background-size: 11.69in 8.27in; /* Not sure whether it works with DOMPDF. So, using a background of actual size. */
     		background-repeat: no-repeat;
     	}
@@ -30,7 +30,7 @@
 <body>
 	<div class="name">{{ $nama }}</div>
 	<div>{{ $kode_sertifikat }}</div>
-	<div>{{ $nama_kelas }}</div>
+	<div>Kegiatan Pelibatan Masyarakat di kelas{{ $nama_kelas }}</div>
 	<div>{{ $tanggal }}</div>
 </body>
 </html>

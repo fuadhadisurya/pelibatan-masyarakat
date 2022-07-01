@@ -20,6 +20,13 @@
     
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     @stack('styles')
+    <style>
+        .stats {
+            color: #f8538d;
+            font-size: 18px;
+            font-weight: 700
+        }
+    </style>
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     
 </head>
