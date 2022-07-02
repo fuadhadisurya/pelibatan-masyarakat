@@ -30,9 +30,15 @@
                     <li class="nav-item">
                         <a class="nav-link {{ Request::segment(4) == 'testimoni' ? 'active' : '' }}" href="{{ route('data-kelas.testimoni.index',[$kelas->id]) }}">Testimoni</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(4) == 'sertifikat' ? 'active' : '' }}" href="{{ route('data-kelas.sertifikat.index',[$kelas->id]) }}">Sertifikat</a>
+                    </li>
                 @else
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Testimoni</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Sertifikat</a>
                     </li>
                 @endif
             @else
@@ -53,6 +59,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Testimoni</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Sertifikat</a>
                 </li>
             @endif
         </ul>

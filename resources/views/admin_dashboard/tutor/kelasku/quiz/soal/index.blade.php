@@ -23,10 +23,12 @@
                 <a href="{{ route('tutor.kelasku.quiz.soal.create', [$kelas->id, $quiz_id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Soal
                 </a>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#status" id="ubah_status" disabled>Ubah Aktif</button>
                 <div class="table-responsive">
-                    <table id="data-peserta" class="table table-hover table-bordered alignment_top" style="width:100%">
+                    <table id="soal-quiz" class="table table-hover table-bordered alignment_top" style="width:100%">
                         <thead>
                             <tr>
+                                <th><input type="checkbox" id="head-cb"></th>
                                 <th>No.</th>
                                 <th>Soal</th>
                                 <th class="text-center">Aktif</th>
@@ -45,7 +47,35 @@
 @endsection
 
 @push('modal')
-
+<div class="modal fade" id="status" tabindex="-1" aria-labelledby="status" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="status">Ubah Aktif</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="ganti_status" action="{{ route('tutor.kelasku.quiz.soal.update.status', [$kelas_id, $quiz_id]) }}" method="post">
+                @csrf
+                @method('put')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="aktif">Aktif</label>
+                        <select class="form-control selectpicker" id="opsi_status" name="aktif" required>
+                            <option value="Y">Aktif</option>
+                            <option value="N">Tidak Aktif</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
+                    <button type="button" onclick="gantiStatus()" class="btn btn-primary">Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endpush
 
 @push('styles')
@@ -69,11 +99,12 @@
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/custom-sweetalert.js') }}"></script>
     <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
     <script>
-        $('#data-peserta').DataTable({
+        $('#soal-quiz').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('tutor.kelasku.quiz.soal.index', [$kelas_id, $quiz_id]) }}",
             columns: [
+                {"width": "5%", data: 'checkbox', name: 'checkbox', searchable:false, orderable:false, sortable:false},
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'soal', name: 'soal'},
                 {data: 'aktif', name: 'aktif', className: 'text-center', orderable: false, searchable: false},
@@ -139,5 +170,47 @@
             }
             return true;
         }
+    </script>
+    <script>
+        let yangDicheck = 0;
+        $("#head-cb").on('click',function(){
+            // if($(this).prop('checked')==true){
+            //     $(".cb-child").prop('checked', true)
+            // } else {
+            //     $(".cb-child").prop('checked', false)
+            // }
+            var isChecked = $('#head-cb').prop('checked');
+            $(".cb-child").prop('checked', isChecked);
+            $('#ubah_status').prop('disabled',!isChecked);
+        })
+
+        $("#soal-quiz tbody").on('click','.cb-child', function(){
+            if($(this).prop('checked')!=true){
+                $("#head-cb").prop('checked', false);
+            }
+            
+            let semuaCheckbox = $("#soal-quiz tbody .cb-child:checked")
+            let childChecked = (semuaCheckbox.length>0)
+            $('#ubah_status').prop('disabled',!childChecked);
+        });
+
+        function gantiStatus(){
+            let aktif = $("#opsi_status :selected").val();
+            let checkbox_dipilih = $("#soal-quiz tbody .cb-child:checked");
+            let semua_id = [];
+            $.each(checkbox_dipilih, function (index,elm){
+                semua_id.push(elm.value);
+            })
+            $.ajax({
+                "_token": "{{ csrf_token() }}",
+                url:"{{ route('tutor.kelasku.quiz.soal.update.status', [$kelas_id, $quiz_id]) }}",
+                method: 'put',
+                data:{"_token": "{{ csrf_token() }}", ids: semua_id, aktif:aktif},
+                success:function(res){
+                    window.location.reload();
+                }
+            })
+            // console.log(semua_id);
+        };
     </script>
 @endpush

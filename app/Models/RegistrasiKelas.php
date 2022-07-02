@@ -17,6 +17,7 @@ class RegistrasiKelas extends Model
         "motivasi",
         "status",
         "catatan",
+        "sertifikat",
     ];
 
     public function user(){

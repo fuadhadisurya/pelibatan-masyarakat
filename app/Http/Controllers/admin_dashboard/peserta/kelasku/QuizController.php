@@ -28,7 +28,7 @@ class QuizController extends Controller
                 ->addIndexColumn()
                 ->addColumn('keterangan', function ($row) {
                     return '
-                            Tanggal : ' . Carbon::parse($row->tanggal_quiz)->format('j F Y') . ',<br>
+                            Tanggal Quiz : ' . Carbon::parse($row->tanggal_quiz)->format('j F Y') . ',<br>
                             Waktu : ' . $row->waktu_pengerjaan . ' Menit
                         ';
                 })
@@ -50,11 +50,19 @@ class QuizController extends Controller
                         ';
                     } else {
                         if ($row->aktif == 'Y') {
-                            $return = '
-                                <td class="text-center">
-                                    <a href="' . route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-primary" title="Kerjakan soal"><i class="far fa-edit"></i></a>
-                                </td>
-                            ';
+                            if (Carbon::now()->format('Y-m-d') >= $row->tanggal_quiz) {
+                                $return = '
+                                    <td class="text-center">
+                                        <a href="' . route('peserta.kelasku.quiz.show', [$row->kelas_id, $row->id]) . '" class="btn btn-sm btn-primary" title="Kerjakan soal"><i class="far fa-edit"></i></a>
+                                    </td>
+                                ';
+                            } else {
+                                $return = '
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-primary" title="Kerjakan soal" disabled><i class="far fa-edit"></i></button>
+                                    </td>
+                                ';
+                            }
                         } else {
                             $return = '
                                 <td class="text-center">
@@ -116,8 +124,11 @@ class QuizController extends Controller
                 $soal['file_extension'] = $extension;
             }
         }
-
-        return view('admin_dashboard.peserta.kelasku.quiz.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz, 'registrasi' => $registrasi]);
+        if(Carbon::now()->format('Y-m-d') >= $quiz->tanggal_quiz){
+            return view('admin_dashboard.peserta.kelasku.quiz.show', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'quiz' => $quiz, 'registrasi' => $registrasi]);
+        } else {
+            abort(404);
+        }
     }
 
     /**

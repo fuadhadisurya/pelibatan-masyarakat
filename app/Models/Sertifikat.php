@@ -15,6 +15,7 @@ class Sertifikat extends Model
         "kelas_id", 
         "user_id", 
         "kode_sertifikat",
+        "status",
     ];
 
     public function kelas(){

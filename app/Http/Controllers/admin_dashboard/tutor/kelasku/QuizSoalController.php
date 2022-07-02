@@ -24,6 +24,9 @@ class QuizSoalController extends Controller
         if ($request->ajax()) {
             return DataTables::of($soal)
                 ->addIndexColumn()
+                ->addColumn('checkbox', function($row){
+                    return '<input type="checkbox" class="cb-child" name="id[]" value='.$row->id.'>';
+                })
                 ->editColumn('soal', function($row){
                     $soal = $row->soal;
                     $soal .= '<ol type="A">';
@@ -81,11 +84,12 @@ class QuizSoalController extends Controller
                         </td>
                     ';
                 })
-                ->rawColumns(['soal', 'aktif', 'aksi'])
+                ->rawColumns(['soal', 'aktif', 'aksi', 'checkbox'])
                 ->make(true);
         }
 
         $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrFail($kelas_id);
+        $quiz = Quiz::findOrFail($quiz_id);
         return view('admin_dashboard.tutor.kelasku.quiz.soal.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'soal' => $soal, 'quiz_id' => $quiz_id]);
     }
 
@@ -332,5 +336,14 @@ class QuizSoalController extends Controller
         ]);
 
         return redirect()->route('tutor.kelasku.quiz.soal.index',[$kelas_id, $soal_id])->with('status', 'Quiz berhasil diperbarui');
+    }
+
+    public function status(Request $request, $kelas_id, $quiz_id){
+        $quizSoal = QuizSoal::whereIn('id',$request->ids)->update(['aktif' => $request->aktif]);
+        if($quizSoal){
+            return response()->json(array('success' => true));
+        } else {
+            return response()->json(array('success' => false));
+        }
     }
 }

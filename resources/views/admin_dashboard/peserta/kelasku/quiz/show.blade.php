@@ -152,7 +152,7 @@
                                                     <td>: {{ $quiz->nama_quiz }}</td>
                                                 <tr>
                                                 </tr>
-                                                    <td><b>Tanggal</b></td>
+                                                    <td><b>Tanggal Quiz</b></td>
                                                     <td>: {{ \Carbon\Carbon::parse($quiz->tanggal_quiz)->format('j F Y') }}</td>
                                                 </tr>
                                                 <tr>
@@ -260,14 +260,22 @@
             , }).then((result) => {
                 if (result.value) {
                     if (result) form.submit();
+                    localStorage.clear();
                 }
             });
         });
 
     </script>
     <script>
-        var detik = 00;
-        var menit = 26;
+        var storageMenit = localStorage.getItem('Menit');
+        var storageDetik = localStorage.getItem('Detik');
+        if(storageMenit != null || storageDetik != null){
+            var detik = storageDetik;
+            var menit = storageMenit;
+        } else {
+            var detik = 00;
+            var menit = {{ $quiz->waktu_pengerjaan }};
+        }
 
         function waktu() {
             if (menit == 0 && detik == 0) {
@@ -280,6 +288,7 @@
                     if (result.value) {
                         var formSubmitting = true;
                         document.getElementById('jawabanQuiz').submit();
+                        localStorage.clear();
                     }
                 });
                 return false;
@@ -303,6 +312,9 @@
             document.getElementById("detik").innerHTML = pad.substring(0, pad.length - detik.length) + detik;
 
             setTimeout("waktu()", 1000)
+            localStorage.setItem('Quiz_ID', {{ $quiz->id }});
+            localStorage.setItem('Menit', menit);
+            localStorage.setItem('Detik', detik);
         }
         waktu();
 

@@ -374,7 +374,7 @@
                     window.location.reload();
                 }
             })
-            console.log(semua_id);
+            // console.log(semua_id);
         };
     </script>
 @endpush

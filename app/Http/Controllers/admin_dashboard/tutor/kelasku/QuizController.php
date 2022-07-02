@@ -25,7 +25,7 @@ class QuizController extends Controller
                     ->addIndexColumn()
                     ->addColumn('keterangan', function($row){
                         return '
-                            Tanggal : '.Carbon::parse($row->tanggal_quiz)->format('j F Y').',<br>
+                            Tanggal Quiz : '.Carbon::parse($row->tanggal_quiz)->format('j F Y').',<br>
                             Waktu : '.$row->waktu_pengerjaan.' Menit
                         ';
                     })

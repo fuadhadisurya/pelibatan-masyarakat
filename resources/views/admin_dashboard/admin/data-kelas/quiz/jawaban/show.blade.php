@@ -23,7 +23,7 @@
                                 <td>: {{ $informasiQuiz->nama_quiz }}</td>
                             <tr>
                             </tr>
-                                <td><b>Tanggal</b></td>
+                                <td><b>Tanggal Quiz</b></td>
                                 <td>: {{ \Carbon\Carbon::parse($informasiQuiz->tanggal_quiz)->format('j F Y') }}</td>
                             </tr>
                             <tr>

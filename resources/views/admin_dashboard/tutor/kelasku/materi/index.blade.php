@@ -18,7 +18,16 @@
                     </div>
                 </div>
             @endif
-
+            @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="widget-content widget-content-area br-6">
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#uploadMateri">
                     <i class="far fa-plus-square"></i> Upload Materi
@@ -63,7 +72,7 @@
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ old('deskripsi') }}</textarea>
+                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required>{{ old('deskripsi') }}</textarea>
                         </div>
                         <div class="form-group">
                             <div class="custom-file-container" data-upload-id="mySecondImage">

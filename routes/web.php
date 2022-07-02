@@ -17,6 +17,7 @@ use App\Http\Controllers\admin_dashboard\admin\KelasController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\ForumController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizJawabanController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\SertifikatController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
@@ -128,6 +129,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
         Route::resource('data-kelas.quiz', QuizController::class);
         Route::resource('data-kelas.quiz.jawaban', QuizJawabanController::class);
         Route::resource('data-kelas.testimoni', TestimoniController::class);
+        Route::resource('data-kelas.sertifikat', SertifikatController::class);
     });
     // Berita Area
     Route::resource('kategori-berita', KategoriBeritaController::class);
@@ -165,6 +167,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
         Route::get('/kelasku/{kelasku}/quiz/{tugas_id}/aktif', [TutorKelaskuQuizController::class, 'aktif'])->name('kelasku.quiz.aktif');
         Route::resource('kelasku.quiz', TutorKelaskuQuizController::class);
         Route::get('/kelasku/{kelasku}/quiz/{quiz_id}/soal/{soal_id}/aktif', [QuizSoalController::class, 'aktif'])->name('kelasku.quiz.soal.aktif');
+        Route::put('/kelasku/{kelasku}/quiz/{quiz_id}/soal', [QuizSoalController::class, 'status'])->name('kelasku.quiz.soal.update.status');
         Route::resource('kelasku.quiz.soal', QuizSoalController::class);
         Route::resource('kelasku.quiz.jawaban', TutorQuizJawabanController::class);
         Route::resource('kelasku.testimoni', TutorKelaskuTestimoniController::class);

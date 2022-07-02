@@ -5,16 +5,91 @@
 
 @section('content')
     <div class="row layout-top-spacing">
-        
-        <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
 
+        <div class="col-xl-6 col-lg-6 col-md-6 col-6 layout-spacing">
             <div class="widget-content-area br-4">
-                <div class="widget-one">
-
-                    <h6>Blank Page - Kick Start you new project with ease!</h6>
-
-                    <p class="">With CORK starter kit, you can begin your work without any hassle. The starter page is highly optimized which gives you freedom to start with minimal code and add only the desired components and plugins required for your project.</p>
-
+                <div class="widget-heading">
+                    <h5>Kelasku</h5>
+                </div>
+                <hr>
+                <div class="widget-content">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table-borderless table-responsive--collapse w-100">
+                                <tbody>
+                                    @forelse ($kelasku as $kelas)
+                                        <tr>
+                                            <td class="">
+                                                <span class="small">
+                                                    <strong>{{ $kelas->kelas->status }}</strong>
+                                                </span>
+                                                <br>
+                                                <p class="mb-0 mt-1">{{ $kelas->kelas->nama_kelas }}</p>
+                                            </td>
+                                            <td class="text-right">
+                                                <a href="{{ route('peserta.kelasku.home.index', [$kelas->kelas->id]) }}" class="btn btn-sm btn-info">
+                                                    <div class="d-flex">
+                                                        <span class="">Lihat Kelas</span>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <p class="text-center">Tidak ada kelas</p>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @if(count($kelasku)>5)
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="{{ route('peserta.kelasku.index') }}">Selengkapnya</a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-6 col-lg-6 col-md-6 col-6 layout-spacing">
+            <div class="widget-content-area br-4">
+                <div class="widget-heading">
+                    <h5>Eventku</h5>
+                </div>
+                <hr>
+                <div class="widget-content">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table-borderless table-responsive--collapse w-100">
+                                <tbody>
+                                    @forelse ($eventku as $event)
+                                        <tr>
+                                            <td class="">
+                                                <span class="small">
+                                                    <strong>{{ $event->event->status }}</strong>
+                                                </span>
+                                                <br>
+                                                <p class="mb-0 mt-1">{{ $event->event->nama_event }}</p>
+                                            </td>
+                                            <td class="text-right">
+                                                <a href="{{ route('peserta.eventku.home.index', [$event->event->id]) }}" class="btn btn-sm btn-info">
+                                                    <div class="d-flex">
+                                                        <span class="">Lihat Event</span>
+                                                    </div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <p class="text-center">Tidak ada event</p>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @if(count($eventku)>5)
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="{{ route('peserta.eventku.index') }}">Selengkapnya</a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

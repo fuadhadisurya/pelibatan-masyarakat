@@ -15,12 +15,13 @@
                 <div class="table-responsive">
                     <table class="w-70">
                         <tbody>
+                            <input type="hidden" id="quiz_id" value="{{ $informasiQuiz->id }}"> 
                             <tr>
                                 <td><b>Judul Kuis</b></td>
                                 <td>: {{ $informasiQuiz->nama_quiz }}</td>
                             <tr>
                             </tr>
-                                <td><b>Tanggal</b></td>
+                                <td><b>Tanggal Quiz</b></td>
                                 <td>: {{ \Carbon\Carbon::parse($informasiQuiz->tanggal_quiz)->format('j F Y') }}</td>
                             </tr>
                             <tr>
@@ -257,9 +258,6 @@
 @push('styles')
     <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
-    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
     <style>
         .btn-light { border-color: transparent; }
@@ -267,19 +265,13 @@
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script>
-        var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
-            minDate: "today",
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true
-        });
-    </script>
-    <script>
-        $(".selectpicker").selectpicker({
-            "title": "Pilih Menu"
-        }).selectpicker("render");
+        var storageQuizID = localStorage.getItem('Quiz_ID');
+        var storageMenit = localStorage.getItem('Menit');
+        var storageDetik = localStorage.getItem('Detik');
+        var quiz_id = document.getElementById("quiz_id").value;
+        if(storageQuizID == quiz_id){
+            localStorage.clear();
+        }
     </script>
 @endpush

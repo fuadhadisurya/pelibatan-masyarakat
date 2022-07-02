@@ -17,7 +17,8 @@ class CreateSertifikatTable extends Migration
             $table->id();
             $table->foreignId('kelas_id');
             $table->foreignId('user_id');
-            $table->foreignId('kode_sertifikat');
+            $table->string('kode_sertifikat');
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -13,13 +13,14 @@ class DashboardController extends Controller
     public function index(Request $request){
         $class = $request->kelas;
         $tahun = $request->tahun;
+        $cariKelas = null;
 
         if ($class == true && $tahun == true) {
-            $kelas = Kelas::whereYear('created_at', Carbon::now()->format('Y'))->get();
+            $kelas = Kelas::all();
             $cariKelas = Kelas::where('nama_kelas', $class)->whereYear('created_at', Carbon::parse($tahun)->format('Y'))->first();
             $peserta = RegistrasiKelas::where('kelas_id', $cariKelas->id)->whereYear('created_at', Carbon::parse($tahun)->format('Y'))->get();
         } else {
-            $kelas = Kelas::whereYear('created_at', Carbon::now()->format('Y'))->get();
+            $kelas = Kelas::all();
             $peserta = RegistrasiKelas::whereYear('created_at', Carbon::now()->format('Y'))->get();
         }
         
