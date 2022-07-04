@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Progress User | Kegiatan Pelibatan Masyarakat
+    Sertifikat Peserta | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')

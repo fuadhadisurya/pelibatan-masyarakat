@@ -47,7 +47,7 @@ class KelaskuController extends Controller
                         return '<td class="text-center">'. $status .'</td>';
                     })
                     ->addColumn('aksi', function($row){
-                        if ($row->kelas->status == "Selesai") {
+                        if ($row->kelas->status == "Selesai" && $row->sertifikat == 'Terbit') {
                             return '
                                 <td class="text-center">
                                     <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>

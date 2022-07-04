@@ -4,10 +4,15 @@ namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\Presensi;
+use App\Models\Quiz;
 use App\Models\RegistrasiKelas;
+use App\Models\Tugas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class SertifikatController extends Controller
@@ -28,9 +33,9 @@ class SertifikatController extends Controller
                     })
                     ->editColumn('sertifikat', function($row){
                         if($row->sertifikat == 'Terbit'){
-                            $sertifikat = '<span class="badge badge-success">Diterima</span>';
+                            $sertifikat = '<span class="badge badge-success">Terbit</span>';
                         } elseif($row->sertifikat == 'Tidak Terbit'){
-                            $sertifikat = '<span class="badge badge-danger">Ditolak</span>';
+                            $sertifikat = '<span class="badge badge-danger">Tidak Terbit</span>';
                         } else {
                             $sertifikat = '<span class="badge badge-warning">Belum Diproses</span>';
                         }
@@ -39,8 +44,8 @@ class SertifikatController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('data-kelas.sertifikat.show', [$row->kelas->id, $row->user->id]).'" class="btn btn-sm btn-info" title="Lihat">
-                                    <i class="far fa-eye"></i>
+                                <a href="'.route('data-kelas.sertifikat.show', [$row->kelas->id, $row->user->id]).'" class="btn btn-sm btn-info" title="Edit">
+                                    <i class="far fa-edit"></i>
                                 </a>
                             </td>
                         ';
@@ -81,9 +86,15 @@ class SertifikatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kelas_id, $user_id)
     {
-        //
+        $registrasiKelas = RegistrasiKelas::where('kelas_id', $kelas_id)->where('user_id', $user_id)->firstOrFail();
+        $kelas = Kelas::findOrfail($kelas_id);
+        $presensi = Presensi::leftJoin('data_presensi', 'presensi.id', '=', DB::raw('data_presensi.presensi_id AND data_presensi.user_id = ' . $user_id))->get();
+        $quiz = Quiz::leftJoin('nilai_quiz', 'quiz.id', '=', DB::raw('nilai_quiz.quiz_id AND nilai_quiz.user_id = ' . $user_id))->get();
+        $tugas = Tugas::leftJoin('jawaban_tugas', 'tugas.id', '=', DB::raw('jawaban_tugas.tugas_id AND jawaban_tugas.users_id = ' . $user_id))->get();
+        
+        return view('admin_dashboard.admin.data-kelas.sertifikat.show', ['kelas' => $kelas, 'registrasiKelas' => $registrasiKelas, 'presensi' => $presensi, 'quiz' => $quiz, 'tugas' => $tugas]);
     }
 
     /**
@@ -94,7 +105,7 @@ class SertifikatController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -104,17 +115,17 @@ class SertifikatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $kelas_id, $id)
+    public function update(Request $request, $kelas_id, $user_id)
     {
         $this->validate($request, [
-            'status' => 'required',
+            'sertifikat' => 'required',
         ]);
 
         $data = $request->all();
-        $dataPeserta = RegistrasiKelas::findOrFail($id);
-        $dataPeserta->update($data);
+        $registrasiKelas = RegistrasiKelas::where('kelas_id',$kelas_id)->where('user_id', $user_id)->first();
+        $registrasiKelas->update($data);
 
-        return redirect()->route('tutor.kelasku.peserta.index', $kelas_id)->with('status', 'Data berhasil diperbarui');
+        return redirect()->route('data-kelas.sertifikat.index', $kelas_id)->with('status', 'Data berhasil diperbarui');
     }
 
     /**
