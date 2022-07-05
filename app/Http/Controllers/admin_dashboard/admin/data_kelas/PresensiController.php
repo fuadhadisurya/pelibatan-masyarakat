@@ -10,6 +10,7 @@ use App\Models\RegistrasiKelas;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class PresensiController extends Controller
@@ -103,7 +104,12 @@ class PresensiController extends Controller
     {
         $kelas = Kelas::findOrfail($kelas_id);
         $presensi = Presensi::where('kelas_id', $kelas_id)->findOrFail($id);
-        $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->whereRelation('presensi', 'kelas_id', '=', $kelas_id)->whereRelation('user', 'level', '=', 'peserta')->get();
+        // $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->whereRelation('presensi', 'kelas_id', '=', $kelas_id)->whereRelation('user', 'level', '=', 'peserta')->get();
+        $dataPresensi = User::select('users.*', 'data_presensi.id AS presensi_id', 'data_presensi.created_at AS waktu_mengisi', 'data_presensi.status AS presensi_status')
+            ->leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('data_presensi', 'data_presensi.user_id', '=', DB::raw('users.id AND data_presensi.presensi_id = ' . $id))
+            ->where('users.level', 'peserta')->get();
+        // dd($dataPresensi);
         $tutor = User::leftJoin('kelas', 'users.id', '=', 'kelas.tutor_id')
             ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
             ->select('users.*', 'data_presensi.status', 'data_presensi.created_at as waktu_mengisi')

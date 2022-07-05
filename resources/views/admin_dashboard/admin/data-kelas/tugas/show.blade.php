@@ -73,19 +73,21 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-text">
-                                    @if(count($tugasBelum) > 0)
-                                        @foreach ($tugasBelum as $tugasBelum)
-                                            <div class="row">
-                                                @if ($tugasBelum->foto != null)
-                                                    <img class="rounded ml-3" src="{{ Storage::url($tugasBelum->foto) }}" width="50px" height="50px" alt="pic1">
-                                                @else
-                                                    <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
-                                                @endif
-                                                <div class="col">
-                                                    <h6 class=""><strong>{{ $tugasBelum->nama }}</strong></h6>
-                                                    <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                    @if(count($jawaban) > 0)
+                                        @foreach ($jawaban as $jb)
+                                            @if ($jb->jawaban_id==null)
+                                                <div class="row">
+                                                    @if ($jb->foto != null)
+                                                        <img class="rounded ml-3" src="{{ Storage::url($jb->foto) }}" width="50px" height="50px" alt="pic1">
+                                                    @else
+                                                        <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
+                                                    @endif
+                                                    <div class="col">
+                                                        <h6 class=""><strong>{{ $jb->nama }}</strong></h6>
+                                                        <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         @endforeach
                                     @else
                                         <span class="d-flex justify-content-center">Yeay, Semuanya sudah mengumpulkan tugas</span>
@@ -101,28 +103,30 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-text">
-                                    @if(count($jawabanTugas) > 0)
-                                        @foreach ($jawabanTugas as $index=>$jawabanTugas)
-                                        <div class="row">
-                                            @if ($jawabanTugas->users->foto != null)
-                                                <img class="rounded ml-3" src="{{ Storage::url($jawabanTugas->users->foto) }}" width="50px" height="50px" alt="pic1">
-                                            @else
-                                                <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
-                                            @endif
-                                            <div class="col">
-                                                <h6 class=""><strong>{{ $jawabanTugas->users->nama }}</strong></h6>
-                                                @if ($jawabanTugas->nilai != null)
-                                                    <p class=""><span class="badge badge-success">Nilai : {{ $jawabanTugas->nilai }}</span></p>                                            
-                                                @else
-                                                    <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
-                                                @endif
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="col">
-                                                    <a href="{{ route('data-kelas.tugas.periksa-tugas.show', [$kelas->id, $tugas->id, $jawabanTugas->id]) }}" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a>
+                                    @if(count($jawaban) > 0)
+                                        @foreach ($jawaban as $index=>$js)
+                                            @if ($js->jawaban_id!=null)
+                                                <div class="row">
+                                                    @if ($js->foto != null)
+                                                        <img class="rounded ml-3" src="{{ Storage::url($js->foto) }}" width="50px" height="50px" alt="pic1">
+                                                    @else
+                                                        <img class="rounded ml-3" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="50px" height="50px" alt="pic1">
+                                                    @endif
+                                                    <div class="col">
+                                                        <h6 class=""><strong>{{ $js->nama }}</strong></h6>
+                                                        @if ($js->nilai != null)
+                                                            <p class=""><span class="badge badge-success">Nilai : {{ $js->nilai }}</span></p>                                            
+                                                        @else
+                                                            <p class=""><span class="badge badge-warning">Nilai : Belum Dinilai</span></p>
+                                                        @endif
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="col">
+                                                            <a href="{{ route('data-kelas.tugas.periksa-tugas.show', [$kelas->id, $tugas->id, $js->jawaban_id]) }}" class="btn btn-primary btn-round btn-sm"><i class="far fa-check-square"></i></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            @endif    
                                         @endforeach
                                     @else
                                         <span class="d-flex justify-content-center">Yah, semua peserta belum mengumpulkan tugas</span>

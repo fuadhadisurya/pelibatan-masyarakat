@@ -25,9 +25,11 @@ class PresensiController extends Controller
             return DataTables::of($presensi)
                     ->addIndexColumn()
                     ->addColumn('nama', function ($row) {
-                        $angka = 0;
-                        $angka++;
-                        return 'Kehadiran ' . $angka;
+                        $angka = 1;
+                        for ($i=1; $i < $row->id; $i++) { 
+                            $angka++;
+                        }
+                        return 'Kehadiran '.$angka;
                     })
                     ->editColumn('tanggal_mulai', function($row){
                         return Carbon::parse($row->tanggal_mulai)->format('j F Y H:i');

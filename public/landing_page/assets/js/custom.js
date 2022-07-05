@@ -35,6 +35,26 @@
         }
       }
   });
+
+	$('.testimoni-loop').owlCarousel({
+      center: false,
+      items:1,
+      loop:true,
+      autoplay: true,
+      nav: false,
+      margin:10,
+      responsive:{ 
+          1200:{
+              items:4
+          },
+          992:{
+              items:3
+          },
+          760:{
+            items:2
+        }
+      }
+  });
 	
 
 	// Menu Dropdown Toggle

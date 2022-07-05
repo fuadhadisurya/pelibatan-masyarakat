@@ -71,7 +71,7 @@
                                                 <p class="mb-0 mt-1">{{ $event->event->nama_event }}</p>
                                             </td>
                                             <td class="text-right">
-                                                <a href="{{ route('peserta.eventku.home.index', [$event->event->id]) }}" class="btn btn-sm btn-info">
+                                                <a href="{{ route('peserta.eventku.deskripsi.index', [$event->event->id]) }}" class="btn btn-sm btn-info">
                                                     <div class="d-flex">
                                                         <span class="">Lihat Event</span>
                                                     </div>

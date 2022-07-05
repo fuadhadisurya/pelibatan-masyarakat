@@ -67,7 +67,7 @@
                             <tbody>
                                 @if ($tutor != null)
                                     <tr>
-                                        <td>1</td>
+                                        <td>1.</td>
                                         <td>{{ $tutor->nama }}</td>
                                         <td>Tutor</td>
                                         @if($tutor->waktu_mengisi != null)
@@ -77,6 +77,8 @@
                                         @endif
                                         @if ($tutor->status != null )
                                             <td><span class="badge badge-info">{{ $tutor->status }}</span></td>
+                                        @elseif(\Carbon\Carbon::now() > $presensi->tanggal_mulai && $tutor->status == null) 
+                                            <td><span class="badge badge-danger">Tidak Hadir</span></td>
                                         @else
                                             <td><span class="badge badge-warning">Belum Mengisi</span></td>
                                         @endif
@@ -111,11 +113,17 @@
                                     @foreach ($dataPresensi as $dataPresensi)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $dataPresensi->user->nama }}</td>
-                                            <td>{{ $dataPresensi->user->tipe_anggota }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($dataPresensi->created_at)->format('j F Y H:i') }}</td>
-                                            @if ($dataPresensi->status)
-                                                <td><span class="badge badge-info">{{ $dataPresensi->status }}</span></td>
+                                            <td>{{ $dataPresensi->nama }}</td>
+                                            <td>{{ $dataPresensi->tipe_anggota }}</td>
+                                            @if ($dataPresensi->presensi_id != null && $dataPresensi->presensi_status != "Tidak Hadir")
+                                                <td>{{ \Carbon\Carbon::parse($dataPresensi->waktu_mengisi)->format('j F Y H:i') }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+                                            @if ($dataPresensi->presensi_status)
+                                                <td><span class="badge badge-info">{{ $dataPresensi->presensi_status }}</span></td>
+                                            @elseif(\Carbon\Carbon::now() > $presensi->tanggal_mulai && $dataPresensi->presensi_status == null) 
+                                                <td><span class="badge badge-danger">Tidak Hadir</span></td>
                                             @else
                                                 <td><span class="badge badge-warning">Belum Mengisi</span></td>
                                             @endif

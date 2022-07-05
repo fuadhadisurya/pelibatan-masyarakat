@@ -31,10 +31,18 @@ class PresensiController extends Controller
                         }
                         return 'Kehadiran '.$angka;
                     })
+                    ->editColumn('tanggal_mulai', function($row){
+                        return Carbon::parse($row->tanggal_mulai)->format('j F Y H:i');
+                    })
+                    ->editColumn('tanggal_berakhir', function($row){
+                        return Carbon::parse($row->tanggal_berakhir)->format('j F Y H:i');
+                    })
                     ->addColumn('status', function($row){
                         $dataPresensi = DataPresensi::where('presensi_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
                         if ($dataPresensi != null) {
                             return '<span class="badge badge-info">'.$dataPresensi->status.'</span>';
+                        } elseif (Carbon::now() > $row->tanggal_berakhir && $dataPresensi == null){
+                            return '<span class="badge badge-danger">Tidak Hadir</span>';
                         } else {
                             return '<span class="badge badge-warning">Belum Mengisi</span>';
                         }
@@ -42,6 +50,13 @@ class PresensiController extends Controller
                     ->addColumn('aksi', function($row){
                         $dataPresensi = DataPresensi::where('presensi_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
                         if(Carbon::now() < $row->tanggal_mulai){
+                            $aksi = '
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'" disabled>
+                                    <i class="far fa-file-alt"></i>
+                                </button>
+                            </td>';
+                        } elseif(Carbon::now() > $row->tanggal_berakhir) {
                             $aksi = '
                             <td class="text-center">
                                 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'" disabled>

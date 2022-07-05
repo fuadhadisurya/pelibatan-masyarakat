@@ -7,9 +7,11 @@ use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use App\Models\Sertifikat;
 use App\Models\Testimoni;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use PDF;
 
 class SertifikatController extends Controller
 {
@@ -26,14 +28,28 @@ class SertifikatController extends Controller
     }
 
     public function store(Request $request, $kelas_id){
-        $data = '';
+        // $data = '';
         
-        $data['kelas_id'] = $kelas_id;
-        $data['user_id'] = Auth::user()->id;
-        $data['kode_sertifikat'] = Str::random(12);
-        dd($data);
-        Post::create($data);
+        // $data['kelas_id'] = $kelas_id;
+        // $data['user_id'] = Auth::user()->id;
+        // $data['kode_sertifikat'] = Str::random(12);
+        // dd($data);
+        // Post::create($data);
         
-        return redirect()->route('tutor.kelasku.forum.index', $kelas_id)->with('status', 'Sertifikat berhasil dibuat');
+        // return redirect()->route('tutor.kelasku.forum.index', $kelas_id)->with('status', 'Sertifikat berhasil dibuat');
+    }
+
+    public function show($kelas_id){
+        $data = [
+            // 'kode_sertifikat' => Str::upper(Str::random(12)),
+            'nama' => Auth::user()->nama,
+            'kelas' => Kelas::findOrFail($kelas_id),
+            'tanggal' => Carbon::now()->format('Y-m-d')
+        ];
+        
+        $pdf = PDF::loadView('sertifikat/SertifikatKelas', $data)->setPaper('A4', 'landscape');
+        
+        // return $pdf->download('sertifikat.pdf');
+        return $pdf->stream('sertifikat.pdf');
     }
 }

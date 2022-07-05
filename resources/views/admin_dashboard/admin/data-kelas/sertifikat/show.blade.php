@@ -159,7 +159,7 @@
             </div>
 
             <div class="widget-content-area">
-                <form action="" method="post">
+                <form action="{{ route('data-kelas.sertifikat.update', [$kelas->id, $user_id]) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="row">

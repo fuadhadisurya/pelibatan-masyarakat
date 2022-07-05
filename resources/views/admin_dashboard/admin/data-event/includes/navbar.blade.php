@@ -14,7 +14,7 @@
                 <a class="nav-link {{ Request::segment(4) == 'presensi' ? 'active' : '' }}" href="{{ route('data-event.presensi.index',[$event->id]) }}">Presensi</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::segment(4) == 'sertifikat' ? 'active' : '' }}" href="{{ route('data-event.peserta.index',[$event->id]) }}">Sertifikat</a>
+                <a class="nav-link {{ Request::segment(4) == 'sertifikat' ? 'active' : '' }}" href="{{ route('data-event.sertifikat.index',[$event->id]) }}">Sertifikat</a>
             </li>
             {{-- @if ($event->status == 'Kegiatan Berlangsung' || $event->status == 'Selesai')
                 <li class="nav-item">

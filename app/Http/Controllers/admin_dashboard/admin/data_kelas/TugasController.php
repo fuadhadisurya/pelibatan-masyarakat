@@ -8,6 +8,7 @@ use App\Models\Kelas;
 use App\Models\Tugas;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class TugasController extends Controller
@@ -69,15 +70,11 @@ class TugasController extends Controller
     {
         $kelas = Kelas::findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
-        $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->get();
-        $tugasBelum = User::leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
-            ->leftJoin('tugas', 'users.id', '=', 'tugas.kelas_id')
-            ->leftJoin('jawaban_tugas', 'users.id', '=', 'jawaban_tugas.users_id')
-            ->where('registrasi_kelas.kelas_id', '=', $kelas_id)
-            ->where('users.level', '=', 'peserta')
-            ->where('jawaban_tugas.status', '=', null)
-            ->get();
-        return view('admin_dashboard.admin.data-kelas.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas, 'tugasBelum' => $tugasBelum]);
+        // $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->get();
+        $jawaban = User::select('users.*', 'jawaban_tugas.id AS jawaban_id')->leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('jawaban_tugas', 'jawaban_tugas.users_id', '=', DB::raw('users.id AND jawaban_tugas.tugas_id = ' . $id))->where('users.level', 'peserta')->get();
+        // return view('admin_dashboard.admin.data-kelas.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas]);
+        return view('admin_dashboard.admin.data-kelas.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawaban' => $jawaban]);
     }
 
     /**

@@ -30,9 +30,9 @@ class Kelas extends Model
 
         $query->when($filters['sort'] ?? false, function($query, $sort){
             if($sort == "Terbaru"){
-                return $query->orderBy('created_at', 'desc');
+                return $query->orderBy('id', 'desc');
             } elseif($sort == "Terlama"){
-                return $query->orderBy('created_at', 'asc');
+                return $query->orderBy('id', 'asc');
             }
         });
 

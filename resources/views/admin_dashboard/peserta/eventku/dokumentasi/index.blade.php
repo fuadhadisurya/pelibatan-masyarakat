@@ -37,7 +37,7 @@
                             {!! $ss->dokumentasi !!}
                         @endforeach
                         @foreach ($presentasi as $present)
-                            {{ $present->tipe }}
+                            <a href="{{ route('dokumentasi.download', [$event->id, $present->id]) }}"><i class="far fa-save"></i> {{ $present->nama_file }}</a><br>
                         @endforeach
                     @else
                         <div class="alert alert-info">

@@ -107,6 +107,7 @@
                         <div class="form-group">
                             <label for="lokasi">Lokasi</label>
                             <input id="lokasi" name="lokasi" class="form-control" type="text" placeholder="Lokasi Kegiatan" value="{{ old('lokasi') }}" required>
+                            <small>Jika kegiatan dilaksakan online. formatnya adalah : "Online + link "</small>
                         </div>
                         <div class="form-group">
                             <label for="deadline_pendaftaran">Batas Waktu Pendaftaran</label>

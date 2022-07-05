@@ -36,7 +36,7 @@
                                         <label class="custom-control-label" for="sort2">Terlama</label>
                                     </div>
                                 </div>
-                                {{-- <div class="mb-3">
+                                <div class="mb-3">
                                     <h5 class="mb-2">Tipe Peserta</h5>
                                     <div class="n-chk">
                                         <label class="new-control new-checkbox checkbox-primary">
@@ -80,7 +80,7 @@
                                             <span class="new-control-indicator"></span>ASN/Polri/TNI
                                         </label>
                                     </div>
-                                </div> --}}
+                                </div>
                             </form>
                         </div>
                     </div>

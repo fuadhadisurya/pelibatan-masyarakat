@@ -14,6 +14,7 @@ class RegistrasiEvent extends Model
     protected $fillable = [
         "user_id", 
         "event_id",
+        "sertifikat",
     ];
 
     public function user(){

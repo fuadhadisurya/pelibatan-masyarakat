@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
+namespace App\Http\Controllers\admin_dashboard\admin\data_event;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelas;
-use App\Models\Presensi;
-use App\Models\Quiz;
-use App\Models\RegistrasiKelas;
-use App\Models\Tugas;
-use Carbon\Carbon;
+use App\Models\Event;
+use App\Models\PresensiEvent;
+use App\Models\RegistrasiEvent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 
 class SertifikatController extends Controller
@@ -22,11 +17,11 @@ class SertifikatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $kelas_id)
+    public function index(Request $request, $event_id)
     {
+        $dataPeserta = RegistrasiEvent::where('event_id', $event_id)->get();
         if ($request->ajax()) {
-            $data = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->get();
-            return DataTables::of($data)
+            return DataTables::of($dataPeserta)
                     ->addIndexColumn()
                     ->addColumn('user.nama', function($row){
                         return $row->user->nama;
@@ -44,7 +39,7 @@ class SertifikatController extends Controller
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('data-kelas.sertifikat.show', [$row->kelas->id, $row->user->id]).'" class="btn btn-sm btn-info" title="Edit">
+                                <a href="'.route('data-event.sertifikat.show', [$row->event->id, $row->user->id]).'" class="btn btn-sm btn-info" title="Edit">
                                     <i class="far fa-edit"></i>
                                 </a>
                             </td>
@@ -53,10 +48,9 @@ class SertifikatController extends Controller
                     ->rawColumns(['aksi', 'sertifikat'])
                     ->make(true);
         }
-        $kelas = Kelas::findOrfail($kelas_id);
-        $dataPeserta = RegistrasiKelas::where('kelas_id', $kelas_id)->get();
-        
-        return view('admin_dashboard.admin.data-kelas.sertifikat.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'dataPeserta' => $dataPeserta]);
+        $event = Event::findOrfail($event_id);
+
+        return view('admin_dashboard.admin.data-event.sertifikat.index', ['event' => $event, 'event_id' => $event_id, 'dataPeserta' => $dataPeserta]);
     }
 
     /**
@@ -86,15 +80,13 @@ class SertifikatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($kelas_id, $user_id)
+    public function show($event_id, $user_id)
     {
-        $registrasiKelas = RegistrasiKelas::where('kelas_id', $kelas_id)->where('user_id', $user_id)->firstOrFail();
-        $kelas = Kelas::findOrfail($kelas_id);
-        $presensi = Presensi::leftJoin('data_presensi', 'presensi.id', '=', DB::raw('data_presensi.presensi_id AND data_presensi.user_id = ' . $user_id))->get();
-        $quiz = Quiz::leftJoin('nilai_quiz', 'quiz.id', '=', DB::raw('nilai_quiz.quiz_id AND nilai_quiz.user_id = ' . $user_id))->get();
-        $tugas = Tugas::leftJoin('jawaban_tugas', 'tugas.id', '=', DB::raw('jawaban_tugas.tugas_id AND jawaban_tugas.users_id = ' . $user_id))->get();
+        $registrasiEvent = RegistrasiEvent::where('event_id', $event_id)->where('user_id', $user_id)->firstOrFail();
+        $event = Event::findOrfail($event_id);
+        $presensi = PresensiEvent::leftJoin('data_presensi_event', 'presensi_event.id', '=', DB::raw('data_presensi_event.presensi_event_id AND data_presensi_event.user_id = ' . $user_id))->get();
         
-        return view('admin_dashboard.admin.data-kelas.sertifikat.show', ['kelas' => $kelas, 'registrasiKelas' => $registrasiKelas, 'presensi' => $presensi, 'quiz' => $quiz, 'tugas' => $tugas, 'user_id' => $user_id]);
+        return view('admin_dashboard.admin.data-event.sertifikat.show', ['event' => $event, 'registrasiEvent' => $registrasiEvent, 'presensi' => $presensi, 'user_id' => $user_id]);
     }
 
     /**
@@ -105,7 +97,7 @@ class SertifikatController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -115,17 +107,17 @@ class SertifikatController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $kelas_id, $user_id)
+    public function update(Request $request, $event_id, $user_id)
     {
         $this->validate($request, [
             'sertifikat' => 'required',
         ]);
 
         $data = $request->all();
-        $registrasiKelas = RegistrasiKelas::where('kelas_id',$kelas_id)->where('user_id', $user_id)->first();
-        $registrasiKelas->update($data);
+        $registrasiEvent = RegistrasiEvent::where('event_id',$event_id)->where('user_id', $user_id)->first();
+        $registrasiEvent->update($data);
 
-        return redirect()->route('data-kelas.sertifikat.index', $kelas_id)->with('status', 'Data berhasil diperbarui');
+        return redirect()->route('data-event.sertifikat.index', $event_id)->with('status', 'Data berhasil diperbarui');
     }
 
     /**

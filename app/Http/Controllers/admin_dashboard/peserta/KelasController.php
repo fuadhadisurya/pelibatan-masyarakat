@@ -21,7 +21,7 @@ class KelasController extends Controller
         if (request('sort')) {
             $kelas = Kelas::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort']))->paginate(10);
         } else {
-            $kelas = Kelas::latest()->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
+            $kelas = Kelas::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
         }
         
         $search = request('search');

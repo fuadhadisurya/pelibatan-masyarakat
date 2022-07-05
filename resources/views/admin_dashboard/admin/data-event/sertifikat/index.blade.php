@@ -1,10 +1,10 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Peserta | Kegiatan Pelibatan Masyarakat
+    Sertifikat | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    @include('admin_dashboard.admin.data-kelas.includes.navbar')
+    @include('admin_dashboard.admin.data-event.includes.navbar')
     
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
@@ -65,7 +65,7 @@
         $('#data-sertifikat').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data-kelas.sertifikat.index', $kelas_id) }}",
+            ajax: "{{ route('data-event.sertifikat.index', $event_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'user.nama', name: 'user.nama'},

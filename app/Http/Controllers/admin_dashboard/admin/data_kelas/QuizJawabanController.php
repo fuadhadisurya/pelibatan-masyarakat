@@ -7,7 +7,9 @@ use App\Models\Kelas;
 use App\Models\NilaiQuiz;
 use App\Models\Quiz;
 use App\Models\QuizJawaban;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class QuizJawabanController extends Controller
@@ -19,19 +21,30 @@ class QuizJawabanController extends Controller
      */
     public function index(Request $request, $kelas_id, $quiz_id)
     {
-        $jawaban = NilaiQuiz::with('users')->with('quiz')->where('quiz_id', $quiz_id)->get();
+        // $jawaban = NilaiQuiz::with('users')->with('quiz')->where('quiz_id', $quiz_id)->get();
+        $jawaban = User::select('users.nama AS nama', 'nilai_quiz.*', 'registrasi_kelas.kelas_id')
+            ->leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('nilai_quiz', 'users.id', '=', DB::raw('nilai_quiz.user_id AND nilai_quiz.quiz_id = ' . $quiz_id))
+            ->where('users.level', 'peserta')->get();
         if ($request->ajax()) {
             return DataTables::of($jawaban)
                     ->addIndexColumn()
                     ->addColumn('nama', function($row){
-                        return $row->users->nama;
+                        return $row->nama;
                     })
                     ->addColumn('aksi', function($row){
-                        return '
-                            <td class="text-center">
-                                <a href="' . route('data-kelas.quiz.jawaban.show', [$row->quiz->kelas_id, $row->quiz->id, $row->users->id]) . '" class="btn btn-sm btn-info" title="Lihat nilai"><i class="far fa-eye"></i></a>
-                            </td>
-                        ';
+                        if ($row->quiz_id != null && $row->user_id != null){
+                            return '
+                                <td class="text-center">
+                                    <a href="' . route('data-kelas.quiz.jawaban.show', [$row->kelas_id, $row->quiz_id, $row->user_id]) . '" class="btn btn-sm btn-info" title="Lihat nilai"><i class="far fa-eye"></i></a>
+                                </td>
+                            ';
+                        }
+                    })
+                    ->editColumn('nilai', function($row){
+                        if($row->nilai != null){
+                            return $row->nilai.'%';
+                        }
                     })
                     ->rawColumns(['nama', 'aksi'])
                     ->make(true);

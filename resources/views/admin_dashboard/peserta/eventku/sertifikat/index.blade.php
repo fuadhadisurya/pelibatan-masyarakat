@@ -18,15 +18,15 @@
   <body>
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
-            <div class="row">
-                <img src="{{ asset('admin_dashboard/assets/img/640x426.jpg') }}" class="img-fluid d-flex justify-content-center" alt="">
+            <div class="col">
+                <img src="{{ asset('admin_dashboard/assets/img/Graduation-pana.png') }}" class="img-fluid d-flex justify-content-center" alt="">
             </div>
             <div class="col">
                 <div class="container">
                     <h2 class="text-center">Selamat</h2>
                     <p class="text-center">Akhirnya kamu sudah bisa mendapatkan sertifikat dari kegiatan <strong>{{ $event->nama_event }}</strong>. silahkan unduh sertifikat dibawah ini</p>
                     <div class="mb-1 d-flex justify-content-center">
-                        <a data-fancybox data-type="pdf" href="{{ url('/sertifikat') }}" class="btn btn-primary">
+                        <a data-fancybox data-type="pdf" href="{{ route('peserta.eventku.sertifikat.download', [$event->id]) }}" class="btn btn-primary">
                             Unduh Sertifikat
                         </a>
                     </div>

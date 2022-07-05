@@ -7,6 +7,7 @@ use App\Http\Controllers\admin_dashboard\admin\data_event\DeskripsiController;
 use App\Http\Controllers\admin_dashboard\admin\data_event\DokumentasiController;
 use App\Http\Controllers\admin_dashboard\admin\data_event\PesertaController;
 use App\Http\Controllers\admin_dashboard\admin\data_event\PresensiController as Data_eventPresensiController;
+use App\Http\Controllers\admin_dashboard\admin\data_event\SertifikatController as Data_eventSertifikatController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\DataPesertaController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\HomeController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\MateriController;
@@ -102,7 +103,7 @@ Route::get('cities', [DaerahController::class, 'cities'])->name('cities');
 Route::get('districts', [DaerahController::class, 'districts'])->name('districts');
 Route::get('villages', [DaerahController::class, 'villages'])->name('villages');
 
-Route::get('/sertifikat', [SertifikatPDFController::class, 'index']);
+// Route::get('/sertifikat', [SertifikatPDFController::class, 'index']);
 
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
@@ -143,6 +144,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-event.peserta', PesertaController::class)->only('index');
     Route::resource('data-event.presensi', Data_eventPresensiController::class);
     Route::resource('data-event.dokumentasi', DokumentasiController::class);
+    Route::resource('data-event.sertifikat', Data_eventSertifikatController::class);
 });
 
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
@@ -205,7 +207,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
         Route::resource('kelasku.quiz', PesertaKelaskuQuizController::class);
         Route::resource('kelasku.testimoni', PesertaKelaskuTestimoniController::class);
         Route::get('/kelasku/{kelasku}/sertifikat', [PesertaKelaskuSertifikatController::class, 'index']);
-        Route::post('/kelasku/{kelasku}/sertifikat', [PesertaKelaskuSertifikatController::class, 'store'])->name('kelasku.sertikat.store');
+        Route::get('/kelasku/{kelasku}/sertifikat/show', [PesertaKelaskuSertifikatController::class, 'show'])->name('kelasku.sertifikat.download');
     });
     // Event
     Route::post('event/{id}', [PesertaEventController::class, 'daftar'])->name('event.daftar');
@@ -215,7 +217,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::resource('eventku.dokumentasi', PesertaEventkuDokumentasiController::class);
     Route::resource('eventku.presensi', PesertaEventkuPresensiController::class);
     Route::get('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'index']);
-    Route::post('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'store'])->name('kelasku.sertikat.store');
+    Route::get('/eventku/{eventku}/sertifikat/show', [PesertaEventkuSertifikatController::class, 'show'])->name('eventku.sertifikat.download');
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){

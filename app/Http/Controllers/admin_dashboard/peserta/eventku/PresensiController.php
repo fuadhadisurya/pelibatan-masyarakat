@@ -42,6 +42,8 @@ class PresensiController extends Controller
                         $dataPresensi = DataPresensiEvent::where('presensi_event_id', '=', $row->id)->where('user_id', '=', Auth::user()->id)->first();
                         if ($dataPresensi != null) {
                             return '<span class="badge badge-info">'.$dataPresensi->status.'</span>';
+                        } elseif (Carbon::now() > $row->tanggal_berakhir && $dataPresensi == null){
+                            return '<span class="badge badge-danger">Tidak Hadir</span>';
                         } else {
                             return '<span class="badge badge-warning">Belum Mengisi</span>';
                         }
@@ -57,6 +59,13 @@ class PresensiController extends Controller
                             </td>';
                         } else {
                             if ($dataPresensi != null) {
+                                $aksi = '
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'" disabled>
+                                        <i class="far fa-file-alt"></i>
+                                    </button>
+                                </td>';
+                            } elseif(Carbon::now() > $row->tanggal_berakhir) {
                                 $aksi = '
                                 <td class="text-center">
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#isiPresensi'.$row->id.'" disabled>

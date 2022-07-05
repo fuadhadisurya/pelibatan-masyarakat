@@ -89,8 +89,8 @@
                             <label for="tutor">Tutor</label>
                             <select class="placeholder form-control" name="tutor_id">
                                 <option value="">Pilih Tutor...</option>
-                                @foreach ($tutor as $tutor)
-                                    <option value="{{ $tutor->id }}" {{ (old("tutor_id") == $tutor->id ? "selected":"") }}>{{ $tutor->nama }}</option>
+                                @foreach ($tutor as $tutors)
+                                    <option value="{{ $tutors->id }}" {{ (old("tutor_id") == $tutors->id ? "selected":"") }}>{{ $tutors->nama }}</option>
                                 @endforeach
                             </select>
                         </div>

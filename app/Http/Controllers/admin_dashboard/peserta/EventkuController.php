@@ -38,7 +38,7 @@ class EventkuController extends Controller
                         ';
                     })
                     ->addColumn('aksi', function($row){
-                        if ($row->event->status == "Selesai") {
+                        if ($row->event->status == "Selesai" && $row->sertifikat == 'Terbit') {
                             return '
                                 <td class="text-center">
                                     <a href="'. route('peserta.eventku.deskripsi.index', $row->event->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>

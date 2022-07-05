@@ -21,7 +21,7 @@ class EventController extends Controller
         if (request('sort')) {
             $event = Event::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort']))->paginate(10);
         } else {
-            $event = Event::where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
+            $event = Event::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
         }
         
         $search = request('search');

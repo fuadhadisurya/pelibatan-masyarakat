@@ -12,11 +12,10 @@ class SertifikatPDFController extends Controller
 {
     public function index()
     {
-        // $sertifikat = Sertifikat::
         $data = [
-            'kode_sertifikat' => Str::upper(Str::random(12)),
+            // 'kode_sertifikat' => Str::upper(Str::random(12)),
             'nama' => Auth::user()->nama,
-            'nama_kelas' => 'Ngoding',
+            'nama_kelas' => 'Kelas Basic Programming',
             'tanggal' => Carbon::now()->format('Y-m-d')
         ];
         

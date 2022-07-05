@@ -83,14 +83,15 @@ https://templatemo.com/tm-568-digimedia
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                            <li class="scroll-to-section"><a href="#about">About</a></li>
-                            <li class="scroll-to-section"><a href="#services">Services</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Projects</a></li>
+                            <li class="scroll-to-section"><a href="#about">Tentang Kami</a></li>
+                            <li class="scroll-to-section"><a href="#services">Kelas</a></li>
+                            <li class="scroll-to-section"><a href="#free-quote">Testimoni</a></li>
+                            <li class="scroll-to-section"><a href="#portfolio">Tutor</a></li>
                             @if (count($berita)>0)
                                 <li class="scroll-to-section"><a href="#blog">Berita</a></li>
                             @endif
                             <li class="scroll-to-section"><a href="#faq">Bantuan</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Contact</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Kontak</a></li>
                             @if (Route::has('login'))
                                 @auth
                                     @if (Auth::user()->level == 'admin')
@@ -169,8 +170,8 @@ https://templatemo.com/tm-568-digimedia
                         <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
                             <div class="about-right-content">
                                 <div class="section-heading">
-                                    <h6>About Us</h6>
-                                    <h4>Who is DigiMedia <em>Agency</em></h4>
+                                    <h6>Tentang Kami</h6>
+                                    <h4>Apa itu Kegiatan Pelibatan <em>Masyarakat</em></h4>
                                     <div class="line-dec"></div>
                                 </div>
                                 <p>We hope this DigiMedia template is useful for your work. You can use this template for any purpose. You may <a rel="nofollow" href="http://paypal.me/templatemo" target="_blank">contribute a little amount</a> via PayPal to <a href="https://templatemo.com/contact" target="_blank">support TemplateMo</a> in creating new templates regularly.</p>
@@ -414,7 +415,7 @@ https://templatemo.com/tm-568-digimedia
     </div>
 
 
-    <div id="free-quote" class="free-quote">
+    {{-- <div id="free-quote" class="free-quote">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 offset-lg-4">
@@ -427,11 +428,6 @@ https://templatemo.com/tm-568-digimedia
                 <div class="col-lg-8 offset-lg-2  wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
                     <form id="search" action="#" method="GET">
                         <div class="row">
-                            {{-- <div class="col-lg-4 col-sm-4">
-                                <fieldset>
-                                    <input type="web" name="web" class="website" placeholder="Your website URL..." autocomplete="on" required>
-                                </fieldset>
-                            </div> --}}
                             <div class="col-lg-8 col-sm-8">
                                 <fieldset>
                                     <input type="text" name="kode_sertifikat" class="" placeholder="Kode Sertifikat..." autocomplete="off" required>
@@ -445,6 +441,120 @@ https://templatemo.com/tm-568-digimedia
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div> --}}
+    
+    <div id="free-quote" class="free-quote">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4">
+                    <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
+                        <h4>Apa kata mereka</h4>
+                        <h6>Dengarkan cerita menarik dari peserta</h6>
+                        <div class="line-dec"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="testimoni-loop owl-carousel">
+                        <div class="testimoni-card">
+                            <div class="">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
+                            </div>
+                            <hr>
+                            <div class="">
+                                <div class="row d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                    By: Andrea Mentuzi
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimoni-card">
+                            <div class="">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
+                            </div>
+                            <hr>
+                            <div class="">
+                                <div class="row d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                    By: Andrea Mentuzi
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimoni-card">
+                            <div class="">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
+                            </div>
+                            <hr>
+                            <div class="">
+                                <div class="row d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                    By: Andrea Mentuzi
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimoni-card">
+                            <div class="">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
+                            </div>
+                            <hr>
+                            <div class="">
+                                <div class="row d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                    By: Andrea Mentuzi
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimoni-card">
+                            <div class="">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
+                            </div>
+                            <hr>
+                            <div class="">
+                                <div class="row d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                    By: Andrea Mentuzi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="testimonials">
+                        <div class="full-radius">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
+                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="testimonials">
+                        <div class="full-radius">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
+                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="testimonials">
+                        <div class="full-radius">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
+                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
+                    <div class="testimonials">
+                        <div class="full-radius">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
+                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
+                        </div>
+                    </div>
+                </div> --}}
             </div>
         </div>
     </div>
