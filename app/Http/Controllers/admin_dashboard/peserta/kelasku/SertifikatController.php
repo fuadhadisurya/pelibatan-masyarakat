@@ -40,16 +40,17 @@ class SertifikatController extends Controller
     }
 
     public function show($kelas_id){
+        $nama = Auth::user()->nama;
+        $kelas = Kelas::findOrFail($kelas_id);
         $data = [
             // 'kode_sertifikat' => Str::upper(Str::random(12)),
-            'nama' => Auth::user()->nama,
-            'kelas' => Kelas::findOrFail($kelas_id),
-            'tanggal' => Carbon::now()->format('Y-m-d')
+            'nama' => $nama,
+            'kelas' => $kelas,
         ];
         
         $pdf = PDF::loadView('sertifikat/SertifikatKelas', $data)->setPaper('A4', 'landscape');
         
-        // return $pdf->download('sertifikat.pdf');
-        return $pdf->stream('sertifikat.pdf');
+        // return $pdf->download('Sertifikat_'.$kelas->nama_kelas.'_'.$nama.'.pdf');
+        return $pdf->stream('Sertifikat_'.$kelas->nama_kelas.'_'.$nama.'.pdf');
     }
 }

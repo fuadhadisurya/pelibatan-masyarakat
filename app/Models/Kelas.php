@@ -36,12 +36,25 @@ class Kelas extends Model
             }
         });
 
-        // $query->when($filters['category'] ?? false, function($query, $category){
-        //     return $query->whereHas('kelasKategori', function($query) use ($category){
-        //         $data = $query->where('TK_PAUD', 1);
-        //         dd($data->get());
-        //     });
-        // });
+        $query->when($filters['category'] ?? false, function($query, $category){
+            return $query->whereHas('kelasKategori', function($query) use ($category){
+                if($category == "TK/PAUD"){
+                    return $query->where('TK_PAUD', 1);
+                } elseif($category == "SD/MI"){
+                    return $query->where('SD_MI', 1);
+                } elseif($category == "SMP/MTS"){
+                    return $query->where('SMP_MTS', 1);
+                } elseif($category == "SMA/SMK/MA"){
+                    return $query->where('SMA_SMK_MA', 1);
+                } elseif($category == "Mahasiswa"){
+                    return $query->where('Mahasiswa', 1);
+                } elseif($category == "Masyarakat Umum"){
+                    return $query->where('Masyarakat_Umum', 1);
+                } elseif($category == "ASN/Polri/TNI"){
+                    return $query->where('ASN_Polri_TNI', 1);
+                }
+            });
+        });
     }
 
     public function tutor(){

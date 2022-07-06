@@ -15,6 +15,7 @@ class DataPresensiEvent extends Model
         "presensi_event_id", 
         "user_id",
         "status",
+        "gambar",
     ];
     
     public function presensi(){

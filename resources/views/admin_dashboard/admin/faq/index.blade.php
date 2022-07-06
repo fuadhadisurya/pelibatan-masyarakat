@@ -36,8 +36,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Judul</th>
-                                <th>Isi</th>
+                                <th>Pertanyaan</th>
+                                <th>Jawaban</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>

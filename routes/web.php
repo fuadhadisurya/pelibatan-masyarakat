@@ -67,7 +67,6 @@ use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PengaturanController;
-use App\Http\Controllers\SertifikatPDFController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,6 +81,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingPageController::class, 'index']);
+Route::get('/capture', function(){
+    return view('capture');
+});
 Route::get('/faq', [LandingPageController::class, 'faq']);
 Route::get('/berita', [LandingPageController::class, 'berita']);
 Route::get('/berita/{slug}', [LandingPageController::class, 'beritaShow']);
@@ -102,8 +104,6 @@ Route::get('provinces', [DaerahController::class, 'provinces'])->name('provinces
 Route::get('cities', [DaerahController::class, 'cities'])->name('cities');
 Route::get('districts', [DaerahController::class, 'districts'])->name('districts');
 Route::get('villages', [DaerahController::class, 'villages'])->name('villages');
-
-// Route::get('/sertifikat', [SertifikatPDFController::class, 'index']);
 
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);

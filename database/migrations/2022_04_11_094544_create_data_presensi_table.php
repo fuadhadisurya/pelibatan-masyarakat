@@ -18,6 +18,7 @@ class CreateDataPresensiTable extends Migration
             $table->foreignId('presensi_id');
             $table->foreignId('user_id');
             $table->string('status');
+            $table->string('gambar');
             $table->timestamps();
         });
     }

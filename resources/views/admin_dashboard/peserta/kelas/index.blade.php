@@ -12,33 +12,59 @@
                         <div class="card-body">
                             <form action="{{ route('peserta.kelas.index') }}" method="GET" autocomplete="off">
                                 <h4 class="mb-3">Filter</h4>
-                                <div class="input-group input-group-sm mb-4">
-                                    <input type="text" class="form-control" name="search" placeholder="Pencarian" value="{{ $search }}" aria-label="Pencarian">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-                                    </div>
-                                </div>
                                 <div class="mb-3">
                                     <h5 class="mb-2">Urutkan</h5>
                                     @if ($sort != null)
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="sort" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
+                                            <input type="radio" id="sort1" value="Terbaru" name="sort1" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
                                             <label class="custom-control-label" for="sort">Terbaru</label>
                                         </div>
                                     @else
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="sort" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" checked>
-                                            <label class="custom-control-label" for="sort">Terbaru</label>
+                                            <input type="radio" id="sort2" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" checked>
+                                            <label class="custom-control-label" for="sort2">Terbaru</label>
                                         </div>
                                     @endif
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="sort2" value="Terlama" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terlama" ? "checked" : "" }}>
-                                        <label class="custom-control-label" for="sort2">Terlama</label>
+                                        <input type="radio" id="sort" value="Terlama" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terlama" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="sort">Terlama</label>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <h5 class="mb-2">Tipe Peserta</h5>
-                                    <div class="n-chk">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category" value="Semua" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "Semua" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category">Semua</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category1" value="TK/PAUD" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "TK/PAUD" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category1">TK/PAUD</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category2" value="SD/MI" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "SD/MI" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category2">SD/MI</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category3" value="SMP/MTS" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "SMP/MTS" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category3">SMP/MTS</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category4" value="SMA/SMK/MA" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "SMA/SMK/MA" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category4">SMA/SMK/MA</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category5" value="Mahasiswa" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "Mahasiswa" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category5">Mahasiswa</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category6" value="Masyarakat Umum" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "Masyarakat Umum" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category6">Masyarakat Umum</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="category7" value="ASN/Polri/TNI" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "ASN/Polri/TNI" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="category7">ASN/Polri/TNI</label>
+                                    </div>
+                                    {{-- <div class="n-chk">
                                         <label class="new-control new-checkbox checkbox-primary">
                                             <input type="checkbox" name='category[]' id="category" class="new-control-input" value="TK/PAUD">
                                             <span class="new-control-indicator"></span>TK/PAUD
@@ -79,6 +105,12 @@
                                             <input type="checkbox" name='category[]' id="category" class="new-control-input" value="ASN/Polri/TNI">
                                             <span class="new-control-indicator"></span>ASN/Polri/TNI
                                         </label>
+                                    </div> --}}
+                                </div>
+                                <div class="input-group input-group-sm mb-4">
+                                    <input type="text" class="form-control" name="search" placeholder="Pencarian" value="{{ $search }}" aria-label="Pencarian">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
                                     </div>
                                 </div>
                             </form>

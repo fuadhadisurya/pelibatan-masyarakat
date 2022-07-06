@@ -18,15 +18,16 @@ class KelasController extends Controller
      */
     public function index()
     {
-        if (request('sort')) {
-            $kelas = Kelas::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort']))->paginate(10);
+        if (request('sort') || request('category')) {
+            $kelas = Kelas::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort', 'category']))->paginate(10);
         } else {
             $kelas = Kelas::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
         }
-        
+        // dd($kelas);
         $search = request('search');
         $sort = request('sort');
-        return view('admin_dashboard.peserta.kelas.index', ['class' => $kelas, 'search' => $search, 'sort' => $sort]);
+        $category = request('category');
+        return view('admin_dashboard.peserta.kelas.index', ['class' => $kelas, 'search' => $search, 'sort' => $sort, 'category' => $category]);
     }
 
     /**

@@ -91,7 +91,7 @@ https://templatemo.com/tm-568-digimedia
                                 <li class="scroll-to-section"><a href="#blog">Berita</a></li>
                             @endif
                             <li class="scroll-to-section"><a href="#faq">Bantuan</a></li>
-                            <li class="scroll-to-section"><a href="#contact">Kontak</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Hubungi Kami</a></li>
                             @if (Route::has('login'))
                                 @auth
                                     @if (Auth::user()->level == 'admin')

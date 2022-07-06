@@ -15,6 +15,7 @@ class DataPresensi extends Model
         "presensi_id", 
         "user_id",
         "status",
+        "gambar",
     ];
     
     public function presensi(){

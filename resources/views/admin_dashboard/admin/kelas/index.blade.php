@@ -66,7 +66,7 @@
                 </div>
                 <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
-                    <div class="modal-body">
+                    <div class="modal-body select-tutor">
                         <div class="form-group">
                             <label for="banner">Banner</label><br>
                             <div class="custom-file mb-4">
@@ -293,7 +293,7 @@
     <script>
         $(".placeholder").select2({
             placeholder: "Pilih Tutor...",
-            dropdownParent: $('.modal-body')
+            dropdownParent: $('.select-tutor')
         });
     </script>
     <script>

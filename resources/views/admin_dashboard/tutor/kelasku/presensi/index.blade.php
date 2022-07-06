@@ -48,7 +48,7 @@
         <div class="modal fade" id="isiPresensi{{ $presensi->id }}" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('tutor.kelasku.presensi.store',[$kelas->id]) }}" method="POST"  >
+                    <form action="{{ route('tutor.kelasku.presensi.store',[$kelas->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                         <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Mengisi Presensi</h5>
@@ -77,6 +77,10 @@
                                         <span class="new-control-indicator"></span><span class="new-radio-content">Izin</span>
                                     </label>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="gambar">Gambar</label>
+                                <input type="file" accept="image/*" name="gambar" capture required>
                             </div>
                         </div>
                         <div class="modal-footer">

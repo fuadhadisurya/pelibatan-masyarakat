@@ -37,16 +37,18 @@ class SertifikatController extends Controller
     }
 
     public function show($event_id){
+        $nama = Auth::user()->nama;
+        $event = Event::findOrFail($event_id);
         $data = [
             // 'kode_sertifikat' => Str::upper(Str::random(12)),
-            'nama' => Auth::user()->nama,
-            'event' => Event::findOrFail($event_id),
+            'nama' => $nama,
+            'event' => $event,
             'tanggal' => Carbon::now()->format('Y-m-d')
         ];
         
         $pdf = PDF::loadView('sertifikat/SertifikatEvent', $data)->setPaper('A4', 'landscape');
         
-        // return $pdf->download('sertifikat.pdf');
-        return $pdf->stream('sertifikat.pdf');
+        // return $pdf->download('Sertifikat_'.$event->nama_event.'_'.$nama.'.pdf');
+        return $pdf->stream('Sertifikat_'.$event->nama_event.'_'.$nama.'.pdf');
     }
 }

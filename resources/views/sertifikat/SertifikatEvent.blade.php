@@ -63,6 +63,10 @@
 </head>
 <body>
 	<div class="name">{{ Str::upper($nama) }}</div>
-	<div class="desc">Kegiatan <strong class="tebal">{{ $event->kategori . ' ' . $event->nama_event }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ $tanggal }}</strong></div>
+	@if (\Carbon\Carbon::parse($event->tanggal_mulai)->format('j F Y') === \Carbon\Carbon::parse($event->tanggal_berakhir)->format('j F Y'))
+		<div class="desc">Kegiatan <strong class="tebal">{{ $event->kategori . ' ' . $event->nama_event }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong></div>
+	@else
+		<div class="desc">Kegiatan <strong class="tebal">{{ $event->kategori . ' ' . $event->nama_event }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ \Carbon\Carbon::parse($event->tanggal_mulai)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong> sampai <strong class="tebal">{{ \Carbon\Carbon::parse($event->tanggal_berakhir)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong></div>
+	@endif
 </body>
 </html>

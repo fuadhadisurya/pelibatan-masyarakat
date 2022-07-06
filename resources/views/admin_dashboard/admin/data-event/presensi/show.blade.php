@@ -29,14 +29,14 @@
                                 <td>{{ $presensi->event->nama_event }}</td>
                             </tr>
                             <tr>
-                                <td>Tanggal</td>
+                                <td>Presensi Buka</td>
                                 <td>:</td>
-                                <td>{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('j F Y') }}</td>
+                                <td><span class="badge badge-info">{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('j F Y H:i') }}</span></td>
                             </tr>
                             <tr>
-                                <td>Waktu Pengisian</td>
+                                <td>Presensi Tutup</td>
                                 <td>:</td>
-                                <td><span class="badge badge-warning">{{ \Carbon\Carbon::parse($presensi->tanggal_mulai)->format('H:i') .' sampai '. \Carbon\Carbon::parse($presensi->tanggal_berakhir)->format('H:i') }}</span></td>
+                                <td><span class="badge badge-warning">{{ \Carbon\Carbon::parse($presensi->tanggal_berakhir)->format('j F Y H:i') }}</span></td>
                             </tr>
                         </tbody>
                     </table>  
@@ -58,19 +58,35 @@
                                 <th>Tipe Anggota</th>
                                 <th>Waktu Mengisi</th>
                                 <th>Status</th>
+                                <th>Gambar</th>
                             </thead>
                             <tbody>
                                 @if (count($dataPresensi) > 0)
                                     @foreach ($dataPresensi as $dataPresensi)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $dataPresensi->user->nama }}</td>
-                                            <td>{{ $dataPresensi->user->tipe_anggota }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($dataPresensi->created_at)->format('j F Y H:i') }}</td>
-                                            @if ($dataPresensi->status)
-                                                <td><span class="badge badge-info">{{ $dataPresensi->status }}</span></td>
+                                            <td>{{ $dataPresensi->nama }}</td>
+                                            <td>{{ $dataPresensi->tipe_anggota }}</td>
+                                            @if ($dataPresensi->presensi_event_id != null && $dataPresensi->presensi_event_status != "Tidak Hadir")
+                                                <td>{{ \Carbon\Carbon::parse($dataPresensi->created_at)->format('j F Y H:i') }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+                                            @if ($dataPresensi->presensi_event_status)
+                                                <td><span class="badge badge-info">{{ $dataPresensi->presensi_event_status }}</span></td>
+                                            @elseif(\Carbon\Carbon::now() > $presensi->tanggal_berakhir && $dataPresensi->presensi_event_status == null) 
+                                                <td><span class="badge badge-danger">Tidak Hadir</span></td>
                                             @else
                                                 <td><span class="badge badge-warning">Belum Mengisi</span></td>
+                                            @endif
+                                            @if ($dataPresensi->gambar != null)
+                                                <td>
+                                                    <a data-fancybox="gallery" href="{{ Storage::url($dataPresensi->gambar) }}">
+                                                        <img class="rounded" src="{{ Storage::url($dataPresensi->gambar) }}" width="100" height="75" />
+                                                    </a>
+                                                </td>
+                                            @else
+                                                <td></td>
                                             @endif
                                         </tr>
                                     @endforeach
@@ -95,23 +111,10 @@
 @push('styles')
     <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
-    <link href="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-media_object.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('admin_dashboard/plugins/fancybox/fancybox.css') }}"/>
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('admin_dashboard/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
-    <script>
-        var secondUpload = new FileUploadWithPreview('mySecondImage')
-    </script>
-    <script>
-        var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
-            enableTime: true,
-            dateFormat: "Y-m-d H:i",
-            time_24hr: true
-        });
-    </script>
+    <script src="{{ asset('admin_dashboard/plugins/fancybox/fancybox.umd.js') }}"></script>
 @endpush
