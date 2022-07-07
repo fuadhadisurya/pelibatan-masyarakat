@@ -33,7 +33,7 @@ class Event extends Model
 
         $query->when($filters['sort'] ?? false, function($query, $sort){
             if($sort == "Event Terbaru"){
-                return $query->orderBy('created_at', 'desc');
+                return $query->orderBy('id', 'desc');
             } elseif($sort == "Segera Berakhir"){
                 return $query->orderBy('deadline_pendaftaran', 'asc');
             }

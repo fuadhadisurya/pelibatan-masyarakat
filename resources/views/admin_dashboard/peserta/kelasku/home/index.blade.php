@@ -5,6 +5,34 @@
 
 @section('content')
     @include('admin_dashboard.peserta.kelasku.includes.navbar')
+    {{-- @if ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi") --}}
+        @if ($registrasi->status == "Diterima" && ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi"))
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Selamat!</strong> anda dinyatakan diterima di kelas {{ $kelas->nama_kelas }}. 
+                @if ($registrasi->catatan!=null)
+                    <br>
+                    <strong>Catatan:</strong>
+                    {{ $registrasi->catatan }}
+                @endif
+            </div>
+        @elseif ($registrasi->status == "Ditolak")
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Mohon Maaf</strong> anda belum lulus seleksi {{ $kelas->nama_kelas }}. silahkan coba lagi lain waktu.
+                @if ($registrasi->catatan!=null)
+                    <br>
+                    <strong>Catatan:</strong>
+                    {{ $registrasi->catatan }}
+                @endif
+            </div>
+        @else
+            <div class="alert alert-warning" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                <strong>Mohon menunggu</strong> saat ini masih proses seleksi peserta.
+            </div>
+        @endif
+    {{-- @endif --}}
     <div class="card mb-3">
         <div class="row no-gutters">
             <div class="col-md-4">
@@ -65,24 +93,6 @@
                         <p class="card-text">Status : <span class="badge badge-dark">{{ $kelas->status }}</span></p>                        
                     @endif
                     <hr>
-                    @if ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi")
-                        @if ($registrasi->status == "Diterima")
-                            <div class="alert alert-success mb-4" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                                <strong>Selamat!</strong> anda dinyatakan diterima di kelas {{ $kelas->nama_kelas }}.
-                            </div>
-                        @elseif ($registrasi->status == "Ditolak")
-                            <div class="alert alert-danger mb-4" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                                <strong>Mohon Maaf</strong> anda belum lulus seleksi {{ $kelas->nama_kelas }}. silahkan coba lagi lain waktu.
-                            </div>
-                        @else
-                            <div class="alert alert-warning mb-4" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                                <strong>Mohon menunggu</strong> saat ini masih proses seleksi peserta.
-                            </div>
-                        @endif
-                    @endif
                 </div>
             </div>
         </div>

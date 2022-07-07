@@ -4,18 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Berita;
 use App\Models\Faq;
+use App\Models\Testimoni;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
 {
     public function index(){
+        $testimoni = Testimoni::where('rating', 5)->get();
+        $tutor = User::with('kelas')->where('level', 'tutor')->get();
         $berita = Berita::where('publish', 'Ya')->orderBy('id', 'desc')->get();
         if(count(Faq::all())>5){
             $faq = Faq::all()->random(5);
         } else {
             $faq = Faq::all();
         }
-        return view('welcome', ['berita' => $berita, 'faq' => $faq]);
+        return view('welcome', ['berita' => $berita, 'faq' => $faq, 'tutor' => $tutor, 'testimoni' => $testimoni]);
     }
 
     public function faq(){

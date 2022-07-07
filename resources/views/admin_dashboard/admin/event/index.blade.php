@@ -36,7 +36,7 @@
                                 <th><input type="checkbox" id="head-cb"></th>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th class="text-center">Periode Event</th>
+                                <th class="text-center" width="20%">Periode Event</th>
                                 <th class="text-center">Batas Waktu Pendaftaran</th>
                                 <th class="text-center">Kuota</th>
                                 <th class="text-center">Status</th>

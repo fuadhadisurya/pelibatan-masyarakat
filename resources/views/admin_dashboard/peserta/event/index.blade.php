@@ -12,21 +12,28 @@
                         <div class="card-body">
                             <form action="{{ route('peserta.event.index') }}" method="GET" autocomplete="off">
                                 <h4 class="mb-3">Filter</h4>
+                                <div class="mb-3">
+                                    <h5 class="mb-2">Urutkan</h5>
+                                    @if ($sort != null)
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="sort" name="sort" value="Event Terbaru" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Event Terbaru" ? "checked" : "" }}>
+                                            <label class="custom-control-label" for="sort">Event Terbaru</label>
+                                        </div>
+                                    @else
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="sort" name="sort" value="Event Terbaru" class="custom-control-input" onchange="this.form.submit();" checked>
+                                            <label class="custom-control-label" for="sort">Event Terbaru</label>
+                                        </div>
+                                    @endif
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="sort2" name="sort" value="Segera Berakhir" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Segera Berakhir" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="sort2">Segera Berakhir</label>
+                                    </div>
+                                </div>
                                 <div class="input-group input-group-sm mb-4">
                                     <input type="text" class="form-control" name="search" placeholder="Pencarian" aria-label="Pencarian" value="{{ $search }}">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <h5 class="mb-2">Urutkan</h5>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="sort" name="sort" value="Event Terbaru" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Event Terbaru" ? "checked" : "" }}>
-                                        <label class="custom-control-label" for="sort">Event Terbaru</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" id="sort2" name="sort" value="Segera Berakhir" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Segera Berakhir" ? "checked" : "" }}>
-                                        <label class="custom-control-label" for="sort2">Segera Berakhir</label>
                                     </div>
                                 </div>
                             </form>

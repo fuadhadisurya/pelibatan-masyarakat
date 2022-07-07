@@ -45,7 +45,9 @@ https://templatemo.com/tm-568-digimedia
         </div>
     </div>
     <!-- ***** Preloader End ***** -->
-
+    <a target="_blank" href="https://wa.me/6289670184654?text=Saya%20ingin%20bertanya%20tentang%20Kegiatan%20Pelibatan%20Masyarakat" class="float">
+        <i class="fa fa-whatsapp fa-lg my-float" aria-hidden="true"></i>
+    </a>
     <!-- Pre-header Starts -->
     <div class="pre-header">
         <div class="container">
@@ -85,12 +87,18 @@ https://templatemo.com/tm-568-digimedia
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">Tentang Kami</a></li>
                             <li class="scroll-to-section"><a href="#services">Kelas</a></li>
-                            <li class="scroll-to-section"><a href="#free-quote">Testimoni</a></li>
-                            <li class="scroll-to-section"><a href="#portfolio">Tutor</a></li>
+                            @if (count($testimoni)>0)
+                                <li class="scroll-to-section"><a href="#free-quote">Testimoni</a></li>
+                            @endif
+                            @if (count($tutor)>0)
+                                <li class="scroll-to-section"><a href="#portfolio">Tutor</a></li>
+                            @endif
                             @if (count($berita)>0)
                                 <li class="scroll-to-section"><a href="#blog">Berita</a></li>
                             @endif
-                            <li class="scroll-to-section"><a href="#faq">Bantuan</a></li>
+                            @if (count($faq)>0)
+                                <li class="scroll-to-section"><a href="#faq">Bantuan</a></li>
+                            @endif
                             <li class="scroll-to-section"><a href="#contact">Hubungi Kami</a></li>
                             @if (Route::has('login'))
                                 @auth
@@ -444,208 +452,186 @@ https://templatemo.com/tm-568-digimedia
             </div>
         </div>
     </div> --}}
-    
-    <div id="free-quote" class="free-quote">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 offset-lg-4">
-                    <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
-                        <h4>Apa kata mereka</h4>
-                        <h6>Dengarkan cerita menarik dari peserta</h6>
-                        <div class="line-dec"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="testimoni-loop owl-carousel">
-                        <div class="testimoni-card">
-                            <div class="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
-                            </div>
-                            <hr>
-                            <div class="">
-                                <div class="row d-flex justify-content-center align-items-center">
-                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
-                                    By: Andrea Mentuzi
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimoni-card">
-                            <div class="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
-                            </div>
-                            <hr>
-                            <div class="">
-                                <div class="row d-flex justify-content-center align-items-center">
-                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
-                                    By: Andrea Mentuzi
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimoni-card">
-                            <div class="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
-                            </div>
-                            <hr>
-                            <div class="">
-                                <div class="row d-flex justify-content-center align-items-center">
-                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
-                                    By: Andrea Mentuzi
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimoni-card">
-                            <div class="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
-                            </div>
-                            <hr>
-                            <div class="">
-                                <div class="row d-flex justify-content-center align-items-center">
-                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
-                                    By: Andrea Mentuzi
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimoni-card">
-                            <div class="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
-                            </div>
-                            <hr>
-                            <div class="">
-                                <div class="row d-flex justify-content-center align-items-center">
-                                    <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
-                                    By: Andrea Mentuzi
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="testimonials">
-                        <div class="full-radius">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
-                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="testimonials">
-                        <div class="full-radius">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
-                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="testimonials">
-                        <div class="full-radius">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
-                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 show-up wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.3s">
-                    <div class="testimonials">
-                        <div class="full-radius">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p>
-                            <span class="author"><img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" alt="">By: Andrea Mentuzi</span>
-                        </div>
-                    </div>
-                </div> --}}
-            </div>
-        </div>
-    </div>
 
+    @if (count($testimoni)>0) 
+        <div id="free-quote" class="free-quote">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 offset-lg-4">
+                        <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <h4>Apa kata mereka</h4>
+                            <h6>Dengarkan cerita menarik dari peserta</h6>
+                            <div class="line-dec"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.7s">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="testimoni-loop owl-carousel">
+                            @forelse ($testimoni as $testimonis)
+                                <div class="testimoni-card">
+                                    <div class="">
+                                        <p>{{ $testimonis->deskripsi }}</p> 
+                                    </div>
+                                    <hr>
+                                    <div class="">
+                                        <div class="row d-flex justify-content-center align-items-center">
+                                            <img src="{{ Storage::url($testimonis->user->foto) }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                            Oleh: {{ $testimonis->user->nama }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="testimoni-card">
+                                    <div class="">
+                                        <p>Data Testimoni Kosong</p> 
+                                    </div>
+                                    <hr>
+                                    <div class="">
+                                        <div class="row d-flex justify-content-center align-items-center">
+                                            <img src="{{ asset('landing_page/assets/images/90x90.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                            Oleh: No Name
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            @endforelse
+                            {{-- <div class="testimoni-card">
+                                <div class="">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doers itii eiumod deis tempor incididunt ut labore.</p> 
+                                </div>
+                                <hr>
+                                <div class="">
+                                    <div class="row d-flex justify-content-center align-items-center">
+                                        <img src="{{ asset('landing_page/assets/images/author-post.jpg') }}" class="rounded-circle" alt="" style="max-width: 56px">
+                                        By: Andrea Mentuzi
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
-    <div id="portfolio" class="our-portfolio section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5">
-                    <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
-                        <h6>Portofolio Peserta</h6>
-                        <h4>Lihat Portofolio Dari <em>Peserta</em></h4>
-                        <div class="line-dec"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="loop owl-carousel">
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('landing_page/assets/images/portfolio-01.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('landing_page/assets/images/portfolio-01.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('landing_page/assets/images/portfolio-02.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('landing_page/assets/images/portfolio-03.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="#">
-                                <div class="portfolio-item">
-                                    <div class="thumb">
-                                        <img src="{{ asset('landing_page/assets/images/portfolio-04.jpg') }}" alt="">
-                                    </div>
-                                    <div class="down-content">
-                                        <h4>Website Builder</h4>
-                                        <span>Marketing</span>
-                                    </div>
-                                </div>
-                            </a>
+    @if (count($tutor)>0)
+        <div id="portfolio" class="our-portfolio section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <h6>Tutor Kelas</h6>
+                            <h4>Tutor yang <em>Berpengalaman</em></h4>
+                            <div class="line-dec"></div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="loop owl-carousel">
+                            @forelse ($tutor as $tutors)
+                                <div class="item">
+                                    <a href="#">
+                                        <div class="portfolio-item">
+                                            <div class="thumb">
+                                                @if($tutors->foto!=null)
+                                                    <img src="{{ Storage::url($tutors->foto) }}" width="284px" height="284px" alt="">
+                                                @else
+                                                    @if($tutors->jenis_kelamin=="Laki-laki")
+                                                        <img src="{{ asset('landing_page/assets/images/avatar-male.png') }}" width="284px" height="284px" alt="">
+                                                    @elseif($tutors->jenis_kelamin=="Perempuan")
+                                                        <img src="{{ asset('landing_page/assets/images/avatar-female.png') }}" width="284px" height="284px" alt="">
+                                                    @else
+                                                        <img src="{{ asset('landing_page/assets/images/255x255.jpg') }}" width="284px" height="284px" alt="">
+                                                    @endif
+                                                @endif
+                                            </div>
+                                            <div class="down-content">
+                                                <h4>{{ $tutors->nama }}</h4>
+                                                <span>{{ $tutors->kelas->last()->nama_kelas }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @empty
+                                
+                            @endforelse
+                            {{-- <div class="item">
+                                <a href="#">
+                                    <div class="portfolio-item">
+                                        <div class="thumb">
+                                            <img src="{{ asset('landing_page/assets/images/portfolio-01.jpg') }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>Website Builder</h4>
+                                            <span>Marketing</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="#">
+                                    <div class="portfolio-item">
+                                        <div class="thumb">
+                                            <img src="{{ asset('landing_page/assets/images/portfolio-02.jpg') }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>Website Builder</h4>
+                                            <span>Marketing</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="#">
+                                    <div class="portfolio-item">
+                                        <div class="thumb">
+                                            <img src="{{ asset('landing_page/assets/images/portfolio-03.jpg') }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>Website Builder</h4>
+                                            <span>Marketing</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="#">
+                                    <div class="portfolio-item">
+                                        <div class="thumb">
+                                            <img src="{{ asset('landing_page/assets/images/portfolio-04.jpg') }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>Website Builder</h4>
+                                            <span>Marketing</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="#">
+                                    <div class="portfolio-item">
+                                        <div class="thumb">
+                                            <img src="{{ asset('landing_page/assets/images/portfolio-04.jpg') }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <h4>Website Builder</h4>
+                                            <span>Marketing</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    @endif
 
     @if (count($berita)>0)
         <div id="blog" class="blog">
@@ -698,57 +684,59 @@ https://templatemo.com/tm-568-digimedia
         </div>
     @endif
 
-    <div id="faq" class="faq section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <h6>Pusat Bantuan</h6>
-                        <h4>Dika Nakon Kula <em>Jawab</em></h4>
-                        <div class="line-dec"></div>
-                    </div>
-                </div>
-                <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
-                    <div class="accordion" id="accordionExample">
-                        @forelse ($faq as $key => $item) 
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading{{ $key }}">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $key }}" aria-expanded="false" aria-controls="collapse{{ $key }}">
-                                        {{ $item->pertanyaan }}
-                                    </button>
-                                </h2>
-                                <div id="collapse{{ $key }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $key }}" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{ $item->jawaban }}
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        Apa itu kegiatan pelibatan masyarakat?
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        Kegiatan Pelibatan Masyarakat merupakan kegiatan di perpustakaan untuk memfasilitasi kebutuhan masyarakat melalui penyediaan informasi yang luas (buku, internet, pelatihan) dengan melibatkan masyarakat secara aktif.
-                                    </div>
-                                </div>
-                            </div>
-                        @endforelse
-                    </div>
-                    @if (count($faq)>0)
-                        <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
-                            <div class="border-first-button scroll-to-section d-flex justify-content-center mt-3">
-                                <a href="{{ url('/faq') }}">Lihat Selengkapnya</a>
-                            </div>
+    @if (count($faq)>0)
+        <div id="faq" class="faq section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+                            <h6>Pusat Bantuan</h6>
+                            <h4>Dika Nakon Kula <em>Jawab</em></h4>
+                            <div class="line-dec"></div>
                         </div>
-                    @endif
+                    </div>
+                    <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                        <div class="accordion" id="accordionExample">
+                            @forelse ($faq as $key => $item) 
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading{{ $key }}">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $key }}" aria-expanded="false" aria-controls="collapse{{ $key }}">
+                                            {{ $item->pertanyaan }}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ $key }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $key }}" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            {{ $item->jawaban }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            Apa itu kegiatan pelibatan masyarakat?
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Kegiatan Pelibatan Masyarakat merupakan kegiatan di perpustakaan untuk memfasilitasi kebutuhan masyarakat melalui penyediaan informasi yang luas (buku, internet, pelatihan) dengan melibatkan masyarakat secara aktif.
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforelse
+                        </div>
+                        @if (count($faq)>0)
+                            <div class="col-lg-12 wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                                <div class="border-first-button scroll-to-section d-flex justify-content-center mt-3">
+                                    <a href="{{ url('/faq') }}">Lihat Selengkapnya</a>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div id="contact" class="contact-us section">
         <div class="container">
@@ -761,7 +749,7 @@ https://templatemo.com/tm-568-digimedia
                     </div>
                 </div>
                 <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
-                    <form id="contact" action="" method="post">
+                    <form id="contact" action="mailto:arpusindramayu7@gmail.com?subject=Tanya Kegiatan Pelibatan Masyarakat" method="post" enctype="text/plain">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="contact-dec">
@@ -776,7 +764,7 @@ https://templatemo.com/tm-568-digimedia
                             <div class="col-lg-7">
                                 <div class="fill-form">
                                     <div class="row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <div class="info-post">
                                                 <div class="icon">
                                                     <img src="{{ asset('landing_page/assets/images/phone-icon.png') }}" alt="">
@@ -784,7 +772,7 @@ https://templatemo.com/tm-568-digimedia
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-5">
                                             <div class="info-post">
                                                 <div class="icon">
                                                     <img src="{{ asset('landing_page/assets/images/email-icon.png') }}" alt="">
@@ -800,20 +788,23 @@ https://templatemo.com/tm-568-digimedia
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <fieldset>
-                                                <input type="name" name="name" id="name" placeholder="Name" autocomplete="on" required>
-                                            </fieldset>
-                                            <fieldset>
-                                                <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
-                                            </fieldset>
-                                            <fieldset>
-                                                <input type="subject" name="subject" id="subject" placeholder="Subject" autocomplete="on">
-                                            </fieldset>
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <fieldset>
+                                                        <input type="name" name="nama" id="nama" placeholder="Nama" autocomplete="on" required>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <fieldset>
+                                                        <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Email Anda" required="">
+                                                    </fieldset>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <fieldset>
-                                                <textarea name="message" type="text" class="form-control" id="message" placeholder="Message" required=""></textarea>
+                                                <textarea name="Pesan" type="text" class="form-control" id="Pesan" placeholder="Pesan" required=""></textarea>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
@@ -837,7 +828,7 @@ https://templatemo.com/tm-568-digimedia
                 <div class="col-lg-12">
                     <p>Copyright © {{ Carbon\Carbon::now()->year }} DigiMedia Co., Ltd. All Rights Reserved.
                         <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
-                        <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free css templates">ThemeWagon</a>
+                        {{-- <br>Distributed By: <a href="https://themewagon.com" target="_blank" title="free css templates">ThemeWagon</a> --}}
                     </p>
                 </div>
             </div>
