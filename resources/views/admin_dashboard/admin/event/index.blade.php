@@ -28,18 +28,15 @@
             @endif
             <div class="widget-content widget-content-area br-6">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahKelas">Tambah Event</button>
-                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#status" id="ubah_status" disabled>Ubah Status</button>
                 <div class="table-responsive mb-4 mt-2">
                     <table id="tab_kelas" class="table table-hover" style="width:100%">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="head-cb"></th>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th class="text-center" width="20%">Periode Event</th>
+                                <th class="text-center">Periode Event</th>
                                 <th class="text-center">Batas Waktu Pendaftaran</th>
                                 <th class="text-center">Kuota</th>
-                                <th class="text-center">Status</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -117,42 +114,10 @@
                             <label for="kuota">Kuota Peserta</label>
                             <input id="kuota" type="text" name="kuota" class="form-control" onkeypress="return isNumber(event)" value="{{ old('kuota') }}" required>
                         </div>
-                        <input type="hidden" name="status" value="Persiapan">
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="status" tabindex="-1" aria-labelledby="status" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="status">Ubah Status</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="ganti_status" action="{{ route('kelas.update.status') }}" method="post">
-                    @csrf
-                    @method('put')
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control selectpicker" id="opsi_status" name="status" required>
-                                <option value="Persiapan">Persiapan</option>
-                                <option value="Pendaftaran">Pendaftaran</option>
-                                <option value="Kegiatan Berlangsung">Kegiatan Berlangsung</option>
-                                <option value="Selesai">Selesai</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
-                        <button type="button" onclick="gantiStatus()" class="btn btn-primary">Kirim</button>
                     </div>
                 </form>
             </div>
@@ -193,13 +158,11 @@
             order: [[1]],
             ajax: "{{ route('event.index') }}",
             columns: [
-                {data: 'checkbox', name: 'checkbox', searchable:false, orderable:false, sortable:false},
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_event', name: 'nama_event'},
                 {data: 'periode_event', name: 'periode_event', className: 'text-center'},
                 {data: 'deadline_pendaftaran', name: 'deadline_pendaftaran', className: 'text-center'},
                 {data: 'kuota', name: 'kuota', className: 'text-center'},
-                {data: 'status', name: 'status', className: 'text-center'},
                 {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
             ],
             "oLanguage": {
@@ -307,44 +270,7 @@
     </script>
     <script>
         $(".selectpicker").selectpicker({
-            "title": "Pilih Status..."        
+            "title": "Pilih Menu..."        
         }).selectpicker("render");
-    </script>
-    <script>
-        let yangDicheck = 0;
-        $("#head-cb").on('click',function(){
-            var isChecked = $('#head-cb').prop('checked');
-            $(".cb-child").prop('checked', isChecked);
-            $('#ubah_status').prop('disabled',!isChecked);
-        })
-
-        $("#tab_kelas tbody").on('click','.cb-child', function(){
-            if($(this).prop('checked')!=true){
-                $("#head-cb").prop('checked', false);
-            }
-            
-            let semuaCheckbox = $("#tab_kelas tbody .cb-child:checked")
-            let childChecked = (semuaCheckbox.length>0)
-            $('#ubah_status').prop('disabled',!childChecked);
-        });
-
-        function gantiStatus(){
-            let status = $("#opsi_status :selected").text();
-            let checkbox_dipilih = $("#tab_kelas tbody .cb-child:checked");
-            let semua_id = [];
-            $.each(checkbox_dipilih, function (index,elm){
-                semua_id.push(elm.value);
-            })
-            $.ajax({
-                "_token": "{{ csrf_token() }}",
-                url:"{{ route('event.update.status') }}",
-                method: 'put',
-                data:{"_token": "{{ csrf_token() }}", ids: semua_id, status:status},
-                success:function(res){
-                    window.location.reload();
-                }
-            })
-            console.log(semua_id);
-        };
     </script>
 @endpush

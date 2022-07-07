@@ -22,7 +22,6 @@ class Event extends Model
         "lokasi",
         "deadline_pendaftaran",
         "kuota",
-        "status",
     ];
 
     public function scopeFilter($query, array $filters){
@@ -38,13 +37,6 @@ class Event extends Model
                 return $query->orderBy('deadline_pendaftaran', 'asc');
             }
         });
-
-        // $query->when($filters['category'] ?? false, function($query, $category){
-        //     return $query->whereHas('kelasKategori', function($query) use ($category){
-        //         $data = $query->where('TK_PAUD', 1);
-        //         dd($data->get());
-        //     });
-        // });
     }
 
     public function registasiEvent(){
@@ -55,7 +47,7 @@ class Event extends Model
         return $this->hasMany(Dokumentasi::class);
     }
 
-    // public function presensi(){
-    //     return $this->hasMany(Presensi::class);
-    // }
+    public function presensi(){
+        return $this->hasMany(PresensiEvent::class);
+    }
 }

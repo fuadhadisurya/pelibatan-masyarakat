@@ -23,7 +23,7 @@ class QuizJawabanController extends Controller
     {
         // $jawaban = NilaiQuiz::with('users')->with('quiz')->where('quiz_id', $quiz_id)->get();
         $jawaban = User::select('users.nama AS nama', 'nilai_quiz.*', 'registrasi_kelas.kelas_id')
-            ->leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->rightJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
             ->leftJoin('nilai_quiz', 'users.id', '=', DB::raw('nilai_quiz.user_id AND nilai_quiz.quiz_id = ' . $quiz_id))
             ->where('users.level', 'peserta')->get();
         if ($request->ajax()) {

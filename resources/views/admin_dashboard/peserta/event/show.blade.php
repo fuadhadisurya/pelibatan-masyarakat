@@ -72,30 +72,36 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        @if ($kuota > 0)    
-                            @if($registrasi_event != null)
-                                <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
-                                    Terimakasih sudah mendaftar
-                                </button>
-                            @elseif(Auth::user()->status == 'Belum Verifikasi')
-                                <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
-                                    Verifikasi akun terlebih dahulu
-                                </button>
+                        @if($event->deadline_pendaftaran > \Carbon\Carbon::now()->format('Y-m-d'))
+                            @if ($kuota > 0)    
+                                @if($registrasi_event != null)
+                                    <button type="button" class="btn btn-success btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                        Terimakasih sudah mendaftar
+                                    </button>
+                                @elseif(Auth::user()->status == 'Belum Verifikasi')
+                                    <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                        Verifikasi akun terlebih dahulu
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                                        Daftar Sekarang
+                                    </button>
+                                @endif
                             @else
-                                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-                                    Daftar Sekarang
-                                </button>
+                                @if($registrasi_event != null)
+                                    <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                        Terimakasih sudah mendaftar
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                        Maaf, kuota pendaftaran sudah habis
+                                    </button>
+                                @endif
                             @endif
                         @else
-                            @if($registrasi_event != null)
-                                <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
-                                    Terimakasih sudah mendaftar
-                                </button>
-                            @else
-                                <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
-                                    Maaf, kuota pendaftaran sudah habis
-                                </button>
-                            @endif
+                            <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                Maaf, pendaftaran sudah ditutup
+                            </button>
                         @endif
                     </div>
                 </div>

@@ -107,17 +107,11 @@ class PresensiController extends Controller
         // $dataPresensi = DataPresensiEvent::with('user')->where('presensi_event_id', '=', $id)->whereRelation('presensi', 'event_id', '=', $event_id)->whereRelation('user', 'level', '=', 'peserta')->get();
         $dataPresensi = User::select('users.*', 'data_presensi_event.id AS presensi_event_id', 'data_presensi_event.created_at AS waktu_mengisi', 'data_presensi_event.status AS presensi_event_status', 'data_presensi_event.gambar AS gambar')
             ->orderBy('users.nama', 'asc')
-            ->leftJoin('registrasi_event', 'users.id', '=', 'registrasi_event.user_id')
+            ->rightJoin('registrasi_event', 'users.id', '=', 'registrasi_event.user_id')
             ->leftJoin('data_presensi_event', 'data_presensi_event.user_id', '=', DB::raw('users.id AND data_presensi_event.presensi_event_id = ' . $id))
             ->where('users.level', 'peserta')->get();
-        $tutor = User::leftJoin('kelas', 'users.id', '=', 'kelas.tutor_id')
-            ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
-            ->select('users.*', 'data_presensi.status', 'data_presensi.created_at as waktu_mengisi')
-            ->where('kelas.id', '=', $event_id)
-            ->where('users.level', '=', 'tutor')
-            ->first();
 
-        return view('admin_dashboard.admin.data-event.presensi.show', ['event' => $event, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'tutor' => $tutor]);
+        return view('admin_dashboard.admin.data-event.presensi.show', ['event' => $event, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi]);
     }
 
     /**

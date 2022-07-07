@@ -73,15 +73,6 @@
                         <label for="kuota">Kuota Peserta</label>
                         <input id="kuota" type="text" name="kuota" class="form-control" onkeypress="return isNumber(event)" value="{{ old('kuota', $event->kuota) }}" required>
                     </div>
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="form-control selectpicker" name="status">
-                            <option value="Persiapan" {{ (old('status', $event->status) == 'Persiapan') ? 'selected': '' }}>Persiapan</option>
-                            <option value="Pendaftaran" {{ (old('status', $event->status) == 'Pendaftaran') ? 'selected': '' }}>Pendaftaran</option>
-                            <option value="Kegiatan Berlangsung" {{ (old('status', $event->status) == 'Kegiatan Berlangsung') ? 'selected': '' }}>Kegiatan Berlangsung</option>
-                            <option value="Selesai" {{ (old('status', $event->status) == 'Selesai') ? 'selected': '' }}>Selesai</option>
-                        </select>
-                    </div>
                     <hr>
                     <div class="d-flex justify-content-between">
                         <a href="{{ route('event.index') }}" class="btn btn-secondary">Batal</a>
@@ -123,7 +114,7 @@
     </script>
     <script>
         $(".selectpicker").selectpicker({
-            "title": "Select Options"        
+            "title": "Pilih Menu..."        
         }).selectpicker("render");
     </script>
     <script type='text/javascript'> 
@@ -169,10 +160,5 @@
             }
             return true;
         }
-    </script>
-    <script>
-        $(".selectpicker").selectpicker({
-            "title": "Pilih Status..."        
-        }).selectpicker("render");
     </script>
 @endpush

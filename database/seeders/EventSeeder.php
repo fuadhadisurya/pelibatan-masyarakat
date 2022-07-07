@@ -37,7 +37,6 @@ class EventSeeder extends Seeder
                 'lokasi' => 'Perpustakaan Kabupaten Indramayu',
                 'deadline_pendaftaran' => Carbon::now()->addDays(6),
                 'kuota' => '30',
-                'status' => 'Persiapan',
             ],
             [
                 'banner' => '',
@@ -53,7 +52,6 @@ class EventSeeder extends Seeder
                 'lokasi' => 'Online. gmeet: https://meet.google.com/abc-defg-hij',
                 'deadline_pendaftaran' => Carbon::now()->addDays(13),
                 'kuota' => '100',
-                'status' => 'Persiapan',
             ],        
         ]);
         foreach($events as $event){

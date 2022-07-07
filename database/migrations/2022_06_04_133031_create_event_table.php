@@ -25,7 +25,6 @@ class CreateEventTable extends Migration
             $table->string("lokasi");
             $table->date('deadline_pendaftaran');
             $table->integer('kuota');
-            $table->string("status");
             $table->timestamps();
         });
     }

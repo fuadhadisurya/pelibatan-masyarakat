@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\RegistrasiEvent;
 use App\Models\RegistrasiKelas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,9 +20,9 @@ class EventController extends Controller
     public function index()
     {
         if (request('sort')) {
-            $event = Event::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort']))->paginate(10);
+            $event = Event::filter(request(['search', 'sort']))->paginate(10);
         } else {
-            $event = Event::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
+            $event = Event::orderBy('id', 'desc')->filter(request(['search']))->paginate(10);
         }
         
         $search = request('search');
@@ -58,7 +59,7 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        $event = Event::where('status', '=', 'Pendaftaran')->findOrfail($id);
+        $event = Event::findOrfail($id);
         $registrasi_event = RegistrasiEvent::where('user_id', '=', Auth::user()->id)->where('event_id', '=', $event->id)->first();
         $jumlahPendaftar = count(RegistrasiEvent::where('event_id', '=', $event->id)->get());
         $kuota = $event->kuota - $jumlahPendaftar;

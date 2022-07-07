@@ -137,7 +137,6 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('berita', BeritaController::class);
     Route::resource('faq', FaqController::class);
     // Event
-    Route::put('/event', [EventController::class, 'status'])->name('event.update.status');
     Route::resource('event', EventController::class);
     Route::resource('data-event', DataEventController::class);
     Route::resource('data-event.deskripsi', DeskripsiController::class);
@@ -213,11 +212,13 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
     Route::post('event/{id}', [PesertaEventController::class, 'daftar'])->name('event.daftar');
     Route::resource('event', PesertaEventController::class);
     Route::resource('eventku', PesertaEventkuController::class)->only(['index']);
-    Route::resource('eventku.deskripsi', PesertaEventkuDeskripsiController::class);
-    Route::resource('eventku.dokumentasi', PesertaEventkuDokumentasiController::class);
-    Route::resource('eventku.presensi', PesertaEventkuPresensiController::class);
-    Route::get('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'index']);
-    Route::get('/eventku/{eventku}/sertifikat/show', [PesertaEventkuSertifikatController::class, 'show'])->name('eventku.sertifikat.download');
+    Route::middleware(['cekRegistrasiEvent'])->group(function(){
+        Route::resource('eventku.deskripsi', PesertaEventkuDeskripsiController::class);
+        Route::resource('eventku.dokumentasi', PesertaEventkuDokumentasiController::class);
+        Route::resource('eventku.presensi', PesertaEventkuPresensiController::class);
+        Route::get('/eventku/{eventku}/sertifikat', [PesertaEventkuSertifikatController::class, 'index']);
+        Route::get('/eventku/{eventku}/sertifikat/show', [PesertaEventkuSertifikatController::class, 'show'])->name('eventku.sertifikat.download');
+    });
 });
 
 Route::middleware(['auth', 'ceklevel:admin,tutor,peserta'])->group(function(){

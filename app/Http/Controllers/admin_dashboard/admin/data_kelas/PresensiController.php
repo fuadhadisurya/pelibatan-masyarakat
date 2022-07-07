@@ -107,7 +107,7 @@ class PresensiController extends Controller
         // $dataPresensi = DataPresensi::with('user')->where('presensi_id', '=', $id)->whereRelation('presensi', 'kelas_id', '=', $kelas_id)->whereRelation('user', 'level', '=', 'peserta')->get();
         $dataPresensi = User::select('users.*', 'data_presensi.id AS presensi_id', 'data_presensi.created_at AS waktu_mengisi', 'data_presensi.status AS presensi_status', 'data_presensi.gambar AS gambar')
             ->orderBy('users.nama', 'asc')
-            ->leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->rightJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
             ->leftJoin('data_presensi', 'data_presensi.user_id', '=', DB::raw('users.id AND data_presensi.presensi_id = ' . $id))
             ->where('users.level', 'peserta')->get();
         $tutor = User::leftJoin('kelas', 'users.id', '=', 'kelas.tutor_id')

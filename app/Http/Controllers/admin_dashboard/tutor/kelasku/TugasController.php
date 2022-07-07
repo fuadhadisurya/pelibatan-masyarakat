@@ -107,8 +107,10 @@ class TugasController extends Controller
         $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
         // $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->get();
-        $jawaban = User::select('users.*', 'jawaban_tugas.id AS jawaban_id')->leftJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
-            ->leftJoin('jawaban_tugas', 'jawaban_tugas.users_id', '=', DB::raw('users.id AND jawaban_tugas.tugas_id = ' . $id))->where('users.level', 'peserta')->get();
+        $jawaban = User::select('users.*', 'jawaban_tugas.id AS jawaban_id')
+            ->rightJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('jawaban_tugas', 'jawaban_tugas.users_id', '=', DB::raw('users.id AND jawaban_tugas.tugas_id = ' . $id))
+            ->where('users.level', 'peserta')->get();
         // return view('admin_dashboard.tutor.kelasku.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawabanTugas' => $jawabanTugas, 'tugasBelum' => $tugasBelum]);
         return view('admin_dashboard.tutor.kelasku.tugas.show', ['kelas' => $kelas, 'tugas' => $tugas, 'jawaban' => $jawaban]);
     }

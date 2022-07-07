@@ -22,9 +22,6 @@ class EventController extends Controller
             $data = Event::orderBy('id', 'desc')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('checkbox', function($row){
-                        return '<input type="checkbox" class="cb-child" name="id[]" value='.$row->id.'>';
-                    })
                     ->editColumn('periode_event', function($row){
                         return '
                             <div class="row">
@@ -44,18 +41,6 @@ class EventController extends Controller
                     ->editColumn('deadline_pendaftaran', function($row){
                         return Carbon::parse($row->deadline_pendaftaran)->format('j F Y');
                     })
-                    ->editColumn('status', function($row){
-                        if($row->status == 'Persiapan'){
-                            $status = '<span class="badge badge-warning">Persiapan</span>';
-                        }elseif($row->status == 'Pendaftaran'){
-                            $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->status == 'Kegiatan Berlangsung'){
-                            $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
-                        } else {
-                            $status = '<span class="badge badge-dark">Selesai</span>';
-                        }
-                        return '<td class="text-center">'. $status .'</td>';
-                    })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
@@ -64,7 +49,7 @@ class EventController extends Controller
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi', 'status', 'periode_event', 'checkbox'])
+                    ->rawColumns(['aksi', 'periode_event', 'checkbox'])
                     ->make(true);
         }
         
@@ -97,7 +82,6 @@ class EventController extends Controller
             'lokasi' => 'required',
             'deadline_pendaftaran' => 'required',
             'kuota' => 'required',
-            'status' => 'required',
         ]);
         
         $data = $request->all();
@@ -169,7 +153,6 @@ class EventController extends Controller
             'lokasi' => 'required',
             'deadline_pendaftaran' => 'required',
             'kuota' => 'required',
-            'status' => 'required',
         ]);
         
         $data = $request->all();
@@ -215,14 +198,5 @@ class EventController extends Controller
         $event->delete();
 
         return response()->json(array('success' => true));
-    }
-
-    public function status(Request $request){
-        $event = Event::whereIn('id',$request->ids)->update(['status' => $request->status]);
-        if($event){
-            return response()->json(array('success' => true));
-        } else {
-            return response()->json(array('success' => false));
-        }
     }
 }
