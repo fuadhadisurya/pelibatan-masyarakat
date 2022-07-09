@@ -28,6 +28,7 @@
                                 <th>Nama</th>
                                 <th>Deskripsi</th>
                                 <th>Batas Waktu</th>
+                                <th>Status</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -70,12 +71,14 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
+            order: [[0, 'desc']],
             ajax: "{{ route('peserta.kelasku.tugas.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_tugas', name: 'nama_tugas'},
                 {data: 'deskripsi', name: 'deskripsi'},
                 {data: 'batas_waktu', name: 'batas_waktu'},
+                {data: 'status', name: 'status'},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

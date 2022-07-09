@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    @include('admin_dashboard.tutor.kelasku.includes.navbar')
+    @include('admin_dashboard.admin.data-kelas.includes.navbar')
     
     <div class="row layout-top-spacing">
         
@@ -86,7 +86,7 @@
                 </section>
                 <hr>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('tutor.kelasku.quiz.soal.index', [$kelas->id, $soal->quiz->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                    <a href="{{ route('data-kelas.quiz.soal.index', [$kelas->id, $soal->quiz->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                 </div>
             </div>
         </div>

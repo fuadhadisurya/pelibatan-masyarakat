@@ -30,7 +30,6 @@ class ResetPasswordController extends Controller
     }
 
     public function postResetPassword(Request $request){
-        // dd($password);
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',

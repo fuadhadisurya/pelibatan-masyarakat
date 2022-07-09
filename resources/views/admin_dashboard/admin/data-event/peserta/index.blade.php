@@ -64,6 +64,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
+            order: [[1, 'asc']],
             ajax: "{{ route('data-event.peserta.index', $event_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

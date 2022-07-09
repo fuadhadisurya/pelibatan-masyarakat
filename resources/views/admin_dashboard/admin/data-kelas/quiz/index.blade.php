@@ -28,6 +28,7 @@
                                 <th>Nama Quiz</th>
                                 <th>Keterangan</th>
                                 <th class="text-center">Status</th>
+                                <th class="text-center">Soal</th>
                                 <th class="text-center">Hasil Nilai</th>
                             </tr>
                         </thead>
@@ -70,12 +71,14 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
+            order: [[0, 'desc']],
             ajax: "{{ route('data-kelas.quiz.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_quiz', name: 'nama_quiz'},
                 {data: 'keterangan', name: 'keterangan'},
                 {data: 'aktif', name: 'aktif', className: 'text-center', orderable: false, searchable: false},
+                {data: 'soal', name: 'soal', className: 'text-center', orderable: false, searchable: false},
                 {data: 'hasil_nilai', name: 'hasil_nilai', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

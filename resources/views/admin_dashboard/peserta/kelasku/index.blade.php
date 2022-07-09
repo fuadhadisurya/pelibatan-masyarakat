@@ -14,7 +14,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama Kelas</th>
-                                <th>Periode Kelas</th>
+                                <th>Periode Belajar</th>
                                 <th>Tutor</th>
                                 <th class="text-center">Status Kelas</th>
                                 <th class="text-center">Status Seleksi</th>
@@ -44,6 +44,7 @@
         $('#data-kelas_admin').DataTable({
             processing: true,
             serverSide: true,
+            order: [[0, 'desc']],
             ajax: "{{ route('peserta.kelasku.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

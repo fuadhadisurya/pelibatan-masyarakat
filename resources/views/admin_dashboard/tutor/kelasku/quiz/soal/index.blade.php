@@ -102,6 +102,7 @@
         $('#soal-quiz').DataTable({
             processing: true,
             serverSide: true,
+            order: [[1, 'asc']],
             ajax: "{{ route('tutor.kelasku.quiz.soal.index', [$kelas_id, $quiz_id]) }}",
             columns: [
                 {"width": "5%", data: 'checkbox', name: 'checkbox', searchable:false, orderable:false, sortable:false},

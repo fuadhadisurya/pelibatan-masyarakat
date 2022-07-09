@@ -71,6 +71,21 @@
                             <label for="tanggal">Tanggal</label>
                             <input id="dateTimeFlatpickr" name="tanggal" class="form-control flatpickr flatpickr-input active dateTimeFlatpickr" type="text" placeholder="Pilih Tanggal">
                         </div>
+                        <div class="form-group">
+                            <label for="opsi">Mengisi presensi dengan foto?</label>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="opsi1" value="Dengan Foto" name="opsi" class="custom-control-input" required="required">
+                                        <label class="custom-control-label" for="opsi1">Ya. Dengan Foto</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="opsi2" value="Tanpa Foto" name="opsi" class="custom-control-input">
+                                        <label class="custom-control-label" for="opsi2">Tidak. Tanpa Foto</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
@@ -123,6 +138,7 @@
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
     <link href="{{ asset('admin_dashboard/plugins/animate/animate.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-modal.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/forms/theme-checkbox-radio.css') }}">
 @endpush
 
 @push('scripts')
@@ -134,6 +150,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
+            order: [[0, 'desc']],
             ajax: "{{ route('data-kelas.presensi.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

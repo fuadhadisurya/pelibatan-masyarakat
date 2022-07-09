@@ -23,7 +23,6 @@ class KelasController extends Controller
         } else {
             $kelas = Kelas::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
         }
-        // dd($kelas);
         $search = request('search');
         $sort = request('sort');
         $category = request('category');

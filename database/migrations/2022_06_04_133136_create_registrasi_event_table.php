@@ -18,6 +18,7 @@ class CreateRegistrasiEventTable extends Migration
             $table->foreignId("user_id");
             $table->foreignId("event_id");
             $table->enum("sertifikat", ['Terbit', 'Tidak Terbit'])->nullable();
+            $table->text("catatan_sertifikat")->nullable();
             $table->timestamps();
         });
     }

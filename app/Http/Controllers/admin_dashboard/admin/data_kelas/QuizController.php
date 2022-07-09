@@ -28,6 +28,11 @@ class QuizController extends Controller
                             Waktu : '.$row->waktu_pengerjaan.' Menit
                         ';
                     })
+                    ->addColumn('soal', function($row){
+                        return '
+                            <a href="'.route('data-kelas.quiz.soal.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="Lihat soal"><i class="far fa-list-alt"></i></a>
+                        ';
+                    })
                     ->addColumn('hasil_nilai', function($row){
                         return '
                             <a href="'.route('data-kelas.quiz.jawaban.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-info" title="Lihat nilai"><i class="far fa-eye"></i></a>
@@ -41,7 +46,7 @@ class QuizController extends Controller
                         }
                         return $aktif;
                     })
-                    ->rawColumns(['keterangan', 'hasil_nilai', 'aktif'])
+                    ->rawColumns(['keterangan', 'hasil_nilai', 'aktif', 'soal'])
                     ->make(true);
         }
 

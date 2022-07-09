@@ -44,6 +44,8 @@ class PresensiController extends Controller
                             return '<span class="badge badge-info">'.$dataPresensi->status.'</span>';
                         } elseif (Carbon::now() > $row->tanggal_berakhir && $dataPresensi == null){
                             return '<span class="badge badge-danger">Tidak Hadir</span>';
+                        } elseif (Carbon::now() < $row->tanggal_berakhir && $dataPresensi == null){
+                            return '<span class="badge badge-info">Presensi Belum Dibuka</span>';
                         } else {
                             return '<span class="badge badge-warning">Belum Mengisi</span>';
                         }

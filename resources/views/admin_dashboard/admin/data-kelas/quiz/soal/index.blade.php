@@ -1,11 +1,11 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Testimoni | Kegiatan Pelibatan Masyarakat
+    Soal Quiz | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    @include('admin_dashboard.tutor.kelasku.includes.navbar')
-
+    @include('admin_dashboard.admin.data-kelas.includes.navbar')
+    
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -21,13 +21,13 @@
 
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive">
-                    <table id="data-peserta" class="table table-hover" style="width:100%">
+                    <table id="soal-quiz" class="table table-hover table-bordered alignment_top" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama</th>
-                                <th>Deskripsi</th>
-                                <th>Rating</th>
+                                <th>Soal</th>
+                                <th class="text-center">Aktif</th>
+                                <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,16 +55,16 @@
 @push('scripts')
     <script src="{{ asset('admin_dashboard/plugins/table/datatable/datatables.js') }}"></script>
     <script>
-        $('#data-peserta').DataTable({
+        $('#soal-quiz').DataTable({
             processing: true,
             serverSide: true,
-            order: [[1, 'asc']],
-            ajax: "{{ route('tutor.kelasku.testimoni.index', $kelas->id) }}",
+            order: [[0, 'asc']],
+            ajax: "{{ route('data-kelas.quiz.soal.index', [$kelas_id, $quiz_id]) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'user.nama', name: 'nama'},
-                {data: 'deskripsi', name: 'deskripsi'},
-                {data: 'rating', name: 'rating', searchable: false},
+                {data: 'soal', name: 'soal'},
+                {data: 'aktif', name: 'aktif', className: 'text-center', orderable: false, searchable: false},
+                {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
                 "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },

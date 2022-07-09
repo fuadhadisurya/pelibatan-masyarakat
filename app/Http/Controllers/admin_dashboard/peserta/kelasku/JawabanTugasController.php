@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class JawabanTugasController extends Controller
 {
     public function store(Request $request, $kelas_id, $tugas_id){
-        // dd($tugas_id);
         // $this->validate($request, [
         //     'jawaban' => 'required',
         // ]);

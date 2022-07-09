@@ -39,8 +39,8 @@
                         <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ $kelas->nama_kelas }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="periode_kelas">Periode Kelas</label>
-                        <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" value="{{ $kelas->tanggal_mulai }} to {{ $kelas->tanggal_berakhir }}" placeholder="Pilih Periode Kelas..">
+                        <label for="periode_kelas">Periode Belajar</label>
+                        <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" value="{{ $kelas->tanggal_mulai }} to {{ $kelas->tanggal_berakhir }}" placeholder="Pilih Periode Belajar..">
                     </div>
                     <div class="form-group">
                         <label for="persyaratan">persyaratan Kelas</label>

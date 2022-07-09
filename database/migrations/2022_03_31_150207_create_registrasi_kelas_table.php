@@ -21,6 +21,7 @@ class CreateRegistrasiKelasTable extends Migration
             $table->string("status")->nullable();
             $table->text("catatan")->nullable();
             $table->enum("sertifikat", ['Terbit', 'Tidak Terbit'])->nullable();
+            $table->text("catatan_sertifikat")->nullable();
             $table->timestamps();
         });
     }

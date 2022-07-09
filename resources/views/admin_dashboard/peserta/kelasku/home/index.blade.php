@@ -26,7 +26,7 @@
                     {{ $registrasi->catatan }}
                 @endif
             </div>
-        @else
+        @elseif ($kelas->status == "Proses Seleksi")
             <div class="alert alert-warning" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                 <strong>Mohon menunggu</strong> saat ini masih proses seleksi peserta.

@@ -14,7 +14,7 @@
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
                         <ul>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -90,7 +90,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="catatan">Catatan</label>
+                                <label for="catatan">Catatan<sup>(Opsional)</sup></label>
                                 <textarea class="form-control" name="catatan" id="catatan" rows="3" placeholder="Catatan untuk peserta (opsional)">{{ $jawabanTugas->catatan }}</textarea>
                             </div>
                         </div>

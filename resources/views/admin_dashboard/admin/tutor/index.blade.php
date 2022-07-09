@@ -10,8 +10,8 @@
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 @if ($errors->any())
-                    <div class="alert alert-warning" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -59,7 +59,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tambah Tutor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="far fa-times-circle"></i>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form action="{{ route('tutor.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
@@ -124,6 +124,7 @@
         $('#tutor').DataTable({
             processing: true,
             serverSide: true,
+            order: [[1, 'asc']],
             ajax: "{{ route('tutor.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

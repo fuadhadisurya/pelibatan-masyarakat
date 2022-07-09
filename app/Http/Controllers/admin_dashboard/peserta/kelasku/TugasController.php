@@ -8,8 +8,10 @@ use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use App\Models\Tugas;
 use App\Models\UploadJawabanTugas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -22,10 +24,30 @@ class TugasController extends Controller
      */
     public function index($kelas_id, Request $request)
     {
-        $tugas = Tugas::where('kelas_id', '=', $kelas_id)->get();
+        $tugas = Tugas::select('tugas.*', 'jawaban_tugas.status AS status_jawaban')->leftJoin('jawaban_tugas', 'tugas.id', '=', DB::raw('jawaban_tugas.tugas_id AND jawaban_tugas.users_id = ' . Auth::user()->id))
+        ->where('kelas_id', $kelas_id)->get();
+        // $tugas = Tugas::where('kelas_id', '=', $kelas_id)->get();
         if ($request->ajax()) {
             return DataTables::of($tugas)
                     ->addIndexColumn()
+                    ->editColumn('batas_waktu', function($row){
+                        return Carbon::parse($row->batas_waktu)->format('j F Y H:i');
+                    })
+                    ->addColumn('status', function($row){
+                        if($row->status_jawaban == 'Dinilai' || $row->status_jawaban == 'Terkirim'){
+                            return '
+                                <td class="text-center">
+                                    <span class="badge badge-success">Terkirim</span>
+                                </td
+                            ';
+                        } else {
+                            return '
+                                <td class="text-center">
+                                    <span class="badge badge-warning">Belum Mengirim</span>
+                                </td
+                            ';
+                        }
+                    })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">

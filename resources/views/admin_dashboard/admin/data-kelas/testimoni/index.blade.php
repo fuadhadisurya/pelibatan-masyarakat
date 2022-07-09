@@ -65,6 +65,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
+            order: [[1, 'asc']],
             ajax: "{{ route('data-kelas.testimoni.index', $kelas->id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

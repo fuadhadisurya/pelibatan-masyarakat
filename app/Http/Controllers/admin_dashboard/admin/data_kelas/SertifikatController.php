@@ -90,9 +90,9 @@ class SertifikatController extends Controller
     {
         $registrasiKelas = RegistrasiKelas::where('kelas_id', $kelas_id)->where('user_id', $user_id)->firstOrFail();
         $kelas = Kelas::findOrfail($kelas_id);
-        $presensi = Presensi::leftJoin('data_presensi', 'presensi.id', '=', DB::raw('data_presensi.presensi_id AND data_presensi.user_id = ' . $user_id))->get();
-        $quiz = Quiz::leftJoin('nilai_quiz', 'quiz.id', '=', DB::raw('nilai_quiz.quiz_id AND nilai_quiz.user_id = ' . $user_id))->get();
-        $tugas = Tugas::leftJoin('jawaban_tugas', 'tugas.id', '=', DB::raw('jawaban_tugas.tugas_id AND jawaban_tugas.users_id = ' . $user_id))->get();
+        $presensi = Presensi::leftJoin('data_presensi', 'presensi.id', '=', DB::raw('data_presensi.presensi_id AND data_presensi.user_id = ' . $user_id))->where('kelas_id', $kelas_id)->get();
+        $quiz = Quiz::leftJoin('nilai_quiz', 'quiz.id', '=', DB::raw('nilai_quiz.quiz_id AND nilai_quiz.user_id = ' . $user_id))->where('kelas_id', $kelas_id)->get();
+        $tugas = Tugas::leftJoin('jawaban_tugas', 'tugas.id', '=', DB::raw('jawaban_tugas.tugas_id AND jawaban_tugas.users_id = ' . $user_id))->where('kelas_id', $kelas_id)->get();
         
         return view('admin_dashboard.admin.data-kelas.sertifikat.show', ['kelas' => $kelas, 'registrasiKelas' => $registrasiKelas, 'presensi' => $presensi, 'quiz' => $quiz, 'tugas' => $tugas, 'user_id' => $user_id]);
     }
@@ -117,9 +117,16 @@ class SertifikatController extends Controller
      */
     public function update(Request $request, $kelas_id, $user_id)
     {
-        $this->validate($request, [
-            'sertifikat' => 'required',
-        ]);
+        if($request->sertifikat == "Tidak Terbit"){
+            $this->validate($request, [
+                'sertifikat' => 'required',
+                'catatan_sertifikat' => 'required',
+            ]);
+        } else {
+            $this->validate($request, [
+                'sertifikat' => 'required',
+            ]);
+        }
 
         $data = $request->all();
         $registrasiKelas = RegistrasiKelas::where('kelas_id',$kelas_id)->where('user_id', $user_id)->first();

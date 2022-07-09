@@ -6,7 +6,7 @@
 @section('content')
     <div class="row layout-top-spacing">
         
-        <div class="col-xl-6 col-lg-6 col-md-6 col-6 layout-spacing">
+        <div class="col-sm-6 layout-spacing">
             <div class="widget-content-area br-4">
                 <div class="widget-heading">
                     <h5>Kelasku</h5>
@@ -15,30 +15,26 @@
                 <div class="widget-content">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table-borderless table-responsive--collapse w-100">
-                                <tbody>
-                                    @forelse ($kelasku as $kelas)
-                                        <tr>
-                                            <td class="">
-                                                <span class="small">
-                                                    <strong>{{ $kelas->status }}</strong>
-                                                </span>
-                                                <br>
-                                                <p class="mb-0 mt-1">{{ $kelas->nama_kelas }}</p>
-                                            </td>
-                                            <td class="text-right">
-                                                <a href="{{ route('tutor.kelasku.home.index', [$kelas->id]) }}" class="btn btn-sm btn-info">
-                                                    <div class="d-flex">
-                                                        <span class="">Lihat Kelas</span>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <p class="text-center">Tidak ada kelas</p>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                            @forelse ($kelasku as $kelas)
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="">
+                                        <span class="small">
+                                            <strong>{{ $kelas->status }}</strong>
+                                        </span>
+                                        <br>
+                                        <p class="mb-0 mt-1">{{ $kelas->nama_kelas }}</p>
+                                    </div>
+                                    <div class="">
+                                        <a href="{{ route('tutor.kelasku.home.index', [$kelas->id]) }}" class="btn btn-sm btn-info">
+                                            <div class="d-flex">
+                                                <span class="">Lihat Kelas</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-center">Tidak ada kelas</p>
+                            @endforelse
                         </div>
                     </div>
                     @if(count($kelasku)>5)

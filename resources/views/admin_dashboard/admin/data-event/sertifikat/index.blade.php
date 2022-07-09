@@ -65,6 +65,7 @@
         $('#data-sertifikat').DataTable({
             processing: true,
             serverSide: true,
+            order: [[1, 'asc']],
             ajax: "{{ route('data-event.sertifikat.index', $event_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

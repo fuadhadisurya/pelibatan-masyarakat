@@ -18,7 +18,7 @@ class TutorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::where('level', '=', 'tutor');
+            $data = User::where('level', '=', 'tutor')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('nama', function($row){

@@ -69,7 +69,7 @@
                                 @if ($errors->any())
                                     <div class="alert alert-danger" role="alert">
                                         <ul>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             @foreach ($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
@@ -126,12 +126,6 @@
                                                         <td>{{ $soal->d }}</td>
                                                     </tr>
                                                 </table>
-                                                @if ($soal->pembahasan != null)
-                                                    <div>
-                                                        <strong>Pembahasan</strong>
-                                                        <p>{{ $soal->pembahasan }}</p>
-                                                    </div>
-                                                @endif
                                             </div>
                                         </div>
                                     @empty

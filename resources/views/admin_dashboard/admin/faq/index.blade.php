@@ -9,8 +9,8 @@
     
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if ($errors->any())
-                <div class="alert alert-warning" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -111,6 +111,7 @@
         $('#tab_faq').DataTable({
             processing: true,
             serverSide: true,
+            order: [[0, 'desc']],
             ajax: "{{ route('faq.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},

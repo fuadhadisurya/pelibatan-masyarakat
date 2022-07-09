@@ -14,7 +14,7 @@
                 @if ($errors->any())
                     <div class="alert alert-danger" role="alert">
                         <ul>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -163,6 +163,13 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="catatan_sertifikat">Catatan</label>
+                                <textarea class="form-control" id="catatan_sertifikat" name="catatan_sertifikat" rows="3">{{ old('catatan_sertifikat', $registrasiKelas->catatan_sertifikat) }}</textarea>
+                                <small>Catatan wajib diisi jika sertifikat tidak terbit</small>
+                            </div>
+                        </div>
                         <div class="col-sm-10">
                             <div class="form-group">
                                 <label for="sertifikat">Sertifikat</label>

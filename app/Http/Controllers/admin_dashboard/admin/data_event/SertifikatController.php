@@ -90,7 +90,7 @@ class SertifikatController extends Controller
         $event = Event::findOrfail($event_id);
         if(Carbon::now()->format('Y-m-d') > $event->tanggal_berakhir){
             $registrasiEvent = RegistrasiEvent::where('event_id', $event_id)->where('user_id', $user_id)->firstOrFail();
-            $presensi = PresensiEvent::leftJoin('data_presensi_event', 'presensi_event.id', '=', DB::raw('data_presensi_event.presensi_event_id AND data_presensi_event.user_id = ' . $user_id))->get();
+            $presensi = PresensiEvent::leftJoin('data_presensi_event', 'presensi_event.id', '=', DB::raw('data_presensi_event.presensi_event_id AND data_presensi_event.user_id = ' . $user_id))->where('event_id', $event_id)->get();
             return view('admin_dashboard.admin.data-event.sertifikat.show', ['event' => $event, 'registrasiEvent' => $registrasiEvent, 'presensi' => $presensi, 'user_id' => $user_id]);
         } else {
             abort(404);
@@ -117,9 +117,16 @@ class SertifikatController extends Controller
      */
     public function update(Request $request, $event_id, $user_id)
     {
-        $this->validate($request, [
-            'sertifikat' => 'required',
-        ]);
+        if($request->sertifikat == "Tidak Terbit"){
+            $this->validate($request, [
+                'sertifikat' => 'required',
+                'catatan_sertifikat' => 'required',
+            ]);
+        } else {
+            $this->validate($request, [
+                'sertifikat' => 'required',
+            ]);
+        }
 
         $data = $request->all();
         $registrasiEvent = RegistrasiEvent::where('event_id',$event_id)->where('user_id', $user_id)->first();

@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class PesertaController extends Controller
 {
@@ -15,11 +16,26 @@ class PesertaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($kelas_id)
+    public function index(Request $request, $kelas_id)
     {
-        $kelas = Kelas::findOrfail($kelas_id);
         $peserta = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('status', '=', 'Diterima' )->get();
-        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
+        if ($request->ajax()) {
+            return DataTables::of($peserta)
+                    ->addIndexColumn()
+                    ->addColumn('user.nama', function($row){
+                        return $row->user->nama;
+                    })
+                    ->addColumn('user.username', function($row){
+                        return $row->user->username;
+                    })
+                    ->addColumn('user.alamat', function($row){
+                        return ucwords(strtolower(\Indonesia::findDistrict($row->user->kecamatan)->name));
+                    })
+                    ->rawColumns(['aksi', 'status'])
+                    ->make(true);
+        }
+        $kelas = Kelas::findOrfail($kelas_id);
+        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->firstOrFail();
 
         return view('admin_dashboard.peserta.kelasku.peserta.index', ['kelas' => $kelas, 'kelas_id' => $kelas_id, 'peserta' => $peserta, 'registrasi' => $registrasi]);
     }

@@ -10,8 +10,8 @@
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 @if ($errors->any())
-                    <div class="alert alert-warning" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -36,7 +36,7 @@
                                 <th><input type="checkbox" id="head-cb"></th>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th>Periode Kelas</th>
+                                <th>Periode Belajar</th>
                                 <th>Tutor</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Aksi</th>
@@ -61,7 +61,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tambah Kelas</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="far fa-times-circle"></i>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form action="{{ route('kelas.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
@@ -82,8 +82,8 @@
                             <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ old('nama_kelas') }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="periode_kelas">Periode Kelas</label>
-                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Kelas.." value="{{ old('periode_kelas') }}" required>
+                            <label for="periode_kelas">Periode Belajar</label>
+                            <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Belajar.." value="{{ old('periode_kelas') }}" required>
                         </div>
                         <div class="form-group">
                             <label for="tutor">Tutor</label>
@@ -228,7 +228,7 @@
         $('#tab_kelas').DataTable({
             processing: true,
             serverSide: true,
-            order: [[1]],
+            order: [[1, 'desc']],
             ajax: "{{ route('kelas.index') }}",
             columns: [
                 {data: 'checkbox', name: 'checkbox', searchable:false, orderable:false, sortable:false},

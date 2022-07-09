@@ -121,9 +121,16 @@ class PesertaController extends Controller
      */
     public function update(Request $request, $kelas_id, $id)
     {
-        $this->validate($request, [
-            'status' => 'required',
-        ]);
+        if($request->status == "Ditolak"){
+            $this->validate($request, [
+                'status' => 'required',
+                'catatan' => 'required',
+            ]);
+        } else {            
+            $this->validate($request, [
+                'status' => 'required',
+            ]);
+        }
 
         $data = $request->all();
         $dataPeserta = RegistrasiKelas::findOrFail($id);

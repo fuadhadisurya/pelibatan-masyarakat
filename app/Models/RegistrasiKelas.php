@@ -18,6 +18,7 @@ class RegistrasiKelas extends Model
         "status",
         "catatan",
         "sertifikat",
+        "catatan_sertifikat",
     ];
 
     public function user(){

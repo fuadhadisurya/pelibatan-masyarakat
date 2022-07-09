@@ -15,6 +15,7 @@ class RegistrasiEvent extends Model
         "user_id", 
         "event_id",
         "sertifikat",
+        "catatan_sertifikat",
     ];
 
     public function user(){

@@ -16,18 +16,18 @@
                                     <h5 class="mb-2">Urutkan</h5>
                                     @if ($sort != null)
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="sort1" value="Terbaru" name="sort1" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
-                                            <label class="custom-control-label" for="sort">Terbaru</label>
+                                            <input type="radio" id="sort1" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terbaru" ? "checked" : "" }}>
+                                            <label class="custom-control-label" for="sort1">Terbaru</label>
                                         </div>
                                     @else
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="sort2" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" checked>
-                                            <label class="custom-control-label" for="sort2">Terbaru</label>
+                                            <input type="radio" id="sort1" value="Terbaru" name="sort" class="custom-control-input" onchange="this.form.submit();" checked>
+                                            <label class="custom-control-label" for="sort1">Terbaru</label>
                                         </div>
                                     @endif
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="sort" value="Terlama" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terlama" ? "checked" : "" }}>
-                                        <label class="custom-control-label" for="sort">Terlama</label>
+                                        <input type="radio" id="sort2" value="Terlama" name="sort" class="custom-control-input" onchange="this.form.submit();" {{ $sort == "Terlama" ? "checked" : "" }}>
+                                        <label class="custom-control-label" for="sort2">Terlama</label>
                                     </div>
                                 </div>
                                 <div class="mb-3">

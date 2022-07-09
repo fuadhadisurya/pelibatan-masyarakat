@@ -45,7 +45,7 @@ https://templatemo.com/tm-568-digimedia
         </div>
     </div>
     <!-- ***** Preloader End ***** -->
-    <a target="_blank" href="https://wa.me/6289670184654?text=Saya%20ingin%20bertanya%20tentang%20Kegiatan%20Pelibatan%20Masyarakat" class="float">
+    <a target="_blank" href="https://wa.me/6289670184654?text=Assalamualaikum%0ASaya%20ingin%20bertanya%20tentang%20Kegiatan%20Pelibatan%20Masyarakat" class="float">
         <i class="fa fa-whatsapp fa-lg my-float" aria-hidden="true"></i>
     </a>
     <!-- Pre-header Starts -->

@@ -67,6 +67,7 @@
         $('#data-peserta').DataTable({
             processing: true,
             serverSide: true,
+            order: [[0, 'asc']],
             ajax: "{{ route('data-kelas.silabus.index', $kelas->id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
