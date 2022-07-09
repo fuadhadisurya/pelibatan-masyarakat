@@ -5,6 +5,31 @@
 
 @section('content')
     @include('admin_dashboard.peserta.kelasku.includes.navbar')
+
+    @if ($kelas->status == "Selesai")
+        @if ($registrasi->sertifikat == "Terbit")
+            <div class="card bg-success mb-3">
+                <div class="card-body">
+                    <p class="text-white">Selamat kamu telah dinyatakan <strong>lulus</strong> di {{ $kelas->nama_kelas }}!</p>
+                    <a href="{{ url('peserta/kelasku/'.$kelas->id.'/sertifikat') }}" class="btn btn-info" title="Lihat Sertifikat">Lihat Sertifikat</a>
+                </div>
+            </div>
+        @elseif ($registrasi->sertifikat == "Tidak Terbit")
+            <div class="card bg-danger mb-3">
+                <div class="card-body">
+                    <p class="text-white">Mohon maaf anda dinyatakan <strong>tidak lulus</strong> di {{ $kelas->nama_kelas }}. dikarenakan belum memenuhi syarat dan ketentuan</p>
+                    <p class="text-white">Berikut ini alasan kami tidak meluluskan anda: <br> {{ $registrasi->catatan_sertifikat }}</p>
+                </div>
+            </div>
+        @else
+            <div class="card mb-3">
+                <div class="card-body bg-warning">
+                    <p class="text-white"><strong>Mohon menunggu.</strong> Saat ini admin sedang memutuskan kelulusan anda di {{ $kelas->nama_kelas }}!</p>
+                </div>
+            </div>
+        @endif
+    @endif
+
     {{-- @if ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi") --}}
         @if ($registrasi->status == "Diterima" && ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi"))
             <div class="alert alert-success" role="alert">
@@ -35,14 +60,14 @@
     {{-- @endif --}}
     <div class="card mb-3">
         <div class="row no-gutters">
-            <div class="col-md-4">
+            <div class="col-sm-4">
                 @if ($kelas->banner != null)            
                     <img src="{{ Storage::url($kelas->banner) }}" height="300px" width="400px" class="" alt="widget-card-2">
                 @else
                     <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="img-fluid" alt="widget-card-2">
                 @endif
             </div>
-            <div class="col-md-8">
+            <div class="col-sm-8">
                 <div class="card-body">
                     <h2 class="card-title">{{ $kelas->nama_kelas }}</h2>
                     <p class="tanggal" style="color: blue; font-weight: bold">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</p>

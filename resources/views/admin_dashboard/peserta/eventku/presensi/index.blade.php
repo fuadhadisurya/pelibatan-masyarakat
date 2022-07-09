@@ -17,7 +17,16 @@
                     </div>
                 </div>
             @endif
-
+            @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="widget-content widget-content-area br-6">
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
@@ -77,10 +86,12 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="gambar">Gambar</label>
-                                <input type="file" accept="image/*" name="gambar" capture required>
-                            </div>
+                            @if ($presensi->foto == "Ya")
+                                <div class="form-group">
+                                    <label for="gambar">Gambar</label>
+                                    <input type="file" accept="image/*" name="gambar" capture required>
+                                </div>
+                            @endif
                         </div>
                         <div class="modal-footer">
                             <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>

@@ -112,27 +112,35 @@ class PresensiController extends Controller
      */
     public function store(Request $request, $event_id)
     {
-        $this->validate($request, [
-            'status' => 'required',
-            'gambar' => 'required|image',
-        ]);
+        if($request->gambar){
+            $this->validate($request, [
+                'status' => 'required',
+                'gambar' => 'required|image',
+            ]);
+        } else {
+            $this->validate($request, [
+                'status' => 'required',
+            ]);
+        }
 
         $data = $request->all();
         $data['user_id'] = Auth::user()->id;
 
-        //get filename with extension
-        $filenamewithextension = $request->file('gambar')->getClientOriginalName();
-    
-        //get filename without extension
-        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        if($request->gambar){
+            //get filename with extension
+            $filenamewithextension = $request->file('gambar')->getClientOriginalName();
+        
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
 
-        //get file extension
-        $extension = $request->file('gambar')->getClientOriginalExtension();
+            //get file extension
+            $extension = $request->file('gambar')->getClientOriginalExtension();
 
-        //filename to store
-        $filenametostore = $filename.'_'.time().'.'.$extension;
+            //filename to store
+            $filenametostore = $filename.'_'.time().'.'.$extension;
 
-        $data['gambar'] = $request->file('gambar')->storeAs('presensi_event', $filenametostore, 'public');
+            $data['gambar'] = $request->file('gambar')->storeAs('presensi_event', $filenametostore, 'public');
+        }
         
         DataPresensiEvent::create($data);
 

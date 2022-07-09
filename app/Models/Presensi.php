@@ -15,6 +15,7 @@ class Presensi extends Model
         "kelas_id", 
         "tanggal_mulai",
         "tanggal_berakhir",
+        "foto",
     ];
     
     public function kelas(){

@@ -15,6 +15,7 @@ class PresensiEvent extends Model
         "event_id", 
         "tanggal_mulai",
         "tanggal_berakhir",
+        "foto",
     ];
     
     public function event(){

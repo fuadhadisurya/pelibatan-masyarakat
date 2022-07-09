@@ -18,6 +18,7 @@ class CreatePresensiTable extends Migration
             $table->foreignId('kelas_id');
             $table->dateTime('tanggal_mulai');
             $table->dateTime('tanggal_berakhir');
+            $table->enum("foto", ['Ya', 'Tidak']);
             $table->timestamps();
         });
     }

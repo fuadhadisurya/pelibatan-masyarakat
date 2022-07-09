@@ -111,12 +111,12 @@ class PresensiController extends Controller
             ->leftJoin('data_presensi', 'data_presensi.user_id', '=', DB::raw('users.id AND data_presensi.presensi_id = ' . $id))
             ->where('users.level', 'peserta')->get();
         $tutor = User::leftJoin('kelas', 'users.id', '=', 'kelas.tutor_id')
-            ->leftJoin('data_presensi', 'users.id', '=', 'data_presensi.user_id')
+            ->leftJoin('data_presensi', 'users.id', '=', DB::raw('data_presensi.user_id AND data_presensi.presensi_id = ' . $id))
             ->select('users.*', 'data_presensi.status', 'data_presensi.created_at AS waktu_mengisi', 'data_presensi.gambar AS gambar')
             ->where('kelas.id', '=', $kelas_id)
             ->where('users.level', '=', 'tutor')
             ->first();
-
+            
         return view('admin_dashboard.admin.data-kelas.presensi.show', ['kelas' => $kelas, 'presensi' => $presensi, 'dataPresensi' => $dataPresensi, 'tutor' => $tutor]);
     }
 

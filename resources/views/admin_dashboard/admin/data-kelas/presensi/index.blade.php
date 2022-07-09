@@ -40,6 +40,7 @@
                                 <th>Nama</th>
                                 <th>Presensi Buka</th>
                                 <th>Presensi Tutup</th>
+                                <th>Dengan Foto?</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -72,16 +73,16 @@
                             <input id="dateTimeFlatpickr" name="tanggal" class="form-control flatpickr flatpickr-input active dateTimeFlatpickr" type="text" placeholder="Pilih Tanggal">
                         </div>
                         <div class="form-group">
-                            <label for="opsi">Mengisi presensi dengan foto?</label>
+                            <label for="foto">Mengisi presensi dengan foto?</label>
                             <div class="row">
                                 <div class="col">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="opsi1" value="Dengan Foto" name="opsi" class="custom-control-input" required="required">
-                                        <label class="custom-control-label" for="opsi1">Ya. Dengan Foto</label>
+                                        <input type="radio" id="foto1" value="Ya" name="foto" class="custom-control-input" required="required">
+                                        <label class="custom-control-label" for="foto1">Ya, dengan foto</label>
                                     </div>
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="opsi2" value="Tanpa Foto" name="opsi" class="custom-control-input">
-                                        <label class="custom-control-label" for="opsi2">Tidak. Tanpa Foto</label>
+                                        <input type="radio" id="foto2" value="Tidak" name="foto" class="custom-control-input">
+                                        <label class="custom-control-label" for="foto2">Tidak, tanpa foto</label>
                                     </div>
                                 </div>
                             </div>
@@ -112,6 +113,21 @@
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
                                 <input id="dateTimeFlatpickr" name="tanggal" value="{{ $presensi->tanggal_mulai .' to '. $presensi->tanggal_berakhir }}" class="form-control flatpickr flatpickr-input active dateTimeFlatpickr" type="text" placeholder="Pilih Tanggal">
+                            </div>
+                            <div class="form-group">
+                                <label for="foto">Mengisi presensi dengan foto?</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="fotoEdit1" value="Ya" name="foto" class="custom-control-input" {{ $presensi->foto == "Ya" ? "checked" : "" }} required="required">
+                                            <label class="custom-control-label" for="fotoEdit1">Ya, dengan foto</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="fotoEdit2" value="Tidak" name="foto" class="custom-control-input" {{ $presensi->foto == "Tidak" ? "checked" : "" }}>
+                                            <label class="custom-control-label" for="fotoEdit2">Tidak, tanpa foto</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -157,6 +173,7 @@
                 {data: 'nama', name: 'nama'},
                 {data: 'tanggal_mulai', name: 'tanggal_mulai'},
                 {data: 'tanggal_berakhir', name: 'tanggal_berakhir'},
+                {data: 'foto', name: 'foto'},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

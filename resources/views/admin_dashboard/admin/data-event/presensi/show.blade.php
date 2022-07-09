@@ -38,6 +38,11 @@
                                 <td>:</td>
                                 <td><span class="badge badge-warning">{{ \Carbon\Carbon::parse($presensi->tanggal_berakhir)->format('j F Y H:i') }}</span></td>
                             </tr>
+                            <tr>
+                                <td>Dengan Foto</td>
+                                <td>:</td>
+                                <td>{{ $presensi->foto }}</td>
+                            </tr>
                         </tbody>
                     </table>  
                 </div>
@@ -58,7 +63,9 @@
                                 <th>Tipe Anggota</th>
                                 <th>Waktu Mengisi</th>
                                 <th>Status</th>
-                                <th>Gambar</th>
+                                @if ($presensi->foto == "Ya") 
+                                    <th>Gambar</th>
+                                @endif
                             </thead>
                             <tbody>
                                 @if (count($dataPresensi) > 0)
@@ -79,14 +86,16 @@
                                             @else
                                                 <td><span class="badge badge-warning">Belum Mengisi</span></td>
                                             @endif
-                                            @if ($dataPresensi->gambar != null)
-                                                <td>
-                                                    <a data-fancybox="gallery" href="{{ Storage::url($dataPresensi->gambar) }}">
-                                                        <img class="rounded" src="{{ Storage::url($dataPresensi->gambar) }}" width="100" height="75" />
-                                                    </a>
-                                                </td>
-                                            @else
-                                                <td></td>
+                                            @if ($presensi->foto == "Ya") 
+                                                @if ($dataPresensi->gambar != null)
+                                                    <td>
+                                                        <a data-fancybox="gallery" href="{{ Storage::url($dataPresensi->gambar) }}">
+                                                            <img class="rounded" src="{{ Storage::url($dataPresensi->gambar) }}" width="100" height="75" />
+                                                        </a>
+                                                    </td>
+                                                @else
+                                                    <td></td>
+                                                @endif
                                             @endif
                                         </tr>
                                     @endforeach
