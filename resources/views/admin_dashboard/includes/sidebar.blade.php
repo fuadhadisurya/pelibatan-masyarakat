@@ -70,6 +70,14 @@
                         </li>      
                     </ul>
                 </li>
+                <li class="menu {{ Request::segment(2) == 'silabus' ? 'active' : '' }}">
+                    <a href="{{ url('/admin/silabus') }}" aria-expanded="{{ Request::segment(2) == 'silabus' ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span> Silabus</span>
+                        </div>
+                    </a>
+                </li>
                 <li class="menu">
                     <a href="#berita" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'berita' || Request::segment(2) == 'kategori-berita' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
@@ -97,71 +105,6 @@
                         </div>
                     </a>
                 </li>
-                {{-- <li class="menu">
-                    <a href="{{ url('/admin/notifikasi') }}" aria-expanded="false" class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                            <span> Notifikasi</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="menu">
-                    <a href="#laporan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                            <span> Laporan</span>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
-                    </a>
-                    <ul class="collapse submenu list-unstyled" id="laporan" data-parent="#accordionExample">
-                        <li>
-                            <a href="javascript:void(0);"> Daftar Hadir Peserta </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> Daftar Hadir Tutor </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> Silabus Tutor </a>
-                        </li>                           
-                    </ul>
-                </li>
-
-                <li class="menu">
-                    <a href="#grafik" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
-                            <span> Grafik</span>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
-                    </a>
-                    <ul class="collapse submenu list-unstyled" id="grafik" data-parent="#accordionExample">
-                        <li>
-                            <a href="javascript:void(0);"> Usia </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> Jenis Kelamin </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> Pendidikan </a>
-                        </li>                           
-                        <li>
-                            <a href="javascript:void(0);"> Kelas </a>
-                        </li>                           
-                    </ul>
-                </li>
-
-                <li class="menu">
-                    <a href="javascript:void(0);" aria-expanded="false" class="dropdown-toggle">
-                        <div class="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                            <span> Alaret</span>
-                        </div>
-                    </a>
-                </li> --}}
             @elseif(Auth::user()->level == 'tutor')
                 <li class="menu {{ Request::segment(2) == 'dashboard' ? 'active' : '' }}">
                     <a href="{{ url('/tutor/dashboard') }}" aria-expanded="{{ Request::segment(2) == 'dashboard' ? 'true' : 'false' }}" class="dropdown-toggle">
@@ -176,6 +119,14 @@
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
                             <span> Kelasku</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu {{ Request::segment(2) == 'silabus' ? 'active' : '' }}">
+                    <a href="{{ url('/tutor/silabus') }}" aria-expanded="{{ Request::segment(2) == 'silabus' ? 'true' : 'false' }}" class="dropdown-toggle">
+                        <div class="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span> Silabus</span>
                         </div>
                     </a>
                 </li>

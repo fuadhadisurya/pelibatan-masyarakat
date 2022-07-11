@@ -27,6 +27,8 @@ use App\Http\Controllers\admin_dashboard\admin\DataEventController;
 use App\Http\Controllers\admin_dashboard\admin\EventController;
 use App\Http\Controllers\admin_dashboard\admin\FaqController;
 use App\Http\Controllers\admin_dashboard\admin\KategoriBeritaController;
+use App\Http\Controllers\admin_dashboard\admin\silabus\SilabusBabController;
+use App\Http\Controllers\admin_dashboard\admin\silabus\SilabusSubBabController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
 use App\Http\Controllers\admin_dashboard\auth\ResetPasswordController;
@@ -64,6 +66,9 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusDetailController a
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TestimoniController as TutorKelaskuTestimoniController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
+use App\Http\Controllers\admin_dashboard\tutor\silabus\SilabusBabController as TutorSilabusBabController;
+use App\Http\Controllers\admin_dashboard\tutor\silabus\SilabusController as TutorSilabusController;
+use App\Http\Controllers\admin_dashboard\tutor\silabus\SilabusSubBabController as TutorSilabusSubBabController;
 use App\Http\Controllers\DaerahController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\LandingPageController;
@@ -146,6 +151,10 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-event.presensi', Data_eventPresensiController::class);
     Route::resource('data-event.dokumentasi', DokumentasiController::class);
     Route::resource('data-event.sertifikat', Data_eventSertifikatController::class);
+    // Silabus
+    Route::resource('silabus', SilabusController::class);
+    Route::resource('silabus.bab', SilabusBabController::class);
+    Route::resource('silabus.bab.subbab', SilabusSubBabController::class);
 });
 
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){
@@ -174,6 +183,12 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
         Route::resource('kelasku.quiz.soal', TutorQuizSoalController::class);
         Route::resource('kelasku.quiz.jawaban', TutorQuizJawabanController::class);
         Route::resource('kelasku.testimoni', TutorKelaskuTestimoniController::class);
+    });
+    // silabus
+    Route::resource('silabus', TutorSilabusController::class);
+    Route::middleware(['cekPemilikSilabus'])->group(function(){
+        Route::resource('silabus.bab', TutorSilabusBabController::class);
+        Route::resource('silabus.bab.subbab', TutorSilabusSubBabController::class);
     });
 });
 

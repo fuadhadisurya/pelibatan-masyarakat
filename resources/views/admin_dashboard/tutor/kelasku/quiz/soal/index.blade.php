@@ -20,6 +20,9 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
+                <a href="{{ route('tutor.kelasku.quiz.index', [$kelas->id]) }}" class="btn btn-secondary mb-3">
+                    <i class="far fa-arrow-alt-circle-left"></i> Kembali ke halaman quiz
+                </a>
                 <a href="{{ route('tutor.kelasku.quiz.soal.create', [$kelas->id, $quiz_id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Soal
                 </a>

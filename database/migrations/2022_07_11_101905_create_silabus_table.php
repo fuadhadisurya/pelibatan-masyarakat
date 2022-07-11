@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSilabusBabTable extends Migration
+class CreateSilabusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSilabusBabTable extends Migration
      */
     public function up()
     {
-        Schema::create('silabus_bab', function (Blueprint $table) {
+        Schema::create('silabus', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('silabus_id');
-            $table->string('nama_bab');
+            $table->foreignId('user_id');
+            $table->string('nama_silabus');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSilabusBabTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('silabus_bab');
+        Schema::dropIfExists('silabus');
     }
 }

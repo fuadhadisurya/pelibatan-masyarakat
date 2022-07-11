@@ -1,26 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\peserta\eventku;
+namespace App\Http\Controllers\admin_dashboard\admin\silabus;
 
 use App\Http\Controllers\Controller;
-use App\Models\Event;
-use App\Models\RegistrasiEvent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class DeskripsiController extends Controller
+class SilabusSubBabController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($event_id)
+    public function index()
     {
-        $event = Event::findOrfail($event_id);
-        $registrasi = RegistrasiEvent::where('event_id', '=', $event_id)->where('user_id', Auth::user()->id)->first();
-
-        return view('admin_dashboard.peserta.eventku.deskripsi.index', ['event' => $event, 'registrasi' => $registrasi]);
+        //
     }
 
     /**

@@ -42,7 +42,6 @@ class EventkuController extends Controller
                             return '
                                 <td class="text-center">
                                     <a href="'. route('peserta.eventku.deskripsi.index', $row->event->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                    <a href="'. url('peserta/eventku/'.$row->event->id.'/sertifikat') .'" class="btn btn-sm btn-light" title="Unduh Sertifikat"><i class="bi bi-patch-check-fill"></i></a>
                                 </td>
                             ';   
                         } else {

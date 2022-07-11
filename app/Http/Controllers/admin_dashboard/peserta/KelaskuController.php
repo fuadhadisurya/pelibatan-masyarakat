@@ -51,7 +51,6 @@ class KelaskuController extends Controller
                             return '
                                 <td class="text-center">
                                     <a href="'. route('peserta.kelasku.home.index', $row->kelas->id) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-eye"></i></a>
-                                    <a href="'. url('peserta/kelasku/'.$row->kelas->id.'/sertifikat') .'" class="btn btn-sm btn-light" title="Unduh Sertifikat"><i class="bi bi-patch-check-fill"></i></a>
                                 </td>
                             ';   
                         } else {

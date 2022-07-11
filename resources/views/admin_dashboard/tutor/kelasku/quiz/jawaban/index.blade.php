@@ -20,6 +20,9 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
+                <a href="{{ route('tutor.kelasku.quiz.index', [$kelas->id]) }}" class="btn btn-secondary mb-3">
+                    <i class="far fa-arrow-alt-circle-left"></i> Kembali ke halaman quiz
+                </a>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
                         <thead>

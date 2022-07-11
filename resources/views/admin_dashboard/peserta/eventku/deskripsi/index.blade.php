@@ -5,6 +5,30 @@
 
 @section('content')
     @include('admin_dashboard.peserta.eventku.includes.navbar')
+    @if (\Carbon\Carbon::now()->format('Y-m-d') > $event->tanggal_berakhir)
+        @if ($registrasi->sertifikat == "Terbit")
+            <div class="card bg-success mb-3">
+                <div class="card-body">
+                    <p class="text-white">Selamat kamu sudah bisa unduh sertifikat {{ $event->nama_event }}!</p>
+                    <a href="{{ url('peserta/eventku/'.$event->id.'/sertifikat') }}" class="btn btn-info" title="Lihat Sertifikat">Lihat Sertifikat</a>
+                </div>
+            </div>
+        @elseif ($registrasi->sertifikat == "Tidak Terbit")
+            <div class="card bg-danger mb-3">
+                <div class="card-body">
+                    <p class="text-white">Mohon maaf kami tidak bisa menerbitkan sertifikat {{ $event->nama_event }}. dikarenakan belum memenuhi syarat dan ketentuan</p>
+                    <p class="text-white">Berikut ini alasan kami tidak bisa menerbitkan sertifikat anda: <br> {{ $registrasi->catatan_sertifikat }}</p>
+                </div>
+            </div>
+        @else
+            <div class="card mb-3">
+                <div class="card-body bg-warning">
+                    <p class="text-white"><strong>Mohon menunggu.</strong> Saat ini admin sedang mempersiapkan sertifikat anda di {{ $event->kategori . ' ' . $event->nama_event }}!</p>
+                </div>
+            </div>
+        @endif
+    @endif
+
     <div class="card mb-3">
         <div class="row no-gutters">
             <div class="col-md-4">

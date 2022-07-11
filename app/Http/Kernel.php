@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'statusKelas' => \App\Http\Middleware\StatusKelas::class,
         'statusKelasAdmin' => \App\Http\Middleware\StatusKelasAdmin::class,
         'cekLogin' => \App\Http\Middleware\CekLogin::class,
+        'cekPemilikSilabus' => \App\Http\Middleware\CekPemilikSilabus::class,
     ];
 }
