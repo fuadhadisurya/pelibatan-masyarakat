@@ -20,14 +20,14 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SertifikatController;
-use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController;
-use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusDetailController;
+use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusKelasController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
 use App\Http\Controllers\admin_dashboard\admin\DataEventController;
 use App\Http\Controllers\admin_dashboard\admin\EventController;
 use App\Http\Controllers\admin_dashboard\admin\FaqController;
 use App\Http\Controllers\admin_dashboard\admin\KategoriBeritaController;
 use App\Http\Controllers\admin_dashboard\admin\silabus\SilabusBabController;
+use App\Http\Controllers\admin_dashboard\admin\silabus\SilabusController;
 use App\Http\Controllers\admin_dashboard\admin\silabus\SilabusSubBabController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
@@ -61,8 +61,7 @@ use App\Http\Controllers\admin_dashboard\tutor\kelasku\PresensiController as Tut
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizController as TutorKelaskuQuizController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizJawabanController as TutorQuizJawabanController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\QuizSoalController as TutorQuizSoalController;
-use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusController as TutorKelaskuSilabusController;
-use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusDetailController as TutorKelaskuSilabusDetailController;
+use App\Http\Controllers\admin_dashboard\tutor\kelasku\SilabusKelasController as TutorSilabusKelasController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TestimoniController as TutorKelaskuTestimoniController;
 use App\Http\Controllers\admin_dashboard\tutor\kelasku\TugasController as TutorKelaskuTugasController;
 use App\Http\Controllers\admin_dashboard\tutor\KelaskuController as TutorKelaskuController;
@@ -121,8 +120,8 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
-    Route::resource('data-kelas.silabus', SilabusController::class);
-    Route::resource('data-kelas.silabus.detail', SilabusDetailController::class);
+    Route::put('/data-kelas/{data_kela}/silabus/pilih-silabus', [SilabusKelasController::class, 'pilihSilabus'])->name('data-kelas.silabus.pilih-silabus');
+    Route::resource('data-kelas.silabus', SilabusKelasController::class);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
     Route::middleware(['statusKelasAdmin:Kegiatan Berlangsung,Selesai'])->group(function(){
         Route::post('/data-kelas/{data_kela}/forum/{post_id}/comment', [ForumController::class, 'commentStore'])->name('data-kelas.forum.comment.store');
@@ -163,8 +162,8 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::get('/akun', [PengaturanController::class, 'akun']);
     Route::resource('kelasku', TutorKelaskuController::class)->only(['index']);
     Route::resource('kelasku.home', TutorKelaskuHomeController::class);
-    Route::resource('kelasku.silabus', TutorKelaskuSilabusController::class);
-    Route::resource('kelasku.silabus.detail', TutorKelaskuSilabusDetailController::class);
+    Route::put('/kelasku/{kelasku}/silabus/pilih-silabus', [TutorSilabusKelasController::class, 'pilihSilabus'])->name('kelasku.silabus.pilih-silabus');
+    Route::resource('kelasku.silabus', TutorSilabusKelasController::class);
     Route::resource('kelasku.peserta', TutorKelaskuPesertaController::class);
     Route::middleware(['statusKelas:Kegiatan Berlangsung,Selesai'])->group(function(){
         Route::post('/kelasku/{kelasku}/forum/{post_id}/comment', [TutorKelaskuForumController::class, 'commentStore'])->name('kelasku.forum.comment.store');

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\peserta\kelasku;
+namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
-use App\Models\RegistrasiKelas;
+use App\Models\Silabus;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class SilabusController extends Controller
+class SilabusKelasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +18,10 @@ class SilabusController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $silabus = SilabusBab::where('silabus_id', $kelas->silabus_id)->get();
-        $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
-
-        return view('admin_dashboard.peserta.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus, 'registrasi' => $registrasi]);
+        $silabus = Silabus::all();
+        $bab = SilabusBab::where('silabus_id', $kelas->silabus_id)->get();
+        
+        return view('admin_dashboard.tutor.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus, 'bab' => $bab]);
     }
 
     /**
@@ -89,5 +88,17 @@ class SilabusController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function pilihSilabus(Request $request, $kelas_id){
+        $this->validate($request, [
+            'silabus_id' => 'required',
+        ]);
+
+        $data = $request->all();
+        $silabus = Kelas::where('id', $kelas_id)->first();
+        $silabus->update($data);
+
+        return redirect()->route('tutor.kelasku.silabus.index', $kelas_id)->with('status', 'Silabus berhasil dipasangkan');
     }
 }

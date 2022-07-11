@@ -16,8 +16,12 @@ class Silabus extends Model
         "nama_silabus", 
     ];
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function kelas(){
-        return $this->belongsTo(Kelas::class);
+        return $this->hasMany(Kelas::class);
     }
 
     public function bab(){

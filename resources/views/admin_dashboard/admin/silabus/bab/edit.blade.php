@@ -1,11 +1,9 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Silabus Subbab | Kegiatan Pelibatan Masyarakat
+    Edit Silabus | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    @include('admin_dashboard.tutor.kelasku.includes.navbar')
-    
     <div class="row layout-top-spacing">
         
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
@@ -21,16 +19,16 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('tutor.kelasku.silabus.detail.update', [$kelas->id, $silabus->id, $silabusSubbab->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('silabus.bab.update', [$silabus_id, $silabusBab->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="nama_subbab">Nama Subbab</label>
-                        <input class="form-control" id="nama_subbab" name="nama_subbab" value="{{ $silabusSubbab->nama_subbab }}" autocomplete="off" required>
+                        <label for="nama_bab">Nama Bab</label>
+                        <input class="form-control" id="nama_bab" name="nama_bab" value="{{ $silabusBab->nama_bab }}" autocomplete="off" required>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $silabus->id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('silabus.bab.index', [$silabus_id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>

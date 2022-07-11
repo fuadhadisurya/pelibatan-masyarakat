@@ -62,6 +62,10 @@ class Kelas extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function silabus(){
+        return $this->belongsTo(Silabus::class);
+    }
+
     public function kelasKategori(){
         return $this->hasOne(KelasKategori::class);
     }

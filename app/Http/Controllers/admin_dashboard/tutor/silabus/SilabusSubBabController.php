@@ -16,7 +16,7 @@ class SilabusSubBabController extends Controller
      */
     public function index(Request $request, $silabus_id, $bab_id)
     {
-        $silabusSubBab = SilabusSubbab::with('bab')->where('silabus_bab_id', '=', $silabus_id)->get();
+        $silabusSubBab = SilabusSubbab::with('bab')->where('silabus_bab_id', '=', $bab_id)->get();
         if ($request->ajax()) {
             return DataTables::of($silabusSubBab)
                     ->addIndexColumn()

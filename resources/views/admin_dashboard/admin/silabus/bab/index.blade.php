@@ -1,11 +1,9 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Silabus Subbab | Kegiatan Pelibatan Masyarakat
+    Silabus | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
-    @include('admin_dashboard.admin.data-kelas.includes.navbar')
-
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -20,15 +18,19 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
-                <a href="{{ route('data-kelas.silabus.detail.create', [$kelas->id, $silabus->id]) }}" class="btn btn-primary mb-3">
-                    <i class="far fa-plus-square"></i> Tambah Silabus Subbab
+                <a href="{{ route('silabus.index') }}" class="btn btn-secondary mb-3">
+                    <i class="far fa-arrow-alt-circle-left"></i> Kembali ke halaman silabus
+                </a>
+                <a href="{{ route('silabus.bab.create', [$silabus_id]) }}" class="btn btn-primary mb-3">
+                    <i class="far fa-plus-square"></i> Tambah Silabus Bab
                 </a>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Subbab</th>
+                                <th>Nama Bab</th>
+                                <th class="text-center">Subbab</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -67,10 +69,11 @@
             processing: true,
             serverSide: true,
             order: [[0, 'asc']],
-            ajax: "{{ route('data-kelas.silabus.detail.index', [$kelas->id, $silabus->id]) }}",
+            ajax: "{{ route('silabus.bab.index', $silabus_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_subbab', name: 'nama_subbab'},
+                {data: 'nama_bab', name: 'nama_bab'},
+                {data: 'subbab', name: 'subbab', className: 'text-center', orderable: false, searchable: false},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
@@ -99,7 +102,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{url("/admin/data-kelas/$kelas->id/silabus/$silabus->id/detail")}}/' +id,
+                        url:'{{url("/admin/silabus/$silabus_id/bab")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

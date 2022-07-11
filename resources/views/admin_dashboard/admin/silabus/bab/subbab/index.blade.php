@@ -18,10 +18,10 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
-                <a href="{{ route('tutor.silabus.bab.index', [$silabus_id]) }}" class="btn btn-secondary mb-3">
+                <a href="{{ route('silabus.bab.index', [$silabus_id]) }}" class="btn btn-secondary mb-3">
                     <i class="far fa-arrow-alt-circle-left"></i> Kembali ke halaman silabus bab
                 </a>
-                <a href="{{ route('tutor.silabus.bab.subbab.create', [$silabus_id, $bab_id]) }}" class="btn btn-primary mb-3">
+                <a href="{{ route('silabus.bab.subbab.create', [$silabus_id, $bab_id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Silabus Subbab
                 </a>
                 <div class="table-responsive">
@@ -68,7 +68,7 @@
             processing: true,
             serverSide: true,
             order: [[0, 'asc']],
-            ajax: "{{ route('tutor.silabus.bab.subbab.index', [$silabus_id, $bab_id]) }}",
+            ajax: "{{ route('silabus.bab.subbab.index', [$silabus_id, $bab_id]) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_subbab', name: 'nama_subbab'},
@@ -100,7 +100,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{url("/tutor/silabus/$silabus_id/bab/$bab_id/subbab")}}/' +id,
+                        url:'{{url("/admin/silabus/$silabus_id/bab/$bab_id/subbab")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

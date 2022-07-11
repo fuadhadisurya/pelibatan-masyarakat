@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Auth;
 
 class SilabusBabController extends Controller
 {
@@ -123,7 +122,7 @@ class SilabusBabController extends Controller
      */
     public function destroy($silabus_id, $id)
     {
-        $data = SilabusBab::with('subbab')->find($id);
+        $data = SilabusBab::with('subbab')->findOrFail($id);
         
         foreach ($data->subbab as $item) {
             $item->delete();

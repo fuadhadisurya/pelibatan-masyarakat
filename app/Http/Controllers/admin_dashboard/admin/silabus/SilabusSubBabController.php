@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\admin_dashboard\admin\silabus;
 
 use App\Http\Controllers\Controller;
+use App\Models\SilabusSubbab;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class SilabusSubBabController extends Controller
 {
@@ -12,9 +14,25 @@ class SilabusSubBabController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $silabus_id, $bab_id)
     {
-        //
+        $silabusSubBab = SilabusSubbab::where('silabus_bab_id', '=', $bab_id)->get();
+        if ($request->ajax()) {
+            return DataTables::of($silabusSubBab)
+                    ->addIndexColumn()
+                    ->addColumn('aksi', function($row){
+                        return '
+                            <td class="text-center">
+                                <a href="'.route('silabus.bab.subbab.edit', [$row->bab->silabus_id, $row->silabus_bab_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
+                            </td>
+                        ';
+                    })
+                    ->rawColumns(['aksi'])
+                    ->make(true);
+        }
+
+        return view('admin_dashboard.admin.silabus.bab.subbab.index', ['silabus_id' => $silabus_id, 'bab_id' => $bab_id]);
     }
 
     /**
@@ -22,9 +40,9 @@ class SilabusSubBabController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($silabus_id, $bab_id)
     {
-        //
+        return view('admin_dashboard.admin.silabus.bab.subbab.create', ['silabus_id' => $silabus_id, 'bab_id' => $bab_id]);
     }
 
     /**
@@ -33,9 +51,24 @@ class SilabusSubBabController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $silabus_id, $bab_id)
     {
-        //
+        $this->validate($request, [
+            "nama_subbab"   => "required|array",
+            "nama_subbab.*" => "required|string",
+        ]);
+
+        $nama_subbab = $request->nama_subbab;
+        $total = count($nama_subbab);
+
+        for($i=0;$i<$total;$i++){
+            SilabusSubbab::create([
+                'silabus_bab_id' => $bab_id,
+                'nama_subbab' => $nama_subbab[$i],
+            ]);
+        }
+        
+        return redirect()->route('silabus.bab.subbab.index',[$silabus_id, $bab_id])->with('status', 'Silabus Subbab berhasil dibuat');
     }
 
     /**
@@ -55,9 +88,10 @@ class SilabusSubBabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($silabus_id, $bab_id, $id)
     {
-        //
+        $silabusSubbab = SilabusSubbab::where('silabus_bab_id', $bab_id)->findOrFail($id);
+        return view('admin_dashboard.admin.silabus.bab.subbab.edit', ['silabus_id' => $silabus_id, 'bab_id' => $bab_id, 'silabusSubbab' => $silabusSubbab]);
     }
 
     /**
@@ -67,9 +101,18 @@ class SilabusSubBabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $silabus_id, $bab_id, $id)
     {
-        //
+        $this->validate($request, [
+            'nama_subbab' => 'required',
+        ]);
+        
+        $silabusSubbab = SilabusSubbab::findOrFail($id);
+        $silabusSubbab->update([
+            'nama_subbab' => $request->nama_subbab,
+        ]);
+
+        return redirect()->route('silabus.bab.subbab.index', [$silabus_id, $bab_id])->with('status', 'Silabus Subbab berhasil diperbarui');
     }
 
     /**
@@ -78,8 +121,12 @@ class SilabusSubBabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($silabus_id, $bab_id, $id)
     {
-        //
+        $data = SilabusSubbab::findOrFail($id);
+
+        $data->delete();
+
+        return response()->json(array('success' => true));
     }
 }
