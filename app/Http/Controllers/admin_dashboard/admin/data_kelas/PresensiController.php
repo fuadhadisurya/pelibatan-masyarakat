@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
+use App\Exports\PresensiExport;
 use App\Http\Controllers\Controller;
 use App\Models\DataPresensi;
 use App\Models\Kelas;
@@ -11,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class PresensiController extends Controller
@@ -177,5 +179,11 @@ class PresensiController extends Controller
         $dataPresensi->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function export($kelas_id, $id){
+        $kelas = Kelas::findOrFail($kelas_id);
+        $presensi = Presensi::findOrFail($id);
+        return Excel::download(new PresensiExport($kelas_id, $id), 'Presensi '.$kelas->nama_kelas.' ('.Carbon::parse($presensi->created_at)->format('j F Y').').xlsx');
     }
 }

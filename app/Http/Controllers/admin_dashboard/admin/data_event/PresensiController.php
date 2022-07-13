@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin_dashboard\admin\data_event;
 
+use App\Exports\PresensiEventExport;
 use App\Http\Controllers\Controller;
 use App\Models\DataPresensiEvent;
 use App\Models\Event;
@@ -10,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class PresensiController extends Controller
@@ -170,5 +172,11 @@ class PresensiController extends Controller
         $dataPresensi->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function export($event_id, $id){
+        $event = Event::findOrFail($event_id);
+        $presensi = PresensiEvent::findOrFail($id);
+        return Excel::download(new PresensiEventExport($event_id, $id), 'Presensi '.$event->nama_event.' ('.Carbon::parse($presensi->created_at)->format('j F Y').').xlsx');
     }
 }

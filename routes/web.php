@@ -133,6 +133,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
         Route::resource('data-kelas.materi', MateriController::class);
         Route::get('/data-kelas/{data_kela}/tugas/{tugas}/periksa-tugas/{id}', [TugasController::class, 'periksaTugas'])->name('data-kelas.tugas.periksa-tugas.show');
         Route::resource('data-kelas.tugas', TugasController::class);
+        Route::get('/data-kelas/{data_kela}/presensi/{presensi}/export', [PresensiController::class, 'export']);
         Route::resource('data-kelas.presensi', PresensiController::class);
         Route::resource('data-kelas.quiz', QuizController::class);
         Route::resource('data-kelas.quiz.soal', QuizSoalController::class);
@@ -150,6 +151,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-event.deskripsi', DeskripsiController::class);
     Route::get('/data-event/{data_event}/peserta/export', [PesertaController::class, 'export']);
     Route::resource('data-event.peserta', PesertaController::class)->only('index');
+    Route::get('/data-event/{data_event}/presensi/{presensi}/export', [Data_eventPresensiController::class, 'export']);
     Route::resource('data-event.presensi', Data_eventPresensiController::class);
     Route::resource('data-event.dokumentasi', DokumentasiController::class);
     Route::resource('data-event.sertifikat', Data_eventSertifikatController::class);

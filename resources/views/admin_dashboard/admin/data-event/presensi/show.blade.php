@@ -47,7 +47,10 @@
                     </table>  
                 </div>
                 <hr>
-                <a href="{{ route('data-event.presensi.index', [$event->id]) }}" class="btn btn-secondary">Kembali</a>
+                <div class="d-flex justify-content-between">
+                    <a href="{{ route('data-event.presensi.index', [$event->id]) }}" class="btn btn-secondary">Kembali</a>
+                    <a href="{{ url('/admin/data-event/'. $event->id .'/presensi/'.$presensi->id.'/export') }}" class="btn btn-primary">Download Data Kehadiran</a>
+                </div>
             </div>
 
             <div class="card shadow-sm mb-3">
