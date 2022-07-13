@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\Silabus;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SilabusKelasController extends Controller
 {
@@ -18,7 +19,7 @@ class SilabusKelasController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $silabus = Silabus::all();
+        $silabus = Silabus::where('user_id', Auth::user()->id)->get();
         $bab = SilabusBab::where('silabus_id', $kelas->silabus_id)->get();
         
         return view('admin_dashboard.tutor.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus, 'bab' => $bab]);

@@ -20,6 +20,8 @@
             @endif
             
             <div class="widget-content widget-content-area br-6">
+                <a href="{{ url('admin/data-kelas/'.$kelas_id.'/peserta/export') }}" class="btn btn-primary">Download Data Peserta</a>
+                <a href="{{ url('admin/data-kelas/'.$kelas_id.'/peserta/export-diterima') }}" class="btn btn-secondary">Download Data Peserta yang Diterima</a>
                 <div class="table-responsive mb-4 mt-4">
                     <table id="data-peserta" class="table table-hover" style="width:100%">
                         <thead>

@@ -38,7 +38,7 @@ class SilabusController extends Controller
             ->addColumn('aksi', function($row){
                 return '
                     <td class="text-center">
-                        <a href="'. route('silabus.edit', $row->id) .'" class="btn btn-sm btn-warning" title="Lihat"><i class="far fa-edit"></i></a>
+                        <a href="'. route('silabus.edit', $row->id) .'" class="btn btn-sm btn-warning" title="Edit"><i class="far fa-edit"></i></a>
                         <button class="btn btn-sm btn-danger" id="konfirmasiHapus' . $row->id . '" onclick="confirmDelete(this)" data-id="' . $row->id . '" title="Hapus"><i class="far fa-trash-alt"></i></button>
                     </td>
                 ';

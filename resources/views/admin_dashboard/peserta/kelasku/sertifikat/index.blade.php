@@ -33,7 +33,7 @@
                         </a>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="{{ route('peserta.kelasku.index') }}" class="btn btn-secondary">Kembali ke dashboard</a>
+                        <a href="{{ route('peserta.kelasku.home.index', [$kelas->id]) }}" class="btn btn-secondary">Kembali ke dashboard</a>
                     </div>
                 </div>
             </div>

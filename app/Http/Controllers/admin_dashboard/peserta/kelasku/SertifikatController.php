@@ -48,10 +48,12 @@ class SertifikatController extends Controller
         if($testimoni != null && $registrasiKelas->sertifikat == "Terbit"){
             $nama = Auth::user()->nama;
             $kelas = Kelas::findOrFail($kelas_id);
+            $namaKelas = preg_replace('~\\s+\\S+$~', "", $kelas->nama_kelas);
             $data = [
                 // 'kode_sertifikat' => Str::upper(Str::random(12)),
                 'nama' => $nama,
                 'kelas' => $kelas,
+                'namaKelas' => $namaKelas,
             ];
             
             $pdf = PDF::loadView('sertifikat/SertifikatKelas', $data)->setPaper('A4', 'landscape');

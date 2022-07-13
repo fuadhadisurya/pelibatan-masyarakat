@@ -25,8 +25,7 @@ class Kelas extends Model
 
     public function scopeFilter($query, array $filters){
         $query->when($filters['search'] ?? false, function($query, $search){
-            return $query->where('nama_kelas', 'like', '%' . $search . '%')
-            ->orWhere('deskripsi', 'like', '%' . $search . '%');
+            return $query->where('nama_kelas', 'like', '%' . $search . '%');
         });
 
         $query->when($filters['sort'] ?? false, function($query, $sort){

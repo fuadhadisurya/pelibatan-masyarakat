@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\admin_dashboard\admin\data_kelas;
 
+use App\Exports\PesertaDiterimaExport;
+use App\Exports\PesertaExport;
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\RegistrasiKelas;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataPesertaController extends Controller
 {
@@ -156,5 +159,15 @@ class DataPesertaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function export($kelas_id){
+        $kelas = Kelas::findOrFail($kelas_id);
+        return Excel::download(new PesertaExport($kelas_id), 'Peserta '.$kelas->nama_kelas.'.xlsx');
+    }
+
+    public function exportDiterima($kelas_id){
+        $kelas = Kelas::findOrFail($kelas_id);
+        return Excel::download(new PesertaDiterimaExport($kelas_id), 'Peserta Diterima '.$kelas->nama_kelas.'.xlsx');
     }
 }

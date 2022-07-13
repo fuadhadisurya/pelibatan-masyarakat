@@ -19,7 +19,7 @@ class KelasSeeder extends Seeder
         $class = ([
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Bahasa Jepang',
+                'nama_kelas' => 'Kelas Bahasa Jepang ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -39,7 +39,7 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Tari Topeng',
+                'nama_kelas' => 'Kelas Tari Topeng ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -59,7 +59,7 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Basic Programming',
+                'nama_kelas' => 'Kelas Basic Programming ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -80,7 +80,7 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas TIK',
+                'nama_kelas' => 'Kelas TIK ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -100,7 +100,7 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Menulis',
+                'nama_kelas' => 'Kelas Menulis ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -119,7 +119,7 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Bahasa Inggris untuk Dewasa',
+                'nama_kelas' => 'Kelas Bahasa Inggris untuk Dewasa ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -139,7 +139,7 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Bahasa Inggris untuk Anak',
+                'nama_kelas' => 'Kelas Bahasa Inggris untuk Anak ' . Carbon::now()->format('Y'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '

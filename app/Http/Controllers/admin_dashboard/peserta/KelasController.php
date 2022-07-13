@@ -18,11 +18,12 @@ class KelasController extends Controller
      */
     public function index()
     {
-        if (request('sort') || request('category')) {
+        if (request('sort') || request('category') || request('search')) {
             $kelas = Kelas::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort', 'category']))->paginate(10);
         } else {
             $kelas = Kelas::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
         }
+        // dd($kelas);
         $search = request('search');
         $sort = request('sort');
         $category = request('category');

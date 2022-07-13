@@ -122,6 +122,8 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-kelas.home', HomeController::class);
     Route::put('/data-kelas/{data_kela}/silabus/pilih-silabus', [SilabusKelasController::class, 'pilihSilabus'])->name('data-kelas.silabus.pilih-silabus');
     Route::resource('data-kelas.silabus', SilabusKelasController::class);
+    Route::get('/data-kelas/{data_kela}/peserta/export', [DataPesertaController::class, 'export']);
+    Route::get('/data-kelas/{data_kela}/peserta/export-diterima', [DataPesertaController::class, 'exportDiterima']);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
     Route::middleware(['statusKelasAdmin:Kegiatan Berlangsung,Selesai'])->group(function(){
         Route::post('/data-kelas/{data_kela}/forum/{post_id}/comment', [ForumController::class, 'commentStore'])->name('data-kelas.forum.comment.store');
@@ -146,6 +148,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('event', EventController::class);
     Route::resource('data-event', DataEventController::class);
     Route::resource('data-event.deskripsi', DeskripsiController::class);
+    Route::get('/data-event/{data_event}/peserta/export', [PesertaController::class, 'export']);
     Route::resource('data-event.peserta', PesertaController::class)->only('index');
     Route::resource('data-event.presensi', Data_eventPresensiController::class);
     Route::resource('data-event.dokumentasi', DokumentasiController::class);

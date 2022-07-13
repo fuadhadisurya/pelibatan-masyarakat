@@ -64,9 +64,9 @@
 <body>
 	<div class="name">{{ Str::upper($nama) }}</div>
 	@if (\Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') === \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y'))
-		<div class="desc">Kegiatan Pelibatan Masyarakat <strong class="tebal">{{ $kelas->nama_kelas }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong></div>
+		<div class="desc">Kegiatan Pelibatan Masyarakat <strong class="tebal">{{ $namaKelas }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong></div>
 	@else
-		<div class="desc">Kegiatan Pelibatan Masyarakat <strong class="tebal">{{ $kelas->nama_kelas }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong> sampai <strong class="tebal">{{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong></div>	
+		<div class="desc">Kegiatan Pelibatan Masyarakat <strong class="tebal">{{ $namaKelas }}</strong> yang diselenggarakan oleh Dinas Perpustakaan dan Arsip Kabupaten Indramayu pada tanggal <strong class="tebal">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong> sampai <strong class="tebal">{{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format('j F Y') }}</strong></div>	
 	@endif
 </body>
 </html>
