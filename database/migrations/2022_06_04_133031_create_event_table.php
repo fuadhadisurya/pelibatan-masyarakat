@@ -26,6 +26,7 @@ class CreateEventTable extends Migration
             $table->date('deadline_pendaftaran');
             $table->integer('kuota');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -25,6 +25,7 @@ class CreateKelasTable extends Migration
             $table->text("deskripsi");
             $table->string("status");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
