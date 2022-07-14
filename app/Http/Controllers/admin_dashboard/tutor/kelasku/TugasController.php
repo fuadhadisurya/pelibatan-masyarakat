@@ -9,6 +9,7 @@ use App\Models\Tugas;
 use App\Models\UploadJawabanTugas;
 use App\Models\UploadTugas;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
@@ -28,6 +29,9 @@ class TugasController extends Controller
         if ($request->ajax()) {
             return DataTables::of($tugas)
                     ->addIndexColumn()
+                    ->editColumn('batas_waktu', function($row){
+                        return Carbon::parse($row->batas_waktu)->format('j F Y H:i');
+                    })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
@@ -189,7 +193,7 @@ class TugasController extends Controller
     {
         $data = Tugas::with('uploadTugas')->with('jawabanTugas')->findOrFail($id);
         $jawaban = JawabanTugas::whereIn('tugas_id', [$id])->get('id');
-        $uploadJawabanTugas = UploadJawabanTugas::whereIn('jawaban_tugas_id', $jawaban);
+        $uploadJawabanTugas = UploadJawabanTugas::whereIn('jawaban_tugas_id', $jawaban)->get();
 
         if ($data->uploadTugas->count() > 0) {
             foreach ($data->uploadTugas as $uploadTugas) {
@@ -199,13 +203,14 @@ class TugasController extends Controller
         }
         
         if($uploadJawabanTugas->count() > 0){
-            Storage::disk('public')->delete($uploadJawabanTugas->jawaban_tugas);
-            $uploadJawabanTugas->delete();
+            foreach ($uploadJawabanTugas as $item) {
+                Storage::disk('public')->delete($item->jawaban_tugas);
+                $item->delete();
+            }
         }
 
         if ($data->jawabanTugas->count() > 0) {
             foreach ($data->jawabanTugas as $jawabanTugas) {
-
                 $jawabanTugas->delete();
             }
         }
