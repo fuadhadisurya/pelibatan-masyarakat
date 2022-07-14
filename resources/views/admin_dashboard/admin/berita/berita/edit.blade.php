@@ -36,12 +36,13 @@
                     </div>
                     <div class="form-group">
                         <label for="kategori">Kategori</label>
-                        <select class="placeholder form-control" name="kategori_id">
+                        <select class="placeholder form-control" name="kategori_id" required>
                             <option value="">Pilih Kategori...</option>
                             @foreach ($kategoriBerita as $kategori)
                                 <option value="{{ $kategori->id }}" {{ ($kategori->id == $berita->kategori_id) ? 'selected': '' }}>{{ $kategori->nama_kategori }}</option>
                             @endforeach
                         </select>
+                        <small>Jika pilihan kategori berita tidak ada silahkan buat kategori terlebih dahulu</small>
                     </div>
                     <div class="form-group">
                         <label for="judul">Judul</label>

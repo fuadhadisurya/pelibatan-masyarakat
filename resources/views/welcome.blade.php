@@ -663,6 +663,8 @@ https://templatemo.com/tm-568-digimedia
                                     <div class="down-content">
                                         @if ($item->kategori != null)
                                             <span class="category">{{ $item->kategori->nama_kategori }}</span>
+                                        @else
+                                            <span class="category">Tidak Berkategori</span>
                                         @endif
                                         <span class="date">{{ \Carbon\Carbon::parse($item->created_at)->format('j F Y') }}</span>
                                         <h4>{{ $item->judul }}</h4>

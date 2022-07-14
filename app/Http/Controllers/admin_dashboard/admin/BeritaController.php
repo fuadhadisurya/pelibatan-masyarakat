@@ -70,6 +70,7 @@ class BeritaController extends Controller
         $this->validate($request, [
             'banner' => 'required|image|max:10240',
             'judul' => 'required',
+            'kategori_id' => 'required',
             'isi' => 'required',
             'publish' => 'required',
         ]);
@@ -135,6 +136,7 @@ class BeritaController extends Controller
         if ($request->banner) {
             $this->validate($request, [
                 'banner' => 'required|image|max:10240',
+                'kategori_id' => 'required',
                 'judul' => 'required',
                 'isi' => 'required',
                 'publish' => 'required',
