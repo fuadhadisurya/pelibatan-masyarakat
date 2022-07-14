@@ -29,9 +29,9 @@
                         <p class="signup-link register">Sudah punya akun? <a href="{{ url('/login') }}">Login</a></p>
                         <form class="text-left" action="{{ route('postRegistrasi') }}" method="POST" enctype="multipart/form-data">
                             @if ($errors->any())
-                                <div class="alert alert-warning" role="alert">
+                                <div class="alert alert-danger" role="alert">
                                     <ul>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
@@ -40,29 +40,29 @@
                             @endif
                             @csrf
                             <div class="form">
-
+                                <input type="hidden" name="status" value="Belum Verifikasi">
                                 <div id="name-field" class="field-wrapper input">
                                     <label for="nama">NAMA LENGKAP</label>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-                                    <input id="nama" name="nama" type="text" class="form-control" placeholder="Nama Lengkap">
+                                    <input id="nama" name="nama" type="text" class="form-control" placeholder="Nama Lengkap" required>
                                 </div>
 
                                 <div id="username-field" class="field-wrapper input">
                                     <label for="username">USERNAME</label>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    <input id="username" name="username" type="text" class="form-control" placeholder="Username">
+                                    <input id="username" name="username" type="text" class="form-control" placeholder="Username" required>
                                 </div>
 
                                 <div id="email-field" class="field-wrapper input">
                                     <label for="email">EMAIL</label>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign register"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-                                    <input id="email" name="email" type="text" value="" class="form-control" placeholder="Email">
+                                    <input id="email" name="email" type="text" value="" class="form-control" placeholder="Email" required>
                                 </div>
 
                                 <div id="phone-field" class="field-wrapper input">
-                                    <label for="kontak">Kontak</label>                                    
+                                    <label for="nomor_telepon">Nomor Telepon</label>                                    
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smartphone"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-                                    <input id="kontak" name="kontak" type="text" value="" class="form-control" placeholder="Kontak">
+                                    <input id="nomor_telepon" name="nomor_telepon" type="text" value="" class="form-control" placeholder="Nomor Telepon" required>
                                 </div>
 
                                 <div id="password-field" class="field-wrapper input">
@@ -71,7 +71,7 @@
                                         <a href="{{ url('/lupa-password') }}" class="forgot-pass-link">Lupa Password?</a>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password">
+                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 </div>
 
@@ -80,14 +80,14 @@
                                         <label for="konfirmasi_password">KONFIRMASI PASSWORD</label>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                    <input id="konfirmasi_password" name="konfirmasi_password" type="password" class="form-control" placeholder="Konfirmasi Password">
+                                    <input id="konfirmasi_password" name="konfirmasi_password" type="password" class="form-control" placeholder="Konfirmasi Password" required>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 </div>
 
                                 <div class="field-wrapper terms_condition">
                                     <div class="n-chk">
                                         <label class="new-control new-checkbox checkbox-primary">
-                                          <input type="checkbox" class="new-control-input">
+                                          <input type="checkbox" class="new-control-input" required>
                                           <span class="new-control-indicator"></span><span>Saya setuju <a href="javascript:void(0);">  syarat dan ketentuan. </a></span>
                                         </label>
                                     </div>

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class TutorController extends Controller
 {
@@ -18,15 +18,18 @@ class TutorController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::where('level', '=', 'tutor');
+            $data = User::where('level', '=', 'tutor')->get();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    ->addColumn('gambar', function($row){
+                    ->addColumn('nama', function($row){
                         $gambar = ($row->gambar != null ) ? "Avatar Tutor (On Progress)" : asset('admin_dashboard/assets/img/90x90.jpg');
                         return '
-                            <td class="text-center">
-                                <div class="avatar avatar-sm">
-                                    <img alt="avatar" src="'. $gambar .'" class="rounded-circle" width="50px" />
+                            <td>
+                                <div class="d-flex">
+                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                        <img alt="avatar" class="img-fluid rounded-circle" src="'. $gambar .'" width="50px">
+                                    </div>
+                                    <p class="align-self-center mb-0">'. $row->nama .'</p>
                                 </div>
                             </td>
                         ';
@@ -39,7 +42,7 @@ class TutorController extends Controller
                             </td>
                         ';
                     })
-                    ->rawColumns(['aksi', 'gambar'])
+                    ->rawColumns(['aksi', 'nama'])
                     ->make(true);
         }
         return view('admin_dashboard.admin.tutor.index');
@@ -66,9 +69,9 @@ class TutorController extends Controller
         $this->validate($request, [
             'nama' => 'required',
             'email' => 'required|email|unique:users,email',
-            'kontak' => 'required|numeric|unique:users,kontak',
+            'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon',
             'username' => 'required|alpha_dash|unique:users,username',
-            'password' => 'required|min:5',
+            'password' => 'required|min:6',
             'konfirmasi_password' => 'required|same:password',
         ]);
         
@@ -78,7 +81,7 @@ class TutorController extends Controller
         
         User::create($data);
         
-        return redirect()->route('tutor.index')->with('status', 'Berita Berhasil Dibuat');
+        return redirect()->route('tutor.index')->with('status', 'Akun tutor berhasil dibuat');
     }
 
     /**
@@ -113,25 +116,27 @@ class TutorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = $request->except(['password']);
+
         if ($request->password) {
             $this->validate($request, [
                 'nama' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'kontak' => 'required|numeric|unique:users,kontak,' . $id,
+                'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
                 'username' => 'required|alpha_dash|unique:users,username,' . $id,
-                'password' => 'required|min:5',
+                'password' => 'required|min:6',
                 'konfirmasi_password' => 'required|same:password',
             ]);
+
+            $data['password'] = bcrypt($request->password);
         } else {
             $this->validate($request, [
                 'nama' => 'required',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'kontak' => 'required|numeric|unique:users,kontak,' . $id,
+                'nomor_telepon' => 'required|numeric|unique:users,nomor_telepon,' . $id,
                 'username' => 'required|alpha_dash|unique:users,username,' . $id,
             ]);
         }
-        $data = $request->all();
-        $data['password'] = bcrypt($request->password);
 
         $tutor = User::findOrFail($id);
 

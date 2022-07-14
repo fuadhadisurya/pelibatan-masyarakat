@@ -64,5 +64,12 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ceklevel' => \App\Http\Middleware\CekLevel::class,
+        'cekUserRegistrasi' => \App\Http\Middleware\CekUserRegistrasi::class,
+        'cekRegistrasi' => \App\Http\Middleware\CekRegistrasi::class,
+        'cekRegistrasiEvent' => \App\Http\Middleware\CekRegistrasiEvent::class,
+        'statusKelas' => \App\Http\Middleware\StatusKelas::class,
+        'statusKelasAdmin' => \App\Http\Middleware\StatusKelasAdmin::class,
+        'cekLogin' => \App\Http\Middleware\CekLogin::class,
+        'cekPemilikSilabus' => \App\Http\Middleware\CekPemilikSilabus::class,
     ];
 }

@@ -19,13 +19,23 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama',
         'username',
-        'level',
         'email',
+        'password',
+        'level',
+        'nama',
+        'jenis_kelamin',
+        'tempat_lahir',
+        'tanggal_lahir',
         'foto',
-        'kontak',
-        'password'
+        'nomor_telepon',
+        'provinsi',
+        'kabupaten_kota',
+        'kecamatan',
+        'desa_kelurahan',
+        'alamat',
+        'tipe_anggota',
+        'status'
     ];
 
     /**
@@ -46,4 +56,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function kelas(){
+        return $this->hasMany(kelas::class, 'tutor_id');
+    }
+
+    public function registrasiKelas(){
+        return $this->hasMany(RegistrasiKelas::class);
+    }
+
+    public function jawaban_Tugas(){
+        return $this->hasMany(JawabanTugas::class);
+    }
+
+    public function dataPresensi(){
+        return $this->hasMany(DataPresensi::class);
+    }
+
+    public function quizJawaban(){
+        return $this->hasMany(QuizJawaban::class);
+    }
 }

@@ -10,8 +10,8 @@
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
                 @if ($errors->any())
-                    <div class="alert alert-warning" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><i class="far fa-times-circle"></i></button>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -20,11 +20,12 @@
                     </div>
                 @endif
                 @if(session('status'))
-                <div class="alert alert-success mb-4" role="alert"> 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                    <strong>{{ session('status') }} </div>
+                    <div class="alert alert-success mb-4" role="alert"> 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                        <strong>{{ session('status') }}</strong>
+                    </div>
                 @endif
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahTutor">Tambah Tutor</button>
                 <div class="table-responsive mb-4 mt-2">
@@ -32,10 +33,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Gambar</th>
                                 <th>Nama</th>
                                 <th>Email</th>
-                                <th>Kontak</th>
+                                <th>Nomor Telepon</th>
                                 <th>Username</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
@@ -59,29 +59,29 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Tambah Tutor</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="far fa-times-circle"></i>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('tutor.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tutor.store') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nama">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control" id="nama">
+                            <input type="text" name="nama" class="form-control" id="nama" value="{{ old('nama') }}">
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" class="form-control" id="email" placeholder="email@example.com">
+                                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="email@example.com">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="kontak">Kontak</label>
-                                <input type="text" name="kontak" class="form-control" id="kontak" placeholder="08123456789">
+                                <label for="nomor_telepon">Nomor Telepon</label>
+                                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" value="{{ old('nomor_telepon') }}" placeholder="08123456789">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" name="username" class="form-control" id="username">
+                            <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
@@ -111,8 +111,8 @@
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/plugins/sweetalerts/sweetalert.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin_dashboard/assets/css/components/custom-sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
     <script src="{{ asset('admin_dashboard/plugins/sweetalerts/promise-polyfill.js') }}"></script>
-    <link href="{{ asset('admin_dashboard/assets/css/tables/table-basic.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
 @push('scripts')
@@ -124,13 +124,13 @@
         $('#tutor').DataTable({
             processing: true,
             serverSide: true,
+            order: [[1, 'asc']],
             ajax: "{{ route('tutor.index') }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {"width": "5%", data: 'gambar', name: 'gambar'},
                 {data: 'nama', name: 'nama'},
                 {data: 'email', name: 'email'},
-                {data: 'kontak', name: 'kontak'},
+                {data: 'nomor_telepon', name: 'nomor_telepon'},
                 {data: 'username', name: 'username'},
                 {"width": "12%", data: 'aksi', name: 'aksi', orderable: false, searchable: false},
             ],

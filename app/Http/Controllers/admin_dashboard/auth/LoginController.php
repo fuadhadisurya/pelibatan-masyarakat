@@ -21,15 +21,11 @@ class LoginController extends Controller
                 return redirect('peserta/dashboard');
             }
         }
-        return redirect('/login');
+        return redirect('/login')->with('status', 'Username atau Password salah')->withInput();
     }
 
     public function logout(){
         Auth::logout();
         return redirect('/');
-    }
-
-    public function lupaPassword(){
-        return view("auth.lupa_password");
     }
 }

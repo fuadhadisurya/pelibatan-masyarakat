@@ -3,12 +3,28 @@
         
         <ul class="navbar-nav theme-brand flex-row  text-center">
             <li class="nav-item theme-logo">
-                <a href="index.html">
-                    <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
-                </a>
+                @if (Auth::user()->level == 'admin')
+                    <a href="{{ url('/admin/dashboard') }}">
+                        <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
+                    </a>
+                @elseif(Auth::user()->level == 'tutor')
+                    <a href="{{ url('/tutor/dashboard') }}">
+                        <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
+                    </a>
+                @else
+                    <a href="{{ url('/peserta/dashboard') }}">
+                        <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
+                    </a>
+                @endif
             </li>
             <li class="nav-item theme-text">
-                <a href="index.html" class="nav-link"> CORK </a>
+                @if (Auth::user()->level == 'admin')
+                    <a href="{{ url('/admin/dashboard') }}" class="nav-link"> KPM </a>
+                @elseif(Auth::user()->level == 'tutor')
+                    <a href="{{ url('/tutor/dashboard') }}" class="nav-link"> KPM </a>
+                @else
+                    <a href="{{ url('/peserta/dashboard') }}" class="nav-link"> KPM </a>
+                @endif
             </li>
             <li class="nav-item toggle-sidebar">
                 <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></a>
@@ -24,28 +40,51 @@
                 <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
-                            <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="img-fluid mr-2" alt="avatar">
+                            @if(Auth::user()->foto != null)
+                                <img src="{{ Storage::url(Auth::user()->foto) }}" class="img-fluid mr-2" alt="avatar">
+                            @else
+                                <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="img-fluid mr-2" alt="avatar">
+                            @endif
                             <div class="media-body">
                                 <h5>{{ Auth()->user()->nama }}</h5>
                                 <p>{{ Auth()->user()->level }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="dropdown-item">
-                        <a href="user_profile.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>My Profile</span>
-                        </a>
-                    </div>
-                    <div class="dropdown-item">
-                        <a href="apps_mailbox.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg> <span>My Inbox</span>
-                        </a>
-                    </div>
-                    <div class="dropdown-item">
-                        <a href="auth_lockscreen.html">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Lock Screen</span>
-                        </a>
-                    </div>
+                    @if (Auth::user()->level == 'admin')
+                        <div class="dropdown-item">
+                            <a href="{{ url('/admin/profil') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>Profilku</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="{{ url('/admin/akun') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Akun</span>
+                            </a>
+                        </div>
+                    @elseif(Auth::user()->level == 'tutor')
+                        <div class="dropdown-item">
+                            <a href="{{ url('/tutor/profil') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>Profilku</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="{{ url('/tutor/akun') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Akun</span>
+                            </a>
+                        </div>
+                    @elseif(Auth::user()->level == 'peserta')
+                        <div class="dropdown-item">
+                            <a href="{{ url('/peserta/profil') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>Profilku</span>
+                            </a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="{{ url('/peserta/akun') }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Akun</span>
+                            </a>
+                        </div>
+                    @endif
                     <div class="dropdown-item">
                         <a href="{{ route('logout') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> <span>Log Out</span>

@@ -15,11 +15,17 @@ class CreateKelasTable extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
-            $table->string("nama_kegiatan");
-            $table->string("periode_kegiatan");
-            $table->integer("id_tutor");
+            $table->foreignId("tutor_id");
+            $table->foreignId("silabus_id")->nullable();
+            $table->string("banner");
+            $table->string("nama_kelas");
+            $table->date("tanggal_mulai");
+            $table->date("tanggal_berakhir");
+            $table->text("persyaratan");
+            $table->text("deskripsi");
             $table->string("status");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
