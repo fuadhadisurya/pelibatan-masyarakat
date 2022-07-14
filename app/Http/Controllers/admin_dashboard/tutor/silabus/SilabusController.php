@@ -130,18 +130,19 @@ class SilabusController extends Controller
     public function destroy($id)
     {
         $silabus = Silabus::findOrFail($id);
-        $silabus->delete();
         
         $silabusBab = SilabusBab::whereIn('silabus_id', [$id]);
         if($silabusBab->count() > 0){
-            $silabusBab->delete();
-            
             $silabusBabId = SilabusBab::whereIn('silabus_id', [$id])->get('id');
             $silabusSubBab = SilabusSubBab::whereIn('silabus_bab_id', $silabusBabId);
             if($silabusSubBab->count() > 0){
-                $silabusBab->delete();
+                $silabusSubBab->delete();
             }
+
+            $silabusBab->delete();
         }
+        
+        $silabus->delete();
         
         return response()->json(array('success' => true));
     }

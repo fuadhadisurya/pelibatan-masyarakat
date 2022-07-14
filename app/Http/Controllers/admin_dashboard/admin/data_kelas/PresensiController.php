@@ -12,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -172,11 +173,16 @@ class PresensiController extends Controller
      */
     public function destroy($kelas_id, $id)
     {
-        $presensi = Presensi::findOrFail($id);
-        $presensi->delete();
+        $presensi = Presensi::with('dataPresensi')->findOrFail($id);
+        
+        if ($presensi->dataPresensi->count() > 0) {
+            foreach ($presensi->dataPresensi as $item) {
+                Storage::disk('public')->delete($item->gambar);
+                $item->delete();
+            }
+        }
 
-        $dataPresensi = DataPresensi::where('presensi_id', '=', $id);
-        $dataPresensi->delete();
+        $presensi->delete();
 
         return response()->json(array('success' => true));
     }

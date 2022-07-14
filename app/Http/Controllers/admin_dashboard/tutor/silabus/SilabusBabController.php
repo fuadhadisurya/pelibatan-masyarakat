@@ -124,8 +124,10 @@ class SilabusBabController extends Controller
     {
         $data = SilabusBab::with('subbab')->findOrFail($id);
         
-        foreach ($data->subbab as $item) {
-            $item->delete();
+        if ($data->subbab->count() > 0) {
+            foreach ($data->subbab as $item) {
+                $item->delete();
+            }
         }
 
         $data->delete();

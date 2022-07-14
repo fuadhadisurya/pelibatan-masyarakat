@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\JawabanTugas;
 use App\Models\Kelas;
 use App\Models\Tugas;
+use App\Models\UploadJawabanTugas;
 use App\Models\UploadTugas;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -184,13 +185,29 @@ class TugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kelas_id, $id)
     {
-        $data = Tugas::with('uploadTugas')->findOrFail($id);
+        $data = Tugas::with('uploadTugas')->with('jawabanTugas')->findOrFail($id);
+        $jawaban = JawabanTugas::whereIn('tugas_id', [$id])->get('id');
+        $uploadJawabanTugas = UploadJawabanTugas::whereIn('jawaban_tugas_id', $jawaban);
+
+        if ($data->uploadTugas->count() > 0) {
+            foreach ($data->uploadTugas as $uploadTugas) {
+                Storage::disk('public')->delete($uploadTugas->tugas);
+                $uploadTugas->delete();
+            }
+        }
         
-        foreach ($data->uploadTugas as $item) {
-            Storage::disk('public')->delete($item->tugas);
-            $item->delete();
+        if($uploadJawabanTugas->count() > 0){
+            Storage::disk('public')->delete($uploadJawabanTugas->jawaban_tugas);
+            $uploadJawabanTugas->delete();
+        }
+
+        if ($data->jawabanTugas->count() > 0) {
+            foreach ($data->jawabanTugas as $jawabanTugas) {
+
+                $jawabanTugas->delete();
+            }
         }
 
         $data->delete();

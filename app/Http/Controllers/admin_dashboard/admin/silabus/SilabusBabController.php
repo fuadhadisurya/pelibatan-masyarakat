@@ -127,7 +127,7 @@ class SilabusBabController extends Controller
      */
     public function destroy($silabus_id, $id)
     {
-        $data = SilabusBab::with('subbab')->find($id);
+        $data = SilabusBab::with('subbab')->findOrFail($id);
         
         if ($data->subbab->count() > 0) {
             foreach ($data->subbab as $item) {

@@ -24,6 +24,7 @@ class CreateKelasKategoriTable extends Migration
             $table->boolean('Masyarakat_Umum')->default('0');
             $table->boolean('ASN_Polri_TNI')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -177,9 +177,11 @@ class MateriController extends Controller
     {
         $data = Materi::with('uploadMateri')->findOrFail($id);
         
-        foreach ($data->uploadMateri as $item) {
-            Storage::disk('public')->delete($item->materi);
-            $item->delete();
+        if ($data->uploadMateri->count() > 0) {
+            foreach ($data->uploadMateri as $item) {
+                Storage::disk('public')->delete($item->materi);
+                $item->delete();
+            }
         }
 
         $data->delete();

@@ -553,7 +553,11 @@ https://templatemo.com/tm-568-digimedia
                                             </div>
                                             <div class="down-content">
                                                 <h4>{{ $tutors->nama }}</h4>
-                                                <span>{{ $tutors->kelas->last()->nama_kelas }}</span>
+                                                @if ($tutors->kelas->last() != null)   
+                                                    <span>{{ preg_replace('~\\s+\\S+$~', "", $tutors->kelas->last()->nama_kelas) }}</span>
+                                                @else
+                                                    <span>Tutor Kelas</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </a>
@@ -657,7 +661,9 @@ https://templatemo.com/tm-568-digimedia
                                         <img height="230px" class="fit-image" src="{{ Storage::url($item->banner) }}" alt="">
                                     </div>
                                     <div class="down-content">
-                                        <span class="category">{{ $item->kategori->nama_kategori }}</span>
+                                        @if ($item->kategori != null)
+                                            <span class="category">{{ $item->kategori->nama_kategori }}</span>
+                                        @endif
                                         <span class="date">{{ \Carbon\Carbon::parse($item->created_at)->format('j F Y') }}</span>
                                         <h4>{{ $item->judul }}</h4>
                                         <div>

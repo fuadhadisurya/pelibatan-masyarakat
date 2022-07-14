@@ -139,7 +139,7 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        //
+        // $kelas = Kelas::with('kelasKategori')->findOrFail($id);
     }
 
     /**
@@ -223,13 +223,13 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Kelas::findOrFail($id);
+        $kelas = Kelas::with('kelasKategori')->findOrFail($id);
+        
+        $kelas->kelasKategori->delete();
+        
         Storage::disk('public')->delete($kelas->banner);
         $kelas->delete();
-
-        $kelasKategori = KelasKategori::where('kelas_id', '=', $id);
-        $kelasKategori->delete();
-
+        
         return response()->json(array('success' => true));
     }
 

@@ -208,7 +208,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{route("tutor.kelasku.materi.destroy", [$kelas_id, '+id+'])}}',
+                        url:'{{url("/tutor/kelasku/$kelas->id/materi")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

@@ -116,13 +116,15 @@ class ForumController extends Controller
      */
     public function destroy($kelas_id, $id)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
-
-        $comment = Comment::where('post_id', '=', $id)->get();
-        foreach($comment as $comment){
-            $comment->delete();
+        $post = Post::with('comment')->findOrFail($id);
+        
+        if ($post->comment->count() > 0) {
+            foreach($post->comment as $item){
+                $item->delete();
+            }
         }
+
+        $post->delete();
 
         return response()->json(array('success' => true));
     }

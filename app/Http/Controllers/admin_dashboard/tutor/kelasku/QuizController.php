@@ -154,10 +154,24 @@ class QuizController extends Controller
      */
     public function destroy($kelas_id, $id)
     {
-        $data = Quiz::with('quizSoal')->find($id);
+        $data = Quiz::with('quizSoal')->with('quizJawaban')->with('quizNilai')->findOrFail($id);
         
-        foreach ($data->quizSoal as $item) {
-            $item->delete();
+        if ($data->quizSoal->count() > 0) {
+            foreach ($data->quizSoal as $soal) {
+                $soal->delete();
+            }
+        }
+
+        if ($data->quizJawaban->count() > 0) {
+            foreach ($data->quizJawaban as $jawaban) {
+                $jawaban->delete();
+            }
+        }
+
+        if ($data->quizNilai->count() > 0) {
+            foreach ($data->quizNilai as $nilai) {
+                $nilai->delete();
+            }
         }
 
         $data->delete();

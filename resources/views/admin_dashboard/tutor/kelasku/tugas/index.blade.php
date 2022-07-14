@@ -156,7 +156,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{route("tutor.kelasku.tugas.destroy", [$kelas_id, '+id+'])}}',
+                        url:'{{url("/tutor/kelasku/$kelas->id/tugas")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },
@@ -179,7 +179,8 @@
         var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            time_24hr: true
+            time_24hr: true,
+            minDate: 'today'
         });
     </script>
 @endpush

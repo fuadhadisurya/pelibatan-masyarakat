@@ -13,9 +13,9 @@
                 </div>
                 <hr>
                 <div class="widget-content">
-                    <div class="card">
-                        <div class="card-body">
-                            @forelse ($kelasku as $kelas)
+                    @forelse ($kelasku as $kelas)
+                        <div class="card mb-2">
+                            <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="">
                                         <span class="small">
@@ -32,11 +32,15 @@
                                         </a>
                                     </div>
                                 </div>
-                            @empty
-                                <p class="text-center">Tidak ada kelas</p>
-                            @endforelse
+                            </div>
                         </div>
-                    </div>
+                    @empty
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <p class="text-center">Tidak ada kelas</p>
+                            </div>
+                        </div>
+                    @endforelse
                     @if(count($kelasku)>5)
                         <div class="d-flex justify-content-end mt-3">
                             <a href="{{ route('peserta.kelasku.index') }}">Selengkapnya</a>
@@ -53,9 +57,9 @@
                 </div>
                 <hr>
                 <div class="widget-content">
-                    <div class="card">
-                        <div class="card-body">
-                            @forelse ($eventku as $event)
+                    @forelse ($eventku as $event)
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="">
                                         <span class="small">
@@ -78,11 +82,15 @@
                                         </a>
                                     </div>
                                 </div>
-                            @empty
-                                <p class="text-center">Tidak ada event</p>
-                            @endforelse
+                            </div>
                         </div>
-                    </div>
+                    @empty
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="text-center">Tidak ada event</p>
+                            </div>
+                        </div>
+                    @endforelse
                     @if(count($eventku)>5)
                         <div class="d-flex justify-content-end mt-3">
                             <a href="{{ route('peserta.eventku.index') }}">Selengkapnya</a>
