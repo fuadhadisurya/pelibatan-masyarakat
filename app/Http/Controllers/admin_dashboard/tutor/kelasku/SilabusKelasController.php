@@ -8,6 +8,7 @@ use App\Models\Silabus;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class SilabusKelasController extends Controller
 {
@@ -16,13 +17,9 @@ class SilabusKelasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($kelas_id)
+    public function index(Request $request, $kelas_id)
     {
-        $kelas = Kelas::findOrfail($kelas_id);
-        $silabus = Silabus::where('user_id', Auth::user()->id)->get();
-        $bab = SilabusBab::where('silabus_id', $kelas->silabus_id)->get();
-        
-        return view('admin_dashboard.tutor.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus, 'bab' => $bab]);
+        // 
     }
 
     /**
@@ -30,9 +27,9 @@ class SilabusKelasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($kelas_id)
     {
-        //
+        // 
     }
 
     /**
@@ -41,9 +38,9 @@ class SilabusKelasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $kelas_id)
     {
-        //
+        // 
     }
 
     /**
@@ -63,9 +60,9 @@ class SilabusKelasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kelas_id, $id)
     {
-        //
+        // 
     }
 
     /**
@@ -75,9 +72,9 @@ class SilabusKelasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
-        //
+        // 
     }
 
     /**
@@ -86,9 +83,9 @@ class SilabusKelasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kelas_id, $id)
     {
-        //
+        // 
     }
 
     public function pilihSilabus(Request $request, $kelas_id){

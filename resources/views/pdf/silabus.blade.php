@@ -18,14 +18,19 @@
     <table class="table table-sm table-borderless">
         <tbody>
             <tr>
-                <th style="width: 9%">Nama Silabus</th>
+                <th style="width: 9%">Nama Kelas</th>
                 <td style="width: 1%">:</td>
-                <td>{{ $silabus->nama_silabus }}</td>
+                <td>{{ $kelas->nama_kelas }}</td>
             </tr>
             <tr>
                 <th>Tutor</th>
                 <td>:</td>
-                <td>{{ $silabus->user->nama }}</td>
+                <td>{{ $kelas->tutor->nama }}</td>
+            </tr>
+            <tr>
+                <th>Periode</th>
+                <td>:</td>
+                <td>{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('Y') }}</td>
             </tr>
         </tbody>
     </table>

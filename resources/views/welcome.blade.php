@@ -87,6 +87,9 @@ https://templatemo.com/tm-568-digimedia
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">Tentang Kami</a></li>
                             <li class="scroll-to-section"><a href="#services">Kelas</a></li>
+                            @if (count($events)>0)
+                                <li class="scroll-to-section"><a href="#event">Event</a></li>
+                            @endif
                             @if (count($testimoni)>0)
                                 <li class="scroll-to-section"><a href="#free-quote">Testimoni</a></li>
                             @endif
@@ -99,7 +102,7 @@ https://templatemo.com/tm-568-digimedia
                             @if (count($faq)>0)
                                 <li class="scroll-to-section"><a href="#faq">Bantuan</a></li>
                             @endif
-                            <li class="scroll-to-section"><a href="#contact">Hubungi Kami</a></li>
+                            <li class="scroll-to-section"><a href="#contact">Kontak</a></li>
                             @if (Route::has('login'))
                                 @auth
                                     @if (Auth::user()->level == 'admin')
@@ -422,6 +425,61 @@ https://templatemo.com/tm-568-digimedia
         </div>
     </div>
 
+    @if (count($events)>0)
+        <div id="event" class="our-portfolio section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="section-heading wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <h6>Event </h6>
+                            <h4>Lihat daftar <em>event</em></h4>
+                            <div class="line-dec"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            @foreach ($events as $event)
+                                <div class="col-sm-3">
+                                    <a href="{{ url('peserta/event/'.$event->id) }}">
+                                        <div class="card h-100">
+                                            @if($event->banner != null)
+                                                <img src="{{ Storage::url($event->banner) }}" class="card-img-top" alt="...">
+                                            @else
+                                                <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="...">
+                                            @endif
+                                            <div class="card-body">
+                                                <div>
+                                                    <span class="badge bg-primary mb-3">{{ $event->kategori }}</span>
+                                                </div>
+                                                <h5 class="card-title">{{ $event->nama_event }}</h5>
+                                                <span class="tipe text-muted">oleh: 
+                                                    <span class="text-muted">{{ $event->pembuat_event }}</span>
+                                                </span>
+                                                <div class="mt-1 mb-3" style="text-align: justify">
+                                                    {!! Str::limit($event->deskripsi, 150, $end='...') !!}
+                                                </div>
+                                            </div>
+                                            <div class="card-footer d-flex justify-content-end">
+                                                @if (\Carbon\Carbon::now()->format('Y-m-d') <= $event->deadline_pendaftaran)
+                                                    <small class="text-secondary">Batas Pendaftaran: {{ \Carbon\Carbon::parse($event->deadline_pendaftaran)->format('j F Y') }}</small>
+                                                @else
+                                                    <small class="text-secondary">Pendaftaran Ditutup</small>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     {{-- <div id="free-quote" class="free-quote">
         <div class="container">

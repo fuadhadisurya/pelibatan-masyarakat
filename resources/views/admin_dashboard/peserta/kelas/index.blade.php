@@ -33,7 +33,7 @@
                                 <div class="mb-3">
                                     <h5 class="mb-2">Tipe Peserta</h5>
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="category" value="Semua" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "Semua" ? "checked" : "" }}>
+                                        <input type="radio" id="category" value="Semua" name="category" class="custom-control-input" onchange="this.form.submit();" {{ $category == "Semua" || $category == null ? "checked" : "" }}>
                                         <label class="custom-control-label" for="category">Semua</label>
                                     </div>
                                     <div class="custom-control custom-radio">

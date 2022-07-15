@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Event;
 use App\Models\Faq;
 use App\Models\Testimoni;
 use App\Models\User;
@@ -14,12 +15,17 @@ class LandingPageController extends Controller
         $testimoni = Testimoni::where('rating', 5)->get();
         $tutor = User::with('kelas')->where('level', 'tutor')->get();
         $berita = Berita::where('publish', 'Ya')->orderBy('id', 'desc')->get();
+        if(count(Event::all())>5){
+            $events = Event::orderBy('id', 'desc')->limit(5)->get();
+        } else {
+            $events = Event::orderBy('id', 'desc')->get();
+        }
         if(count(Faq::all())>5){
             $faq = Faq::all()->random(5);
         } else {
             $faq = Faq::all();
         }
-        return view('welcome', ['berita' => $berita, 'faq' => $faq, 'tutor' => $tutor, 'testimoni' => $testimoni]);
+        return view('welcome', ['berita' => $berita, 'faq' => $faq, 'tutor' => $tutor, 'testimoni' => $testimoni, 'events' => $events]);
     }
 
     public function faq(){
