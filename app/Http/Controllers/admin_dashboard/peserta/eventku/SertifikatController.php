@@ -50,8 +50,8 @@ class SertifikatController extends Controller
             
             $pdf = PDF::loadView('sertifikat/SertifikatEvent', $data)->setPaper('A4', 'landscape');
             
-            // return $pdf->download('Sertifikat_'.$event->nama_event.'_'.$nama.'.pdf');
-            return $pdf->stream('Sertifikat_'.$event->nama_event.'_'.$nama.'.pdf');
+            return $pdf->download('Sertifikat_'.$event->nama_event.'_'.$nama.'.pdf');
+            // return $pdf->stream('Sertifikat_'.$event->nama_event.'_'.$nama.'.pdf');
         } else {
             abort(404);
         }

@@ -82,5 +82,14 @@ return array (
     'normal' => $fontDir . '/poppins_normal_442dffd12abdf0df26c14405d3f49bfa',
     '800' => $fontDir . '/poppins_800_313634739c16b7523b76f32223648e5b',
   ),
+  'glyphicons halflings' => array(
+    'normal' => $fontDir . '/glyphicons_halflings_normal_1c174d81745f821d7388d781af2c7729',
+  ),
+  'quicksand' => array(
+    'normal' => $fontDir . '/quicksand_normal_eedeabdad54b80a8ffc1dbd70fe5328c',
+    '500' => $fontDir . '/quicksand_500_0c56c9b3beeb2a91ef4d3ad4e2455dd5',
+    '600' => $fontDir . '/quicksand_600_9ce648edffd6773b7af0d5b3a161cb64',
+    'bold' => $fontDir . '/quicksand_bold_7b37fc9cadcf1404a7bbe95f0c175492',
+  ),
 );
 }; ?>

@@ -14,6 +14,7 @@ class SilabusBab extends Model
     protected $fillable = [
         "silabus_id",
         "nama_bab", 
+        "tanggal",
     ];
 
     public function silabus(){

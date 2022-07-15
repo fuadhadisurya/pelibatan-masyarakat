@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin_dashboard\tutor\silabus;
 
 use App\Http\Controllers\Controller;
 use App\Models\SilabusBab;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -55,8 +56,11 @@ class SilabusBabController extends Controller
         $this->validate($request, [
             "nama_bab"   => "required|array",
             "nama_bab.*" => "required|string",
+            "tanggal"   => "required|array",
+            "tanggal.*" => "required",
         ]);
 
+        $tanggal = $request->tanggal;
         $nama_bab = $request->nama_bab;
         $total = count($nama_bab);
 
@@ -64,6 +68,7 @@ class SilabusBabController extends Controller
             SilabusBab::create([
                 'silabus_id' => $silabus_id,
                 'nama_bab' => $nama_bab[$i],
+                'tanggal' => $tanggal[$i],
             ]);
         }
         

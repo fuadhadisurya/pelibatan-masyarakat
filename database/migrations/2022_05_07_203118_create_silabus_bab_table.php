@@ -17,6 +17,7 @@ class CreateSilabusBabTable extends Migration
             $table->id();
             $table->foreignId('silabus_id');
             $table->string('nama_bab');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

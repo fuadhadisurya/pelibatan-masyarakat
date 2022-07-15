@@ -18,9 +18,6 @@
         @endif
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             <div class="widget-content widget-content-area br-6">
-                <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#buatSilabus">
-                    <i class="far fa-plus-square"></i> Buat Silabus
-                </button>
                 <div class="table-responsive mb-4 mt-4">
                     <table id="data-silabus" class="table table-hover" style="width:100%">
                         <thead>
@@ -28,7 +25,7 @@
                                 <th>No.</th>
                                 <th>Nama Silabus</th>
                                 <th>Tahun</th>
-                                <th>Bab</th>
+                                <th>Tutor</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -44,40 +41,6 @@
 @endsection
 
 @push('modal')
-    <div class="modal fade" id="buatSilabus" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('silabus.store') }}" method="POST" autocomplete="off">
-                @csrf
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buat Silabus</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="nama_silabus">Nama Silabus</label>
-                            <input id="dateTimeFlatpickr" name="nama_silabus" class="form-control" type="text" placeholder="" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="user_id">Tutor</label>
-                            <select class="form-control select2" name="user_id" required>
-                                <option value="">Pilih Menu</option>
-                                @foreach ($tutor as $tutors)
-                                    <option value="{{ $tutors->id }}">{{ $tutors->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endpush
 
 @push('styles')
@@ -108,7 +71,7 @@
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
                 {data: 'nama_silabus', name: 'nama_silabus'},
                 {data: 'created_at', name: 'created_at'},
-                {data: 'bab', name: 'bab', className: 'text-center', orderable: false, searchable: false},
+                {data: 'tutor', name: 'tutor'},
                 {"width": "12%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {

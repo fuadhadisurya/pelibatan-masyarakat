@@ -19,24 +19,6 @@
                 </div>
             @endif
 
-            <div class="widget-content widget-content-area mb-3 br-6">
-                <form id="form" action="{{ route('tutor.kelasku.silabus.pilih-silabus', [$kelas->id]) }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <select class="form-control select2" name="silabus_id" required>
-                        <option value="">Pilih Menu</option>
-                        @foreach ($silabus as $silabuss)
-                            <option value="{{ $silabuss->id }}" {{ $silabuss->id == $kelas->silabus_id ? 'selected' : ''}}>{{ $silabuss->nama_silabus }}</option>
-                        @endforeach
-                    </select>
-                    <hr>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('silabus.index') }}" class="btn btn-sm btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-
             @if ($kelas->silabus_id != null)
                 <div class="widget-content widget-content-area br-6">
                     <div id="toggleAccordion">
@@ -88,6 +70,10 @@
                             @endif
                         @endforeach
                     </div>
+                </div>
+            @else
+                <div class="widget-content widget-content-area br-6">
+                    Data tidak ditemukan
                 </div>
             @endif
         </div>

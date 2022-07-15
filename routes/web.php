@@ -157,8 +157,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('data-event.sertifikat', Data_eventSertifikatController::class);
     // Silabus
     Route::resource('silabus', SilabusController::class);
-    Route::resource('silabus.bab', SilabusBabController::class);
-    Route::resource('silabus.bab.subbab', SilabusSubBabController::class);
+    Route::get('/silabus/{silabu}/download', [SilabusController::class, 'download'])->name('silabus.download');
 });
 
 Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->group(function(){

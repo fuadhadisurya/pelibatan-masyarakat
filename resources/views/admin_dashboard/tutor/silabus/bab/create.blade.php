@@ -30,6 +30,10 @@
                                         <label for="nama_bab[]">Nama Bab</label>
                                         <input class="form-control" id="nama_bab[]" name="nama_bab[]" autocomplete="off" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="tanggal">Tanggal</label>
+                                        <input id="dateTimeFlatpickr" name="tanggal[]" class="form-control flatpickr flatpickr-input active tanggal" type="date" placeholder="Pilih Tanggal.." value="{{ old('tanggal') }}" required>
+                                    </div>
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-success add-more" type="button">
                                             Tambah
@@ -58,6 +62,10 @@
                         <label for="nama_bab[]">Nama Bab</label>
                         <input class="form-control" id="nama_bab[]" name="nama_bab[]" autocomplete="off" required>
                     </div>
+                    <div class="form-group">
+                        <label for="tanggal">Tanggal</label>
+                        <input id="dateTimeFlatpickr" name="tanggal[]" class="form-control flatpickr flatpickr-input active tanggal" type="date" placeholder="Pilih Tanggal.." value="{{ old('tanggal') }}" required>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-danger remove" type="button">
                             Hapus
@@ -72,14 +80,31 @@
 @push('styles')
     <link href="{{ asset('admin_dashboard/assets/css/components/tabs-accordian/custom-tabs.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_dashboard/assets/css/elements/alert.css') }}">
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('admin_dashboard/plugins/flatpickr/custom-flatpickr.css') }}" rel="stylesheet" type="text/css">
 @endpush
 
 @push('scripts')
+    <script src="{{ asset('admin_dashboard/plugins/flatpickr/flatpickr.js') }}"></script>
+    <script>
+        function tanggal(e) {
+            return flatpickr(document.getElementsByClassName('flatpickr'), {
+                dateFormat: "Y-m-d",
+                minDate: 'today'
+            });
+        }
+
+        var f2 = flatpickr(document.getElementsByClassName('flatpickr'), {
+            dateFormat: "Y-m-d",
+            minDate: 'today'
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function() {
             $(".add-more").click(function(){ 
                 var html = $(".copy").html();
                 $("#listSoal").append(html);
+                tanggal();
             });
         
             // saat tombol remove dklik control group akan dihapus 

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class PresensiController extends Controller
 {
@@ -180,9 +181,29 @@ class PresensiController extends Controller
         return response()->json(array('success' => true));
     }
 
+    // public function export($event_id, $id){
+    //     $event = Event::findOrFail($event_id);
+    //     $presensi = PresensiEvent::findOrFail($id);
+    //     return Excel::download(new PresensiEventExport($event_id, $id), 'Presensi '.$event->nama_event.' ('.Carbon::parse($presensi->created_at)->format('j F Y').').xlsx');
+    // }
+
     public function export($event_id, $id){
         $event = Event::findOrFail($event_id);
         $presensi = PresensiEvent::findOrFail($id);
-        return Excel::download(new PresensiEventExport($event_id, $id), 'Presensi '.$event->nama_event.' ('.Carbon::parse($presensi->created_at)->format('j F Y').').xlsx');
+        $dataPresensi = User::select('users.*', 'data_presensi_event.id AS presensi_event_id', 'data_presensi_event.created_at AS waktu_mengisi', 'data_presensi_event.status AS presensi_event_status', 'data_presensi_event.gambar AS gambar')
+            ->orderBy('users.nama', 'asc')
+            ->rightJoin('registrasi_event', 'users.id', '=', 'registrasi_event.user_id')
+            ->leftJoin('data_presensi_event', 'data_presensi_event.user_id', '=', DB::raw('users.id AND data_presensi_event.presensi_event_id = ' . $id))
+            ->where('users.level', 'peserta')->get();
+        
+        $data = [
+            'event' => $event,
+            'presensi' => $presensi,
+            'dataPresensi' => $dataPresensi,
+        ];
+        
+        $pdf = PDF::loadView('pdf/presensiEvent', $data)->setPaper('A4', 'portrait');
+        
+        return $pdf->download('Presensi '.$event->nama_event.' ('.Carbon::parse($presensi->tanggal_mulai)->format('j F Y').').pdf');
     }
 }
