@@ -74,7 +74,7 @@ class Kelas extends Model
         return $this->hasMany(Quiz::class);
     }
 
-    public function registasiKelas(){
+    public function registrasiKelas(){
         return $this->hasMany(RegistrasiKelas::class);
     }
 

@@ -23,10 +23,15 @@ class DashboardController extends Controller
         $tahun = $request->tahun;
         
         $kelas = RegistrasiKelas::with('kelas')->where('user_id', Auth::user()->id)->get();
-        foreach ($kelas as $kela) {
-            $namaKelas[] = preg_replace('~\\s+\\S+$~', "", $kela->kelas->nama_kelas);
+        // dd($kelas->count());
+        if($kelas->count()>0){
+            foreach ($kelas as $kela) {
+                $className[] = preg_replace('~\\s+\\S+$~', "", $kela->kelas->nama_kelas);
+            }
+            $namaKelas = array_unique($className, SORT_REGULAR);
+        } else {
+            $namaKelas = null;
         }
-        $namaKelas = array_unique($namaKelas, SORT_REGULAR);
 
         if ($class == true && $tahun == true) {
             $cariKelas = Kelas::where('nama_kelas', $class)->whereYear('tanggal_mulai', $tahun)->first();
@@ -76,25 +81,37 @@ class DashboardController extends Controller
                 
             $presensi = Presensi::whereHas('kelas', function($query) use ($tahun, $class){
                 return $query->whereYear('tanggal_mulai', $tahun)
-                ->where('nama_kelas', $class);
+                ->where('nama_kelas', $class)
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->where('kelas_id', $cariKelas->id)->orderBy('id', 'desc')->limit(3)->get();
 
             $tugas = Tugas::whereHas('kelas', function($query) use ($tahun, $class){
                 return $query->whereYear('tanggal_mulai', $tahun)
-                ->where('nama_kelas', $class);
+                ->where('nama_kelas', $class)
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->where('kelas_id', $cariKelas->id)->orderBy('id', 'desc')->limit(3)->get();
             
             $quiz = Quiz::whereHas('kelas', function($query) use ($tahun, $class){
                 return $query->whereYear('tanggal_mulai', $tahun)
-                ->where('nama_kelas', $class);
+                ->where('nama_kelas', $class)
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->where('kelas_id', $cariKelas->id)->orderBy('id', 'desc')->limit(3)->get();
             
             $materi = Materi::whereHas('kelas', function($query) use ($tahun, $class){
                 return $query->whereYear('tanggal_mulai', $tahun)
-                ->where('nama_kelas', $class);
+                ->where('nama_kelas', $class)
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->where('kelas_id', $cariKelas->id)->orderBy('id', 'desc')->limit(3)->get();
         } else {
@@ -129,22 +146,34 @@ class DashboardController extends Controller
             $tidakHadir = ($countDataTidakHadir+$countTidakHadir) - ($hadir+$sakit+$izin);
 
             $presensi = Presensi::whereHas('kelas', function($query) use ($tahun){
-                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'));
+                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'))
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->orderBy('id', 'desc')->limit(3)->get();
             
             $tugas = Tugas::whereHas('kelas', function($query) use ($tahun){
-                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'));
+                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'))
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->orderBy('id', 'desc')->limit(3)->get();
             
             $quiz = Quiz::whereHas('kelas', function($query) use ($tahun){
-                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'));
+                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'))
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->orderBy('id', 'desc')->limit(3)->get();
             
             $materi = Materi::whereHas('kelas', function($query) use ($tahun){
-                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'));
+                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'))
+                ->whereHas('registrasiKelas', function($query) use ($tahun){
+                    return $query->where('user_id', Auth::user()->id);
+                });
             })
             ->orderBy('id', 'desc')->limit(3)->get();
         }

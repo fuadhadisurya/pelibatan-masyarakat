@@ -40,7 +40,7 @@ class Event extends Model
         });
     }
 
-    public function registasiEvent(){
+    public function registrasiEvent(){
         return $this->hasMany(RegistrasiEvent::class);
     }
 

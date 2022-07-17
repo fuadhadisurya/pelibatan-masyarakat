@@ -227,7 +227,7 @@
                                     <div class="">
                                         @if ($cariKelas==null) 
                                             <span class="small">
-                                                <strong>{{ $p->kelas->nama_kelas }}</strong>
+                                                <strong>{{ $t->kelas->nama_kelas }}</strong>
                                             </span>
                                             <br>
                                         @endif
@@ -273,7 +273,7 @@
                                     <div class="">
                                         @if ($cariKelas==null) 
                                             <span class="small">
-                                                <strong>{{ $p->kelas->nama_kelas }}</strong>
+                                                <strong>{{ $q->kelas->nama_kelas }}</strong>
                                             </span>
                                             <br>
                                         @endif
