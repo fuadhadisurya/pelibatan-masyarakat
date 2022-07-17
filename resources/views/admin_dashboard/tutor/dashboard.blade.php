@@ -168,6 +168,12 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="">
+                                        @if ($cariKelas==null) 
+                                            <span class="small">
+                                                <strong>{{ $p->kelas->nama_kelas }}</strong>
+                                            </span>
+                                            <br>
+                                        @endif
                                         <p class="mb-0 mt-1">{{ \Carbon\Carbon::parse($p->tanggal_mulai)->format('j F Y') }}</p>
                                     </div>
                                     <div class="">
@@ -219,6 +225,12 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="">
+                                        @if ($cariKelas==null) 
+                                            <span class="small">
+                                                <strong>{{ $p->kelas->nama_kelas }}</strong>
+                                            </span>
+                                            <br>
+                                        @endif
                                         <p class="mb-0 mt-1">{{ $t->nama_tugas }}</p>
                                     </div>
                                     <div class="">
@@ -259,6 +271,12 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="">
+                                        @if ($cariKelas==null) 
+                                            <span class="small">
+                                                <strong>{{ $p->kelas->nama_kelas }}</strong>
+                                            </span>
+                                            <br>
+                                        @endif
                                         <p class="mb-0 mt-1">{{ $q->nama_quiz }}</p>
                                     </div>
                                     <div class="">

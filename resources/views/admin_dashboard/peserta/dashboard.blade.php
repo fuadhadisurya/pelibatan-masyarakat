@@ -159,7 +159,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $hadir }}</div>
                             </div>
                             <div class="col-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                             </div>
                         </div>
                     </blockquote>
@@ -172,7 +172,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $tidakHadir }}</div>
                             </div>
                             <div class="col-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
                             </div>
                         </div>
                     </blockquote>
@@ -185,7 +185,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $sakit }}</div>
                             </div>
                             <div class="col-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                             </div>
                         </div>
                     </blockquote>
@@ -198,7 +198,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $izin }}</div>
                             </div>
                             <div class="col-auto">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                             </div>
                         </div>
                     </blockquote>
@@ -284,11 +284,22 @@
                                         <p class="mb-0 mt-1">{{ $t->nama_tugas }}</p>
                                     </div>
                                     <div class="">
-                                        <a href="{{ route('peserta.kelasku.tugas.show', [$t->kelas_id, $t->id]) }}" class="btn btn-sm btn-info">
-                                            <div class="d-flex">
-                                                <span class="">Lihat Tugas</span>
-                                            </div>
-                                        </a>
+                                        @php
+                                            $dataTugas = DB::table('jawaban_tugas')->where('tugas_id', $t->id)->where('users_id', Auth::user()->id)->first();
+                                        @endphp
+                                        @if ($dataTugas!=null)
+                                            <a href="{{ route('peserta.kelasku.tugas.show', [$p->kelas_id, $t->id]) }}" class="btn btn-sm btn-success">
+                                                <div class="d-flex">
+                                                    <span class="">Lihat Jawaban</span>
+                                                </div>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('peserta.kelasku.tugas.show', [$p->kelas_id, $t->id]) }}" class="btn btn-sm btn-warning">
+                                                <div class="d-flex">
+                                                    <span class="">Kirim Jawaban</span>
+                                                </div>
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -327,24 +338,32 @@
                                             </span>
                                             <br>
                                         @endif
-                                        <p class="mb-0 mt-1">{{ $q->nama_quiz }}</p>
+                                        <p class="mb-0 mt-1">{{ $q->nama_quiz . " (" . \Carbon\Carbon::parse($q->tanggal_quiz)->format('j F Y'). ")" }}</p>
                                     </div>
                                     <div class="">
                                         @php
-                                            $dataQuiz = DB::table('quiz_jawaban')->where('quiz_id', $p->id)->where('user_id', Auth::user()->id)->first();
+                                            $dataQuiz = DB::table('nilai_quiz')->where('quiz_id', $q->id)->where('user_id', Auth::user()->id)->first();
                                         @endphp
-                                        @if ($dataPresensi!=null)
-                                            <a href="{{ route('peserta.kelasku.presensi.index', [$p->kelas_id]) }}" class="btn btn-sm btn-success">
+                                        @if ($dataQuiz!=null)
+                                            <a href="{{ route('peserta.quiz.jawaban.show', [$q->kelas_id, $q->id]) }}" class="btn btn-sm btn-success">
                                                 <div class="d-flex">
-                                                    <span class="">Sudah Mengisi</span>
+                                                    <span class="">Lihat Jawaban</span>
                                                 </div>
                                             </a>
                                         @else
-                                            <a href="{{ route('peserta.kelasku.presensi.index', [$p->kelas_id]) }}" class="btn btn-sm btn-warning">
-                                                <div class="d-flex">
-                                                    <span class="">Isi Presensi</span>
-                                                </div>
-                                            </a>
+                                            @if (\Carbon\Carbon::now()->format('Y-m-d') >= \Carbon\Carbon::parse($q->tanggal_quiz)->format('Y-m-d'))
+                                                <a href="{{ route('peserta.kelasku.quiz.show', [$q->kelas_id, $q->id]) }}" class="btn btn-sm btn-warning">
+                                                    <div class="d-flex">
+                                                        <span class="">Isi Jawaban</span>
+                                                    </div>
+                                                </a>
+                                            @else
+                                                <button class="btn btn-sm btn-warning" disabled>
+                                                    <div class="d-flex">
+                                                        <span class="">Mulai Tanggal {{ \Carbon\Carbon::parse($q->tanggal_quiz)->format('j F Y') }}</span>
+                                                    </div>
+                                                </button>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -359,7 +378,7 @@
                     @endforelse
                     @if($cariKelas!=null && count($quiz)>=3)
                         <div class="d-flex justify-content-end mt-3">
-                            <a href="{{ route('peserta.kelasku.presensi.index', [$cariKelas->id]) }}">Selengkapnya</a>
+                            <a href="{{ route('peserta.kelasku.quiz.index', [$cariKelas->id]) }}">Selengkapnya</a>
                         </div>
                     @endif
                 </div>
@@ -405,7 +424,7 @@
                     @endforelse
                     @if($cariKelas!=null && count($materi)>=3)
                         <div class="d-flex justify-content-end mt-3">
-                            <a href="{{ route('peserta.kelasku.tugas.index', [$cariKelas->id]) }}">Selengkapnya</a>
+                            <a href="{{ route('peserta.kelasku.materi.index', [$cariKelas->id]) }}">Selengkapnya</a>
                         </div>
                     @endif
                 </div>

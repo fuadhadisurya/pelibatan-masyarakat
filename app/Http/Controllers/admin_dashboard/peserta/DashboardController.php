@@ -66,11 +66,12 @@ class DashboardController extends Controller
             $countDataTidakHadir = Presensi::select('presensi.*')
                 ->leftJoin('registrasi_kelas', 'registrasi_kelas.kelas_id', '=', 'presensi.kelas_id')
                 ->where('registrasi_kelas.user_id', Auth::user()->id)
+                ->where('presensi.tanggal_berakhir', '<' , Carbon::now()->format('Y-m-d'))
                 ->whereHas('kelas', function($query) use ($class, $tahun){
                     return $query->where('nama_kelas', $class)
                     ->whereYear('tanggal_mulai', $tahun);
                 })->get()->count();
-            
+                
             $tidakHadir = ($countDataTidakHadir+$countTidakHadir) - ($hadir+$sakit+$izin);
                 
             $presensi = Presensi::whereHas('kelas', function($query) use ($tahun, $class){
