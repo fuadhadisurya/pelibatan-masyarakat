@@ -21,7 +21,6 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizJawabanController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\QuizSoalController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SertifikatController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusController as Data_kelasSilabusController;
-use App\Http\Controllers\admin_dashboard\admin\data_kelas\SilabusKelasController;
 use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
 use App\Http\Controllers\admin_dashboard\admin\DataEventController;
 use App\Http\Controllers\admin_dashboard\admin\EventController;
@@ -116,9 +115,9 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     Route::resource('kelas', KelasController::class);
     Route::resource('data-kelas', DataKelasController::class);
     Route::resource('data-kelas.home', HomeController::class);
-    Route::put('/data-kelas/{data_kela}/silabus/pilih-silabus', [SilabusKelasController::class, 'pilihSilabus'])->name('data-kelas.silabus.pilih-silabus');
+    // Route::put('/data-kelas/{data_kela}/silabus/pilih-silabus', [SilabusKelasController::class, 'pilihSilabus'])->name('data-kelas.silabus.pilih-silabus');
+    Route::get('/data-kelas/{data_kela}/silabus/download', [Data_kelasSilabusController::class, 'download'])->name('data-kelas.silabus.download');
     Route::resource('data-kelas.silabus', Data_kelasSilabusController::class);
-    Route::get('/data-kelas/{data_kela}/silabus/{silabu}/download', [Data_kelasSilabusController::class, 'download'])->name('data-kelas.silabus.download');
     Route::get('/data-kelas/{data_kela}/peserta/export', [DataPesertaController::class, 'export']);
     Route::get('/data-kelas/{data_kela}/peserta/export-diterima', [DataPesertaController::class, 'exportDiterima']);
     Route::resource('data-kelas.peserta', DataPesertaController::class);
@@ -164,6 +163,7 @@ Route::prefix('tutor')->name('tutor.')->middleware(['auth', 'ceklevel:tutor'])->
     Route::resource('kelasku', TutorKelaskuController::class)->only(['index']);
     Route::resource('kelasku.home', TutorKelaskuHomeController::class);
     // Route::put('/kelasku/{kelasku}/silabus/pilih-silabus', [TutorSilabusKelasController::class, 'pilihSilabus'])->name('kelasku.silabus.pilih-silabus');
+    Route::get('/kelasku/{data_kela}/silabus/download', [TutorKelaskuSilabusController::class, 'download'])->name('kelasku.silabus.download');
     Route::resource('kelasku.silabus', TutorKelaskuSilabusController::class);
     Route::resource('kelasku.silabus.detail', TutorKelaskuSilabusDetailController::class);
     Route::resource('kelasku.peserta', TutorKelaskuPesertaController::class);

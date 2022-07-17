@@ -22,6 +22,7 @@
                 <a href="{{ route('tutor.kelasku.silabus.create', [$kelas->id]) }}" class="btn btn-primary mb-3">
                     <i class="far fa-plus-square"></i> Tambah Silabus Bab
                 </a>
+                <a href="{{ route('tutor.kelasku.silabus.download', [$kelas->id]) }}" class="btn btn-info mb-3" title="Lihat">Download Silabus</a>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
                         <thead>

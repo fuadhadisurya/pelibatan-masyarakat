@@ -19,11 +19,11 @@
             </li>
             <li class="nav-item theme-text">
                 @if (Auth::user()->level == 'admin')
-                    <a href="{{ url('/admin/dashboard') }}" class="nav-link"> KPM </a>
+                    <a href="{{ url('/admin/dashboard') }}" class="nav-link"> SIBAKAT </a>
                 @elseif(Auth::user()->level == 'tutor')
-                    <a href="{{ url('/tutor/dashboard') }}" class="nav-link"> KPM </a>
+                    <a href="{{ url('/tutor/dashboard') }}" class="nav-link"> SIBAKAT </a>
                 @else
-                    <a href="{{ url('/peserta/dashboard') }}" class="nav-link"> KPM </a>
+                    <a href="{{ url('/peserta/dashboard') }}" class="nav-link"> SIBAKAT </a>
                 @endif
             </li>
             <li class="nav-item toggle-sidebar">
