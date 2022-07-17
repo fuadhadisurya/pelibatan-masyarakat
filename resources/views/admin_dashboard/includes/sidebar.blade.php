@@ -70,14 +70,14 @@
                         </li>      
                     </ul>
                 </li>
-                <li class="menu {{ Request::segment(2) == 'silabus' ? 'active' : '' }}">
+                {{-- <li class="menu {{ Request::segment(2) == 'silabus' ? 'active' : '' }}">
                     <a href="{{ url('/admin/silabus') }}" aria-expanded="{{ Request::segment(2) == 'silabus' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                             <span> Silabus</span>
                         </div>
                     </a>
-                </li>
+                </li> --}}
                 <li class="menu">
                     <a href="#berita" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'berita' || Request::segment(2) == 'kategori-berita' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
@@ -122,14 +122,14 @@
                         </div>
                     </a>
                 </li>
-                <li class="menu {{ Request::segment(2) == 'silabus' ? 'active' : '' }}">
+                {{-- <li class="menu {{ Request::segment(2) == 'silabus' ? 'active' : '' }}">
                     <a href="{{ url('/tutor/silabus') }}" aria-expanded="{{ Request::segment(2) == 'silabus' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                             <span> Silabus</span>
                         </div>
                     </a>
-                </li>
+                </li> --}}
                 <li class="menu">
                     <a href="#pengaturan" data-toggle="collapse" aria-expanded="{{ Request::segment(2) == 'profil' || Request::segment(2) == 'akun' ? 'true' : 'false' }}" class="dropdown-toggle">
                         <div class="">

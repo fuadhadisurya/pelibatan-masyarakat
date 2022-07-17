@@ -21,7 +21,7 @@ class KelasController extends Controller
         if (request('sort') || request('category') || request('search')) {
             $kelas = Kelas::where('status', '=', 'Pendaftaran')->filter(request(['search', 'sort', 'category']))->paginate(10);
         } else {
-            $kelas = Kelas::orderBy('id', 'desc')->where('status', '=', 'Pendaftaran')->filter(request(['search']))->paginate(10);
+            $kelas = Kelas::orderBy('id', 'desc')->filter(request(['search']))->paginate(10);
         }
         // dd($kelas);
         $search = request('search');
@@ -59,7 +59,7 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        $kelas = Kelas::where('status', '=', 'Pendaftaran')->findOrfail($id);
+        $kelas = Kelas::findOrfail($id);
 
         $registrasi_kelas = RegistrasiKelas::where('user_id', '=', Auth::user()->id)->where('kelas_id', '=', $kelas->id)->get();
         

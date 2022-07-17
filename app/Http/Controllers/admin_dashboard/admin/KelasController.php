@@ -34,12 +34,8 @@ class KelasController extends Controller
                         return $row->tutor->nama;
                     })
                     ->editColumn('status', function($row){
-                        if($row->status == 'Persiapan'){
-                            $status = '<span class="badge badge-warning">Persiapan</span>';
-                        }elseif($row->status == 'Pendaftaran'){
+                        if($row->status == 'Pendaftaran'){
                             $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-info">Proses Seleksi</span>';
                         } elseif($row->status == 'Kegiatan Berlangsung'){
                             $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
                         } else {
@@ -89,6 +85,7 @@ class KelasController extends Controller
     {
         $this->validate($request, [
             'banner' => 'image|required|max:10240',
+            'tanggal_pendaftaran' => 'required',
             'nama_kelas' => 'required',
             'periode_kelas' => 'required',
             'persyaratan' => 'required',
@@ -120,6 +117,12 @@ class KelasController extends Controller
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
         $data['tanggal_berakhir'] = $endDate;
+        
+        $datesPendaftaran = explode('to', $request->tanggal_pendaftaran);
+        $startDatePendaftaran = trim($datesPendaftaran[0]);
+        $endDatePendaftaran = trim($datesPendaftaran[1]);
+        $data['pendaftaran_buka'] = $startDatePendaftaran;
+        $data['pendaftaran_tutup'] = $endDatePendaftaran;
         
         $data['nama_kelas'] = $request->nama_kelas . ' ' . Carbon::parse($startDate)->format('Y');
 
@@ -167,6 +170,7 @@ class KelasController extends Controller
         $this->validate($request, [
             'banner' => 'image|nullable|max:10240',
             'nama_kelas' => 'required',
+            'tanggal_pendaftaran' => 'required',
             'periode_kelas' => 'required',
             'tutor_id' => 'required',
             'status' => 'required',
@@ -179,6 +183,12 @@ class KelasController extends Controller
         $endDate = trim($dates[1]);
         $data['tanggal_mulai'] = $startDate;
         $data['tanggal_berakhir'] = $endDate;
+
+        $datesPendaftaran = explode('to', $request->tanggal_pendaftaran);
+        $startDatePendaftaran = trim($datesPendaftaran[0]);
+        $endDatePendaftaran = trim($datesPendaftaran[1]);
+        $data['pendaftaran_buka'] = $startDatePendaftaran;
+        $data['pendaftaran_tutup'] = $endDatePendaftaran;
 
         $data['nama_kelas'] = $request->nama_kelas . ' ' . Carbon::parse($startDate)->format('Y');
 

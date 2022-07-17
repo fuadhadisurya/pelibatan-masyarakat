@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama</th>
+                                <th>Tanggal</th>
                                 <th>Presensi Buka</th>
                                 <th>Presensi Tutup</th>
                                 <th>Status</th>
@@ -125,7 +125,7 @@
             ajax: "{{ route('tutor.kelasku.presensi.index', $kelas_id) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama', name: 'nama'},
+                {data: 'tanggal', name: 'tanggal'},
                 {data: 'tanggal_mulai', name: 'tanggal_mulai'},
                 {data: 'tanggal_berakhir', name: 'tanggal_berakhir'},
                 {data: 'status', name: 'status'},

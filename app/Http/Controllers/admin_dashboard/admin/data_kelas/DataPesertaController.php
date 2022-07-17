@@ -54,7 +54,7 @@ class DataPesertaController extends Controller
                         return '<td class="text-center">'. $status .'</td>';
                     })
                     ->addColumn('aksi', function($row){
-                        if($row->kelas->status == "Proses Seleksi"){
+                        if($row->kelas->status == "Pendaftaran"){
                             if($row->status == 'Diterima'){
                                 if($row->catatan!=null){
                                     $message = '<a href="whatsapp://send?phone='.$row->user->nomor_telepon.'&text=Hallo. pesan ini dari Perpustakaan Kabupaten Indramayu.%0a*Selamat!* anda dinyatakan diterima di kelas Kelas Basic Programming. Jangan lupa datang tepat waktu ya!%0aBerikut ini ada informasi tambahan untuk anda:%0a'.$row->catatan.'."><span class="btn btn-sm" style="background-color: #e7f7ff;"><i class="far fa-comment-dots"></i></span></a>';

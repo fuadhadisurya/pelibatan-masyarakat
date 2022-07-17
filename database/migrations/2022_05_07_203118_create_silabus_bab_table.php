@@ -15,8 +15,9 @@ class CreateSilabusBabTable extends Migration
     {
         Schema::create('silabus_bab', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('silabus_id');
+            $table->foreignId('kelas_id');
             $table->string('nama_bab');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

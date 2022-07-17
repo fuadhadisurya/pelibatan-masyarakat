@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class PresensiController extends Controller
 {
@@ -29,12 +30,13 @@ class PresensiController extends Controller
         if ($request->ajax()) {
             return DataTables::of($presensi)
                 ->addIndexColumn()
-                ->addColumn('nama', function ($row) {
-                    $angka = 1;
-                    for ($i=1; $i < $row->id; $i++) { 
-                        $angka++;
-                    }
-                    return 'Kehadiran '.$angka;
+                ->addColumn('tanggal', function ($row) {
+                    // $angka = 1;
+                    // for ($i=1; $i < $row->id; $i++) { 
+                    //     $angka++;
+                    // }
+                    // return 'Kehadiran '.$angka;
+                    return Carbon::parse($row->tanggal_mulai)->format('j F Y');
                 })
                 ->editColumn('tanggal_mulai', function($row){
                     return Carbon::parse($row->tanggal_mulai)->format('j F Y H:i');
@@ -187,9 +189,29 @@ class PresensiController extends Controller
         return response()->json(array('success' => true));
     }
 
+    // public function export($kelas_id, $id){
+    //     $kelas = Kelas::findOrFail($kelas_id);
+    //     $presensi = Presensi::findOrFail($id);
+    //     return Excel::download(new PresensiExport($kelas_id, $id), 'Presensi '.$kelas->nama_kelas.' ('.Carbon::parse($presensi->tanggal_mulai)->format('j F Y').').xlsx');
+    // }
+
     public function export($kelas_id, $id){
         $kelas = Kelas::findOrFail($kelas_id);
         $presensi = Presensi::findOrFail($id);
-        return Excel::download(new PresensiExport($kelas_id, $id), 'Presensi '.$kelas->nama_kelas.' ('.Carbon::parse($presensi->created_at)->format('j F Y').').xlsx');
+        $dataPresensi = User::select('users.*', 'data_presensi.id AS presensi_id', 'data_presensi.created_at AS waktu_mengisi', 'data_presensi.status AS presensi_status', 'data_presensi.gambar AS gambar')
+            ->orderBy('users.nama', 'asc')
+            ->rightJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
+            ->leftJoin('data_presensi', 'data_presensi.user_id', '=', DB::raw('users.id AND data_presensi.presensi_id = ' . $id))
+            ->where('users.level', 'peserta')->get();
+        
+        $data = [
+            'kelas' => $kelas,
+            'presensi' => $presensi,
+            'dataPresensi' => $dataPresensi
+        ];
+        
+        $pdf = PDF::loadView('pdf/presensi', $data)->setPaper('A4', 'portrait');
+        
+        return $pdf->download('Presensi '.$kelas->nama_kelas.' ('.Carbon::parse($presensi->tanggal_mulai)->format('j F Y').').pdf');
     }
 }

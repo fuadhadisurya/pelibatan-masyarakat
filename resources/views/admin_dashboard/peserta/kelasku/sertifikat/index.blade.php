@@ -9,7 +9,7 @@
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/> --}}
     <link rel="stylesheet" href="{{ asset('sertifikat-page/bootstrap/css/bootstrap.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('admin_dashboard/plugins/fancybox/fancybox.css') }}"/>
+    {{-- <link rel="stylesheet" href="{{ asset('admin_dashboard/plugins/fancybox/fancybox.css') }}"/> --}}
     <style type="text/css">
         html, body{
             height: 100%;
@@ -28,7 +28,10 @@
                     <h2 class="text-center">Selamat</h2>
                     <p class="text-center">Akhirnya kamu sudah sudah menyelesaikan kelas <strong>{{ $kelas->nama_kelas }}</strong>. silahkan unduh sertifikat dibawah ini</p>
                     <div class="mb-1 d-flex justify-content-center">
-                        <a data-fancybox data-type="pdf" href="{{ route('peserta.kelasku.sertifikat.download', [$kelas->id]) }}" class="btn btn-primary">
+                        {{-- <a data-fancybox data-type="pdf" href="{{ route('peserta.kelasku.sertifikat.download', [$kelas->id]) }}" class="btn btn-primary">
+                            Unduh Sertifikat
+                        </a> --}}
+                        <a href="{{ route('peserta.kelasku.sertifikat.download', [$kelas->id]) }}" class="btn btn-primary">
                             Unduh Sertifikat
                         </a>
                     </div>
@@ -48,7 +51,7 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script> --}}
     <script src="{{ asset('sertifikat-page/jquery/jquery.slim.min.js') }}"></script>
     <script src="{{ asset('sertifikat-page/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin_dashboard/plugins/fancybox/fancybox.umd.js') }}"></script>
+    {{-- <script src="{{ asset('admin_dashboard/plugins/fancybox/fancybox.umd.js') }}"></script> --}}
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

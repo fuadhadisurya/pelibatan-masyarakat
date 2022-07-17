@@ -59,7 +59,7 @@
                                             <span class="tipe">oleh: 
                                                 <span class="text-muted">{{ $event->pembuat_event }}</span>
                                             </span>
-                                            <div class="mt-1 mb-3">
+                                            <div class="mt-1 mb-3 text-justify">
                                                 {!! Str::limit($event->deskripsi, 150, $end='...') !!}
                                             </div>
                                         </div>

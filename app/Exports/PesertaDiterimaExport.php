@@ -39,7 +39,7 @@ class PesertaDiterimaExport implements FromCollection, WithMapping, WithHeadings
             $row->user->nama,
             $umur,
             ucwords(strtolower(\Indonesia::findCity($row->user->tempat_lahir)->name)),
-            Carbon::parse($row->tanggal_lahir)->format('j F Y'),
+            Carbon::parse($row->user->tanggal_lahir)->format('j F Y'),
             $row->user->jenis_kelamin,
             $row->user->tipe_anggota,
             $row->user->nomor_telepon,

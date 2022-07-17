@@ -1,9 +1,10 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Silabus | Kegiatan Pelibatan Masyarakat
+    Silabus Subbab | Kegiatan Pelibatan Masyarakat
 @endsection
 
 @section('content')
+    @include('admin_dashboard.tutor.kelasku.includes.navbar')
     <div class="row layout-top-spacing">
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
             @if(session('status'))
@@ -18,19 +19,18 @@
             @endif
 
             <div class="widget-content widget-content-area br-6">
-                <a href="{{ route('silabus.index') }}" class="btn btn-secondary mb-3">
-                    <i class="far fa-arrow-alt-circle-left"></i> Kembali ke halaman silabus
+                <a href="{{ route('tutor.kelasku.silabus.index', [$kelas->id]) }}" class="btn btn-secondary mb-3">
+                    <i class="far fa-arrow-alt-circle-left"></i> Kembali ke halaman silabus bab
                 </a>
-                <a href="{{ route('silabus.bab.create', [$silabus_id]) }}" class="btn btn-primary mb-3">
-                    <i class="far fa-plus-square"></i> Tambah Silabus Bab
+                <a href="{{ route('tutor.kelasku.silabus.detail.create', [$kelas->id, $bab_id]) }}" class="btn btn-primary mb-3">
+                    <i class="far fa-plus-square"></i> Tambah Silabus Subbab
                 </a>
                 <div class="table-responsive">
                     <table id="data-peserta" class="table table-hover table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Bab</th>
-                                <th class="text-center">Subbab</th>
+                                <th>Nama Subbab</th>
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -69,11 +69,10 @@
             processing: true,
             serverSide: true,
             order: [[0, 'asc']],
-            ajax: "{{ route('silabus.bab.index', $silabus_id) }}",
+            ajax: "{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $bab_id]) }}",
             columns: [
                 {"width": "5%", data: 'DT_RowIndex', name: 'id'},
-                {data: 'nama_bab', name: 'nama_bab'},
-                {data: 'subbab', name: 'subbab', className: 'text-center', orderable: false, searchable: false},
+                {data: 'nama_subbab', name: 'nama_subbab'},
                 {"width": "18%", data: 'aksi', name: 'aksi', className: 'text-center', orderable: false, searchable: false},
             ],
             "oLanguage": {
@@ -102,7 +101,7 @@
                 if (result.value) {
                     $.ajax({
                         type:'DELETE',
-                        url:'{{url("/admin/silabus/$silabus_id/bab")}}/' +id,
+                        url:'{{url("/tutor/kelasku/$kelas->id/silabus/$bab_id/detail")}}/' +id,
                         data:{
                             "_token": "{{ csrf_token() }}",
                         },

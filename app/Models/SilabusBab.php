@@ -12,12 +12,13 @@ class SilabusBab extends Model
     protected $table = "silabus_bab";
 
     protected $fillable = [
-        "silabus_id",
+        "kelas_id",
         "nama_bab", 
+        "tanggal",
     ];
 
-    public function silabus(){
-        return $this->belongsTo(Silabus::class);
+    public function kelas(){
+        return $this->belongsTo(Kelas::class);
     }
 
     public function subbab(){

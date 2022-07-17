@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+    @include('admin_dashboard.tutor.kelasku.includes.navbar')
     <div class="row layout-top-spacing">
         
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
@@ -19,7 +20,7 @@
                         </ul>
                     </div>
                 @endif
-                <form id="form" action="{{ route('silabus.bab.subbab.update', [$silabus_id, $bab_id, $silabusSubbab->id]) }}" method="post" enctype="multipart/form-data">
+                <form id="form" action="{{ route('tutor.kelasku.silabus.detail.update', [$kelas->id, $bab_id, $silabusSubbab->id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -28,7 +29,7 @@
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('silabus.bab.subbab.index', [$silabus_id, $bab_id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
+                        <a href="{{ route('tutor.kelasku.silabus.detail.index', [$kelas->id, $bab_id]) }}" class="btn btn-sm btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                     </div>
                 </form>

@@ -16,7 +16,9 @@ class Kelas extends Model
         "tutor_id",
         "silabus_id",
         "banner", 
-        "nama_kelas", 
+        "nama_kelas",
+        "pendaftaran_buka",
+        "pendaftaran_tutup",
         "tanggal_mulai",
         "tanggal_berakhir",
         "persyaratan",
@@ -74,7 +76,7 @@ class Kelas extends Model
         return $this->hasMany(Quiz::class);
     }
 
-    public function registasiKelas(){
+    public function registrasiKelas(){
         return $this->hasMany(RegistrasiKelas::class);
     }
 

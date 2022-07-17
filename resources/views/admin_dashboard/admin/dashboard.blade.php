@@ -16,17 +16,29 @@
                                 <div class="col-sm-4">
                                     <select class="form-control select2" id="sk" name="kelas" required>
                                         <option value="">Pilih Kelas</option>
-                                        @foreach ($kelas->unique('nama_kelas') as $class)
-                                            <option value="{{ $class->nama_kelas }}">{{ $class->nama_kelas }}</option>
-                                        @endforeach
+                                        @if ($namaKelas != null)
+                                            @foreach ($namaKelas as $class)
+                                                @if ($cariKelas!=null)
+                                                    <option value="{{ $class }}" {{ ($class == preg_replace('~\\s+\\S+$~', "", $cariKelas->nama_kelas)) ? 'selected': '' }}>{{ $class }}</option>
+                                                @else
+                                                    <option value="{{ $class }}">{{ $class }}</option>                                           
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-sm-4">
                                     <select class="form-control select2" id="st" name="tahun" required>
                                         <option value="">Pilih Tahun</option>
-                                        @foreach ($kelas->unique('created_at') as $tahun)
-                                            <option value="{{ $tahun->created_at }}">{{ \Carbon\Carbon::parse($tahun->created_at)->format('Y') }}</option>
-                                        @endforeach
+                                        @if ($pilihTahun != null)
+                                            @foreach ($pilihTahun as $tahun)
+                                                @if ($cariKelas!=null)
+                                                    <option value="{{ $tahun }}" {{ ($tahun == \Carbon\Carbon::parse($cariKelas->tanggal_mulai)->format('Y')) ? 'selected': '' }}>{{ $tahun }}</option>                                           
+                                                @else
+                                                    <option value="{{ $tahun }}">{{ $tahun }}</option>                                           
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-sm-2 input-group-append">

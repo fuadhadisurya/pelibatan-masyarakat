@@ -30,8 +30,8 @@
         @endif
     @endif
 
-    {{-- @if ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi") --}}
-        @if ($registrasi->status == "Diterima" && ($kelas->status == "Pendaftaran" || $kelas->status == "Proses Seleksi"))
+    {{-- @if ($kelas->status == "Pendaftaran") --}}
+        @if ($registrasi->status == "Diterima" && $kelas->status == "Pendaftaran")
             <div class="alert alert-success" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                 <strong>Selamat!</strong> anda dinyatakan diterima di kelas {{ $kelas->nama_kelas }}. 
@@ -51,7 +51,7 @@
                     {{ $registrasi->catatan }}
                 @endif
             </div>
-        @elseif ($kelas->status == "Proses Seleksi")
+        @elseif ($registrasi->status == null && $kelas->status == "Pendaftaran")
             <div class="alert alert-warning" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                 <strong>Mohon menunggu</strong> saat ini masih proses seleksi peserta.
@@ -70,6 +70,11 @@
             <div class="col-sm-8">
                 <div class="card-body">
                     <h2 class="card-title">{{ $kelas->nama_kelas }}</h2>
+                    @if ($kelas->status == "Pendaftaran")
+                        <div class="mb-2">
+                            <p>Masa Pendaftaran : <br>{{ \Carbon\Carbon::parse($kelas->pendaftaran_buka)->format('j F Y')}} sampai {{ \Carbon\Carbon::parse($kelas->pendaftaran_tutup)->format('j F Y')}}</p>
+                        </div>
+                    @endif
                     <p class="tanggal" style="color: blue; font-weight: bold">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</p>
                     @php
                         if($kelas->kelasKategori->TK_PAUD == 1){
@@ -106,12 +111,8 @@
                             @endforeach
                         </small>
                     </p>
-                    @if($kelas->status == 'Persiapan')
-                        <p class="card-text">Status : <span class="badge badge-warning">{{ $kelas->status }}</span></p>
-                    @elseif($kelas->status == 'Pendaftaran')
+                    @if($kelas->status == 'Pendaftaran')
                         <p class="card-text">Status : <span class="badge badge-success">{{ $kelas->status }}</span></p>
-                    @elseif($kelas->status == 'Proses Seleksi')
-                        <p class="card-text">Status : <span class="badge badge-info">{{ $kelas->status }}</span></p>
                     @elseif($kelas->status == 'Kegiatan Berlangsung')
                         <p class="card-text">Status : <span class="badge badge-primary">{{ $kelas->status }}</span></p>
                     @else

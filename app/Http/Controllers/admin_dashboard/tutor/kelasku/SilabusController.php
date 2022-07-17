@@ -1,34 +1,39 @@
 <?php
 
-namespace App\Http\Controllers\admin_dashboard\admin\silabus;
+namespace App\Http\Controllers\admin_dashboard\tutor\kelasku;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelas;
+use App\Models\Silabus;
 use App\Models\SilabusBab;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class SilabusBabController extends Controller
+class SilabusController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $silabus_id)
+    public function index(Request $request, $kelas_id)
     {
-        $silabusBab = SilabusBab::where('silabus_id', '=', $silabus_id)->get();
+        $kelas = Kelas::findOrfail($kelas_id);
+        $bab = SilabusBab::where('kelas_id', $kelas_id)->get();
+
         if ($request->ajax()) {
-            return DataTables::of($silabusBab)
+            return DataTables::of($bab)
                     ->addIndexColumn()
                     ->addColumn('subbab', function($row){
                         return '
-                            <a href="'.route('silabus.bab.subbab.index', [$row->silabus_id, $row->id]).'" class="btn btn-sm btn-primary" title="kelola soal"><i class="far fa-list-alt"></i></a>
+                            <a href="'.route('tutor.kelasku.silabus.detail.index', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-primary" title="lihat subbab"><i class="far fa-list-alt"></i></a>
                         ';
                     })
                     ->addColumn('aksi', function($row){
                         return '
                             <td class="text-center">
-                                <a href="'.route('silabus.bab.edit', [$row->silabus_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
+                                <a href="'.route('tutor.kelasku.silabus.edit', [$row->kelas_id, $row->id]).'" class="btn btn-sm btn-warning" title="edit"><i class="far fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" id="konfirmasiHapus'.$row->id.'" onclick="confirmDelete(this)" data-id="'.$row->id.'" title="Hapus"><i class="far fa-trash-alt"></i></button>
                             </td>
                         ';
@@ -36,7 +41,8 @@ class SilabusBabController extends Controller
                     ->rawColumns(['subbab', 'aksi'])
                     ->make(true);
         }
-        return view('admin_dashboard.admin.silabus.bab.index', ['silabus_id' => $silabus_id]);
+        
+        return view('admin_dashboard.tutor.kelasku.silabus.index', ['kelas' => $kelas, 'bab' => $bab]);
     }
 
     /**
@@ -44,9 +50,10 @@ class SilabusBabController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($silabus_id)
+    public function create($kelas_id)
     {
-        return view('admin_dashboard.admin.silabus.bab.create', ['silabus_id' => $silabus_id]);
+        $kelas = Kelas::findOrFail($kelas_id);
+        return view('admin_dashboard.tutor.kelasku.silabus.create', ['kelas' => $kelas]);
     }
 
     /**
@@ -55,24 +62,28 @@ class SilabusBabController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $silabus_id)
+    public function store(Request $request, $kelas_id)
     {
         $this->validate($request, [
             "nama_bab"   => "required|array",
             "nama_bab.*" => "required|string",
+            "tanggal"   => "required|array",
+            "tanggal.*" => "required",
         ]);
 
+        $tanggal = $request->tanggal;
         $nama_bab = $request->nama_bab;
         $total = count($nama_bab);
 
         for($i=0;$i<$total;$i++){
             SilabusBab::create([
-                'silabus_id' => $silabus_id,
+                'kelas_id' => $kelas_id,
                 'nama_bab' => $nama_bab[$i],
+                'tanggal' => $tanggal[$i],
             ]);
         }
         
-        return redirect()->route('silabus.bab.index',[$silabus_id])->with('status', 'Silabus Bab berhasil dibuat');
+        return redirect()->route('tutor.kelasku.silabus.index',[$kelas_id])->with('status', 'Silabus Bab berhasil dibuat');
     }
 
     /**
@@ -92,10 +103,11 @@ class SilabusBabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($silabus_id, $id)
+    public function edit($kelas_id, $id)
     {
+        $kelas = Kelas::findOrFail($kelas_id);
         $silabusBab = SilabusBab::findOrFail($id);
-        return view('admin_dashboard.admin.silabus.bab.edit', ['silabus_id' => $silabus_id, 'silabusBab' => $silabusBab]);
+        return view('admin_dashboard.tutor.kelasku.silabus.edit', ['kelas' => $kelas, 'silabusBab' => $silabusBab]);
     }
 
     /**
@@ -105,18 +117,20 @@ class SilabusBabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $silabus_id, $id)
+    public function update(Request $request, $kelas_id, $id)
     {
         $this->validate($request, [
             'nama_bab' => 'required',
+            'tanggal' => 'required',
         ]);
         
         $silabusBab = SilabusBab::findOrFail($id);
         $silabusBab->update([
             'nama_bab' => $request->nama_bab,
+            'tanggal' => $request->tanggal,
         ]);
 
-        return redirect()->route('silabus.bab.index', [$silabus_id])->with('status', 'Silabus Bab berhasil diperbarui');
+        return redirect()->route('tutor.kelasku.silabus.index', [$kelas_id])->with('status', 'Silabus Bab berhasil diperbarui');
     }
 
     /**
@@ -125,7 +139,7 @@ class SilabusBabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($silabus_id, $id)
+    public function destroy($kelas_id, $id)
     {
         $data = SilabusBab::with('subbab')->findOrFail($id);
         
