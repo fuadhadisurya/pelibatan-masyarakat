@@ -74,13 +74,15 @@
                                 <div class="col-sm-4">
                                     <select class="form-control select2" id="st" name="tahun" required>
                                         <option value="" hidden>Pilih Tahun</option>
-                                        @foreach ($kelas->unique('tanggal_mulai') as $tahun)
-                                            @if ($cariKelas!=null)
-                                                <option value="{{ \Carbon\Carbon::parse($tahun->tanggal_mulai)->format('Y') }}" {{ (\Carbon\Carbon::parse($tahun->tanggal_mulai)->format('Y') == \Carbon\Carbon::parse($cariKelas->tanggal_mulai)->format('Y')) ? 'selected': '' }}>{{ \Carbon\Carbon::parse($tahun->tanggal_mulai)->format('Y') }}</option>
-                                            @else
-                                                <option value="{{ \Carbon\Carbon::parse($tahun->tanggal_mulai)->format('Y') }}">{{ \Carbon\Carbon::parse($tahun->tanggal_mulai)->format('Y') }}</option>                                           
-                                            @endif
-                                        @endforeach
+                                        @if ($pilihTahun != null)
+                                            @foreach ($pilihTahun as $tahun)
+                                                @if ($cariKelas!=null)
+                                                    <option value="{{ $tahun }}" {{ ($tahun == \Carbon\Carbon::parse($cariKelas->tanggal_mulai)->format('Y')) ? 'selected': '' }}>{{ $tahun }}</option>                                           
+                                                @else
+                                                    <option value="{{ $tahun }}">{{ $tahun }}</option>                                           
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-sm-2 input-group-append">

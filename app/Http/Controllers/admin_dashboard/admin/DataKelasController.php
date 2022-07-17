@@ -28,12 +28,8 @@ class DataKelasController extends Controller
                         return $row->tutor->nama;
                     })
                     ->editColumn('status', function($row){
-                        if($row->status == 'Persiapan'){
-                            $status = '<span class="badge badge-warning">Persiapan</span>';
-                        }elseif($row->status == 'Pendaftaran'){
+                        if($row->status == 'Pendaftaran'){
                             $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-info">Proses Seleksi</span>';
                         } elseif($row->status == 'Kegiatan Berlangsung'){
                             $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
                         } else {

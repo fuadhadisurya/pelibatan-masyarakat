@@ -36,7 +36,11 @@
                     </div>
                     <div class="form-group">
                         <label for="nama_kelas">Nama Kelas</label>
-                        <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ $kelas->nama_kelas }}" required>
+                        <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ preg_replace('~\\s+\\S+$~', "", $kelas->nama_kelas) }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal_pendaftaran">Tanggal Pendaftaran</label>
+                        <input id="tanggal_pendaftaran" name="tanggal_pendaftaran" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Tanggal Pendaftaran.." value="{{ $kelas->pendaftaran_buka }} to {{ $kelas->pendaftaran_tutup }}" required>
                     </div>
                     <div class="form-group">
                         <label for="periode_kelas">Periode Belajar</label>
@@ -66,9 +70,7 @@
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select class="form-control selectpicker" name="status">
-                            <option value="Persiapan" {{ ($kelas->status == 'Persiapan') ? 'selected': '' }}>Persiapan</option>
                             <option value="Pendaftaran" {{ ($kelas->status == 'Pendaftaran') ? 'selected': '' }}>Pendaftaran</option>
-                            <option value="Proses Seleksi" {{ ($kelas->status == 'Proses Seleksi') ? 'selected': '' }}>Proses Seleksi</option>
                             <option value="Kegiatan Berlangsung" {{ ($kelas->status == 'Kegiatan Berlangsung') ? 'selected': '' }}>Kegiatan Berlangsung</option>
                             <option value="Selesai" {{ ($kelas->status == 'Selesai') ? 'selected': '' }}>Selesai</option>
                         </select>
@@ -147,6 +149,10 @@
     <script src="{{ asset('admin_dashboard/plugins/prismjs/prism.js') }}"></script>
     <script>
         var f3 = flatpickr(document.getElementById('periode_kelas'), {
+            mode: "range",
+            // minDate: "today"
+        });
+        var f3 = flatpickr(document.getElementById('tanggal_pendaftaran'), {
             mode: "range",
             // minDate: "today"
         });

@@ -19,6 +19,8 @@ class CreateKelasTable extends Migration
             $table->foreignId("silabus_id")->nullable();
             $table->string("banner");
             $table->string("nama_kelas");
+            $table->date("pendaftaran_buka");
+            $table->date("pendaftaran_tutup");
             $table->date("tanggal_mulai");
             $table->date("tanggal_berakhir");
             $table->text("persyaratan");

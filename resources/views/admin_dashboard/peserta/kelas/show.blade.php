@@ -25,8 +25,32 @@
                         <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                     @endif
                     <div class="card-body">
+                        <div>
+                            @if (Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_buka)
+                                <span class="badge badge-info mb-3">Segera Dibuka</span>
+                            @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_tutup)
+                                <span class="badge badge-success mb-3">Pendaftaran Dibuka</span>
+                            @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_tutup)    
+                                <span class="badge badge-danger mb-3">Pendaftaran Ditutup</span>
+                            @endif
+                        </div>
                         <p class="meta-date">{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</p>
                         <h5 class="nama-kelas">{{ $kelas->nama_kelas }}</h5>
+                        <div class="mb-2">
+                            <p>Masa Pendaftaran : <br>{{ \Carbon\Carbon::parse($kelas->pendaftaran_buka)->format('j F Y')}} sampai {{ \Carbon\Carbon::parse($kelas->pendaftaran_tutup)->format('j F Y')}}</p>
+                            {{-- <div class="row">
+                                <div class="col-sm-3">Mulai</div>
+                                <div class="col-sm-9">: 
+                                    <b>{{ \Carbon\Carbon::parse($kelas->pendaftaran_buka)->format('j F Y')}}</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">Selesai</div>
+                                <div class="col-sm-9">: 
+                                    <b>{{ \Carbon\Carbon::parse($kelas->pendaftaran_tutup)->format('j F Y')}}</b>
+                                </div>
+                            </div> --}}
+                        </div>
                         @php
                             if($kelas->kelasKategori->TK_PAUD == 1){
                                 $sasaran['TK/PAUD'] = "TK/PAUD";
@@ -97,9 +121,19 @@
                                 Tipe anggotamu adalah {{ Auth::user()->tipe_anggota }}. tidak bisa mengikuti kegiatan ini.
                             </button>
                         @else
-                            <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
-                                Daftar Sekarang
-                            </button>
+                            @if (Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_buka)
+                                <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                    Mohon menunggu. Pendaftaran dibuka tanggal  <strong>{{ \Carbon\Carbon::parse($kelas->pendaftaran_buka)->format('j F Y') }}</strong>
+                                </button>
+                            @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_tutup)
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
+                                    Daftar Sekarang
+                                </button>
+                            @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_tutup)    
+                                <button type="button" class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
+                                    Pendaftaran sudah ditutup
+                                </button>
+                            @endif
                         @endif
                     </div>
                 </div>

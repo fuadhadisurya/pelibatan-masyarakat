@@ -20,6 +20,8 @@ class KelasSeeder extends Seeder
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas Bahasa Jepang ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -35,11 +37,13 @@ class KelasSeeder extends Seeder
                     <p>Peserta yang mengikuti Kelas Bahasa Jepang ini dari pelajar SMP sampai lanjut usia. Jadi, tunggu apa lagi! yuk gabung di Kelas Bahasa Jepang Pelibatan Masyarakat di Perpustakaan Kabupaten Indramayu.</p>
                 ',
                 'tutor_id' => '2',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas Tari Topeng ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -55,11 +59,13 @@ class KelasSeeder extends Seeder
                     <p>Sasaran untuk kelas tari yaitu pelajar TK, PAUD, SD dan SMP.</p>
                 ',
                 'tutor_id' => '3',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas Basic Programming ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -76,11 +82,13 @@ class KelasSeeder extends Seeder
                     <p>Setelah mengikuti kelas ini peserta diharapkan dapat membuat website dan dapat mengembangkannya menjadi website/aplikasi yang dinamis.</p>
                 ',
                 'tutor_id' => '4',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas TIK ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -96,11 +104,13 @@ class KelasSeeder extends Seeder
                     <p>Setelah mengikuti kelas ini peserta diharapkan dapat meningkatkan pemahaman terkait ilmu komputer dalam kehidupan sehari-hari.</p>
                 ',
                 'tutor_id' => '5',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas Menulis ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -115,11 +125,13 @@ class KelasSeeder extends Seeder
                     <p>Dan paling penting dari yang disebutkan di atas, adalah para peserta akan mendalami penulisan fiksi (naratif); mengetahui ide, membuat draft tulisan, mengetahui elemen-elemen pembentuk fiksi, dan mengedit tulisan sehingga tepat kaidah.</p>
                 ',
                 'tutor_id' => '6',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas Bahasa Inggris untuk Dewasa ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -135,11 +147,13 @@ class KelasSeeder extends Seeder
                     <p>Sementara untuk SMA-Umum, kita akan bersama melatih keberanian dan rasa percaya diri berbicara Bahasa Inggris di depan banyak orang dengan cara yang menyenangkan</p>
                 ',
                 'tutor_id' => '7',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
             [
                 'banner' => '',
                 'nama_kelas' => 'Kelas Bahasa Inggris untuk Anak ' . Carbon::now()->format('Y'),
+                'pendaftaran_buka' => Carbon::parse('2022-06-20'),
+                'pendaftaran_tutup' => Carbon::parse('2022-06-22'),
                 'tanggal_mulai' => Carbon::parse('2022-06-28'),
                 'tanggal_berakhir' => Carbon::parse('2022-10-31'),
                 'persyaratan' => '
@@ -155,7 +169,7 @@ class KelasSeeder extends Seeder
                     <p>Sementara untuk SMA-Umum, kita akan bersama melatih keberanian dan rasa percaya diri berbicara Bahasa Inggris di depan banyak orang dengan cara yang menyenangkan</p>
                 ',
                 'tutor_id' => '7',
-                'status' => 'Persiapan',
+                'status' => 'Pendaftaran',
             ],
         ]);
         foreach($class as $kelas){

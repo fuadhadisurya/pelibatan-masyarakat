@@ -26,10 +26,13 @@ class DashboardController extends Controller
         if($kelas->count()>0){
             foreach ($kelas as $kela) {
                 $className[] = preg_replace('~\\s+\\S+$~', "", $kela->kelas->nama_kelas);
+                $pilihTahun[] = Carbon::parse($kela->kelas->tanggal_mulai)->format('Y');
             }
             $namaKelas = array_unique($className, SORT_REGULAR);
+            $pilihTahun = array_unique($pilihTahun, SORT_REGULAR);
         } else {
             $namaKelas = null;
+            $pilihTahun = null;
         }
 
         if ($class == true && $tahun == true) {
@@ -185,6 +188,7 @@ class DashboardController extends Controller
             'sakit' => $sakit,
             'izin' => $izin,
 
+            'pilihTahun' => $pilihTahun,
             'cariKelas' => $cariKelas, 
             'kelas' => $kelas, 
             'namaKelas' => $namaKelas, 

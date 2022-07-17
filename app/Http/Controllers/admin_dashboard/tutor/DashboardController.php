@@ -21,11 +21,14 @@ class DashboardController extends Controller
         $kelas = Kelas::where('tutor_id', Auth::user()->id)->get();
         if($kelas->count()>0){
             foreach ($kelas as $kela) {
-                $className[] = preg_replace('~\\s+\\S+$~', "", $kela->kelas->nama_kelas);
+                $className[] = preg_replace('~\\s+\\S+$~', "", $kela->nama_kelas);
+                $pilihTahun[] = Carbon::parse($kela->tanggal_mulai)->format('Y');
             }
             $namaKelas = array_unique($className, SORT_REGULAR);
+            $pilihTahun = array_unique($pilihTahun, SORT_REGULAR);
         } else {
             $namaKelas = null;
+            $pilihTahun = null;
         }
 
         if ($class == true && $tahun == true) {
@@ -129,6 +132,7 @@ class DashboardController extends Controller
         $mengajar = Kelas::where('tutor_id', Auth::user()->id)->get();
         $kelasku = Kelas::where('tutor_id', Auth::user()->id)->orderBy('id', 'desc')->limit(3)->get();
         return view('admin_dashboard.tutor.dashboard', [
+            'pilihTahun' => $pilihTahun,
             'cariKelas' => $cariKelas, 
             'kelas' => $kelas, 
             'namaKelas' => $namaKelas, 

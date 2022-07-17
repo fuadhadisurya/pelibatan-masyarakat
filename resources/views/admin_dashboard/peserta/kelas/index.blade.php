@@ -130,6 +130,15 @@
                                                 <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                                             @endif
                                             <div class="card-body">
+                                                <div>
+                                                    @if (Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_buka)
+                                                        <span class="badge badge-info mb-3">Segera Dibuka</span>
+                                                    @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_tutup)
+                                                        <span class="badge badge-success mb-3">Pendaftaran Dibuka</span>
+                                                    @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_tutup)    
+                                                        <span class="badge badge-danger mb-3">Pendaftaran Ditutup</span>
+                                                    @endif
+                                                </div>
                                                 <p class="meta-date text-primary"><strong>{{ \Carbon\Carbon::parse($kelas->tanggal_mulai)->format('j F Y') }} - {{ \Carbon\Carbon::parse($kelas->tanggal_berakhir)->format('j F Y') }}</strong></p>
                                                 <h5 class="card-title"><strong>{{ $kelas->nama_kelas }}</strong></h5>
                                                 <p class="card-text">{!! Str::limit($kelas->deskripsi, 150, $end='...') !!}</p>

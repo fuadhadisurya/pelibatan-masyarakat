@@ -82,6 +82,10 @@
                             <input type="text" name="nama_kelas" class="form-control" id="nama_kelas" value="{{ old('nama_kelas') }}" required>
                         </div>
                         <div class="form-group">
+                            <label for="tanggal_pendaftaran">Tanggal Pendaftaran</label>
+                            <input id="tanggal_pendaftaran" name="tanggal_pendaftaran" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Tanggal Pendaftaran.." value="{{ old('tanggal_pendaftaran') }}" required>
+                        </div>
+                        <div class="form-group">
                             <label for="periode_kelas">Periode Belajar</label>
                             <input id="periode_kelas" name="periode_kelas" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Pilih Periode Belajar.." value="{{ old('periode_kelas') }}" required>
                         </div>
@@ -106,7 +110,7 @@
                                 {!! old('deskripsi') !!}
                             </textarea>
                         </div>
-                        <input type="hidden" name="status" value="Persiapan">
+                        <input type="hidden" name="status" value="Pendaftaran">
                         <div class="form-group">
                             <label for="Sasaran">Sasaran</label>
                             <div class="n-chk">
@@ -177,9 +181,7 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control selectpicker" id="opsi_status" name="status" required>
-                                <option value="Persiapan">Persiapan</option>
                                 <option value="Pendaftaran">Pendaftaran</option>
-                                <option value="Proses Seleksi">Proses Seleksi</option>
                                 <option value="Kegiatan Berlangsung">Kegiatan Berlangsung</option>
                                 <option value="Selesai">Selesai</option>
                             </select>
@@ -286,6 +288,10 @@
     </script>
     <script>
         var f3 = flatpickr(document.getElementById('periode_kelas'), {
+            mode: "range",
+            minDate: "today"
+        });
+        var f2 = flatpickr(document.getElementById('tanggal_pendaftaran'), {
             mode: "range",
             minDate: "today"
         });

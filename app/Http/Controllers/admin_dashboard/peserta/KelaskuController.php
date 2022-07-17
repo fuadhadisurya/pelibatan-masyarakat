@@ -23,12 +23,8 @@ class KelaskuController extends Controller
                         return $row->kelas->tutor->nama;
                     })
                     ->editColumn('status', function($row){
-                        if($row->kelas->status == 'Persiapan'){
-                            $status = '<span class="badge badge-warning">Persiapan</span>';
-                        }elseif($row->kelas->status == 'Pendaftaran'){
+                        if($row->kelas->status == 'Pendaftaran'){
                             $status = '<span class="badge badge-success">Pendaftaran</span>';
-                        } elseif($row->kelas->status == 'Proses Seleksi'){
-                            $status = '<span class="badge badge-info">Proses Seleksi</span>';
                         } elseif($row->kelas->status == 'Kegiatan Berlangsung'){
                             $status = '<span class="badge badge-primary">Kegiatan Berlangsung</span>';
                         } else {

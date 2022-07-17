@@ -130,7 +130,7 @@
                                     </tr>
                                 </tbody>
                             </table>  
-                            @if($kelas->status == 'Proses Seleksi')
+                            @if($kelas->status == 'Pendaftaran' && \Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_tutup)
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select class="form-control selectpicker" name="status" required>
@@ -147,8 +147,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batalkan</button>
-                        @if($kelas->status == 'Proses Seleksi')
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Tutup</button>
+                        @if($kelas->status == 'Pendaftaran' && \Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_tutup)
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         @endif
                     </div>
