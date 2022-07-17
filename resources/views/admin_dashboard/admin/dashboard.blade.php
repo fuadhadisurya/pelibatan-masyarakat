@@ -16,13 +16,15 @@
                                 <div class="col-sm-4">
                                     <select class="form-control select2" id="sk" name="kelas" required>
                                         <option value="">Pilih Kelas</option>
-                                        @foreach ($namaKelas as $class)
-                                            @if ($cariKelas!=null)
-                                                <option value="{{ $class }}" {{ ($class == preg_replace('~\\s+\\S+$~', "", $cariKelas->nama_kelas)) ? 'selected': '' }}>{{ $class }}</option>
-                                            @else
-                                                <option value="{{ $class }}">{{ $class }}</option>                                           
-                                            @endif
-                                        @endforeach
+                                        @if ($namaKelas != null)
+                                            @foreach ($namaKelas as $class)
+                                                @if ($cariKelas!=null)
+                                                    <option value="{{ $class }}" {{ ($class == preg_replace('~\\s+\\S+$~', "", $cariKelas->nama_kelas)) ? 'selected': '' }}>{{ $class }}</option>
+                                                @else
+                                                    <option value="{{ $class }}">{{ $class }}</option>                                           
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-sm-4">

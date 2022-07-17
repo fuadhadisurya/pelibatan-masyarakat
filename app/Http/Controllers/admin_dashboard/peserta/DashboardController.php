@@ -23,7 +23,6 @@ class DashboardController extends Controller
         $tahun = $request->tahun;
         
         $kelas = RegistrasiKelas::with('kelas')->where('user_id', Auth::user()->id)->get();
-        // dd($kelas->count());
         if($kelas->count()>0){
             foreach ($kelas as $kela) {
                 $className[] = preg_replace('~\\s+\\S+$~', "", $kela->kelas->nama_kelas);

@@ -15,10 +15,14 @@ class DashboardController extends Controller
         $tahun = $request->tahun;
         
         $kelas = Kelas::all();
-        foreach ($kelas as $kela) {
-            $namaKelas[] = preg_replace('~\\s+\\S+$~', "", $kela->nama_kelas);
+        if($kelas->count()>0){
+            foreach ($kelas as $kela) {
+                $className[] = preg_replace('~\\s+\\S+$~', "", $kela->kelas->nama_kelas);
+            }
+            $namaKelas = array_unique($className, SORT_REGULAR);
+        } else {
+            $namaKelas = null;
         }
-        $namaKelas = array_unique($namaKelas, SORT_REGULAR);
 
         if ($class == true && $tahun == true) {
             $cariKelas = Kelas::where('nama_kelas', $class)->whereYear('tanggal_mulai', Carbon::parse($tahun)->format('Y'))->first();
