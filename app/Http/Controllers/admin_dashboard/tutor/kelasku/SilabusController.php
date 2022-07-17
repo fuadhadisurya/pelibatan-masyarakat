@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\Silabus;
 use App\Models\SilabusBab;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class SilabusController extends Controller
 {
@@ -152,5 +154,18 @@ class SilabusController extends Controller
         $data->delete();
 
         return response()->json(array('success' => true));
+    }
+
+    public function download($kelas_id){
+        $kelas = Kelas::findOrFail($kelas_id);
+        $silabusBab = SilabusBab::where('kelas_id',$kelas_id)->get();
+        $data = [
+            'kelas' => $kelas,
+            'silabusBab' => $silabusBab
+        ];
+        
+        $pdf = PDF::loadView('pdf/silabus', $data)->setPaper('A4', 'landscape');
+        
+        return $pdf->download('Silabus '.$kelas->nama_kelas.'.pdf');
     }
 }

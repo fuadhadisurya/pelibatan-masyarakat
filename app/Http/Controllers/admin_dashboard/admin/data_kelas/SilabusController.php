@@ -21,25 +21,25 @@ class SilabusController extends Controller
     public function index(Request $request, $kelas_id)
     {
         $silabus = SilabusBab::where('kelas_id', $kelas_id)->get();
-        if ($request->ajax()) {
-            return DataTables::of($silabus)
-            ->addIndexColumn()
-            ->editColumn('created_at', function($row){
-                return Carbon::parse($row->created_at)->format('Y');
-            })
-            ->addColumn('tutor', function($row){
-                return $row->kelas->tutor->nama;
-            })
-            ->addColumn('aksi', function($row){
-                return '
-                    <td class="text-center">
-                        <a href="'. route('data-kelas.silabus.download', [$row->kelas_id, $row->id]) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-save"></i></a>
-                    </td>
-                ';
-            })
-            ->rawColumns(['aksi', 'bab'])
-            ->make(true);
-        }
+        // if ($request->ajax()) {
+        //     return DataTables::of($silabus)
+        //     ->addIndexColumn()
+        //     ->editColumn('created_at', function($row){
+        //         return Carbon::parse($row->created_at)->format('Y');
+        //     })
+        //     ->addColumn('tutor', function($row){
+        //         return $row->kelas->tutor->nama;
+        //     })
+        //     ->addColumn('aksi', function($row){
+        //         return '
+        //             <td class="text-center">
+        //                 <a href="'. route('data-kelas.silabus.download', [$row->kelas_id, $row->id]) .'" class="btn btn-sm btn-info" title="Lihat"><i class="far fa-save"></i></a>
+        //             </td>
+        //         ';
+        //     })
+        //     ->rawColumns(['aksi', 'bab'])
+        //     ->make(true);
+        // }
         // $tutor = User::where('level', 'tutor')->get();
         $kelas = Kelas::findOrFail($kelas_id);
         return view('admin_dashboard.admin.data-kelas.silabus.index', ['silabus' => $silabus, 'kelas' => $kelas]);
@@ -111,7 +111,7 @@ class SilabusController extends Controller
         //
     }
 
-    public function download($kelas_id, $id){
+    public function download($kelas_id){
         $kelas = Kelas::findOrFail($kelas_id);
         $silabusBab = SilabusBab::where('kelas_id',$kelas_id)->get();
         $data = [
@@ -121,6 +121,6 @@ class SilabusController extends Controller
         
         $pdf = PDF::loadView('pdf/silabus', $data)->setPaper('A4', 'landscape');
         
-        return $pdf->stream('Silabus '.$kelas->nama_kelas.' '.Carbon::parse($kelas->created_at)->format('Y').'.pdf');
+        return $pdf->download('Silabus '.$kelas->nama_kelas.'.pdf');
     }
 }
