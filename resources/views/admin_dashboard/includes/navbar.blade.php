@@ -5,15 +5,18 @@
             <li class="nav-item theme-logo">
                 @if (Auth::user()->level == 'admin')
                     <a href="{{ url('/admin/dashboard') }}">
-                        <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
+                        <img src="{{ asset('admin_dashboard/assets/img/logo.png') }}" class="navbar-logo" alt="logo">
+                        {{-- <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo"> --}}
                     </a>
-                @elseif(Auth::user()->level == 'tutor')
+                    @elseif(Auth::user()->level == 'tutor')
                     <a href="{{ url('/tutor/dashboard') }}">
-                        <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
+                        <img src="{{ asset('admin_dashboard/assets/img/logo.png') }}" class="navbar-logo" alt="logo">
+                        {{-- <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo"> --}}
                     </a>
-                @else
+                    @else
                     <a href="{{ url('/peserta/dashboard') }}">
-                        <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo">
+                        <img src="{{ asset('admin_dashboard/assets/img/logo.png') }}" class="navbar-logo" alt="logo">
+                        {{-- <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" class="navbar-logo" alt="logo"> --}}
                     </a>
                 @endif
             </li>

@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <title>@yield('title')</title>
-
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('admin_dashboard/assets/img/favicon-32x32.png') }}">
+    
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('landing_page/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('landing_page/assets/css/fontawesome.css') }}">
@@ -38,7 +38,7 @@ https://templatemo.com/tm-568-digimedia
                         <nav class="main-nav">
                             <!-- ***** Logo Start ***** -->
                             <a href="index.html" class="logo">
-                                <img src="{{ asset('landing_page/assets/images/logo-v3.png') }}" alt="">
+                                <img src="{{ asset('landing_page/assets/images/logo.png') }}" alt="">
                             </a>
                             <!-- ***** Logo End ***** -->
                             <!-- ***** Menu Start ***** -->
