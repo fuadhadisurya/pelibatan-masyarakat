@@ -19,7 +19,7 @@ class SilabusController extends Controller
     public function index($kelas_id)
     {
         $kelas = Kelas::findOrfail($kelas_id);
-        $silabus = SilabusBab::where('silabus_id', $kelas->silabus_id)->get();
+        $silabus = SilabusBab::where('kelas_id', $kelas_id)->get();
         $registrasi = RegistrasiKelas::where('kelas_id', '=', $kelas_id)->where('user_id', Auth::user()->id)->first();
 
         return view('admin_dashboard.peserta.kelasku.silabus.index', ['kelas' => $kelas, 'silabus' => $silabus, 'registrasi' => $registrasi]);

@@ -27,7 +27,7 @@
                         <div class="card mb-3">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                    <div>{{ $post->judul }}</div>
+                                    <div class="overflow-hidden">{{ $post->judul }}</div>
                                     <div>{{ \Carbon\Carbon::parse($post->created_at)->format('j F Y H:i') }}</div>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                     <div>
                                         <span class="badge badge-info">{{ count($post->comment) }} komentar</span>
                                     </div>
-                                    <span class="badge badge-light">Postingan oleh : {{ $post->user->nama }}</span>
+                                    <span class="badge badge-light overflow-hidden">Postingan oleh : {{ $post->user->nama }}</span>
                                 </div>
                             </div>
                         </div>
