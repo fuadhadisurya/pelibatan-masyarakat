@@ -90,12 +90,12 @@ https://templatemo.com/tm-568-digimedia
                             @if (count($events)>0)
                                 <li class="scroll-to-section"><a href="#event">Event</a></li>
                             @endif
-                            @if (count($testimoni)>0)
+                            {{-- @if (count($testimoni)>0)
                                 <li class="scroll-to-section"><a href="#free-quote">Testimoni</a></li>
                             @endif
                             @if (count($tutor)>0)
                                 <li class="scroll-to-section"><a href="#portfolio">Tutor</a></li>
-                            @endif
+                            @endif --}}
                             @if (count($berita)>0)
                                 <li class="scroll-to-section"><a href="#blog">Berita</a></li>
                             @endif

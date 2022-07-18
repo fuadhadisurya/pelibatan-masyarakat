@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="tanggal">Tanggal</label>
-                                        <input id="dateTimeFlatpickr" name="tanggal[]" class="form-control flatpickr flatpickr-input active tanggal" type="date" placeholder="Pilih Tanggal.." value="{{ old('tanggal') }}" required>
+                                        <input id="dateTimeFlatpickr" name="tanggal[]" class="form-control flatpickr flatpickr-input active tanggal" type="text" placeholder="Pilih Tanggal.." value="{{ old('tanggal') }}" required>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-success add-more" type="button">
@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tanggal">Tanggal</label>
-                        <input id="dateTimeFlatpickr" name="tanggal[]" class="form-control flatpickr flatpickr-input active tanggal" type="date" placeholder="Pilih Tanggal.." value="{{ old('tanggal') }}" required>
+                        <input id="dateTimeFlatpickr" name="tanggal[]" class="form-control flatpickr flatpickr-input active tanggal" type="text" placeholder="Pilih Tanggal.." value="{{ old('tanggal') }}" required>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-danger remove" type="button">

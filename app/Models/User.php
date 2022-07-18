@@ -58,7 +58,7 @@ class User extends Authenticatable
     ];
 
     public function kelas(){
-        return $this->hasMany(kelas::class, 'tutor_id');
+        return $this->hasMany(Kelas::class, 'tutor_id');
     }
 
     public function registrasiKelas(){

@@ -112,7 +112,7 @@ class TugasController extends Controller
         $kelas = Kelas::where('tutor_id', Auth::user()->id)->findOrfail($kelas_id);
         $tugas = Tugas::findOrFail($id);
         // $jawabanTugas = JawabanTugas::where('tugas_id', '=', $id)->get();
-        $jawaban = User::select('users.*', 'jawaban_tugas.id AS jawaban_id')
+        $jawaban = User::select('users.*', 'jawaban_tugas.id AS jawaban_id', 'jawaban_tugas.nilai AS nilai')
             ->rightJoin('registrasi_kelas', 'users.id', '=', 'registrasi_kelas.user_id')
             ->leftJoin('jawaban_tugas', 'jawaban_tugas.users_id', '=', DB::raw('users.id AND jawaban_tugas.tugas_id = ' . $id))
             ->where('users.level', 'peserta')->get();
@@ -234,7 +234,6 @@ class TugasController extends Controller
         ]);
 
         $jawabanTugas = JawabanTugas::with('uploadJawabanTugas')->findOrFail($id);
-        
         $data = $request->all();
         $data['status'] = 'Dinilai';
 

@@ -38,7 +38,7 @@
                             <div class="text-for-element">Jadwal Pelaksanaan</div>
                             <div class="row">
                                 <div class="col-sm-3">Mulai</div>
-                                <div class="col-sm-9">: 
+                                <div class="col-sm-9">:
                                     <b>{{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('j F Y')}}</b> 
                                     {{ \Carbon\Carbon::parse($event->tanggal_mulai)->format('H:i')}}
                                 </div>

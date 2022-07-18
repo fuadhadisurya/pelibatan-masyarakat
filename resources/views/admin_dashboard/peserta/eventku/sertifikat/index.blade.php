@@ -20,10 +20,10 @@
   <body>
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
-            <div class="col">
+            <div class="col-sm-6">
                 <img src="{{ asset('admin_dashboard/assets/img/Graduation-pana.png') }}" class="img-fluid d-flex justify-content-center" alt="">
             </div>
-            <div class="col">
+            <div class="col-sm-6">
                 <div class="container">
                     <h2 class="text-center">Selamat</h2>
                     <p class="text-center">Akhirnya kamu sudah bisa mendapatkan sertifikat dari kegiatan <strong>{{ $event->nama_event }}</strong>. silahkan unduh sertifikat dibawah ini</p>
