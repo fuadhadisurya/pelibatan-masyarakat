@@ -78,7 +78,7 @@ https://templatemo.com/tm-568-digimedia
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{url('/')}}" class="logo">
                             <img src="{{ asset('landing_page/assets/images/logo.png') }}" alt="">
                         </a>
                         <!-- ***** Logo End ***** -->
@@ -145,9 +145,9 @@ https://templatemo.com/tm-568-digimedia
                             <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h6>Digital Media Agency</h6>
-                                        <h2>We Boost Your Website Traffic</h2>
-                                        <p>This template is brought to you by TemplateMo website. Feel free to use this for a commercial purpose. You are not allowed to redistribute the template ZIP file on any other template website. Thank you.</p>
+                                        <h6>DPA INDRAMAYU PRESENTS</h6>
+                                        <h2>KELAS PELIBATAN MASYARAKAT</h2>
+                                        <p>Kelas Pelibatan Masyarakat tahun ini dibuka kembali. Pilih minat dan bidang yang kamu cocok buatmu. Segera daftarkan diri kalian. Kesempatan tidak akan datang dua kali!</p>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="border-first-button scroll-to-section">
@@ -159,7 +159,7 @@ https://templatemo.com/tm-568-digimedia
                         </div>
                         <div class="col-lg-6">
                             <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('landing_page/assets/images/slider-dec-v3.png') }}" alt="">
+                                <img src="{{ asset('landing_page/assets/images/slider-dec-v4.png') }}" alt="">
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@ https://templatemo.com/tm-568-digimedia
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="about-left-image  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('landing_page/assets/images/about-dec-v3.png') }}" alt="">
+                                <img src="{{ asset('landing_page/assets/images/about-dec-v4.png') }}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -185,8 +185,8 @@ https://templatemo.com/tm-568-digimedia
                                     <h4>Apa itu Kegiatan Pelibatan <em>Masyarakat</em></h4>
                                     <div class="line-dec"></div>
                                 </div>
-                                <p>We hope this DigiMedia template is useful for your work. You can use this template for any purpose. You may <a rel="nofollow" href="http://paypal.me/templatemo" target="_blank">contribute a little amount</a> via PayPal to <a href="https://templatemo.com/contact" target="_blank">support TemplateMo</a> in creating new templates regularly.</p>
-                                <div class="row">
+                                <p>Kegiatan Pelibatan Masyarakat adalah progam rutin Dinas Perpustakaan dan Arsip Indramayu dari tahun ke tahun. Berfokus dan bertujuan untuk mengembangkan literasi di Indramayu, kami hadir membuka kelas-kelas yang dapat menambah kecakapan dalam bidang literasi yang dibutuhkan oleh masyarakat.</p>
+                                {{-- <div class="row">
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
                                             <div class="progress" data-percentage="90">
@@ -241,7 +241,7 @@ https://templatemo.com/tm-568-digimedia
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -255,8 +255,8 @@ https://templatemo.com/tm-568-digimedia
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <h6>Our Services</h6>
-                        <h4>What Our Agency <em>Provides</em></h4>
+                        <h6>Kelas</h6>
+                        <h4>Kenapa sih Kami Harus Ikut Kelas Pelibatan <em>Masyarakat?</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>
@@ -756,8 +756,9 @@ https://templatemo.com/tm-568-digimedia
                 <div class="row">
                     <div class="col-lg-6 offset-lg-3">
                         <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                            <h6>Pusat Bantuan</h6>
-                            <h4>Dika Nakon Kula <em>Jawab</em></h4>
+                            <h6>F.A.Q</h6>
+                            <h4>Pertanyaan Yang sering <em>Ditanyakan</em></h4>
+                            {{-- <h4>Dika Nakon Kula <em>Jawab</em></h4> --}}
                             <div class="line-dec"></div>
                         </div>
                     </div>

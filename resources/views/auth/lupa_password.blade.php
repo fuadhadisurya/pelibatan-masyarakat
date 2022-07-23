@@ -26,8 +26,8 @@
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="">Password Recovery</h1>
-                        <p class="signup-link recovery">Enter your email and instructions will sent to you!</p>
+                        <h1 class="">Lupa Password</h1>
+                        <p class="signup-link recovery">Silahkan Masukkan alamat email di bawah ini</p>
                         @if(session('status'))
                             <div class="alert alert-success mb-4" role="alert"> 
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

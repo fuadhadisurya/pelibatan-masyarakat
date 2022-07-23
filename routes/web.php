@@ -81,9 +81,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingPageController::class, 'index']);
-// Route::get('/capture', function(){
-//     return view('capture');
-// });
 Route::get('/faq', [LandingPageController::class, 'faq']);
 Route::get('/berita', [LandingPageController::class, 'berita']);
 Route::get('/berita/{slug}', [LandingPageController::class, 'beritaShow']);
