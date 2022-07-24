@@ -269,31 +269,37 @@ https://templatemo.com/tm-568-digimedia
                                         <div class="first-thumb active">
                                             <div class="thumb">
                                                 <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-01') }}.png" alt=""></span>
-                                                Apartments
+                                                Keuntungan
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-02.png') }}" alt=""></span>
-                                                Food &amp; Life
+                                                Tutor
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-03.png') }}" alt=""></span>
-                                                Cars
+                                                Durasi
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
                                                 <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-04.png') }}" alt=""></span>
-                                                Shopping
+                                                Kegiatan
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="thumb">
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-04.png') }}" alt=""></span>
+                                                Cakupan
                                             </div>
                                         </div>
                                         <div class="last-thumb">
                                             <div class="thumb">
                                                 <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-01.png') }}" alt=""></span>
-                                                Traveling
+                                                Keunggulan
                                             </div>
                                         </div>
                                     </div>
@@ -306,12 +312,21 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>SEO Analysis &amp; Daily Reports</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
+                                                                <h4>Keuntungan Bergabung Kelas Pelibatan Masyarakat</h4>
+                                                                <div class="mb-2">Kalau kalian masih penasaran akan dapat apa selama bergabung, cek poin-poin ini:</div>
+                                                                <div>
+                                                                    <div>&bull; Tutor unggul dan berpengalaman di bidang masing-masing.</div> 
+                                                                    <div>&bull; Durasi pembelajaran 2 jam sekali dalam seminggu.</div> 
+                                                                    <div>&bull; Pembelajaran intensif, komunikatif, interaktif, dan kondusif.</div>
+                                                                    <div>&bull; Mendapatkan sertifikat sebagai peserta.</div> 
+                                                                </div>
+                                                                <div class="mt-2">Ayo! Tunggu apa lagi? Segera daftarkan diri kalian dan bergabung bersama kami.</div>
+
+                                                                {{-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
                                                                     dover lipsum lorem and the others.</p>
                                                                 <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
                                                                     <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p> --}}
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
@@ -329,12 +344,14 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Healthy Food &amp; Life</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Tutor</h4>
+                                                                <div>
+                                                                    <div>1. Berpengalaman di bidang masing-masing.</div> 
+                                                                    <div>2. Telah bersertifikat baik dalam bidang ilmunya atau pun pedagoginya.</div> 
+                                                                    <div>3. Dedikasi dan tepat waktu.</div>
+                                                                    <div>4. Ramah dan bersahabat.</div> 
+                                                                    <div>5. Profesional.</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
@@ -352,12 +369,14 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Car Re-search &amp; Transport</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Durasi Pembelajaran</h4>
+                                                                <div>
+                                                                    <div>1. Pertemuan satu kali dalam seminggu terjadwal.</div> 
+                                                                    <div>2. Tiap pertemuan dilaksanakan selama dua jam.</div> 
+                                                                    <div>3. Pertemuan dilaksanakan di ruang audiovisual DPA.</div>
+                                                                    <div>4. Pertemuan dilaksanakan dengan medium ajar secara lengkap; infokus, salindia presentasi, dan papan tulis.</div> 
+                                                                    <div>5. Pertemuan dilaksankan secara tatap muka (dan/atau online jika diperlukan).</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
@@ -375,12 +394,14 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Online Shopping &amp; Tracking ID</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Kegiatan Pembelajaran</h4>
+                                                                <div>
+                                                                    <div>1. Pembelajaran dilakukan secara intensif, komunikatif, interaktif, dan kondusif.</div> 
+                                                                    <div>2. Pembelajaran dirancang dan dilaksanakan dengan bantuan silabus, modul ajar, dan media online.</div> 
+                                                                    <div>3. Pembelajaran dilakukan secara komunikatif yang berpusat pada para peserta.</div>
+                                                                    <div>4. Pembelajaran didukung dengan <i>games</i>.</div> 
+                                                                    <div>5. Pembelajaran akan dilengkapi dengan tes atau tinjauan langsung pada akhir pertemuan.</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
@@ -398,12 +419,40 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Enjoy &amp; Travel</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Cakupan Pembelajaran</h4>
+                                                                <div>
+                                                                    <div>1. Secara umum tiap jelas ditujukan untuk semua masyarakat Indramayu.</div> 
+                                                                    <div>2. Siswa/i SD (untuk Kelas Menari).</div> 
+                                                                    <div>3. Siswa/i SD/MI sederajat (untuk Kelas Bahasa Inggris junior).</div>
+                                                                    <div>4. Siswa/i SMP, SMA/K/MA, mahasiswa, dan umum (untuk Kelas Bahasa Inggris senior).</div> 
+                                                                    <div>5. Siswa/i SMP, SMA/K/MA, mahasiswa, dan umum (untuk Kelas Bahasa Jepang).</div> 
+                                                                    <div>6. Siswa/i SMA/K/MA, mahasiswa dan umum (untuk Kelas Menulis).</div> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 align-self-center">
+                                                            <div class="right-image">
+                                                                <img src="{{ asset('landing_page/assets/images/services-image-04.jpg') }}" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <div class="thumb">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 align-self-center">
+                                                            <div class="left-text">
+                                                                <h4>Keunggulan-Keunggulan Lain</h4>
+                                                                <div>
+                                                                    <div>1. Belajar di ruang ber-AC dan multimedia.</div> 
+                                                                    <div>2. Jadwal belajar cocok dan ramah dengan kegiatan lain sehari-hari.</div> 
+                                                                    <div>3. Pembelajaran komprehensif.</div>
+                                                                    <div>4. Memperoleh long-term skill.</div> 
+                                                                    <div>5. Mendapatkan sertifikat kompetensi setelah evaluasi.</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
@@ -531,7 +580,7 @@ https://templatemo.com/tm-568-digimedia
                             @forelse ($testimoni as $testimonis)
                                 <div class="testimoni-card">
                                     <div class="">
-                                        <p>{{ $testimonis->deskripsi }}</p> 
+                                        <p>"{{ $testimonis->deskripsi }}"</p> 
                                     </div>
                                     <hr>
                                     <div class="">
