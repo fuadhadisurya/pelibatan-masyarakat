@@ -474,7 +474,7 @@ https://templatemo.com/tm-568-digimedia
         </div>
     </div>
 
-    {{-- @if (count($galeri)>0) --}}
+    @if (count($galeri)>0)
         <div id="galeri" class="our-portfolio section">
             <div class="container">
                 <div class="row">
@@ -493,7 +493,14 @@ https://templatemo.com/tm-568-digimedia
                         <div class="row">
                             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    @foreach ($galeri as $g1)
+                                        @if ($loop->first)
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $loop->index }}" class="active" aria-current="true" aria-label="Slide {{ $loop->iteration }}"></button>
+                                        @else
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $loop->index }}" aria-label="Slide {{ $loop->iteration }}"></button>
+                                        @endif
+                                    @endforeach
+                                    {{-- <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
                                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
                                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
@@ -505,9 +512,27 @@ https://templatemo.com/tm-568-digimedia
                                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="9" aria-label="Slide 10"></button>
                                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="10" aria-label="Slide 11"></button>
                                     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="11" aria-label="Slide 12"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="12" aria-label="Slide 13"></button> --}}
                                 </div>
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
+                                    @foreach ($galeri as $g2)
+                                        @if ($loop->first)
+                                            <div class="carousel-item active">
+                                                <img src="{{ Storage::url($g2->photo_path) }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ $g2->nama_foto }}</h5>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="carousel-item">
+                                                <img src="{{ Storage::url($g2->photo_path) }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ $g2->nama_foto }}</h5>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    {{-- <div class="carousel-item active">
                                         <img src="{{ asset('landing_page/assets/images/galeri/image-1.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
                                         <div class="carousel-caption d-none d-md-block">
                                             <h5>Kelas Bahasa Inggris</h5>
@@ -579,6 +604,12 @@ https://templatemo.com/tm-568-digimedia
                                             <h5>Kelas Tari Topeng slide label</h5>
                                         </div>
                                     </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-13.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Ruangan TIK</h5>
+                                        </div>
+                                    </div> --}}
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -594,7 +625,7 @@ https://templatemo.com/tm-568-digimedia
                 </div>
             </div>
         </div>
-    {{-- @endif --}}
+    @endif
 
     @if (count($events)>0)
         <div id="event" class="our-portfolio section">
