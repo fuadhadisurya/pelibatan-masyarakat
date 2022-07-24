@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Testimoni | Kegiatan Pelibatan Masyarakat
+    Testimoni | Sibakat
 @endsection
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Silabus | Kegiatan Pelibatan Masyarakat
+    Edit Silabus | Sibakat
 @endsection
 
 @section('content')

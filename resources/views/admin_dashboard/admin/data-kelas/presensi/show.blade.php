@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Detail Presensi | Kegiatan Pelibatan Masyarakat
+    Detail Presensi | Sibakat
 @endsection
 
 @section('content')

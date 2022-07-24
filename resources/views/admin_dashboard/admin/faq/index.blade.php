@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Pusat Bantuan | Kegiatan Pelibatan Masyarakat
+    Pusat Bantuan | Sibakat
 @endsection
 
 @section('content')

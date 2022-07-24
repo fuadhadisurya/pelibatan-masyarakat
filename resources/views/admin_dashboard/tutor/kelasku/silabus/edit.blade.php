@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Silabus | Kegiatan Pelibatan Masyarakat
+    Edit Silabus | Sibakat
 @endsection
 
 @section('content')
@@ -55,6 +55,10 @@
     <script>
         var f2 = flatpickr(document.getElementsByClassName('flatpickr'), {
             dateFormat: "Y-m-d",
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
 @endpush

@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Event | Kegiatan Pelibatan Masyarakat
+    Edit Event | Sibakat
 @endsection
 
 @section('content')
@@ -105,11 +105,19 @@
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             time_24hr: true,
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script>
         var f3 = flatpickr(document.getElementById('deadline_pendaftaran'), {
             minDate: "today",
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script>

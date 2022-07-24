@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Tutor | Kegiatan Pelibatan Masyarakat
+    Edit Tutor | Sibakat
 @endsection
 
 @section('content')

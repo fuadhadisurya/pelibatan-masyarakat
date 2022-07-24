@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Silabus | Kegiatan Pelibatan Masyarakat
+    Silabus | Sibakat
 @endsection
 
 @section('content')
@@ -74,7 +74,7 @@
 
 {{-- @extends('admin_dashboard.layouts.main')
 @section('title')
-    Silabus | Kegiatan Pelibatan Masyarakat
+    Silabus | Sibakat
 @endsection
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Periksa Jawaban Peserta | Kegiatan Pelibatan Masyarakat
+    Periksa Jawaban Peserta | Sibakat
 @endsection
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Detail Tugas | Kegiatan Pelibatan Masyarakat
+    Detail Tugas | Sibakat
 @endsection
 
 @section('content')
@@ -165,7 +165,11 @@
         var f2 = flatpickr(document.getElementById('dateTimeFlatpickr'), {
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            time_24hr: true
+            time_24hr: true,
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
 @endpush

@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Tugas | Kegiatan Pelibatan Masyarakat
+    Tugas | Sibakat
 @endsection
 
 @section('content')
@@ -184,7 +184,11 @@
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             time_24hr: true,
-            minDate: 'today'
+            minDate: 'today',
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
 @endpush

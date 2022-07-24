@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Detail Jawaban Quiz | Kegiatan Pelibatan Masyarakat
+    Detail Jawaban Quiz | Sibakat
 @endsection
 
 @section('content')
@@ -277,7 +277,11 @@
             minDate: "today",
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            time_24hr: true
+            time_24hr: true,
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script>
