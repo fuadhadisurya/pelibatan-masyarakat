@@ -268,37 +268,37 @@ https://templatemo.com/tm-568-digimedia
                                     <div class="menu">
                                         <div class="first-thumb active">
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-01') }}.png" alt=""></span>
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-1.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
                                                 Keuntungan
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-02.png') }}" alt=""></span>
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-2.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
                                                 Tutor
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-03.png') }}" alt=""></span>
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-3.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
                                                 Durasi
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-04.png') }}" alt=""></span>
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-4.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
                                                 Kegiatan
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-04.png') }}" alt=""></span>
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-5.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
                                                 Cakupan
                                             </div>
                                         </div>
                                         <div class="last-thumb">
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-01.png') }}" alt=""></span>
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-6.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
                                                 Keunggulan
                                             </div>
                                         </div>
@@ -331,7 +331,7 @@ https://templatemo.com/tm-568-digimedia
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-1.png') }}" style="max-height: 285px; object-fit: cover" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -356,7 +356,7 @@ https://templatemo.com/tm-568-digimedia
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-02.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-2.png') }}" style="max-height: 285px; object-fit: cover" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -381,7 +381,7 @@ https://templatemo.com/tm-568-digimedia
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-03.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-3.png') }}" style="max-height: 285px; object-fit: cover" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -406,7 +406,7 @@ https://templatemo.com/tm-568-digimedia
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-04.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-4.png') }}" style="max-height: 285px; object-fit: contain" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -432,7 +432,7 @@ https://templatemo.com/tm-568-digimedia
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-04.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-5.png') }}" style="max-height: 285px; object-fit: contain" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -457,7 +457,7 @@ https://templatemo.com/tm-568-digimedia
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-6.jpg') }}" style="max-height: 285px; object-fit: contain" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -473,6 +473,128 @@ https://templatemo.com/tm-568-digimedia
             </div>
         </div>
     </div>
+
+    {{-- @if (count($galeri)>0) --}}
+        <div id="galeri" class="our-portfolio section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="section-heading wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <h6>Galeri </h6>
+                            <h4>Lihat aktivitas <em>kelas</em></h4>
+                            <div class="line-dec"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="8" aria-label="Slide 9"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="9" aria-label="Slide 10"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="10" aria-label="Slide 11"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="11" aria-label="Slide 12"></button>
+                                </div>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-1.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Bahasa Inggris</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-2.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Bahasa Inggris</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-3.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-4.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-5.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas TIK</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-6.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-7.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-8.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-9.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-10.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Tari Topeng slide label</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-11.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Tari Topeng slide label</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-12.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Tari Topeng slide label</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{-- @endif --}}
 
     @if (count($events)>0)
         <div id="event" class="our-portfolio section">
