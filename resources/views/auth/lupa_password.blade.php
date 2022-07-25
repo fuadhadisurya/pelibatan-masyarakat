@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Lupa Password | Kegiatan Pelibatan Masyarakat</title>
+    <title>Lupa Password | Sibakat</title>
     {{-- <link rel="icon" type="image/x-icon" href="{{ asset('admin_dashboard/assets/img/favicon.ico') }}"/> --}}
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('admin_dashboard/assets/img/favicon-32x32.png') }}">
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -26,8 +26,8 @@
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="">Password Recovery</h1>
-                        <p class="signup-link recovery">Enter your email and instructions will sent to you!</p>
+                        <h1 class="">Lupa Password</h1>
+                        <p class="signup-link recovery">Silahkan Masukkan alamat email di bawah ini</p>
                         @if(session('status'))
                             <div class="alert alert-success mb-4" role="alert"> 
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

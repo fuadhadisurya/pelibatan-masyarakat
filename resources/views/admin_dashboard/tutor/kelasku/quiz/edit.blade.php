@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Edit Quiz | Kegiatan Pelibatan Masyarakat
+    Edit Quiz | Sibakat
 @endsection
 
 @section('content')
@@ -77,6 +77,10 @@
         var f1 = flatpickr(document.getElementById('basicFlatpickr'),{
             minDate: "today",
             dateFormat: "j F Y",
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script>

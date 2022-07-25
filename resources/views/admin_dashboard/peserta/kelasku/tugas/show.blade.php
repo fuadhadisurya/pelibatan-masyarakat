@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Detail Tugas | Kegiatan Pelibatan Masyarakat
+    Detail Tugas | Sibakat
 @endsection
 
 @section('content')

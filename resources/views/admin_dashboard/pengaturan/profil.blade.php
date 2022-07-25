@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Profil | Kegiatan Pelibatan Masyarakat
+    Profil | Sibakat
 @endsection
 
 @section('content')
@@ -252,7 +252,11 @@
     </script>
     <script>
         var f1 = flatpickr(document.getElementById('tanggal_lahir'), {
-            // dateFormat: "d-m-Y"
+            // dateFormat: "d-m-Y",
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script>

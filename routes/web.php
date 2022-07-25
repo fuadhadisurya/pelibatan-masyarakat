@@ -25,6 +25,7 @@ use App\Http\Controllers\admin_dashboard\admin\data_kelas\TestimoniController;
 use App\Http\Controllers\admin_dashboard\admin\DataEventController;
 use App\Http\Controllers\admin_dashboard\admin\EventController;
 use App\Http\Controllers\admin_dashboard\admin\FaqController;
+use App\Http\Controllers\admin_dashboard\admin\GaleriController;
 use App\Http\Controllers\admin_dashboard\admin\KategoriBeritaController;
 use App\Http\Controllers\admin_dashboard\admin\TutorController;
 use App\Http\Controllers\admin_dashboard\auth\RegistrasiController;
@@ -81,9 +82,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingPageController::class, 'index']);
-// Route::get('/capture', function(){
-//     return view('capture');
-// });
 Route::get('/faq', [LandingPageController::class, 'faq']);
 Route::get('/berita', [LandingPageController::class, 'berita']);
 Route::get('/berita/{slug}', [LandingPageController::class, 'beritaShow']);
@@ -140,6 +138,7 @@ Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function()
     // Berita Area
     Route::resource('kategori-berita', KategoriBeritaController::class);
     Route::resource('berita', BeritaController::class);
+    Route::resource('galeri', GaleriController::class);
     Route::resource('faq', FaqController::class);
     // Event
     Route::resource('event', EventController::class);

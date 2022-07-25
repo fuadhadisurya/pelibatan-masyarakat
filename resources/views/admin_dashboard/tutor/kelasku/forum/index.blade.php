@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Forum | Kegiatan Pelibatan Masyarakat
+    Forum | Sibakat
 @endsection
 
 @section('content')

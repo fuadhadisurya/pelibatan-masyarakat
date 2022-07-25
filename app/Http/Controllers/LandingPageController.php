@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Berita;
 use App\Models\Event;
 use App\Models\Faq;
+use App\Models\Galeri;
 use App\Models\Testimoni;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,12 +21,13 @@ class LandingPageController extends Controller
         } else {
             $events = Event::orderBy('id', 'desc')->get();
         }
+        $galeri = Galeri::where('publish', "Ya")->inRandomOrder()->limit(15)->get();
         if(count(Faq::all())>5){
             $faq = Faq::all()->random(5);
         } else {
             $faq = Faq::all();
         }
-        return view('welcome', ['berita' => $berita, 'faq' => $faq, 'tutor' => $tutor, 'testimoni' => $testimoni, 'events' => $events]);
+        return view('welcome', ['berita' => $berita, 'galeri' => $galeri, 'faq' => $faq, 'tutor' => $tutor, 'testimoni' => $testimoni, 'events' => $events]);
     }
 
     public function faq(){

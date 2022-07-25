@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <title>Kegiatan Pelibatan Masyarakat</title>
+    <title>Sibakat - Sistem Pelibatan Masyarakat</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('admin_dashboard/assets/img/favicon-32x32.png') }}">
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('landing_page/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -78,7 +78,7 @@ https://templatemo.com/tm-568-digimedia
                 <div class="col-12">
                     <nav class="main-nav">
                         <!-- ***** Logo Start ***** -->
-                        <a href="index.html" class="logo">
+                        <a href="{{url('/')}}" class="logo">
                             <img src="{{ asset('landing_page/assets/images/logo.png') }}" alt="">
                         </a>
                         <!-- ***** Logo End ***** -->
@@ -145,9 +145,9 @@ https://templatemo.com/tm-568-digimedia
                             <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h6>Digital Media Agency</h6>
-                                        <h2>We Boost Your Website Traffic</h2>
-                                        <p>This template is brought to you by TemplateMo website. Feel free to use this for a commercial purpose. You are not allowed to redistribute the template ZIP file on any other template website. Thank you.</p>
+                                        <h6>DPA INDRAMAYU PRESENTS</h6>
+                                        <h2>KELAS PELIBATAN MASYARAKAT</h2>
+                                        <p>Kelas Pelibatan Masyarakat tahun ini dibuka kembali. Pilih minat dan bidang yang kamu cocok buatmu. Segera daftarkan diri kalian. Kesempatan tidak akan datang dua kali!</p>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="border-first-button scroll-to-section">
@@ -159,7 +159,7 @@ https://templatemo.com/tm-568-digimedia
                         </div>
                         <div class="col-lg-6">
                             <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('landing_page/assets/images/slider-dec-v3.png') }}" alt="">
+                                <img src="{{ asset('landing_page/assets/images/slider-dec-v4.png') }}" alt="">
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@ https://templatemo.com/tm-568-digimedia
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="about-left-image  wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <img src="{{ asset('landing_page/assets/images/about-dec-v3.png') }}" alt="">
+                                <img src="{{ asset('landing_page/assets/images/about-dec-v4.png') }}" alt="">
                             </div>
                         </div>
                         <div class="col-lg-6 align-self-center  wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -185,8 +185,8 @@ https://templatemo.com/tm-568-digimedia
                                     <h4>Apa itu Kegiatan Pelibatan <em>Masyarakat</em></h4>
                                     <div class="line-dec"></div>
                                 </div>
-                                <p>We hope this DigiMedia template is useful for your work. You can use this template for any purpose. You may <a rel="nofollow" href="http://paypal.me/templatemo" target="_blank">contribute a little amount</a> via PayPal to <a href="https://templatemo.com/contact" target="_blank">support TemplateMo</a> in creating new templates regularly.</p>
-                                <div class="row">
+                                <p>Kegiatan Pelibatan Masyarakat adalah progam rutin Dinas Perpustakaan dan Arsip Indramayu dari tahun ke tahun. Berfokus dan bertujuan untuk mengembangkan literasi di Indramayu, kami hadir membuka kelas-kelas yang dapat menambah kecakapan dalam bidang literasi yang dibutuhkan oleh masyarakat.</p>
+                                {{-- <div class="row">
                                     <div class="col-lg-4 col-sm-4">
                                         <div class="skill-item first-skill-item wow fadeIn" data-wow-duration="1s" data-wow-delay="0s">
                                             <div class="progress" data-percentage="90">
@@ -241,7 +241,7 @@ https://templatemo.com/tm-568-digimedia
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -255,8 +255,8 @@ https://templatemo.com/tm-568-digimedia
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading  wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
-                        <h6>Our Services</h6>
-                        <h4>What Our Agency <em>Provides</em></h4>
+                        <h6>Kelas</h6>
+                        <h4>Kenapa sih Kami Harus Ikut Kelas Pelibatan <em>Masyarakat?</em></h4>
                         <div class="line-dec"></div>
                     </div>
                 </div>
@@ -268,32 +268,38 @@ https://templatemo.com/tm-568-digimedia
                                     <div class="menu">
                                         <div class="first-thumb active">
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-01') }}.png" alt=""></span>
-                                                Apartments
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-1.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
+                                                Keuntungan
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-02.png') }}" alt=""></span>
-                                                Food &amp; Life
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-2.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
+                                                Tutor
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-03.png') }}" alt=""></span>
-                                                Cars
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-3.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
+                                                Durasi
                                             </div>
                                         </div>
                                         <div>
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-04.png') }}" alt=""></span>
-                                                Shopping
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-4.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
+                                                Kegiatan
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="thumb">
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-5.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
+                                                Cakupan
                                             </div>
                                         </div>
                                         <div class="last-thumb">
                                             <div class="thumb">
-                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-01.png') }}" alt=""></span>
-                                                Traveling
+                                                <span class="icon"><img src="{{ asset('landing_page/assets/images/service-icon-6.png') }}" style="max-width: 60px; max-height: 60px" alt=""></span>
+                                                Keunggulan
                                             </div>
                                         </div>
                                     </div>
@@ -306,17 +312,26 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>SEO Analysis &amp; Daily Reports</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
+                                                                <h4>Keuntungan Bergabung Kelas Pelibatan Masyarakat</h4>
+                                                                <div class="mb-2">Kalau kalian masih penasaran akan dapat apa selama bergabung, cek poin-poin ini:</div>
+                                                                <div>
+                                                                    <div>&bull; Tutor unggul dan berpengalaman di bidang masing-masing.</div> 
+                                                                    <div>&bull; Durasi pembelajaran 2 jam sekali dalam seminggu.</div> 
+                                                                    <div>&bull; Pembelajaran intensif, komunikatif, interaktif, dan kondusif.</div>
+                                                                    <div>&bull; Mendapatkan sertifikat sebagai peserta.</div> 
+                                                                </div>
+                                                                <div class="mt-2">Ayo! Tunggu apa lagi? Segera daftarkan diri kalian dan bergabung bersama kami.</div>
+
+                                                                {{-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
                                                                     dover lipsum lorem and the others.</p>
                                                                 <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
                                                                     <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p> --}}
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-1.png') }}" style="max-height: 285px; object-fit: cover" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -329,17 +344,19 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Healthy Food &amp; Life</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Tutor</h4>
+                                                                <div>
+                                                                    <div>1. Berpengalaman di bidang masing-masing.</div> 
+                                                                    <div>2. Telah bersertifikat baik dalam bidang ilmunya atau pun pedagoginya.</div> 
+                                                                    <div>3. Dedikasi dan tepat waktu.</div>
+                                                                    <div>4. Ramah dan bersahabat.</div> 
+                                                                    <div>5. Profesional.</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-02.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-2.png') }}" style="max-height: 285px; object-fit: cover" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -352,17 +369,19 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Car Re-search &amp; Transport</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Durasi Pembelajaran</h4>
+                                                                <div>
+                                                                    <div>1. Pertemuan satu kali dalam seminggu terjadwal.</div> 
+                                                                    <div>2. Tiap pertemuan dilaksanakan selama dua jam.</div> 
+                                                                    <div>3. Pertemuan dilaksanakan di ruang audiovisual DPA.</div>
+                                                                    <div>4. Pertemuan dilaksanakan dengan medium ajar secara lengkap; infokus, salindia presentasi, dan papan tulis.</div> 
+                                                                    <div>5. Pertemuan dilaksankan secara tatap muka (dan/atau online jika diperlukan).</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-03.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-3.png') }}" style="max-height: 285px; object-fit: cover" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -375,17 +394,19 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Online Shopping &amp; Tracking ID</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Kegiatan Pembelajaran</h4>
+                                                                <div>
+                                                                    <div>1. Pembelajaran dilakukan secara intensif, komunikatif, interaktif, dan kondusif.</div> 
+                                                                    <div>2. Pembelajaran dirancang dan dilaksanakan dengan bantuan silabus, modul ajar, dan media online.</div> 
+                                                                    <div>3. Pembelajaran dilakukan secara komunikatif yang berpusat pada para peserta.</div>
+                                                                    <div>4. Pembelajaran didukung dengan <i>games</i>.</div> 
+                                                                    <div>5. Pembelajaran akan dilengkapi dengan tes atau tinjauan langsung pada akhir pertemuan.</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image-04.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-4.png') }}" style="max-height: 285px; object-fit: contain" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -398,17 +419,45 @@ https://templatemo.com/tm-568-digimedia
                                                     <div class="row">
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="left-text">
-                                                                <h4>Enjoy &amp; Travel</h4>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt ut labore et dolore kengan darwin doerski token.
-                                                                    dover lipsum lorem and the others.</p>
-                                                                <div class="ticks-list"><span><i class="fa fa-check"></i> Optimized Template</span> <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span>
-                                                                    <span><i class="fa fa-check"></i> Data Info</span> <span><i class="fa fa-check"></i> SEO Analysis</span> <span><i class="fa fa-check"></i> Optimized Template</span></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedr do eiusmod deis tempor incididunt.</p>
+                                                                <h4>Cakupan Pembelajaran</h4>
+                                                                <div>
+                                                                    <div>1. Secara umum tiap jelas ditujukan untuk semua masyarakat Indramayu.</div> 
+                                                                    <div>2. Siswa/i SD (untuk Kelas Menari).</div> 
+                                                                    <div>3. Siswa/i SD/MI sederajat (untuk Kelas Bahasa Inggris junior).</div>
+                                                                    <div>4. Siswa/i SMP, SMA/K/MA, mahasiswa, dan umum (untuk Kelas Bahasa Inggris senior).</div> 
+                                                                    <div>5. Siswa/i SMP, SMA/K/MA, mahasiswa, dan umum (untuk Kelas Bahasa Jepang).</div> 
+                                                                    <div>6. Siswa/i SMA/K/MA, mahasiswa dan umum (untuk Kelas Menulis).</div> 
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 align-self-center">
                                                             <div class="right-image">
-                                                                <img src="{{ asset('landing_page/assets/images/services-image.jpg') }}" alt="">
+                                                                <img src="{{ asset('landing_page/assets/images/services-5.png') }}" style="max-height: 285px; object-fit: contain" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <div class="thumb">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 align-self-center">
+                                                            <div class="left-text">
+                                                                <h4>Keunggulan-Keunggulan Lain</h4>
+                                                                <div>
+                                                                    <div>1. Belajar di ruang ber-AC dan multimedia.</div> 
+                                                                    <div>2. Jadwal belajar cocok dan ramah dengan kegiatan lain sehari-hari.</div> 
+                                                                    <div>3. Pembelajaran komprehensif.</div>
+                                                                    <div>4. Memperoleh long-term skill.</div> 
+                                                                    <div>5. Mendapatkan sertifikat kompetensi setelah evaluasi.</div> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 align-self-center">
+                                                            <div class="right-image">
+                                                                <img src="{{ asset('landing_page/assets/images/services-6.jpg') }}" style="max-height: 285px; object-fit: contain" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -424,6 +473,159 @@ https://templatemo.com/tm-568-digimedia
             </div>
         </div>
     </div>
+
+    @if (count($galeri)>0)
+        <div id="galeri" class="our-portfolio section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="section-heading wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                            <h6>Galeri </h6>
+                            <h4>Lihat aktivitas <em>kelas</em></h4>
+                            <div class="line-dec"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid wow fadeIn" data-wow-duration="1s" data-wow-delay="0.7s">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    @foreach ($galeri as $g1)
+                                        @if ($loop->first)
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $loop->index }}" class="active" aria-current="true" aria-label="Slide {{ $loop->iteration }}"></button>
+                                        @else
+                                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $loop->index }}" aria-label="Slide {{ $loop->iteration }}"></button>
+                                        @endif
+                                    @endforeach
+                                    {{-- <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="8" aria-label="Slide 9"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="9" aria-label="Slide 10"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="10" aria-label="Slide 11"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="11" aria-label="Slide 12"></button>
+                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="12" aria-label="Slide 13"></button> --}}
+                                </div>
+                                <div class="carousel-inner">
+                                    @foreach ($galeri as $g2)
+                                        @if ($loop->first)
+                                            <div class="carousel-item active">
+                                                <img src="{{ Storage::url($g2->photo_path) }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ $g2->nama_foto }}</h5>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="carousel-item">
+                                                <img src="{{ Storage::url($g2->photo_path) }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h5>{{ $g2->nama_foto }}</h5>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    {{-- <div class="carousel-item active">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-1.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Bahasa Inggris</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-2.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Bahasa Inggris</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-3.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-4.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-5.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas TIK</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-6.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-7.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-8.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-9.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-10.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Tari Topeng slide label</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-11.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Tari Topeng slide label</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-12.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Kelas Tari Topeng slide label</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="{{ asset('landing_page/assets/images/galeri/image-13.jpeg') }}" class="d-block w-100" style="height: 480px; object-fit: cover" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>Ruangan TIK</h5>
+                                        </div>
+                                    </div> --}}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     @if (count($events)>0)
         <div id="event" class="our-portfolio section">
@@ -531,7 +733,7 @@ https://templatemo.com/tm-568-digimedia
                             @forelse ($testimoni as $testimonis)
                                 <div class="testimoni-card">
                                     <div class="">
-                                        <p>{{ $testimonis->deskripsi }}</p> 
+                                        <p>"{{ $testimonis->deskripsi }}"</p> 
                                     </div>
                                     <hr>
                                     <div class="">
@@ -756,8 +958,9 @@ https://templatemo.com/tm-568-digimedia
                 <div class="row">
                     <div class="col-lg-6 offset-lg-3">
                         <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-                            <h6>Pusat Bantuan</h6>
-                            <h4>Dika Nakon Kula <em>Jawab</em></h4>
+                            <h6>F.A.Q</h6>
+                            <h4>Pertanyaan Yang sering <em>Ditanyakan</em></h4>
+                            {{-- <h4>Dika Nakon Kula <em>Jawab</em></h4> --}}
                             <div class="line-dec"></div>
                         </div>
                     </div>

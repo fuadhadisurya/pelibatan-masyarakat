@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title> Pengerjaan Quiz | Kegiatan Pelibatan Masyarakat </title>
+    <title>Pengerjaan Quiz | Sibakat</title>
     <link rel="icon" type="image/x-icon" href="http://localhost:8000/admin_dashboard/assets/img/favicon.ico" />
     <link href="http://localhost:8000/admin_dashboard/assets/css/loader.css" rel="stylesheet" type="text/css">
     <script src="http://localhost:8000/admin_dashboard/assets/js/loader.js"></script>

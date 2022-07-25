@@ -14,7 +14,7 @@ class Kelas extends Model
 
     protected $fillable = [
         "tutor_id",
-        "silabus_id",
+        // "silabus_id",
         "banner", 
         "nama_kelas",
         "pendaftaran_buka",

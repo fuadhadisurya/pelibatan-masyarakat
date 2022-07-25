@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Materi | Kegiatan Pelibatan Masyarakat
+    Materi | Sibakat
 @endsection
 
 @section('content')

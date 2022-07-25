@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Kelas | Kegiatan Pelibatan Masyarakat
+    Kelas | Sibakat
 @endsection
 
 @section('content')
@@ -292,11 +292,19 @@
     <script>
         var f3 = flatpickr(document.getElementById('periode_kelas'), {
             mode: "range",
-            minDate: "today"
+            minDate: "today",
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
         var f2 = flatpickr(document.getElementById('tanggal_pendaftaran'), {
             mode: "range",
-            minDate: "today"
+            minDate: "today",
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script>

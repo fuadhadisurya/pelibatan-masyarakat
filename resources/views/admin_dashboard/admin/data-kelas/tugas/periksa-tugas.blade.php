@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Detail Jawaban Peserta | Kegiatan Pelibatan Masyarakat
+    Detail Jawaban Peserta | Sibakat
 @endsection
 
 @section('content')

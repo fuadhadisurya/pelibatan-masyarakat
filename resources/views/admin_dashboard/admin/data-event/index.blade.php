@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Data Event | Kegiatan Pelibatan Masyarakat
+    Data Event | Sibakat
 @endsection
 
 @section('content')

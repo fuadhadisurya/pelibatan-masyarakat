@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Sertifikat Peserta | Kegiatan Pelibatan Masyarakat
+    Sertifikat Peserta | Sibakat
 @endsection
 
 @section('content')

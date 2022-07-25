@@ -15,7 +15,9 @@
             height: 100%;
         }
     </style>
-     <title>Sertifikat | Kegiatan Pelibatan masyarakat</title>
+    <title>Sertifikat | Sibakat</title>
+    {{-- <link rel="icon" type="image/x-icon" href="{{ asset('admin_dashboard/assets/img/favicon.ico') }}"/> --}}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('admin_dashboard/assets/img/favicon-32x32.png') }}">
   </head>
   <body>
     <div class="container h-100">

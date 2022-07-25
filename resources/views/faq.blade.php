@@ -25,7 +25,7 @@
                             </h2>
                             <div id="collapse{{ $key }}" class="accordion-collapse collapse" aria-labelledby="heading{{ $key }}" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
-                                    {{ $dataFaq->jawaban }}
+                                    {!! $dataFaq->jawaban !!}
                                 </div>
                             </div>
                         </div>

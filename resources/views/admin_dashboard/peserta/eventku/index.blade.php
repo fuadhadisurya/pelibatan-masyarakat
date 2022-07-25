@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Eventku | Kegiatan Pelibatan Masyarakat
+    Eventku | Sibakat
 @endsection
 
 @section('content')

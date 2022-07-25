@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Jawaban Quiz | Kegiatan Pelibatan Masyarakat
+    Jawaban Quiz | Sibakat
 @endsection
 
 @section('content')

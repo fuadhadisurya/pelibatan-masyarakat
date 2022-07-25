@@ -1,6 +1,6 @@
 @extends('admin_dashboard.layouts.main')
 @section('title')
-    Tambah Silabus | Kegiatan Pelibatan Masyarakat
+    Tambah Silabus | Sibakat
 @endsection
 
 @section('content')
@@ -91,13 +91,21 @@
         function tanggal(e) {
             return flatpickr(document.getElementsByClassName('flatpickr'), {
                 dateFormat: "Y-m-d",
-                minDate: 'today'
+                minDate: 'today',
+                allowInput: true,
+                onReady: function(selectedDates, dateStr, instance) {
+                    $(instance.altInput).prop('readonly', false);
+                },
             });
         }
 
         var f2 = flatpickr(document.getElementsByClassName('flatpickr'), {
             dateFormat: "Y-m-d",
-            minDate: 'today'
+            minDate: 'today',
+            allowInput: true,
+            onReady: function(selectedDates, dateStr, instance) {
+                $(instance.altInput).prop('readonly', false);
+            },
         });
     </script>
     <script type="text/javascript">
