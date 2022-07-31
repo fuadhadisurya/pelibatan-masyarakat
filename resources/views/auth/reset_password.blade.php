@@ -38,22 +38,14 @@
                         @endif
                         @if ($errors->any())
                             <div class="alert alert-danger" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <ul>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
+                                        <li><strong>{{ $error }}</strong></li>
                                     @endforeach
                                 </ul>
                             </div>
                         @endif
-                        @error('email')
-                            <div class="alert alert-warning" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                </button>
-                                <strong>{{ $message }} </strong>
-                            </div>
-                        @enderror
                         <form class="text-left" action="{{ route('password.update') }}" method="POST">
                             @csrf
                             <div class="form">
@@ -69,10 +61,10 @@
 
                                 <div id="password-field" class="field-wrapper input">
                                     <div class="d-flex justify-content-between">
-                                        <label for="password">NEW PASSWORD</label>
+                                        <label for="password">PASSWORD BARU</label>
                                     </div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                    <input id="password" name="password" type="password" class="form-control" placeholder="New Password" required>
+                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password Baru" required>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 </div>
 
