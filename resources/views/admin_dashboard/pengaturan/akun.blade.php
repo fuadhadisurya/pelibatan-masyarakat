@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label for="password_baru">Password Baru <span class="text-danger">*</span></label>
                             <input id="password_baru" type="password" name="password" placeholder="Password Baru" class="form-control" required>
-                            <small id="passwordHelp" class="form-text text-muted">Gunakan minimal 6 karakter.</small>
+                            <small id="passwordHelp" class="form-text text-muted">Gunakan minimal 8 karakter.</small>
                         </div>
                         <div class="form-group">
                             <label for="konfirmasi_password">Konfirmasi Password <span class="text-danger">*</span></label>
