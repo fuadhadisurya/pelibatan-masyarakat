@@ -125,7 +125,7 @@
                                 <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                     Mohon menunggu. Pendaftaran dibuka tanggal  <strong>{{ \Carbon\Carbon::parse($kelas->pendaftaran_buka)->format('j F Y') }}</strong>
                                 </button>
-                            @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_tutup)
+                            @elseif (Carbon\Carbon::now()->format('Y-m-d') >= $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') <= $kelas->pendaftaran_tutup)
                                 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
                                     Daftar Sekarang
                                 </button>
