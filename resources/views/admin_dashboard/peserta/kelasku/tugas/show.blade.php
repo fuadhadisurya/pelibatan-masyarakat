@@ -59,7 +59,11 @@
                         </div>
                         <div>
                             @foreach ($tugas->uploadTugas as $fileTugas)
-                                <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->tugas }}</a><br>
+                                @php
+                                    $tugasFormat = explode('/', $fileTugas->tugas);
+                                    $namaTugas = end($tugasFormat);
+                                @endphp
+                                <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $namaTugas }}</a><br>
                             @endforeach
                         </div>
                         <hr>
@@ -221,7 +225,11 @@
                             <h6 for="file_jawaban">File Jawaban</h6>
                             @if ($jawabanTugas != null)
                                 @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
-                                    <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
+                                    @php
+                                        $jawabanTugasFormat = explode('/', $fileTugas->jawaban_tugas);
+                                        $namaJawabanTugas = end($jawabanTugasFormat);
+                                    @endphp
+                                    <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $namaJawabanTugas }}</a><br>
                                 @endforeach
                             @endif
                         </div>
@@ -266,7 +274,11 @@
                         <h6 for="file_jawaban">File Jawaban</h6>
                         @if ($jawabanTugas != null)
                             @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
-                                <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
+                                @php
+                                    $jawabanTugasFormat = explode('/', $fileTugas->jawaban_tugas);
+                                    $namaJawabanTugas = end($jawabanTugasFormat);
+                                @endphp
+                                <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $namaJawabanTugas }}</a><br>
                             @endforeach
                         @endif
                     </div>

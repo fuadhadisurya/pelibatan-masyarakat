@@ -97,7 +97,7 @@
                                             @if ($tutor->gambar != null)
                                                 <td>
                                                     <a data-fancybox="gallery" href="{{ Storage::url($tutor->gambar) }}">
-                                                        <img class="rounded" src="{{ Storage::url($tutor->gambar) }}" width="100" height="75" />
+                                                        <img class="rounded" src="{{ Storage::url($tutor->gambar) }}" width="100" height="75" style="object-fit: cover" />
                                                     </a>
                                                 </td>
                                             @else
@@ -156,7 +156,7 @@
                                                 @if ($dataPresensi->gambar != null)
                                                     <td>
                                                         <a data-fancybox="gallery" href="{{ Storage::url($dataPresensi->gambar) }}">
-                                                            <img class="rounded" src="{{ Storage::url($dataPresensi->gambar) }}" width="100" height="75" />
+                                                            <img class="rounded" src="{{ Storage::url($dataPresensi->gambar) }}" width="100" height="75" style="object-fit: cover" />
                                                         </a>
                                                     </td>
                                                 @else

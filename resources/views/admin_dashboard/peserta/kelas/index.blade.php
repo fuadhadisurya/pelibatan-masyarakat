@@ -125,7 +125,7 @@
                                     <a href="{{ url('peserta/kelas/'.$kelas->id) }}">
                                         <div class="card h-100">
                                             @if($kelas->banner != null)
-                                                <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
+                                                <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" width="400px" height="300px" style="object-fit: cover" alt="widget-card-2">
                                             @else
                                                 <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                                             @endif

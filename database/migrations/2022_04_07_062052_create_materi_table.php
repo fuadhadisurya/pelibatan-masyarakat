@@ -17,7 +17,7 @@ class CreateMateriTable extends Migration
             $table->id();
             $table->foreignId('kelas_id');
             $table->string('nama_materi');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }

@@ -27,15 +27,19 @@
                     </div>
                     @else
                         <div class="form-group">
+                            @php
+                                $dokumentasiFormat = explode('/', $dokumentasi->nama_file);
+                                $namaDokumentasi = end($dokumentasiFormat);
+                            @endphp
                             @if ($dokumentasi->tipe == 'jpg' || $dokumentasi->tipe == 'jpeg' || $dokumentasi->tipe == 'png')            
                                 <figure>
                                     <img src="{{ Storage::url($dokumentasi->dokumentasi) }}" height="300px" width="400px" class="" alt="widget-card-2">
                                     <figcaption>
-                                        <a href="{{ route('dokumentasi.download', [$event->id, $dokumentasi->id]) }}"><i class="far fa-save"></i> {{ $dokumentasi->nama_file }}</a><br>
+                                        <a href="{{ route('dokumentasi.download', [$event->id, $dokumentasi->id]) }}"><i class="far fa-save"></i> {{ $namaDokumentasi }}</a><br>
                                     </figcaption>
                                 </figure>    
                             @else
-                                <a href="{{ route('dokumentasi.download', [$event->id, $dokumentasi->id]) }}"><i class="far fa-save"></i> {{ $dokumentasi->nama_file }}</a><br>
+                                <a href="{{ route('dokumentasi.download', [$event->id, $dokumentasi->id]) }}"><i class="far fa-save"></i> {{ $namaDokumentasi }}</a><br>
                             @endif
                         </div>
                         <div class="form-group">

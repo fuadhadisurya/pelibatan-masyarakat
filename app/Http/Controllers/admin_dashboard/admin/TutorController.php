@@ -22,7 +22,7 @@ class TutorController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('nama', function($row){
-                        $gambar = ($row->gambar != null ) ? "Avatar Tutor (On Progress)" : asset('admin_dashboard/assets/img/90x90.jpg');
+                        $gambar = ($row->foto != null) ? Storage::url($row->foto) : asset('admin_dashboard/assets/img/90x90.jpg');
                         return '
                             <td>
                                 <div class="d-flex">

@@ -20,7 +20,7 @@
             <div class="user-profile layout-spacing sticky-top" style="top: 105px;">
                 <div class="card component-card_9">
                     @if($kelas->banner != null)
-                        <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
+                        <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" width="400" height="300" style="object-fit: cover" alt="widget-card-2">
                     @else
                         <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                     @endif

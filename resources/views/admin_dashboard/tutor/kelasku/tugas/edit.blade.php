@@ -38,7 +38,11 @@
                     </div>
                     <div class="form-group">
                         @foreach ($tugas->uploadTugas as $fileTugas)
-                            <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->tugas }}</a><br>
+                            @php
+                                $tugasFormat = explode('/', $fileTugas->tugas);
+                                $namaTugas = end($tugasFormat);
+                            @endphp
+                            <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $namaTugas }}</a><br>
                         @endforeach
                     </div>
                     <div class="form-group">

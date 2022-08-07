@@ -57,7 +57,11 @@
                 </div>
                 <div>
                     @foreach ($tugas->uploadTugas as $fileTugas)
-                        <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->tugas }}</a><br>
+                        @php
+                            $tugasFormat = explode('/', $fileTugas->tugas);
+                            $namaTugas = end($tugasFormat);
+                        @endphp
+                        <a href="{{ route('tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $namaTugas }}</a><br>
                     @endforeach
                 </div>
                 <hr>
@@ -87,6 +91,8 @@
                                                         <p class=""><span class="badge badge-danger">Nilai : Belum Mengumpulkan</span></p>
                                                     </div>
                                                 </div>
+                                            @else
+                                                <span class="d-flex justify-content-center">Yeay, Semuanya sudah mengumpulkan tugas</span>
                                             @endif
                                         @endforeach
                                     @else
@@ -126,6 +132,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            @else
+                                                <span class="d-flex justify-content-center">Yah, semua peserta belum mengumpulkan tugas</span>
                                             @endif
                                         @endforeach
                                     @else

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class QuizSoalController extends Controller
 {
@@ -339,6 +340,9 @@ class QuizSoalController extends Controller
     }
 
     public function status(Request $request, $kelas_id, $quiz_id){
+        $this->validate($request, [
+            "aktif"   => ["required", Rule::in(['Y', 'N'])],
+        ]);
         $quizSoal = QuizSoal::whereIn('id',$request->ids)->update(['aktif' => $request->aktif]);
         if($quizSoal){
             return response()->json(array('success' => true));

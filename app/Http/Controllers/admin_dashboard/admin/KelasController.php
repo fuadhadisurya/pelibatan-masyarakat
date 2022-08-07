@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class KelasController extends Controller
@@ -256,6 +257,10 @@ class KelasController extends Controller
     // }
 
     public function status(Request $request){
+        $this->validate($request, [
+            "status"   => ["required", Rule::in(['Pendaftaran', 'Kegiatan Berlangsung', 'Selesai'])],
+        ]);
+
         $kelas = Kelas::whereIn('id',$request->ids)->update(['status' => $request->status]);
         if($kelas){
             return response()->json(array('success' => true));
