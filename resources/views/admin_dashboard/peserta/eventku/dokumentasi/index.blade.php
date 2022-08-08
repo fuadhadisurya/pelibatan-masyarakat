@@ -36,6 +36,7 @@
                         @foreach ($slideshare as $ss)
                             {!! $ss->dokumentasi !!}
                         @endforeach
+                        <hr>
                         @foreach ($presentasi as $present)
                             @php
                                 $presentasiFormat = explode('/', $present->nama_file);

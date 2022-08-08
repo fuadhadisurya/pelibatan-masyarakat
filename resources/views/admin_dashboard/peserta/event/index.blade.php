@@ -47,7 +47,7 @@
                                 <a href="{{ url('peserta/event/'.$event->id) }}">
                                     <div class="card h-100">
                                         @if($event->banner != null)
-                                            <img src="{{ Storage::url($event->banner) }}" class="card-img-top" alt="...">
+                                            <img src="{{ Storage::url($event->banner) }}" width="400" height="300" style="object-fit: cover" class="card-img-top" alt="...">
                                         @else
                                             <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="...">
                                         @endif

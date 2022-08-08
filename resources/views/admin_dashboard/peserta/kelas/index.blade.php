@@ -180,7 +180,7 @@
                                                 <div class="row d-flex justify-content-start align-items-center">
                                                     <div class="ml-3 mr-1">
                                                         @if ($kelas->tutor->foto != null)
-                                                            <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ Storage::url($kelas->tutor->foto) }}" width="30" height="30" class="rounded-circle" /></span>
+                                                            <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ Storage::url($kelas->tutor->foto) }}" width="30" height="30" style="object-fit: cover" class="rounded-circle" /></span>
                                                         @else
                                                             <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
                                                         @endif

@@ -5,7 +5,7 @@
             <figure class="user-cover-image"></figure>
             <div class="user-info">
                 @if(Auth::user()->foto != null)
-                    <img src="{{ Storage::url(Auth::user()->foto) }}" alt="avatar">
+                    <img src="{{ Storage::url(Auth::user()->foto) }}" width="90" height="90" style="object-fit: cover" alt="avatar">
                 @else
                     <img src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" alt="avatar">
                 @endif

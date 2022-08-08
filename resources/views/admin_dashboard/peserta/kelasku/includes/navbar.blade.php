@@ -8,9 +8,9 @@
                 <a class="nav-link {{ Request::segment(4) == 'silabus' ? 'active' : '' }}" href="{{ route('peserta.kelasku.silabus.index',[$kelas->id]) }}">Silabus</a>
             </li>
             @if($registrasi->status == 'Diterima' && $kelas->status == 'Kegiatan Berlangsung' || $kelas->status == 'Selesai')
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'peserta' ? 'active' : '' }}" href="{{ route('peserta.kelasku.peserta.index',[$kelas->id]) }}">Peserta</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(4) == 'forum' ? 'active' : '' }}" href="{{ route('peserta.kelasku.forum.index',[$kelas->id]) }}">Forum</a>
                 </li>
