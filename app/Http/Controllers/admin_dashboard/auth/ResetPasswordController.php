@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin_dashboard\auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPasswordMail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\PasswordReset;
@@ -73,11 +74,16 @@ class ResetPasswordController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        Mail::send('auth.lupa-password-email', ['token' => $token], function($message) use($request){
-            $message->to($request->email);
-            $message->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'));
-            $message->subject('Reset Password Notification');
-        });
+        // Mail::send('auth.lupa-password-email', ['token' => $token], function($message) use($request){
+        //     $message->to($request->email);
+        //     $message->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'));
+        //     $message->subject('Reset Password Notification');
+        // });
+        
+        $details = [
+            'url' => url('reset-password/'.$token.'')
+        ];
+        Mail::to($request->email)->send(new ResetPasswordMail($details));
 
         return back()->with('status', 'Kami telah mengirim email reset password, jika email tidak ditemukan cek folder spam!');
     }
