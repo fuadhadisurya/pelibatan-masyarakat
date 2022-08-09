@@ -78,7 +78,11 @@
                 </div>
                 <div>
                     @foreach ($jawabanTugas->uploadJawabanTugas as $fileTugas)
-                        <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $fileTugas->jawaban_tugas }}</a><br>
+                        @php
+                            $jawabanTugasFormat = explode('/', $fileTugas->jawaban_tugas);
+                            $namaJawabanTugas = end($jawabanTugasFormat);
+                        @endphp
+                        <a href="{{ route('jawaban.tugas.download', [$kelas->id, $fileTugas->id]) }}"><i class="far fa-save"></i> {{ $namaJawabanTugas }}</a><br>
                     @endforeach
                 </div>
             </div>

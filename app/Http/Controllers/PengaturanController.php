@@ -132,7 +132,7 @@ class PengaturanController extends Controller
         } elseif($request->password) {
             $this->validate($request, [
                 'password_lama' => 'required',
-                'password' => 'required|min:6',
+                'password' => 'required|min:8',
                 'konfirmasi_password' => 'required|same:password',
             ]);
 

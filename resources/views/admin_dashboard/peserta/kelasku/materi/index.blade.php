@@ -83,7 +83,11 @@
                         </div>
                         <div>
                             @foreach ($materi->uploadMateri as $fileMateri)
-                                <a href="{{ route('materi.download', [$kelas->id, $fileMateri->id]) }}"><i class="far fa-save"></i> {{ $fileMateri->materi }}</a><br>
+                                @php
+                                    $materiFormat = explode('/', $fileMateri->materi);
+                                    $namaMateri = end($materiFormat);
+                                @endphp
+                                <a href="{{ route('materi.download', [$kelas->id, $fileMateri->id]) }}"><i class="far fa-save"></i> {{ $namaMateri }}</a><br>
                             @endforeach
                         </div>
                     </div>

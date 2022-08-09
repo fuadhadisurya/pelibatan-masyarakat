@@ -9,7 +9,7 @@
         <div class="row no-gutters">
             <div class="col-md-4">
                 @if ($event->banner != null)            
-                    <img src="{{ Storage::url($event->banner) }}" height="300px" width="400px" class="" alt="widget-card-2">
+                    <img src="{{ Storage::url($event->banner) }}" height="300px" width="400px" style="object-fit: cover" class="" alt="widget-card-2">
                 @else
                     <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="img-fluid" alt="widget-card-2">
                 @endif

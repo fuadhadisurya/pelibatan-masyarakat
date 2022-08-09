@@ -215,7 +215,7 @@ Route::prefix('peserta')->name('peserta.')->middleware(['auth', 'ceklevel:pesert
         Route::get('/kelasku/{kelasku}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'hasil'])->name('quiz.jawaban.show');
         Route::post('/kelasku/{kelasku}/quiz/{quiz_id}/jawaban', [PesertaKelaskuQuizController::class, 'jawaban'])->name('quiz.jawaban.store');
         
-        Route::resource('kelasku.peserta', PesertaKelaskuPesertaController::class);
+        // Route::resource('kelasku.peserta', PesertaKelaskuPesertaController::class);
         Route::resource('kelasku.forum', PesertaKelaskuForumController::class);
         Route::resource('kelasku.materi', PesertaKelaskuMateriController::class);
         Route::resource('kelasku.tugas', PesertaKelaskuTugasController::class);

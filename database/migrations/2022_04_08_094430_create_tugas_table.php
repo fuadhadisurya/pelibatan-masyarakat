@@ -17,7 +17,7 @@ class CreateTugasTable extends Migration
             $table->id();
             $table->foreignId('kelas_id');
             $table->string('nama_tugas');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->dateTime('batas_waktu');
             $table->timestamps();
         });

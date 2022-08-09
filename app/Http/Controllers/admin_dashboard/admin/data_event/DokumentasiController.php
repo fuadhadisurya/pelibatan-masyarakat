@@ -78,9 +78,9 @@ class DokumentasiController extends Controller
                 'dokumentasi' => 'required',
             ]);
             
-            $nama_file = $request->nama_file;
-            $dokumentasi = $request->dokumentasi;
-            $total = count($nama_file);
+            // $nama_file = $request->nama_file;
+            // $dokumentasi = $request->dokumentasi;
+            // $total = count($nama_file);
         } else {
             $this->validate($request, [
                 'dokumentasi' => 'required|array',
@@ -89,14 +89,20 @@ class DokumentasiController extends Controller
         }
 
         if ($request->tipe == 'Slideshare'){
-            for($i=0;$i<$total;$i++){
-                Dokumentasi::create([
-                    'event_id' => $event_id,
-                    'nama_file' => $nama_file[$i],
-                    'tipe' => $request->tipe,
-                    'dokumentasi' => $dokumentasi[$i],
-                ]);
-            }
+            // for($i=0;$i<$total;$i++){
+                // Dokumentasi::create([
+                //     'event_id' => $event_id,
+                //     'nama_file' => $nama_file[$i],
+                //     'tipe' => $request->tipe,
+                //     'dokumentasi' => $dokumentasi[$i],
+                // ]);
+            // }
+            Dokumentasi::create([
+                'event_id' => $event_id,
+                'nama_file' => $request->nama_file,
+                'tipe' => $request->tipe,
+                'dokumentasi' => $request->dokumentasi,
+            ]);
         } else {
             foreach ($request->file('dokumentasi') as $file) {
                 //get filename with extension

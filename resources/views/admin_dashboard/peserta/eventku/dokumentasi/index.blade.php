@@ -36,8 +36,13 @@
                         @foreach ($slideshare as $ss)
                             {!! $ss->dokumentasi !!}
                         @endforeach
+                        <hr>
                         @foreach ($presentasi as $present)
-                            <a href="{{ route('dokumentasi.download', [$event->id, $present->id]) }}"><i class="far fa-save"></i> {{ $present->nama_file }}</a><br>
+                            @php
+                                $presentasiFormat = explode('/', $present->nama_file);
+                                $namaPresentasi = end($presentasiFormat);
+                            @endphp
+                            <a href="{{ route('dokumentasi.download', [$event->id, $present->id]) }}"><i class="far fa-save"></i> {{ $namaPresentasi }}</a><br>
                         @endforeach
                     @else
                         <div class="alert alert-info">

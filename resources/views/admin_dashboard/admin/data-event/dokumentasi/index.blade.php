@@ -129,12 +129,14 @@
                             <div class="control-group mb-3">
                                 <div class="form-group">
                                     <label for="nama_file">Nama File</label>
-                                    <input id="name_file" name="nama_file[]" class="form-control" type="text" placeholder="Masukkan nama file">
+                                    <input id="name_file" name="nama_file" class="form-control" type="text" placeholder="Masukkan nama file">
+                                    {{-- <input id="name_file" name="nama_file[]" class="form-control" type="text" placeholder="Masukkan nama file"> --}}
                                 </div>
                                 <input type="hidden" name="tipe" value="Slideshare">
                                 <div class="form-group">
                                     <label for="dokumentasi">Link Slideshare</label>
-                                    <textarea name="dokumentasi[]" id="dokumentasi" class="form-control" rows="5" placeholder='pastekan link share embed dari slideshare'>{{ old('dokumentasi') }}</textarea>
+                                    <textarea name="dokumentasi" id="dokumentasi" class="form-control" rows="5" placeholder='pastekan link share embed dari slideshare'>{{ old('dokumentasi') }}</textarea>
+                                    {{-- <textarea name="dokumentasi[]" id="dokumentasi" class="form-control" rows="5" placeholder='pastekan link share embed dari slideshare'>{{ old('dokumentasi') }}</textarea> --}}
                                     {{-- <input id="dokumentasi" name="dokumentasi[]" class="form-control" type="text" placeholder='pastekan link share embed dari slideshare'> --}}
                                     <small>Untuk bagian link slideshare. Pada slideshare klik icon share lalu atur ukuran dan copy yang ada di embed</small>    
                                 </div>
@@ -143,9 +145,9 @@
                     </div>
                     <div class="modal-footer">
                             <span class="mr-auto">
-                                <button class="btn btn-success add-more" type="button">
+                                {{-- <button class="btn btn-success add-more" type="button">
                                     Tambah
-                                </button>
+                                </button> --}}
                             </span>
                             <span>
                                 <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Batal</button>

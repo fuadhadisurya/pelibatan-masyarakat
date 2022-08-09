@@ -64,13 +64,15 @@
                                 @forelse ($presensi as $p)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>Presensi {{ $loop->iteration }}</td>
+                                        <td>{{ Carbon\Carbon::parse($p->tanggal_mulai)->format('j F Y') }}</td>
                                         @if ($p->status!=null)
                                             @if ($p->status == "Hadir")
                                                 <td><span class="badge badge-success">{{ $p->status }}</span></td>
                                             @else
                                                 <td><span class="badge badge-warning">{{ $p->status }}</span></td>
                                             @endif
+                                        @elseif(Carbon\Carbon::now()->format('j F Y') <= Carbon\Carbon::parse($p->tanggal_berakhir)->format('j F Y'))
+                                            <td><span class="badge badge-warning">Belum Mengisi</span></td>
                                         @else
                                             <td><span class="badge badge-danger">Tidak Hadir</span></td>
                                         @endif

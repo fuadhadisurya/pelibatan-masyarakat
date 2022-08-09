@@ -20,7 +20,7 @@
             <div class="user-profile layout-spacing sticky-top" style="top: 105px;">
                 <div class="card component-card_9">
                     @if($kelas->banner != null)
-                        <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" alt="widget-card-2">
+                        <img src="{{ Storage::url($kelas->banner) }}" class="card-img-top" width="400" height="300" style="object-fit: cover" alt="widget-card-2">
                     @else
                         <img src="{{ asset('admin_dashboard/assets/img/400x300.jpg') }}" class="card-img-top" alt="widget-card-2">
                     @endif
@@ -103,7 +103,11 @@
                         <hr>
                         <div class="meta-user">
                             <div class="avatar avatar-sm">
-                                <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
+                                @if ($kelas->tutor->foto != null)
+                                    <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ Storage::url($kelas->tutor->foto) }}" width="30" height="30" style="object-fit: cover" class="rounded-circle" /></span>
+                                @else
+                                    <span class="avatar-title rounded-circle"><img alt="avatar" src="{{ asset('admin_dashboard/assets/img/90x90.jpg') }}" width="30" height="30" class="rounded-circle" /></span>
+                                @endif
                             </div>
                             <div class="user-name">{{ $kelas->tutor->nama }}</div>
                         </div>
@@ -125,7 +129,7 @@
                                 <button type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#exampleModal" disabled>
                                     Mohon menunggu. Pendaftaran dibuka tanggal  <strong>{{ \Carbon\Carbon::parse($kelas->pendaftaran_buka)->format('j F Y') }}</strong>
                                 </button>
-                            @elseif (Carbon\Carbon::now()->format('Y-m-d') > $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') < $kelas->pendaftaran_tutup)
+                            @elseif (Carbon\Carbon::now()->format('Y-m-d') >= $kelas->pendaftaran_buka && Carbon\Carbon::now()->format('Y-m-d') <= $kelas->pendaftaran_tutup)
                                 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#exampleModal">
                                     Daftar Sekarang
                                 </button>
