@@ -286,13 +286,14 @@ class KelasSeeder extends Seeder
             ],
             [
                 'banner' => '',
-                'nama_kelas' => 'Kelas Bahasa Inggris untuk Dewasa ' . Carbon::now()->format('Y'),
+                'nama_kelas' => 'Kelas Bahasa Inggris ' . Carbon::now()->format('Y'),
                 'pendaftaran_buka' => Carbon::now(),
                 'pendaftaran_tutup' => Carbon::now()->addDays(7),
                 'tanggal_mulai' => Carbon::now()->addDays(14),
                 'tanggal_berakhir' => Carbon::now()->addDays(164),
                 'persyaratan' => '
                     <ul>
+                        <li>Peserta Kelas Bahasa Inggris untuk Anak dikhususkan untuk pelajar SD/Sederajat, dan SMP/Sederajat.</li>
                         <li>Peserta Kelas Bahasa Inggris untuk Dewasa dikhususkan untuk pelajar SMA/Sederajat, Mahasiswa, dan Masyarakat Umum.</li>
                         <li>Peserta Wajib mematuhi protokol kesehatan, berpakaian rapih, sopan, menjaga kebersihan dan ketertiban di kelas serta dapat hadir tepat waktu.</li>
                     </ul>
@@ -306,28 +307,28 @@ class KelasSeeder extends Seeder
                 'tutor_id' => '7',
                 'status' => 'Pendaftaran',
             ],
-            [
-                'banner' => '',
-                'nama_kelas' => 'Kelas Bahasa Inggris untuk Anak ' . Carbon::now()->format('Y'),
-                'pendaftaran_buka' => Carbon::now(),
-                'pendaftaran_tutup' => Carbon::now()->addDays(7),
-                'tanggal_mulai' => Carbon::now()->addDays(14),
-                'tanggal_berakhir' => Carbon::now()->addDays(164),
-                'persyaratan' => '
-                    <ul>
-                    <li>Peserta Kelas Bahasa Inggris untuk Dewasa dikhususkan untuk pelajar SD/Sederajat, dan SMP/Sederajat.</li>
-                        <li>Peserta Wajib mematuhi protokol kesehatan, berpakaian rapih, sopan, menjaga kebersihan dan ketertiban di kelas serta dapat hadir tepat waktu.</li>
-                    </ul>
-                ',
-                'deskripsi' => '
-                    <p>Di Kelas Bahasa Inggris, peserta akan belajar empat keterampilan berbahasa yaitu mendengarkan, berbicara, membaca, menulis, plus belajar tata bahasa (grammar) mulai dari dasar.</p>
-                    <p>Kelas ini akan terbagi dalam dua kelompok, yaitu pelajar SD-SMP dan SMA-Umum.</p>
-                    <p>Untuk peserta SD-SMP, kita akan bersenang-senang di kelas. Selama lima bulan ke depan, kita akan belajar sambil bermain tapi tetap berfokus pada memperbanyak kosakata Bahasa Inggris</p>
-                    <p>Sementara untuk SMA-Umum, kita akan bersama melatih keberanian dan rasa percaya diri berbicara Bahasa Inggris di depan banyak orang dengan cara yang menyenangkan</p>
-                ',
-                'tutor_id' => '7',
-                'status' => 'Pendaftaran',
-            ],
+            // [
+            //     'banner' => '',
+            //     'nama_kelas' => 'Kelas Bahasa Inggris untuk Anak ' . Carbon::now()->format('Y'),
+            //     'pendaftaran_buka' => Carbon::now(),
+            //     'pendaftaran_tutup' => Carbon::now()->addDays(7),
+            //     'tanggal_mulai' => Carbon::now()->addDays(14),
+            //     'tanggal_berakhir' => Carbon::now()->addDays(164),
+            //     'persyaratan' => '
+            //         <ul>
+            //             <li>Peserta Kelas Bahasa Inggris untuk Anak dikhususkan untuk pelajar SD/Sederajat, dan SMP/Sederajat.</li>
+            //             <li>Peserta Wajib mematuhi protokol kesehatan, berpakaian rapih, sopan, menjaga kebersihan dan ketertiban di kelas serta dapat hadir tepat waktu.</li>
+            //         </ul>
+            //     ',
+            //     'deskripsi' => '
+            //         <p>Di Kelas Bahasa Inggris, peserta akan belajar empat keterampilan berbahasa yaitu mendengarkan, berbicara, membaca, menulis, plus belajar tata bahasa (grammar) mulai dari dasar.</p>
+            //         <p>Kelas ini akan terbagi dalam dua kelompok, yaitu pelajar SD-SMP dan SMA-Umum.</p>
+            //         <p>Untuk peserta SD-SMP, kita akan bersenang-senang di kelas. Selama lima bulan ke depan, kita akan belajar sambil bermain tapi tetap berfokus pada memperbanyak kosakata Bahasa Inggris</p>
+            //         <p>Sementara untuk SMA-Umum, kita akan bersama melatih keberanian dan rasa percaya diri berbicara Bahasa Inggris di depan banyak orang dengan cara yang menyenangkan</p>
+            //     ',
+            //     'tutor_id' => '7',
+            //     'status' => 'Pendaftaran',
+            // ],
         ]);
         foreach($class as $kelas){
             Kelas::create($kelas);

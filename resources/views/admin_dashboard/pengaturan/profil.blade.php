@@ -133,7 +133,7 @@
                                 <option value="SMA/SMK/MA" {{ (Auth::user()->tipe_anggota == 'SMA/SMK/MA') ? 'selected': '' }}>SMA/SMK/MA</option>
                                 <option value="Mahasiswa" {{ (Auth::user()->tipe_anggota == 'Mahasiswa') ? 'selected': '' }}>Mahasiswa</option>
                                 <option value="Masyarakat Umum" {{ (Auth::user()->tipe_anggota == 'Masyarakat Umum') ? 'selected': '' }}>Masyarakat Umum</option>
-                                <option value="ASN/TNI/POLRI" {{ (Auth::user()->tipe_anggota == 'ASN/TNI/POLRI') ? 'selected': '' }}>ASN/TNI/POLRI</option>
+                                <option value="ASN/Polri/TNI" {{ (Auth::user()->tipe_anggota == 'ASN/Polri/TNI') ? 'selected': '' }}>ASN/Polri/TNI</option>
                             </select>
                         </div>
                         <hr>

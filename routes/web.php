@@ -105,6 +105,8 @@ Route::get('villages', [DaerahController::class, 'villages'])->name('villages');
 
 Route::prefix('admin')->middleware(['auth', 'ceklevel:admin'])->group(function(){
     Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+    Route::get('/dashboard/grafik', [AdminDashboardController::class, 'grafik']);
+    Route::get('/dashboard/grafik/{kelas_id}', [AdminDashboardController::class, 'grafik']);
     Route::get('/profil', [PengaturanController::class, 'profil']);
     Route::get('/akun', [PengaturanController::class, 'akun']);
     // Kelas Pelibatan Masyuarakat

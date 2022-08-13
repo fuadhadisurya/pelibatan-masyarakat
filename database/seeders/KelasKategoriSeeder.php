@@ -69,23 +69,23 @@ class KelasKategoriSeeder extends Seeder
             [
                 'kelas_id' => '6',
                 'TK_PAUD' => '0',
-                'SD_MI' => '0',
-                'SMP_MTS' => '0',
+                'SD_MI' => '1',
+                'SMP_MTS' => '1',
                 'SMA_SMK_MA' => '1',
                 'Mahasiswa' => '1',
                 'Masyarakat_Umum' => '1',
                 'ASN_Polri_TNI' => '1',
             ],
-            [
-                'kelas_id' => '7',
-                'TK_PAUD' => '0',
-                'SD_MI' => '1',
-                'SMP_MTS' => '1',
-                'SMA_SMK_MA' => '0',
-                'Mahasiswa' => '0',
-                'Masyarakat_Umum' => '0',
-                'ASN_Polri_TNI' => '0',
-            ],
+            // [
+            //     'kelas_id' => '7',
+            //     'TK_PAUD' => '0',
+            //     'SD_MI' => '1',
+            //     'SMP_MTS' => '1',
+            //     'SMA_SMK_MA' => '0',
+            //     'Mahasiswa' => '0',
+            //     'Masyarakat_Umum' => '0',
+            //     'ASN_Polri_TNI' => '0',
+            // ],
         ]);
         foreach($categoryClass as $kategori){
             KelasKategori::create($kategori);
