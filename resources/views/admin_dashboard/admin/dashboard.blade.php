@@ -70,6 +70,7 @@
                                 <input type="hidden" name="tipe_anggota" id="tipe_anggota">
                                 <input type="hidden" name="jenis_kelamin" id="jenis_kelamin">
                                 @if ($cariKelas != null)
+                                    <input type="hidden" name="kelas_id" value="{{ $cariKelas->id }}">
                                     <input type="hidden" name="kelas" value="{{ $cariKelas->nama_kelas }}">
                                     <input type="hidden" name="tahun" value="{{ \Carbon\Carbon::parse($cariKelas->tanggal_mulai)->format('Y') }}">
                                 @else

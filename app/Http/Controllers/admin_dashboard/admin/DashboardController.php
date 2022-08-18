@@ -52,7 +52,21 @@ class DashboardController extends Controller
     }
 
     public function grafik(Request $request){
+        if ($request->kelas_id != null) {
+            $peserta = RegistrasiKelas::where('kelas_id', $request->kelas_id)
+            ->whereHas('kelas', function($query) use ($request){
+                return $query->whereYear('tanggal_mulai', $request->tahun);
+            })
+            ->get();
+        } else {
+            $peserta = RegistrasiKelas::whereHas('kelas', function($query) {
+                
+                return $query->whereYear('tanggal_mulai', Carbon::now()->format('Y'));
+            })->get();
+        }
+
         $pdf = PDF::loadview('pdf.grafik',[
+            'peserta' => $peserta,
             'kelas' => $request->kelas,
             'tahun' => $request->tahun,
             'pendaftar' => $request->pendaftar,
@@ -63,6 +77,6 @@ class DashboardController extends Controller
         ])->setPaper('A4', 'portrait');
         $pdf->setOption(['isJavascriptEnabled'=> true]);
         $pdf->render();
-    	return $pdf->download('laporan_grafik'.$request->kelas.'.pdf');
+    	return $pdf->stream('laporan_grafik'.$request->kelas.'.pdf');
     }
 }
