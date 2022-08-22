@@ -36,9 +36,9 @@
                     </li>
                 @endif
             @else
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Peserta</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Forum</a>
                 </li>
