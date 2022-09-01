@@ -77,6 +77,6 @@ class DashboardController extends Controller
         ])->setPaper('A4', 'portrait');
         $pdf->setOption(['isJavascriptEnabled'=> true]);
         $pdf->render();
-    	return $pdf->stream('laporan_grafik'.$request->kelas.'.pdf');
+    	return $pdf->download('laporan_grafik'.$request->kelas.'.pdf');
     }
 }
