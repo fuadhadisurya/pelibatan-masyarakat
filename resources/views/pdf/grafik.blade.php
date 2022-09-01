@@ -121,27 +121,27 @@
     <table class="border">
         <tr class="text-center">
             <th>Usia</th>
-            <th>Jumlah</th>
+            <th style="width: 25%">Jumlah Peserta</th>
         </tr>
         <tr>
             <td>Anak-anak (5 s.d. 11 Tahun)</td>
-            <td>{{ $anak_anak }}</td>
+            <td class="text-center">{{ $anak_anak }}</td>
         </tr>
         <tr>
             <td>Remaja (12 s.d. 19 Tahun)</td>
-            <td>{{ $remaja }}</td>
+            <td class="text-center">{{ $remaja }}</td>
         </tr>
         <tr>
             <td>Dewasa (20 s.d. 49 Tahun)</td>
-            <td>{{ $dewasa }}</td>
+            <td class="text-center">{{ $dewasa }}</td>
         </tr>
         <tr>
             <td>Manula (>50 Tahun)</td>
-            <td>{{ $manula }}</td>
+            <td class="text-center">{{ $manula }}</td>
         </tr>
         <tr>
             <th>Total</th>
-            <th>{{ $anak_anak+$remaja+$dewasa+$manula }}</th>
+            <th class="text-center">{{ $anak_anak+$remaja+$dewasa+$manula }}</th>
         </tr>
     </table>
     <p class="mt-3">Berikut ini tampilan dalam bentuk grafik:</p>
@@ -157,39 +157,39 @@
     <table class="border">
         <tr class="text-center">
             <th>Tipe Anggota</th>
-            <th>Jumlah</th>
+            <th style="width: 25%">Jumlah Peserta</th>
         </tr>
         <tr>
             <td>TK/PAUD</td>
-            <td>{{ $tk_paud }}</td>
+            <td class="text-center">{{ $tk_paud }}</td>
         </tr>
         <tr>
             <td>SD/MI</td>
-            <td>{{ $sd_mi }}</td>
+            <td class="text-center">{{ $sd_mi }}</td>
         </tr>
         <tr>
             <td>SMP/MTS</td>
-            <td>{{ $smp_mts }}</td>
+            <td class="text-center">{{ $smp_mts }}</td>
         </tr>
         <tr>
             <td>SMA/SMK/MA</td>
-            <td>{{ $sma_smk_ma }}</td>
+            <td class="text-center">{{ $sma_smk_ma }}</td>
         </tr>
         <tr>
             <td>Mahasiswa</td>
-            <td>{{ $mahasiswa }}</td>
+            <td class="text-center">{{ $mahasiswa }}</td>
         </tr>
         <tr>
             <td>Masyarakat Umum</td>
-            <td>{{ $masyarakat_umum }}</td>
+            <td class="text-center">{{ $masyarakat_umum }}</td>
         </tr>
         <tr>
             <td>ASN/POLRI/TNI</td>
-            <td>{{ $asn_polri_tni }}</td>
+            <td class="text-center">{{ $asn_polri_tni }}</td>
         </tr>
         <tr>
             <th>Total</th>
-            <th>{{ $tk_paud+$sd_mi+$smp_mts+$sma_smk_ma+$mahasiswa+$masyarakat_umum+$asn_polri_tni }}</th>
+            <th class="text-center">{{ $tk_paud+$sd_mi+$smp_mts+$sma_smk_ma+$mahasiswa+$masyarakat_umum+$asn_polri_tni }}</th>
         </tr>
     </table>
     <p class="mt-3">Berikut ini tampilan dalam bentuk grafik:</p>
@@ -205,19 +205,19 @@
     <table class="border">
         <tr class="text-center">
             <th>Jenis Kelamin</th>
-            <th>Jumlah</th>
+            <th style="width: 25%">Jumlah Peserta</th>
         </tr>
         <tr>
             <td>Laki-laki</td>
-            <td>{{ $laki_laki }}</td>
+            <td class="text-center">{{ $laki_laki }}</td>
         </tr>
         <tr>
             <td>Perempuan</td>
-            <td>{{ $perempuan }}</td>
+            <td class="text-center">{{ $perempuan }}</td>
         </tr>
         <tr>
             <th>Total</th>
-            <th>{{ $laki_laki+$perempuan }}</th>
+            <th class="text-center">{{ $laki_laki+$perempuan }}</th>
         </tr>
     </table>
     <p class="mt-3">Berikut ini tampilan dalam bentuk grafik:</p>
