@@ -9,10 +9,10 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
             <div class="widget-content-area br-4">
                 <div class="widget-one">
-                    <h6>Dashboard</h6>
+                    <h6>Cari</h6>
                     <form action="{{ url('admin/dashboard') }}" method="GET" autocomplete="off">
-                        {{-- <div class="input-group input-group-sm my-2"> --}}
-                            <div class="row">
+                        <div class="row">
+                            {{-- <div class="input-group input-group-sm my-2"> --}}
                                 <div class="col-sm-4">
                                     <select class="form-control select2" id="sk" name="kelas" required>
                                         <option value="">Pilih Kelas</option>
@@ -52,104 +52,128 @@
                                         Reset
                                     </a>
                                 </div>
-                            </div>
-                        {{-- </div> --}}
+                            {{-- </div> --}}
+                        </div>
                     </form>
                 </div>
             </div>
         </div> 
-        <div class="col-xl-4">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                <div class="statbox widget box box-shadow">
-                    <div class="widget-content-area br-4">
-                        <div class="widget-one">
-                            <h6>Nama Kelas</h6>
-                            @if ($cariKelas != null)
-                                <p class="stats">{{ $cariKelas->nama_kelas }}</p>
-                            @else
-                                <p class="stats">Semua</p>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                <div class="statbox widget box box-shadow">
-                    <div class="widget-content-area br-4">
-                        <div class="widget-one">
-                            <h6>Periode</h6>
-                            @if ($cariKelas != null)
-                                <p class="stats">{{ \Carbon\Carbon::parse($cariKelas->created_at)->format('Y') }}</p>
-                            @else
-                                <p class="stats">{{ \Carbon\Carbon::now()->format('Y') }}</p>
-                            @endif
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+            <div class="d-flex justify-content-between">
+                <h3>Dashboard</h3>
+                <div class="col-sm-2">
+                    <div class="col-xl-12 layout-spacing">
+                        <div class="d-flex justify-content-end">
+                            <form method="POST" id="make-pdf" action="{{ url('admin/dashboard/grafik') }}">
+                                @csrf
+                                <input type="hidden" name="usia" id="usia">
+                                <input type="hidden" name="tipe_anggota" id="tipe_anggota">
+                                <input type="hidden" name="jenis_kelamin" id="jenis_kelamin">
+                                @if ($cariKelas != null)
+                                    <input type="hidden" name="kelas_id" value="{{ $cariKelas->id }}">
+                                    <input type="hidden" name="kelas" value="{{ $cariKelas->nama_kelas }}">
+                                    <input type="hidden" name="tahun" value="{{ \Carbon\Carbon::parse($cariKelas->tanggal_mulai)->format('Y') }}">
+                                @else
+                                    <input type="hidden" name="kelas" value="">
+                                    <input type="hidden" name="tahun" value="">
+                                @endif
+                                <input type="hidden" name="pendaftar" value="{{ count($peserta) }}">
+                                <input type="hidden" name="pendaftar_diterima" value="{{ count($peserta->where('status', 'Diterima')) }}">
+                                <button type="submit" name="create_pdf" id="create_pdf" class="btn btn-info btn-sm btn-block align-items-center justify-content-center" disabled>Download Laporan</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                <div class="statbox widget box box-shadow">
-                    <div class="widget-content-area br-4">
-                        <div class="widget-one">
-                            <h6>Total Peserta Pendaftar Kelas</h6>
-                            <p class="stats">{{ count($peserta) }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
-                <div class="statbox widget box box-shadow">
-                    <div class="widget-content-area br-4">
-                        <div class="widget-one">
-                            <h6>Total Peserta Diterima</h6>
-                            <p class="stats">{{ count($peserta->where('status', 'Diterima')) }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>  
         </div>
-        
-        <div id="chartBar" class="col-xl-8 layout-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">                                
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Usia Peserta</h4> 
+        <div class="col-xl-12 col-lg-12 col-md-12 col-12 layout-spacing">
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="statbox widget box box-shadow mb-4">
+                        <div class="widget-content-area br-4">
+                            <div class="widget-one">
+                                <h6>Nama Kelas</h6>
+                                @if ($cariKelas != null)
+                                    <p class="stats">{{ $cariKelas->nama_kelas }}</p>
+                                @else
+                                    <p class="stats">Semua</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="statbox widget box box-shadow mb-4">
+                        <div class="widget-content-area br-4">
+                            <div class="widget-one">
+                                <h6>Periode</h6>
+                                @if ($cariKelas != null)
+                                    <p class="stats">{{ \Carbon\Carbon::parse($cariKelas->created_at)->format('Y') }}</p>
+                                @else
+                                    <p class="stats">{{ \Carbon\Carbon::now()->format('Y') }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="statbox widget box box-shadow mb-4">
+                        <div class="widget-content-area br-4">
+                            <div class="widget-one">
+                                <h6>Total Peserta Pendaftar Kelas</h6>
+                                <p class="stats">{{ count($peserta) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="statbox widget box box-shadow mb-4">
+                        <div class="widget-content-area br-4">
+                            <div class="widget-one">
+                                <h6>Total Peserta Diterima</h6>
+                                <p class="stats">{{ count($peserta->where('status', 'Diterima')) }}</p>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                
+                <div id="chartBar" class="col-xl-8 layout-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">                                
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Usia Peserta</h4> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <div id="usiaChart" class=""></div>
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
-                    <div id="usiaChart" class=""></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="chartBar" class="col-xl-7 layout-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">                                
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Tipe Anggota Peserta</h4> 
+                
+                <div id="chartBar" class="col-xl-7 layout-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">                                
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Tipe Anggota Peserta</h4> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <div id="tipePesertaChart" class=""></div>
                         </div>
                     </div>
                 </div>
-                <div class="widget-content widget-content-area">
-                    <div id="tipePesertaChart" class=""></div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="chartDonut" class="col-xl-5 layout-spacing">
-            <div class="statbox widget box box-shadow">
-                <div class="widget-header">                                
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                            <h4>Jenis Kelamin Peserta</h4> 
+                
+                <div id="chartDonut" class="col-xl-5 layout-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">                                
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4>Jenis Kelamin Peserta</h4> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <div id="jenisKelaminChart" class=""></div>
                         </div>
                     </div>
-                </div>
-                <div class="widget-content widget-content-area">
-                    <div id="jenisKelaminChart" class=""></div>
                 </div>
             </div>
         </div>
@@ -265,7 +289,14 @@
             donutChart
         );
 
-        donut.render();
+        donut.render().then(() => {
+            window.setTimeout(function() {
+                donut.dataURI().then((uri) => {
+                    // console.log(uri);
+                    $('#jenis_kelamin').val(uri);
+                })
+            }, 1000) 
+        })
     </script>
     <script>
         // Tipe Peserta Bar
@@ -300,7 +331,14 @@
             tipePesertaBar
         );
 
-        tipePesertaChart.render();
+        tipePesertaChart.render().then(() => {
+            window.setTimeout(function() {
+                tipePesertaChart.dataURI().then((uri) => {
+                    // console.log(uri);
+                    $('#tipe_anggota').val(uri);
+                })
+            }, 1000) 
+        })
     </script>
     <script>
         // Usia Bar
@@ -342,7 +380,14 @@
             usiaBar
         );
 
-        usiaChart.render();
+        usiaChart.render().then(() => {
+            window.setTimeout(function() {
+                usiaChart.dataURI().then((uri) => {
+                    // console.log(uri);
+                    $('#usia').val(uri);
+                })
+            }, 1000) 
+        })
     </script>
     <script>
         var kelas = $("#sk").select2({
@@ -351,5 +396,35 @@
         var tahun = $("#st").select2({
             placeholder: "Pilih Tahun",
         });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#create_pdf').click(function(){
+                // $('#jenis_kelamin').val($('testing').html());
+                $('#make_pdf').submit();
+            })
+        });
+    </script>
+    <script>
+        // Get refreence to span and button
+        // var spn = document.getElementById("count");
+        var btn = document.getElementById("create_pdf");
+
+        var count = 1;     // Set count
+        var timer = null;  // For referencing the timer
+
+        (function countDown(){
+            // Display counter and start counting down
+            // spn.textContent = count;
+            
+            // Run the function again every second if the count is not zero
+            if(count !== 0){
+                timer = setTimeout(countDown, 1000);
+                count--; // decrease the timer
+            } else {
+                // Enable the button
+                btn.removeAttribute("disabled");
+            }
+        }());
     </script>
 @endpush
